@@ -725,14 +725,14 @@
                         if (response.datas.length == 0) {
                             alert( "{{ _('No Patient') }}" );
                         }
-                        else if (response.datas.length == 1) {
-                            $('#reservation_chart').val(response.datas[0].id);
-                            $('#reservation_chart_number').val(response.datas[0].chart);
-                            $('#reservation_patient').val(response.datas[0].name_kor);
-                            $('#reservation_patient_eng').val( response.datas[0].name_eng);
-                            $('#reservation_date_of_birth').val(response.datas[0].date_of_birth);
-                            $('#reservation_phone').val(response.datas[0].phonenumber);
-                        }
+                        // else if (response.datas.length == 1) {
+                        //     $('#reservation_chart').val(response.datas[0].id);
+                        //     $('#reservation_chart_number').val(response.datas[0].chart);
+                        //     $('#reservation_patient').val(response.datas[0].name_kor);
+                        //     $('#reservation_patient_eng').val( response.datas[0].name_eng);
+                        //     $('#reservation_date_of_birth').val(response.datas[0].date_of_birth);
+                        //     $('#reservation_phone').val(response.datas[0].phonenumber);
+                        // }
                         else {
                             $('#patient_list_contents').empty();
 
@@ -824,9 +824,10 @@
         $('#reservation_patient_eng').val(content.children[3].textContent);
         $('#reservation_date_of_birth').val(content.children[4].textContent);
         $('#reservation_phone').val(content.children[6].textContent);
-        if(content.children[7].textContent == 'Vietnam' || content.children[7].textContent == 'Vietnam'){
+        if(content.children[7].textContent == 'Vietnam' || content.children[7].textContent == 'Korea'){
             $('#reservation_nationality').val(content.children[7].textContent);
-        }else{
+        }
+        else{
             $('#reservation_nationality').val('Other');
             $('#reservation_nationality_etc').val(content.children[7].textContent);
         }

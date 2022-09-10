@@ -139,3 +139,4 @@ env_local/
 */excel_form
 *.xlsx
 */uploads/
+*.docx
