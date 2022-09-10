@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+    <meta charset="utf-8" />
+    <style>
+        @media print {
+            #wrap {
+                margin: 0px;
+                padding: 45px;
+                font-size: 10px;
+                font-family: "Times New Roman", Times, serif;
+            }
+
+            table {
+                height: 100%;
+            }
+
+            table tr td {
+                font-size: 12px;
+            }
+
+            #logo {
+                width: 100%;
+            }
+
+            .top {}
+
+            .top tr:first-child td:nth-child(2) {
+                font-weight: 700;
+            }
+
+            .patient_info {
+                width: 100%;
+                border-collapse: separate;
+                border-spacing: 0px 2px;
+            }
+
+            .patient_info tr td {
+                width: 50%;
+            }
+
+
+            .title {
+                width: 100%;
+                text-align: center;
+                font-size: 14px;
+                font-weight: 700;
+                margin-top: 40px;
+            }
+
+            .contents .table1 {
+                margin-top: 15px;
+                width: 100%;
+                border: 1px solid black;
+                border-collapse: collapse;
+                table-layout: fixed;
+
+            }
+
+            .contents tr td,
+            .contents tr th {
+                border: 1px solid black;
+            }
+
+
+            .contents thead tr th {
+                text-align: center;
+                vertical-align: middle;
+            }
+
+            .contents thead tr th:nth-child(1) {
+                width: 160px;
+            }
+
+            .contents thead tr th:nth-child(2) {
+                width: 160px;
+            }
+
+            .contents thead tr th:nth-child(3) {
+                width: 160px;
+            }
+
+            .contents thead tr th:nth-child(4) {
+                width: 160px;
+            }
+
+            .contents thead tr th:nth-child(5) {
+                width: 160px;
+            }
+
+
+            #contents_datas tr td:nth-child(2) {
+                padding-left: 10px;
+            }
+
+            #contents_datas tr td:nth-child(1),
+            #contents_datas tr td:nth-child(3),
+            #contents_datas tr td:nth-child(4),
+            #contents_datas tr td:nth-child(5) {
+                text-align: center;
+            }
+
+            #contents tr,
+            #contents td {
+                padding: 2px;
+            }
+
+            #contents_datas tr th {
+                text-align: center;
+                vertical-align: middle;
+            }
+
+            .footer {
+                margin-top: 30px;
+                width: 100%;
+            }
+
+            .footer tr td:first-child {
+                width: 50%;
+                text-align: center;
+
+            }
+
+            .footer tr td:nth-child(2) {
+                width: 50%;
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div id="wrap">
+        <table class="top" style="height: 100px;">
+            <tr>
+                <!-- <td>
+                    <img src="/static/img/document_top.png" id="logo" />
+                </td> -->
+                <!--<td>Công ty TNHH International Medicare - Phòng khám đa khoa quốc tế I-Medicare</td>
+            </tr>
+            <tr>
+                <td>Địa chỉ : Tầng 1 - Tòa nhà The Garden - đường Mễ Trì - phường Mĩ Đình 1 </td>
+            </tr>
+            <tr>
+                <td>Quận Nam Từ Liêm - Hà Nội</td>
+            </tr>
+            <tr>
+                <td>Hotline : 081.340.0101 - 081.760.0105</td>-->
+            </tr>
+        </table>
+
+
+        <div class="title">
+            <text>PHIẾU TRẢ LỜI KẾT QUẢ XÉT NGHIỆM</text>
+            <br />
+            <text><I>LABORATORY TEST REPORT</I></text>
+        </div>
+        <br />
+        <p style="font-size: 14px; position: relative; bottom: -8px;"><b>Họ tên khách hàng (Client Name): </b> : {{ name_kor }} / <b>{{ name_eng }}</b></p>
+        <table class="patient_info" style="font-size: 14px;">
+
+            <tr>
+                <td style="font-size: 14px;"><b>Ngày sinh (Date of birth): </b> : <text>{{ date_of_birth }}</text></td>
+                <td style="font-size: 14px;"><b>Giới tính (Gender): </b>: {{ gender }}</td>
+            </tr>
+            <tr>
+                <td style="font-size: 14px;"><b>Địa chỉ (Address): </b> {{address}}</td>
+                <td style="font-size: 14px;"><b>Số điện thoại (Phone number):  </b>{{phone}}</td>
+            </tr>
+            <!-- <tr>
+                <td style="font-size: 14px;"><b>Quốc tịch (Nationality): {{ nationality }} </b></td>
+            </tr>
+            <tr>
+                <td style="font-size: 14px;"><b>CCCD/Hộ chiếu (Citizen/Passport No.): {{ passport }} </b></td>
+            </tr> -->
+
+        </table>
+        <p style="font-size: 14px; position: relative; top: 0px;"><b>Quốc tịch (Nationality): </b> : {{ nationality }}</p>
+        <p style="font-size: 14px; position: relative; top: -6px;"><b>CCCD/Hộ chiếu (Citizen/Passport No.) : {{ passport }}  </b></p>
+        <div style="font-size: 14px;  position: relative; top: -8px;">
+           <b>Xét nghiệm theo yêu cầu (Test requested): COVID-19 Ag test nhanh (COVID-19 Antigen Rapid Test Kit) </b>
+        </div>
+        <table class=" contents table1">
+            <thead>
+                <tr>
+                    <th>
+                        <b>Bệnh phẩm</b>
+                        <br />(Speciment)
+                    </th>
+                    <th>
+                        <b>Lần Lấy Mẫu</b>
+                        <br />(Sampling Times)
+                    </th>
+
+                    <th>
+                        <b>Ngày/ giờ lấy mẫu</b>
+                        <br />(Collection Date)
+                    </th>
+                    <th>
+                        <b>Ngày/ giờ nhận mẫu</b>
+                        <br />(Received date)
+                    </th>
+                    <th>
+                        <b>Tình Trạng Mẫu</b>
+                        <br />(Sample condition)
+                    </th>
+                </tr>
+            </thead>
+            <tbody id="contents_datas">
+                <tr>
+                    <td>
+                        <p>
+                            Dịch tỵ hầu <br> Nasopharyngeal swab
+                        </p>
+                    </td>
+                    <td style="text-align: center;">
+                        <p>01</p>
+                    </td>
+                    <td>
+                        {{ date_today }}
+                        <br />
+                        {{ collection_time }}
+                    </td>
+                    <td>
+                        {{ date_today }}
+                        <br />
+                        {{ receive_time }}
+                    </td>
+                    <td>
+                        <b>
+                            Đạt
+                            <br>
+                            (Accepted)
+                        </b>
+                    </td>
+                </tr>
+
+                <!-- {% for test in test_res %}
+                <tr>
+                    <td>{{ test.no }}</td>
+                    <td>{{ test.name_vie }}<br /><i>{{ test.name }}</i></td>
+                    <td>{{ test.result }}</td>
+                    <td>{{ test.unit_vie }}<br /><i>{{test.unit}}</i></td>
+                    <td>
+                        {% if test.normal_range.length != 0 %}
+                            {% for interval in test.normal_range %}
+                               
+                                    {{interval.name}}
+                                
+                                {% if interval.minimum is not None %}
+                                    {{interval.minimum}}
+                                {% else %}
+                                    &emsp;&emsp;
+                                {% endif %} < 
+                                {% if interval.maximum is not None %}
+                                    {{interval.maximum}}
+                                {% else %}
+                                    &emsp;&emsp;
+                                {% endif %}<br />
+                            {% endfor %}
+                        {% endif %}
+                    </td>
+                    <td></td> -->
+                <!-- </tr> -->
+                <!-- {% endfor %} -->
+            </tbody>
+            </table>
+
+            <p style="font-size: 14px;"><b>Nơi tiến hành xét nghiệm: </b> Phòng khám đa khoa I-MEDICARE </p>
+            <p style="font-size: 14px;">(Testing implemented by: Medical clinic I-MEDICARE) </p>
+            <p style="font-size: 14px;"><b> Mã bệnh phẩm (Sample ID):</b> {{ chart }} </p>
+
+            <table class="contents table2">
+                <thead>
+                    <tr>
+                        <th>
+                            <b>Bệnh phẩm</b>
+                            <br />(Speciment)
+                        </th>
+                        <th>
+                            <b>Kĩ thuật xét nghiệm</b>
+                            <br />(Method)
+                        </th>
+
+                        <th>
+                            <b>Ngày thực hiện</b>
+                            <br />(Testing Date)
+                        </th>
+                        <th>
+                            <b>Kết quả</b>
+                            <br />(Result test)
+                        </th>
+                    </tr>
+                </thead>
+                <tbody id="contents_datas">
+                    <tr>
+                        <td>
+                            <p>
+                                Dịch tỵ hầu <br> Nasopharyngeal swab
+                            </p>
+                        </td>
+                        <td style="text-align: center;">
+                            <p>COVID-19 Ag test nhanh
+                                EasyDiagnosis COVID-19 Ag Rapid Test
+                            </p>
+                        </td>
+                        <td>
+                            <b>
+                                {{ date_today }}
+                            </b>
+                            
+                        </td>
+                        <td>
+                            <b>
+                                Âm tính
+                                <br />
+                                (Negative)
+                            </b>
+                        </td>
+
+                    </tr>
+                </tbody>
+            </table>
+            <p style="font-size: 14px;"><b>Thời gian trả kết quả (Time release of result): </b> {{ date_today }} {{return_time }}</p>
+            <p style="font-size: 14px;"><b>Người thực hiện (Testing officer):</b> CN. Nguyễn Thị Thuỳ Dương </p>
+            <table class="footer">
+                <tr>
+                    <td>
+
+                    </td>
+                    <td>
+                        <b style="font-size: 14px;">
+
+                            Trưởng đơn vị xét nghiệm<br />
+                            <i>Chef of Laboratory</i>
+                        </b>
+
+                    </td>
+                </tr>
+            </table>
+
+
+
+        </div>
+        <div style="padding:40px 10% 0% 10%;">
+            <p>Kết quả xét nghiệm test nhanh tìm kháng nguyên SARS-CoV-2 chỉ có giá trị tại thời điểm lấy mẫu xét nghiệm
+                và có giá trị sàng lọc COVID 19 ban đầu, cần tiếp tục theo dõi, giám sát dịch tễ, tuân thủ 5K của Bộ Y
+                tế.
+            </p>
+            <p><i>SARS-CoV-2 antigen test results are valid only at the time of sampling and are valid for initial COVID
+                    19 screening which should continue to monitor epidemiology, and comply with 5K regulations of the
+                    Ministry of Health. </i>
+            </p>
+        </div>
+</body>
+
+</html>

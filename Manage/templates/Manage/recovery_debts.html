@@ -1,0 +1,123 @@
+{% extends "app/layout.html" %}
+
+{% load staticfiles %}
+{% block content %}
+
+
+<!--Payment-->
+<div class="contents_wrap" >
+    <div id="REVENUE_TOTAL">
+        <div class="contents_filter_wrap">
+            <div class="contents_Title_wrap">
+                <span class="btn btn-danger contents_Title">{{ _('DEBIT DAILY') }}</span>
+            </div>
+
+            <div class="contents_filter_top">
+                <!--날짜-->
+                <div class="date_input_div">
+                    {{ _('Date')}}:
+                    <input type="text" class="form-control date_input" id="payment_search_date_start" /> ~ 
+                    <input type="text" class="form-control date_input" id="payment_search_date_end" />
+                </div>
+                <!-- 과 -->
+               <div class="input-group contents_filter_div" id="contents_filter_div_depart" {% if user.doctor %}style="display:none;"{% endif %}>
+                    <span class="input-group-addon">{{ _('Depart') }}</span>
+                    <select id="contents_filter_depart" class="form-control costom-select" aria-describedby="basic-addon1">
+                        <option value="">{{ _('All') }}</option>
+                        {% for data in depart_medical %}
+                        <option value="{{ data.code }}" {% if user.doctor.depart.id == data.code %} selected {% endif%}>{{ data.name }}</option>
+                        {% endfor %}
+                        <!--
+                        {% for data in depart_medical %}
+                        <option value="{{ data.code }}">{{ data.name }}</option>
+                        {% endfor %}
+                        -->
+                    </select>
+                </div>
+                <!-- 의사 -->
+               <div class="input-group contents_filter_div" id="contents_filter_div_doctor" {% if user.doctor %}style="display:none;"{% endif %}>
+                    <span class="input-group-addon">{{ _('Doctor') }}</span>
+                    <select id="contents_filter_doctor" class="form-control costom-select" aria-describedby="basic-addon1">
+                        <option value="">{{ _('All') }}</option>
+                        {% for data in doctor %}
+                        <option value="{{ data.id }}" >{{ data.name_short }}</option>
+                        {% endfor %}
+                    </select>
+                </div>            
+
+                <div class="contents_filter_div" id="contents_filter_div_patient_name">
+                    <span class="input-group-addon">{{ _('Payment Name') }}</span>
+                    <select name="filter" id="patient_search_select" class="form-control patient_search_select hide" aria-describedby="basic-addon1">
+                        <option value="" selected>{{_('All') }}</option>
+                        <option value="name">{{_('Name') }}</option>
+                        <option value="chart">{{_('Chart No') }}</option>
+                        <option value="date_of_birth">{{_('Date of Birth') }}</option>
+                        <option value="phone">{{_('Phone Number') }}</option>
+                    </select>
+                    <input type="text" name="search_input" id="patient_search_input" class="form-control patient_search_input" aria-describedby="basic-addon1" autocomplete="off" placeholder="{{ _('At least 2 characters') }}"/>
+                </div>
+            </div>
+        </div>
+        <div class="payment_search">
+          
+            <div class="payment_search_table_div">
+                <table class="table table-bordered table-hover table-striped revenue_table" id="payment_search_table">
+                    <thead>
+                        <tr>
+                            <th>{{_('No')}}</th>
+                            <th>{{_('Chart No')}}</th>
+                            <th>{{_('Department')}}</th>
+                            <th>{{_('Debit Date')}}</th>
+                            <th>{{_('Customer name')}}</th>
+                            <th>{{_('Department')}}</th>
+                            <th>{{_('Doctor')}}</th>                         
+                            <th>{{_('Phone number')}}</th>
+                            <th>{{_('Payment amount')}}</th>
+                        </tr>
+                    </thead>
+                    <tbody id="payment_table_result" class="payment_table_result">
+               
+                    </tbody>
+                </table>
+                <table class="table table-bordered table-striped total_table">
+                    <tbody>
+                        <tr>
+                            <td></td>
+                            <td>{{_('Total')}} ( ₫ ) </td>
+                            <td><span id="payment_total"></span></td>                            
+                        </tr>
+                    </tbody>
+                </table>
+
+
+                <!--페이징-->
+        
+                <ul class="pagination" id="payment_pagnation">
+
+                </ul>
+                <table class="table table-bordered table-hover table-striped payment_total">
+                    <tr>
+
+                    </tr>
+                </table>
+        
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
+
+{% block style %}
+<link rel="stylesheet" type="text/css" href="{% static 'css/recovery_debts.css' %}" />
+{% endblock %}
+
+{% block scripts %}
+<script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels"></script>
+
+<script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.js"></script>
+<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
+<script src="{% static 'js/recovery_debts.js' %}" type="text/javascript"></script>
+{% endblock%}

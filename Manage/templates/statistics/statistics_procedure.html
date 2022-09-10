@@ -1,0 +1,133 @@
+{% extends "app/layout.html" %}
+
+{% load staticfiles %}
+{% block content %}
+{% csrf_token %}
+<div class="inventory_precedure_grid">
+    <div class="statistics_grid partition">
+        <div class="statistics_table_wrap">
+            <span class="btn btn-danger inventory_table_title_span">{{ _('Procedure Statistics') }}</span>
+            <div style="float:right;">
+                <input type="hidden" value="TEST" id="revenue_search_type" />
+                 <!--Date-->
+                <div class="date_input_div">
+                    {{ _('Date')}}:
+                    <input type="text" class="form-control date_input" id="date_start" /> ~ 
+                    <input type="text" class="form-control date_input" id="date_end" />
+                </div>
+
+                <!--Depart-->
+                <div class="input-group contents_filter_div" id="contents_filter_div_depart" {% if user.doctor %}style="display:none;"{% endif %}>
+                    <span class="input-group-addon">{{ _('Depart') }}</span>
+                    <select id="contents_filter_depart" class="form-control costom-select" aria-describedby="basic-addon1">
+                        <option value="">{{ _('All') }}</option>
+                        {% for data in depart_medical %}
+                        <option value="{{ data.code }}" {% if user.doctor.depart.id == data.code %} selected {% endif%}>{{ data.name }}</option>
+                        {% endfor %}
+                        <!--
+                        {% for data in depart_medical %}
+                        <option value="{{ data.code }}">{{ data.name }}</option>
+                        {% endfor %}
+                        -->
+                    </select>
+                </div>
+                <div class="input-group contents_filter_div" id="contents_filter_div_doctor" {% if user.doctor %}style="display:none;"{% endif %}>
+                    <span class="input-group-addon">{{ _('Doctor') }}</span>
+                    <select id="contents_filter_doctor" class="form-control costom-select" aria-describedby="basic-addon1">
+                        <option value="">{{ _('All') }}</option>
+                        {% for data in doctor %}
+                        <option value="{{ data.id }}" >{{ data.name_short }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="contents_filter_div" id="contents_filter_div_patient_name">
+                    <span class="input-group-addon">{{ _('Payment Name') }}</span>
+                    <select name="filter" id="patient_search_select" class="form-control patient_search_select hide" aria-describedby="basic-addon1">
+                        <option value="" selected>{{_('All') }}</option>
+                        <option value="name">{{_('Name') }}</option>
+                        <option value="chart">{{_('Chart No') }}</option>
+                        <option value="date_of_birth">{{_('Date of Birth') }}</option>
+                        <option value="phone">{{_('Phone Number') }}</option>
+                    </select>
+                    <input type="text" name="search_input" id="patient_search_input" class="form-control patient_search_input" aria-describedby="basic-addon1" autocomplete="off" placeholder="{{ _('At least 2 characters') }}"/>
+                </div>                                
+            </div>
+            <div style="text-align:right; margin-bottom:5px;">
+                <a class="btn btn-default" onclick="excel_download()"><i class="fa fa-file-excel-o"></i>{{ _('Download') }}</a>
+            </div>
+            <div class="total_div">
+                <span>{{ _('Total Revenue') }} : </span>
+                <span></span>
+            </div>
+            <br />
+            <div class="precedure_database_list">
+                <div class="precedure_database_table">
+                    <table class="table table-hover table-striped" id="statistics_table">
+                        <thead>
+                            <tr>
+                                <th>{{ _('No.') }}</th>
+                                <th>{{ _('Chart No.') }}</th>
+                                <th>{{ _('Date') }}</th>
+                                <th>{{ _('Customer Name') }}</th>
+                                <th>{{ _('Department') }}</th>
+                                <th>{{ _('Doctor') }}</th>
+                                <th>{{ _('Class') }}</th>
+                                <th>{{ _('Service Code') }}</th>
+                                <th>{{ _('Item name Korea') }}</th>
+                                <th>{{ _('Item name ENG/VN') }}</th>
+                                <th>{{ _('Quantity') }}</th>
+                                <th>{{ _('Unit Price') }}</th>
+                                <th>{{ _('Total') }}</th>                                
+                            </tr>
+                        </thead>
+                        <tbody id="statistics_table_body">
+                        </tbody>
+                        <tr>
+                            <th></th>
+                            <th></th>
+                            <th></th>
+                            <th></th>
+                            <th></th>
+                            <th></th>
+                            <th></th>
+                            <th></th>
+                            <th></th>
+                            <th></th>
+                            <th></th>
+                            <th></th>   
+                            <th></th>                                                  
+                        </tr>
+                    </table>
+                    <br />
+                    <!--
+                    <div class="total_div">
+                        <span>{{ _('Total Revenue') }} : </span>
+                        <span></span>
+                    </div>
+                    -->
+                    <br />
+                    <br />
+                </div>
+
+             </div>
+        </div>
+    </div>
+</div>
+
+
+
+{% endblock %}
+
+{% block style %}
+<link rel="stylesheet" type="text/css" href="{% static 'css/statistics/statistics_procedure.css' %}" />
+<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+{% endblock %}
+
+{% block scripts %}
+<script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.js"></script>
+<script src="{% static 'js/statistics/statistics_procedure.js' %}" type="text/javascript"></script>
+{% endblock %}

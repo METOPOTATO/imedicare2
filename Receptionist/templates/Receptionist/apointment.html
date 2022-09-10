@@ -1,0 +1,588 @@
+{% extends "app/layout.html" %}
+
+{% load staticfiles %}
+{% block content %}
+
+{% csrf_token %}
+<div class="document_grid">
+    <div class="background_grid">
+        <div class="customer_list partition">
+            <div class="status_table_title">
+                <span class="btn btn-danger title_span">{{ _('Appointment - Pickup status') }}</span>
+                    <div style="float:right;">
+                        <input type="hidden" value="customer list" id="customer_list" />
+                        
+                        <div class="input-group" >
+                            <input type="checkbox" id="need_pick_up" checked>
+                            <text> Need Pick Up</text>
+                        </div>  
+                        <!--Date-->
+                        <div class="date_input_div" style="{% if user.doctor %} margin-right:0px; {%endif%}">
+                            {{ _('Date')}}:
+                            <input type="text" class="form-control date_input" id="date_start" /> ~
+                            <input type="text" class="form-control date_input" id="date_end" />
+                        </div>             
+                        <div class="input-group" id="document_control_depart_div" style="{% if user.doctor %} display:none; {%endif%}">
+                            <span class="input-group-addon reception_table_title" id="basic-addon1">{{ _('Depart') }}</span>
+                            <select id="control_depart" class="form-control">
+                                <option value="">{{ _('All') }}</option>
+                                {% for depart in list_depart%}
+                                    '<option value="{{ depart.id }}" {% if user.doctor.depart == depart.id %}selected{% endif %}>{{ depart.name }}</option>' +
+                                {% endfor %}
+                            </select>
+                        </div>                      
+                        <div class="input-group" id="document_control_depart_div" >
+                            <span class="input-group-addon reception_table_title" id="basic-addon1">{{ _('Pick Up') }}</span>
+                            <select name="pickup" id="pick_up_status_filter" class="form-control costom-select " aria-describedby="basic-addon1" >
+                                <option value="" selected="">{{ _('ALL') }}</option>
+                                {% for driver in list_driver%}
+                                '<option value="{{ driver.name }}">{{ driver.name }}</option>' +
+                                {% endfor %}                                                
+                            </select>
+                        </div>                
+                        <div class="input-group" id="document_control_depart_div" >
+                            <span class="input-group-addon reception_table_title" id="basic-addon1">{{ _('Drop Off') }}</span>
+                            <select name="dropoff" id="drop_off_status_filter" class="form-control costom-select " aria-describedby="basic-addon1" >
+                                <option value="" selected="">{{ _('ALL') }}</option>
+                                {% for driver in list_driver%}
+                                '<option value="{{ driver.name }}">{{ driver.name }}</option>' +
+                                {% endfor %}                                               
+                            </select>
+                        </div>                                   
+                        <!-- <div class="input-group depart_select">
+                            <span class="input-group-addon document_control_depart_div" id="basic-addon1">{{ _('Type') }}</span>
+                            <select name="depart" id="patient_type" class="form-control costom-select " aria-describedby="basic-addon1" >
+                                <option value="" selected="">{{ _('Name') }}</option>         
+                            </select>
+                        </div> -->
+
+                        <div class="nput-group depart_select">
+                            <span class="input-group-addon">{{ _('Name') }}</span>
+                            <!-- <input type="text" name="search_input" id="patient_search_btn" class="form-control" aria-describedby="basic-addon1" autocomplete="off" placeholder="{{ _('At least 2 characters') }}"/> -->
+                            <input type="text" id="patient_search" class="form-control" aria-describedby="basic-addon1" autocomplete="off" placeholder="{{ _('At least 2 characters') }}"/>
+                        </div>
+
+                        
+                        <input type="button" id="patient_search_btn" class="btn btn-default" value="{{ _('Search') }}" style="display:inline;"/>
+
+                        <!-- <div style="float:right;"> -->
+                            <a class="btn btn-default" onclick="excel_download()"><i class="fa fa-file-excel-o"></i>{{ _('Download') }}</a>
+                        <!-- </div> -->
+                        <div class="total_div">
+                            <span>{{ _('Total') }} : </span>
+                            <span></span>
+                        </div>
+                    </div>
+                </div>
+            <div class="patient_list_table_wrap">
+                <table class="table table-bordered table-hover table-striped" id="patient_list_table">
+                    <thead>
+                        <tr>
+                            <th>{{ _('No') }}</th>
+                            <th>{{ _('Name') }}</th>
+                            <th>{{ _('DOB') }}</th>
+                            <th>{{ _('Depart') }}</th>
+                            <th>{{ _('Address') }}</th>
+                            <th>{{ _('Phone Number') }}</th>
+                            <th>{{ _('Pick up addr') }}</th>
+                            <th>{{ _('Person') }}</th>
+                            <th>{{ _('Pick Up Memo')}}</th>
+                            <th>{{ _('Reservation Date') }}</th>
+                            <th>{{ _('Pick up time') }}</th>
+                            <th>{{ _('Pick up driver') }}</th>
+                            <th>{{ _('Pick up status') }}</th>
+                            <th>{{ _('Complete payment time') }}</th>
+                            <th>{{ _('Drop off time') }}</th>
+                            <th>{{ _('Drop off driver') }}</th>
+                            <th>{{ _('Drop off status') }}</th>
+                            <th>{{ _('Setup') }}</th>
+                            <th>{{ _('Appointment letter') }}</th>
+                            <th>{{ _('SMS') }}</th>
+                            <th>{{ _('New patient') }}</th>
+                        </tr>
+                    </thead>
+                    <tbody id="document_contents">
+               
+                    </tbody>
+                </table>
+                <ul class="pagination" id="table_pagnation">
+                </ul>
+            </div>
+            <td></td>
+            <td></td>
+        </div>
+    </div>
+
+</div>
+<div id="dynamic_div">
+
+</div>
+
+<!-- SMS - personal -->
+<div id="sms_modal" class="modal fade">
+    <div class="modal-dialog" style="width:500px;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span> <span class="sr-only">close</span></button>
+                <h4 id="delete_database_header">{{ _('Send SMS') }}</h4>
+                <div id="modalBody" class="modal-body">
+                    <!--Patient Name-->
+                    <div class="input-group">
+                        <span class="input-group-addon" id="basic-addon1">{{ _('Name') }}</span>
+                        <input type="text" id="sms_modal_name" class="form-control medicine_control_input" aria-describedby="basic-addon1">
+                    </div>
+                    <!--Patient's phone-->
+                    <div class="input-group">
+                        <span class="input-group-addon" id="basic-addon1">{{ _('Phone Number') }}</span>
+                        <input type="text" id="sms_modal_phone" class="form-control medicine_control_input" aria-describedby="basic-addon1">
+                    </div>
+                    <input type="button" value="{{_('Vietnamese') }}" class="btn btn-primary save_cancel_btn" style="width:100px;" onclick="set_contentVN()"/>
+                    <input type="button" value="{{_('Korean') }}" class="btn btn-primary save_cancel_btn" style="width:100px;" onclick="set_contentKR()"/>
+                    <input type="button" value="{{_('Option') }}" class="btn btn-primary save_cancel_btn" style="width:100px;" onclick="set_contentOption()"/>
+                    <!--content-->
+                    <div class="input-group">
+                        <span class="input-group-addon" id="basic-addon1">{{ _('Content') }}</span>
+                        <textarea type="text" id="sms_modal_content" class="form-control medicine_control_input" aria-describedby="basic-addon1"></textarea>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <a class="btn btn-default" data-dismiss="modal" aria-hidden="true">{{ _('Cancel') }}</a>
+                    <a class="btn btn-primary" onclick="send_sms()">{{ _('Send') }}</a>
+                </div>
+                 
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div id="createEventModal" class="modal fade">
+    <div class="modal-dialog">
+       <div class="modal-content">
+           <div class="modal-header">
+               <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span> <span class="sr-only">close</span></button>
+               <h4>Add/Edit Appointment Information</h4>
+               <div id="modalBody" class="modal-body" >
+                <input type="hidden" value="" id="reservation_id"/>
+                   <table class="table add_event_table" style="border:none;">
+                       <tr>
+                           <td>
+                               <div class="input-group" style="width:100%" >
+                                   <span class="input-group-addon" style="width:21%" id="basic-addon1">{{ _('Pick up time') }}</span>
+                                   <input type="text" id="pick_up_time" class="form-control" aria-describedby="basic-addon1" autocomplete="off"/>
+                               </div>
+                           </td>
+                           <td>
+                                <div class="input-group" style="width:100%" >
+                                    <span class="input-group-addon " style="width:42%" id="basic-addon1">{{ _('Pick up driver') }}</span>
+                                    <select id="pick_up_vehicle" class="form-control">
+                                        {% for driver in list_driver%}
+                                        '<option value="{{ driver.name }}">{{ driver.name }}</option>' +
+                                        {% endfor %}
+                                    </select>   
+                                </div>
+                            </td>                           
+                       </tr>
+                       <tr>
+                            <td colspan="2">
+                                <div class="input-group" style="width:100%">
+                                    <span class="input-group-addon" style="width:21%" id="basic-addon1">{{ _('Pick up address') }}</span>
+                                    <input type="text" id="pick_up_addr" class="form-control" style="width:100%;" aria-describedby="basic-addon1" autocomplete="off"/>
+                                </div>
+                            </td>                           
+                       </tr>
+                       <tr>
+                           <td>
+                               <div class="input-group" style="width:100%" >
+                                   <span class="input-group-addon " style="width:42%" id="basic-addon1">{{ _('Drop off time') }}</span>
+                                   <input type="text" id="drop_off_time" class="form-control" aria-describedby="basic-addon1" autocomplete="off"/>
+                              </div>
+                           </td>
+                           <td>
+                               <div class="input-group" style="width:100%" >
+                                   <span class="input-group-addon " style="width:42%" id="basic-addon1">{{ _('Drop off driver') }}</span>
+                                   <select id="drop_off_vehicle" class="form-control">
+                                        {% for driver in list_driver%}
+                                        '<option value="{{ driver.name }}">{{ driver.name }}</option>' +
+                                        {% endfor %}
+                                    </select>   
+                              </div>
+                           </td>
+                       </tr>
+                       <tr>
+                            <td colspan="2">
+                                <div class="input-group" style="width:100%">
+                                    <span class="input-group-addon" style="width:21%" id="basic-addon1">{{ _('Drop off address') }}</span>
+                                    <input type="text" id="drop_off_addr" class="form-control" style="width:100%;" aria-describedby="basic-addon1" autocomplete="off"/>
+                                </div>
+                            </td>                           
+                        </tr>
+                       <tr>
+                           <td colspan="2">
+                               <div class="input-group" style="width:100%">
+                                   <span class="input-group-addon" style="width:21%" id="basic-addon1">{{ _('Memo') }}</span>
+                                   <input type="text" id="apointment_memo" class="form-control" style="width:100%;" aria-describedby="basic-addon1" autocomplete="off"/>
+                              </div>
+                           </td>
+                       </tr>
+                   </table>
+                   
+                   <div class="modal-footer">
+                       <input type="hidden" id="selected_reservation" />
+                       <a class="btn btn-default" data-dismiss="modal" aria-hidden="true" onclick="reset_inputs">{{ _('Cancel') }}</a>
+                       <input type="button" class="btn btn-primary" value="{{ _('Save') }}" onclick="apointment_save()"/>
+                   </div>
+               </div>
+           </div>
+       </div>
+
+   </div>
+</div>
+
+
+
+<div id="registrationModal" class="modal fade">
+    <div class="modal-dialog">
+       <div class="modal-content">
+           <div class="modal-header">
+               <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span> <span class="sr-only">close</span></button>
+               <h4>New Patient</h4>
+               <div id="modalBody" class="modal-body" >
+                <input type="hidden" value="" id="patient_id"/>
+                <input type="hidden" value="" id="reception_id"/>
+                   <table class="table add_event_table" style="border:none;">
+                       <tr>
+                        <td colspan="2">
+                            <div class="input-group" style="width:100%" >
+                                <span class="input-group-addon" style="width:42%" id="basic-addon1">{{ _('Chart No') }}</span>
+                                <input type="hidden" id="patient_id"/>
+                                <input type="hidden" id="reservation_id"/>
+                                <input type="text" id="reservation_chart_number" class="form-control" readonly aria-describedby="basic-addon1" autocomplete="off"/>
+                           </div>
+                        </td>                        
+                       </tr>
+                       <tr>
+                            <td>
+                                <div class="input-group" style="width:100%" >
+                                    <span class="input-group-addon " style="width:42%" id="basic-addon1">{{ _('Nationality') }}</span>
+                                    <select name="nationality" id="patient_nationality" class="form-control costom-select" aria-describedby="basic-addon1" required="">
+                                        <option value="">---------</option>
+                                        <option value="Korea">{{ _('Korea') }}</option>
+                                        <option value="Vietnam">{{ _('Vietnam') }}</option>
+                                        <option value="Other">{{ _('Other') }}</option>
+                                    </select>
+                            </div>
+                            </td>
+                            <td>
+                                <div class="input-group" style="width:100%" >
+                                    <span class="input-group-addon " style="width:42%" id="basic-addon1">{{ _('Gender') }}</span>
+                                    <select name="gender" id="patient_gender" class="form-control costom-select" aria-describedby="basic-addon1" required="">
+                                        <option value="">---------</option>
+                                        <option value="Male">{{ _('Male') }}</option>
+                                        <option value="Female">{{ _('Female') }}</option>
+                                    </select>
+                            </div>
+                            </td>                        
+                       </tr>
+                       <tr>
+                            <td>
+                                <div class="input-group" style="width:100%">
+                                    <span class="input-group-addon" style="width:21%" id="basic-addon1">{{ _('Name Kor') }}</span>
+                                    <input type="text" id="patient_name_kor" class="form-control" style="width:100%;" aria-describedby="basic-addon1" autocomplete="off"/>
+                                </div>
+                            </td>                           
+                            <td>
+                                <div class="input-group" style="width:100%">
+                                    <span class="input-group-addon" style="width:21%" id="basic-addon1">{{ _('Name Eng') }}</span>
+                                    <input type="text" id="patient_name_eng" class="form-control" style="width:100%;" aria-describedby="basic-addon1" autocomplete="off"/>
+                                </div>
+                            </td> 
+                        </tr>
+                        <tr>
+                            <td>
+                                <div class="input-group" style="width:100%">
+                                    <span class="input-group-addon" style="width:21%" id="basic-addon1">{{ _('Date of Birth') }}</span>
+                                    <input type="text" id="patient_date_of_birth" class="form-control" style="width:100%;" aria-describedby="basic-addon1" autocomplete="off"/>
+                                </div>
+                            </td>                           
+                            <td>
+                                <div class="input-group" style="width:100%">
+                                    <span class="input-group-addon" style="width:21%" id="basic-addon1">{{ _('Address') }}</span>
+                                    <input type="text" id="patient_address" class="form-control" style="width:100%;" aria-describedby="basic-addon1" autocomplete="off"/>
+                                </div>
+                            </td> 
+                        </tr>      
+                        <tr>
+                            <td>
+                                <div class="input-group" style="width:100%">
+                                    <span class="input-group-addon" style="width:21%" id="basic-addon1">{{ _('Phone') }}</span>
+                                    <input type="text" id="patient_phone" class="form-control" style="width:100%;" aria-describedby="basic-addon1" autocomplete="off"/>
+                                </div>
+                            </td>                           
+                            <td>
+                                <div class="input-group" style="width:100%">
+                                    <span class="input-group-addon" style="width:21%" id="basic-addon1">{{ _('Email') }}</span>
+                                    <input type="text" id="patient_email" class="form-control" style="width:100%;" aria-describedby="basic-addon1" autocomplete="off"/>
+                                </div>
+                            </td> 
+                        </tr>   
+                        <tr>
+                            <td>
+                                <div class="input-group" style="width:100%">
+                                    <span class="input-group-addon" style="width:21%" id="basic-addon1">{{ _('Depart') }}</span>
+                                    <select id="reservation_depart" class="form-control">
+                                        <option value="" selected="">{{ _('ALL') }}</option>
+                                        {% for depart in list_depart %}
+                                        <option value="{{ depart.id }}">{{ depart.name }}</option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                            </td>                           
+                            <td>
+                                <div class="input-group" style="width:100%">
+                                    <span class="input-group-addon" style="width:21%" id="basic-addon1">{{ _('Doctor') }}</span>
+                                    <select id="reservation_doctor" class="form-control">
+                                        <option value="" selected="">{{ _('ALL') }}</option>
+                                    </select>
+                                </div>
+                            </td> 
+                        </tr>  
+                        <tr>
+                            <td>
+                                <div class="input-group" style="width:100%">
+                                    <span class="input-group-addon" style="width:42%">{{ _('Funnels') }}</span>
+                                    <select id="patient_funnel" class="form-control">
+                                        <option value="">----------</option>
+                                        {% for data in list_funnels %}
+                                        <option value="{{ data.code }}">{{ data.name }}</option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                            </td>  
+                            <td>
+                                <div class="input-group" style="width:100%" >
+                                    <input type="text" id="patient_funnel_etc" class="form-control" aria-describedby="basic-addon1" autocomplete="off">
+                               </div>
+                            </td>                                
+                        </tr>                           
+                        <tr>
+                            <td colspan="2">
+                                <div class="input-group" style="width:100%">
+                                    <span class="input-group-addon" style="width:21%" id="basic-addon1">{{ _('Patient Memo') }}</span>
+                                    <input type="text" id="patient_memo" class="form-control" style="width:100%;" aria-describedby="basic-addon1" autocomplete="off"/>
+                               </div>
+                            </td>
+                        </tr>                        
+                        <tr>
+                            <td>
+                                <label class="need_medical_report" style="margin-right:10px;"><input type="checkbox" id="need_invoice" /><text> {{_('Red Invoice') }}</text></label>
+                                <label class="need_medical_report" style="margin-right:10px;"><input type="checkbox" id="need_insurance" /><text> {{_('Insurance') }}</text></label>                                                                                        
+                            </td> 
+                        </tr>  
+                    </table>
+                   
+                   <div class="modal-footer">
+                       <input type="hidden" id="selected_reservation" />
+                       <a class="btn btn-default" data-dismiss="modal" aria-hidden="true" onclick="reset_inputs">{{ _('Cancel') }}</a>
+                       <input type="button" class="btn btn-info save_cancel_btn" id="btn_save_patient" value="{{ _('Save') }}" onclick="save_patient()"/>
+                       <!-- <input class="btn btn-info save_cancel_btn" value="{{ _('Save') }}" onclick="save_patient()"/> -->
+                       <input type="button" id="btn_save_recept" value="{{_('Registration') }}" class="btn btn-primary save_cancel_btn" style="width:100px;" onclick="save_recept()"/>
+                   </div>
+               </div>
+           </div>
+       </div>
+
+   </div>
+</div>
+
+<script>
+    function get_doctor(part, depart = null,doctor_id = null) {
+        var part_id = part.attr('id');
+        var doctor;
+        if (part_id == 'reservation_search_depart') {
+            doctor = $('#reservation_search_doctor');
+        } else if (part_id == 'reservation_depart') {
+            doctor = $('#reservation_doctor');
+        }
+        if (depart == null)
+            depart = part.val();
+
+        if (part.val() == '') {
+            doctor.empty();
+            doctor.append(new Option('---------', ''));
+            return;
+        }
+
+        $.ajax({
+            type: 'POST',
+            url: '/receptionist/get_depart_doctor/',
+            data: {
+                'csrfmiddlewaretoken': $('#csrf').val(),
+                'depart': part.val(),
+            },
+            dataType: 'Json',
+            success: function (response) {
+                doctor.empty();
+                doctor.append(new Option('---------', ''));
+                for (var i in response.datas){
+
+                    if(doctor_id==response.datas[i]){
+                        console.log("<option value='" + response.datas[i] + "' selected>" + i + "</Option>");
+                        doctor.append("<option value='" + response.datas[i] + "' selected>" + i + "</Option>");
+                    }
+                    else{
+                        doctor.append("<option value='" + response.datas[i] + "'>" + i + "</Option>");
+                    }
+                }
+
+            },
+            error: function (request, status, error) {
+                console.log("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
+
+            },
+        })
+    }    
+     $(function () {
+        $('.fc-left').html('<div class="reservation_title">' + 
+            '<span class="btn btn-danger" style="font-size:16px; height:26.5px; padding-top:1.5px; background:#d2322d;">{{ _('Reservation')}}</span>' +
+            '<b>&emsp;Date</b> : <input type="text" id="reservation_search_date" class="form-control reservation_input" aria-describedby="sizing-addon1" />' +
+            '&emsp;&emsp;' +
+            '<div class="input-group" style="margin-right:15px; width:145px; display:inline-table;{% if user.doctor%}display:none{% endif%}">' +
+            '<span class="input-group-addon reception_table_title" id="basic-addon1">{{ _('Depart') }}</span>' +
+            '<select name="depart" id="reservation_search_depart" class="form-control reservation_select" aria-describedby="basic-addon1" >' +
+            '<option value="">{{ _('All') }}</option>' +
+            {% for depart in list_depart%}
+                '<option value="{{ depart.id }}" {% if user.doctor.depart == depart.id %}selected{% endif %}>{{ depart.name }}</option>' +
+            {% endfor %}
+            '</select>' + 
+            '</div>' + 
+
+            '<div class="input-group" style="width:175px; display:inline-table;{% if user.doctor%}display:none{% endif%}">' +
+            '<span class="input-group-addon reception_table_title" id="basic-addon1">{{ _('Division') }}</span>' +
+            '<select id="reservation_search_division" class="form-control reservation_select" aria-describedby="basic-addon1" >' +
+            '<option value="">{{ _('All') }}</option>' +
+            {% for data in list_reservation_division %}
+                '<option value="{{ data.code}}">{{ data.name }}</option>' +
+            {% endfor %}   
+            '</select>' + 
+            '</div>' + 
+
+
+            //'<option value="" selected="">---------</option>' +
+            //{% for depart in list_depart%}
+            //    '<option value="{{ depart.id }}">{{ depart.name }}</option>' +
+            //{% endfor %}
+            //'</select>' +
+            //'<select name="doctor" id="reservation_search_doctor" class="form-control reservation_select" placeholder="" aria-describedby="basic-addon1" required="">' +
+            //'<option value="" selected="">---------</option>' +
+            //'</select>' +
+            //'<input type="text" id="reservation_search_string" class="form-control reservation_input" aria-describedby="sizing-addon1" autocomplete="off"/>' + 
+            '</div>');
+
+        $('.fc-center').css("position","absolute");
+        $('.fc-center').css('left', '690px');
+
+        $('.fc-right > div, .fc-right > button').attr('font-size', '16px');
+        $('.fc-right > div, .fc-right > button').css('height','26.5px;');
+        $('.fc-right > div').css('padding-top', '1.5px');
+        $('.fc-button').css('padding-top', '0');
+        $('.fc-button').css('padding-bottom', '0');
+        $('.fc-right > button').css('padding-top', '0px');
+        $('.fc-right > button').css('padding-bottom', '0px');
+
+        $('#pick_up_time, #drop_off_time').daterangepicker({
+            autoUpdateInput: false,
+            singleDatePicker: true,
+            timePicker: true,
+            timePicker24Hour: true,
+            timePickerIncrement: 10,
+            showDropdowns: true,
+            drops: "down",
+            locale: {
+                format: 'YYYY-MM-DD HH:mm:ss',
+                locale: { cancelLabel: 'Clear' },
+
+            },
+            clickPrev : function(){alert()},
+
+        }).on('show.daterangepicker', function (ev, picker) {
+        picker.container.find(".hourselect").empty()
+        picker.container.find(".hourselect").append('<option value = "7" > 7</option>');
+        picker.container.find(".hourselect").append('<option value = "8" > 8</option>');
+        picker.container.find(".hourselect").append('<option value = "9" > 9</option>');
+        picker.container.find(".hourselect").append('<option value = "10" > 10</option>');
+        picker.container.find(".hourselect").append('<option value = "11" > 11</option>');
+        picker.container.find(".hourselect").append('<option value = "12" > 12</option>');
+        picker.container.find(".hourselect").append('<option value = "13" > 13</option>');
+        picker.container.find(".hourselect").append('<option value = "14" > 14</option>');
+        picker.container.find(".hourselect").append('<option value = "15" > 15</option>');
+        picker.container.find(".hourselect").append('<option value = "16" > 16</option>');
+        picker.container.find(".hourselect").append('<option value = "17" > 17</option>');
+        picker.container.find(".hourselect").append('<option value = "18" > 18</option>');
+        picker.container.find(".hourselect").append('<option value = "19" > 19</option>');
+        picker.container.find(".hourselect").append('<option value = "20" > 20</option>');
+        picker.container.find(".hourselect").append('<option value = "21" > 21</option>');
+
+        });
+
+
+    
+        $('#pick_up_time,#drop_off_time').on('apply.daterangepicker', function (ev, picker) {
+            var hour = picker.container.find(".hourselect").children("option:selected").val();
+            if (hour < 7)
+                hour = 7;
+            else if (hour > 22)
+                hour = 22;
+            picker.startDate.set({ hour: hour, });
+            // if ($("#language").val() == 'vi') {
+            //     $(this).val(picker.startDate.format('HH:mm:ss DD/MM/YYYY'));
+            // }else{
+                $(this).val(picker.startDate.format('YYYY-MM-DD HH:mm:ss'));
+            //}
+        });
+        $('#pick_up_time,#drop_off_time').on('cancel.daterangepicker', function(ev, picker) {
+            $(this).val('');
+        });
+
+        $('#reservation_search_doctor').empty();
+        $('#reservation_search_doctor').append(new Option('---------', ''));
+        $("#reservation_search_depart").change(function () {
+            get_doctor($("#reservation_search_depart"));
+        });
+
+
+        $('#reservation_doctor').empty();
+        $('#reservation_doctor').append(new Option('---------', ''));
+        $("#reservation_depart").change(function () {
+            get_doctor($("#reservation_depart"));
+        });        
+
+   });
+
+    function set_contentVN() {
+      document.getElementById("sms_modal_content").value = "Thông báo: Xe của phòng khám I-Medicare đang đi đón quý khách. \nĐiểm đón tại: \nBiển số xe: \nNhãn hiệu: \nMàu sắc: \nSDT lái xe: \nDự kiến thời gian xe đến: \nHân hạn được đón tiếp!";
+    };
+    function set_contentKR() {
+      document.getElementById("sms_modal_content").value = "아이메디케어 픽업 안내. \n1. 차량 정보 : \n차종 /색상/ 번호판 \n2. 도착 예정시간 : 시 분\n3. 도착 장소: \n4. 주의: 여권지참 후 정시 전에 약속장소에 나와주세요. 승차인원 제한있음. \n타인과 동석 할 수도 있음. \n5. 연락처: 081.340.0101 또는 채널 http://pf.kakao.com/_WxikRK \n(기사님이 약속시간에 도착하지 않았거나 기타 문제사항은 바로 알려주세요)";
+    } 
+    function set_contentOption() {
+      document.getElementById("sms_modal_content").value = "";
+    }       
+
+</script>
+
+
+{% endblock %}
+
+
+{% block style %}
+<link rel="stylesheet" type="text/css" href="{% static 'css/apointment.css' %}" />
+<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
+
+{% endblock %}
+
+{% block scripts %}
+<script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.js"></script>
+<script src="{% static 'js/apointment.js' %}" type="text/javascript"></script>
+{% endblock %}

@@ -1,0 +1,351 @@
+﻿<!DOCTYPE html>
+{% load i18n %}
+<html >
+<head>
+    {% load staticfiles %}
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>I-MEDICARE </title>
+
+    <script src="{% static 'js/jquery.min.js'%}"></script>
+    <script src="{% static 'js/jquery-ui.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/moment.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'js/daterangepicker.min.js'%} "></script>
+    
+    <script type="text/javascript" src="{% static 'js/printThis.min.js' %}"></script>
+    
+    <script src="{% static 'app/scripts/bootstrap.js' %}"></script>
+    <script src="{% static 'app/scripts/respond.js' %}"></script>
+    <script src="{% static 'js/main.js' %}"></script>
+
+
+    <link rel="stylesheet" type="text/css" href="{% static 'app/content/bootstrap.min.css' %}" />
+    <link rel="stylesheet" type="text/css" href="{% static 'css/wrapper.css' %}" />
+    <link rel="stylesheet" type="text/css" href="{% static 'css/main.css' %}" />
+    <script src="{% static 'app/scripts/modernizr-2.6.2.js' %}"></script>
+    <script type="text/javascript" src="{% url 'javascript-catalog' %}"></script>
+    <link rel="stylesheet" href="{% static 'jquery-ui-1.8.18/themes/base/jquery-ui.css' %}" type="text/css" /> 
+    <link rel="stylesheet" href="{% static 'css/font-awesome.min.css' %}">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/daterangepicker.min.css' %}" />
+    
+    <link rel="Shortcut Icon" href="{% static 'favicon.ico'%}" type="image/x-icon" />
+    <link rel="icon" href="{% static 'favicon.ico'%}" type="image/x-icon" />
+
+    {% block style %}{% endblock %}
+    {% block scripts %}{% endblock %}
+
+    <script>
+        window.onbeforeunload = function (e) {
+            //return confirm();
+        }
+
+
+        function set_lang(lang) {
+            if (lang == 'en') {
+                str_url = '/TranslateEN/';
+            } else if (lang == 'ko') {
+                str_url = '/TranslateKO/';
+            } else if (lang == 'vie') {
+                str_url = '/TranslateVIE/';
+            }
+            $.ajax({
+                type: 'POST',
+                url: str_url,
+                data: {
+                    'csrfmiddlewaretoken': $('#csrf').val(),
+                },
+                dataType: 'Json',
+                success: function (response) {
+                    location.reload();
+                },
+                error: function (request, status, error) {
+                    console.log("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
+                },
+            })
+
+        }
+    </script>
+</head>
+
+<body>
+    <input id="csrf" type="hidden" value="{{ csrf_token }}" />
+    <input id="language" type="hidden" value="{{ request.LANGUAGE_CODE }}" />
+    <div class="navbar navbar-inverse navbar-fixed-top" style=" margin:0px; position:inherit; background:rgb(255, 255, 255); border-bottom:4px solid rgba(206, 17, 39, 1);border-color:rgba(206, 17, 39, 1);">
+        <div class="">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                
+                <a href="{% url 'index' %}" class="navbar-brand" style="padding-top:7.5px; padding-left:10px; padding-right:0px; color:rgba(0,0,0, 1); font-size:20px; ">
+                <img src="{% static 'img/Menu_icon.png' %}" style="height:47px;"/>&nbsp;&nbsp;&nbsp;I - MEDICARE</a>
+            </div>
+            <div class="navbar-collapse collapse top_menu" >
+                <ul class="nav menu_contents_ul" style="display:inline-block">
+                    {% with url_name=request.resolver_match.url_name %}
+                    {% for data in request.session.MENU %}
+                        {% if request.session.SYSTEM_CHECKING and request.user.depart == 'RECEPTIONIST' and data.code == 'draft' %}
+                        {% elif request.session.SYSTEM_CHECKING and request.user.depart == 'RECEPTIONIST' and data.code == 'rec_res' %}
+                        {% elif request.session.SYSTEM_CHECKING and request.user.depart == 'RECEPTIONIST' and data.code == 'pharm' %}
+                        {% elif request.session.SYSTEM_CHECKING and request.user.depart == 'RECEPTIONIST' and data.code == 'board_board' %}
+                        {% elif request.session.SYSTEM_CHECKING and request.user.depart == 'DOCTOR' and data.code == 'pharm' %}
+                        {% elif request.session.SYSTEM_CHECKING and request.user.depart == 'DOCTOR' and data.code == 'cus_mgt' %}
+                            
+                        
+                    {# 메뉴 출력 #}
+                        {% elif data.code == 'doctor' %}
+                            <li>{{ request.session.DOCTOR_MENU | safe}}</li>
+                        {% else %}
+                            {% if data.lower_menu %}
+                            <li>
+                                <a href="" data-toggle="dropdown" >{{ data.name }}<span class="caret"></span></a>
+                                <ul class="dropdown-menu">
+                                {% for sub in data.lower_menu %}
+                                    <li><a href="{{ sub.url }}">{{ sub.name }}<span id="badge_{{sub.code}}" class="badge" style="display:none;">N</span></a></li>
+                                {% endfor %}
+                                </ul>
+                            </li>
+                            {% else %}
+                            <li><a href="{{ data.url }}">{{ data.name }}<span id="badge_{{data.code}}" class="badge" style="display:none;">N</span></a></li>
+                            {% endif %}
+                        {% endif %}
+                    {% endfor %}
+
+                    <!--
+                    {% if user.is_receptionist %}
+                        <li {% if url_name == 'reception_index' %}class="active"{% endif %}><a href="{% url 'Receptionist:reception_index' %}" >{{ _('Registration') }}</a></li>
+                        <li {% if url_name == 'storage_page' %}class="active"{% endif %}><a href="{% url 'Receptionist:storage_page'%}">{{ _('Payment') }}</a></li>
+                        <li {% if url_name == 'reservation' %}class="active"{% endif %}><a href="{% url 'Receptionist:reservation'%}">{{ _('Reservation') }}</a></li>
+                        <li {% if url_name == 'Documents' %}class="active"{% endif %}><a href="{% url 'Receptionist:Documents'%}">{{ _('Documents') }}</a></li>
+                    <li {% if url_name == 'pharmacy_index' %}class="active"{% endif %}><a href="{% url 'Pharmacy:pharmacy_index'%}">{{ _('Pharmacy') }}</a></li>
+                    {% elif user.is_doctor %}
+                        
+                    
+                        <li {% if url_name == 'index' %}class="active"{% endif %}><a href="{% url 'Doctor:index'%}">
+                            <span style="margin-right:5px;color:blue;">{{ user.doctor.depart.name }} </span> Dr.{{user.doctor.name_short }}</a>
+                        </li>
+                        <li {% if url_name == 'laboratory_index' %}class="active"{% endif %}><a href="{% url 'Laboratory:laboratory_index'%}">{{ _('Laboratory') }}</a></li>
+                        <li {% if url_name == 'radiation_index' %}class="active"{% endif %}><a href="{% url 'Radiation:radiation_index'%}">{{ _('Radiology') }}</a></li>
+                        <li {% if url_name == 'report' %}class="active"{% endif %}><a href="{% url 'Doctor:report'%}">{{ _('Medical Report') }}</a></li>    
+                        <li {% if url_name == 'reservation' %}class="active"{% endif %}><a href="{% url 'Receptionist:reservation'%}">{{ _('Reservation') }}</a></li>
+                        <li {% if url_name == 'customer_manage' %}class="active"{% endif %}><a href="{% url 'Manage:customer_manage'%}">{{ _('CRM') }}</a></li>
+                        {% if user.doctor.depart.id == 7%}
+                            <li {% if url_name == 'audit' %}class="active"{% endif %}><a href="{% url 'Doctor:audit'%}">{{ _('Audit') }}</a></li>
+                        {% endif %}
+                    <li {% if url_name == 'reservation' %}class="active"{% endif %}><a href="{% url 'Receptionist:Documents'%}">{{ _('Documents') }}</a></li>
+                    <li {% if url_name == 'pharmacy_index' %}class="active"{% endif %}><a href="{% url 'Pharmacy:pharmacy_index'%}">{{ _('Pharmacy') }}</a></li>
+                    {% elif user.is_pharmacy %}
+                        <li {% if url_name == 'pharmacy_index' %}class="active"{% endif %}><a href="{% url 'Pharmacy:pharmacy_index'%}">{{ _('Pharmacy') }}</a></li>
+                        <li {% if url_name == 'inventory' %}class="active"{% endif %}><a href="{% url 'Pharmacy:inventory'%}">{{ _('Inventory') }}</a></li>
+                    {% elif user.is_laboratory %}
+                        <li {% if url_name == 'laboratory_index' %}class="active"{% endif %}><a href="{% url 'Laboratory:laboratory_index'%}">{{ _('Laboratory') }}</a></li>
+                        <li {% if url_name == 'inventory_test' %}class="active"{% endif %}><a href="{% url 'Manage:inventory_test'%}">{{ _('Lab Inventory') }}</a></li>
+                    {% elif user.is_radiation %}
+                        <li {% if url_name == 'radiation_index' %}class="active"{% endif %}><a href="{% url 'Radiation:radiation_index'%}">{{ _('Radiology') }}</a></li>
+                    {% elif user.is_nurse %}
+                        <li {% if url_name == 'inventory_medical_tool' %}class="active"{% endif %}><a href="{% url 'Manage:inventory_medical_tool'%}">{{ _('Consumable Management') }}</a></li>
+                    {% elif user.is_admin %}
+                        {% for data in request.session.MENU %}
+                            {% if data.lower_menu %}
+                            <li>
+                                <a href="" data-toggle="dropdown" >{{ data.name }}<span class="caret"></span></a>
+                                <ul class="dropdown-menu">
+                                {% for sub in data.lower_menu %}
+                                    <li><a href="{{ sub.url }}">{{ sub.name}}</a></li>
+                                {% endfor %}
+                                </ul>
+                            </li>
+                            {% else %}
+                            <li><a href="{{ data.url }}">{{ data.name }}</a></li>
+                            {% endif %}
+                            {#{{ data.seq }}{{data.name}} // {{data.url}}#}
+                        {% endfor %}
+
+
+                    <!--
+                    <li><a href="" data-toggle="dropdown" >{{ _('Statistics') }}<span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                          <li><a href="{% url 'Manage:manage'%}">{{ _('Revenue Status') }}</a></li>
+                          <li><a href="{% url 'Manage:statistics_test'%}">{{ _('Tests Statistics') }}</a></li>
+                          <li><a href="{% url 'Manage:statistics_procedure'%}">{{ _('Procedures Statistics') }}</a></li>
+                          <li><a href="{% url 'Manage:statistics_medicine'%}">{{ _('Medicines Statistics') }}</a></li>
+                          <li><a href="{% url 'Manage:statistics_depart'%}">{{ _('Depart Statistics') }}</a></li>
+                          <li><a href="{% url 'Manage:statistics_customer_info'%}">{{ _('Customer Info Statistics') }}</a></li>
+                          <li><a href="{% url 'Manage:statistics_daily'%}">{{ _('Daily Statistics') }}</a></li>
+                          <li><a href="{% url 'Manage:statistics_ymw'%}">{{ _('Yearly, Monthly, Weekly Statistics') }}</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="" data-toggle="dropdown" >{{ _('Service & Inventory') }}<span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                          <li><a href="{% url 'Manage:inventory_test'%}" >{{ _('Tests') }}</a>
+                          <li><a href="{% url 'Manage:inventory_precedure'%}">{{ _('Procedures') }}</a></li>
+                          <li><a href="{% url 'Pharmacy:inventory'%}">{{ _('Medicines') }}</a></li>
+                          <li><a href="{% url 'Manage:inventory_medical_tool'%}">{{ _('Expendables') }}</a></li>
+                        </ul>
+                    </li>
+                    
+
+                    <li {% if url_name == 'Documents' %}class="active"{% endif %}><a href="{% url 'Receptionist:Documents'%}">{{ _('Documents') }}</a></li>
+
+                    
+                    
+                    <li {% if url_name == 'manage_employee' %}class="active"{% endif %}><a href="{% url 'Manage:manage_employee'%}">{{ _('Employee Mgt') }}</a></li>
+
+                    <li {% if url_name == 'customer_manage' %}class="active"{% endif %}><a href="{% url 'Manage:customer_manage'%}">{{ _('Customer Mgt') }}</a></li>
+
+                    <li {% if url_name == 'sms_history_index' %}class="active"{% endif %}><a href="{% url 'Manage:sms_history_index'%}">{{ _('SMS History') }}</a></li>
+                    
+                        <!--<li><a href="#DOCTOR_PROFIT">DOCTORS PROFIT</a></li>
+                        <li><a href="#MEDICINE_TOTAL">MEDICINE</a></li>-->
+                    {% elif user.is_physical_therapist %}
+
+                        <li {% if url_name == 'physical_therapist_index' %}class="active"{% endif %}><a href="{% url 'physical_therapist:index'%}">{{ _('Physical Therapist') }}</a></li>
+                    
+                    {% endif %}
+                    
+                    <!--게시판
+                    {% if user.is_authenticated %}
+                    <li {% if url_name == 'draft' %}class="active"{% endif %}><a href="{% url 'Manage:draft'%}">{{ _('Drafts') }}</a></li>
+                    <li><a href="" data-toggle="dropdown" >{{ _('Board') }}<span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                          <li><a href="{% url 'Manage:board_list'%}">{{ _('Notice Board') }}</a></li>
+                          <li><a href="{% url 'Manage:board_work_list'%}">{{ _('Co-Work Board') }}</a></li>
+                        </ul>
+                    </li>
+                    {% endif %}
+                    {% if user.is_admin %}
+                    <li><a href="{% url 'Manage:code_setting'%}">{{ _('Code Setting') }}</a></li>
+                    {% endif %}
+                        -->
+
+                    {% if user.doctor.depart.id == 7%}
+                    <li>
+                        <a href="" data-toggle="dropdown" >Audit<span class="caret"></span></a>
+                        
+                        <ul class="dropdown-menu">
+                            <!--<li><a href="{% url 'Doctor:audit'%}">{{ _('Audit') }}</a></li>-->
+                            <li><a href="{% url 'Manage:manage'%}">{{ _('Revenue Status') }}</a></li>
+                            <li><a href="{% url 'Doctor:statistics_PM'%}">{{ _('Statistics') }}</a></li>
+                        </ul>
+                    </li>
+
+                            
+                        {% endif %}
+                    {% endwith %}
+                </ul>
+                
+                {% include 'app/loginpartial.html' %}
+                <ul class="nav navbar-nav navbar-right" id="language_ul">
+                    <li><a href="" onclick="set_lang('vie')"><image src="{% static 'img/vie.png' %}" style='height:30px;' /></a></li>
+                    <li><a href="" onclick="set_lang('ko')"><image src="{% static 'img/ko.png' %} " style='height:26px;'/></a></li>
+                    <li><a href="" onclick="set_lang('en')"><image src="{% static 'img/en.png' %} " style='height:26px;'/></a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="sub_title"></div>
+    <div class="body-content">
+{% block content %}{% endblock %}
+    </div>
+{% if user.is_authenticated %}
+    <div id="alert_mini">
+        <span class="fa-stack fa-lg" id="alert_mini_icon">
+            <a class="btn btn-lg" href='javascript: void (0);' onclick="" >
+                <i class='fa fa-2x fa-bell-o'></i>
+                <i class="fa fa-stack-1x" id="alert_mini_badge">
+                    <!--<span class="badge badge-error">+9</span>-->
+                </i>
+            </a >
+        </span>
+    </div>
+    <div id="alert_wrap" style="display:none;">
+        <div id="top_menu">
+            <div id="title_nemu">{{ _('Alarm') }}</div>
+            <div id="close_menu">
+                <a class="btn" href='javascript: void (0);' onclick="" ><i class='fa fa-lg fa-minus'></i></a >
+            </div>
+        </div>
+        <div id="content_menu">
+            <div class="alert_content_wrap" id="alarm_nores_wrap">
+                <span>No Alarm</span>
+            </div>
+            <div class="alert_content_wrap" id="alarm_cowork_wrap">
+                <div class="content_left">
+                    <sapn>{{ _('Co-Work') }}</sapn>
+                </div>
+                <div class="content_right">
+                    <div class="alert_content_main" id="co_work_pointed_week">
+                        
+                    </div>
+                    <div class="alert_content_main" id="co_work_expected_week">
+                       
+                    </div>
+                    <div class="alert_content_main alert_more" id="co_work_more">
+                        <a href="{% url 'Manage:board_work_list' %}">{{ _('More') }}</a>
+                    </div>
+                </div>
+            </div>
+            <div class="alert_content_wrap" id="alarm_draft_wrap">
+                <div class="content_left">
+                    <sapn>{{ _('Draft') }}</sapn>
+                </div>
+                <div class="content_right">
+                    <div class="alert_content_main" id="draft_requested">
+                       
+                    </div>
+                    <div class="alert_content_main" id="draft_waiting">
+                       
+                    </div>
+                    <div class="alert_content_main" id="draft_pending">
+                       
+                    </div>
+                    <div class="alert_content_main alert_more" id="draft_more">
+                        <a href="{% url 'Manage:draft'%}">{{ _('More') }}</a>
+                    </div>
+                </div>
+            </div>
+            <div class="alert_content_wrap" id="alarm_vaccine_warp">
+                <div class="content_left">
+                    <sapn>{{ _('Vaccine') }}</sapn>
+                </div>
+                <div class="content_right">
+                    <div class="alert_content_main" id="reservation_pointed_week">
+                        
+                    </div>
+                    <div class="alert_content_main alert_more" id="reservation_more">
+                        <a href="{% url 'Receptionist:reservation' %}">{{ _('More') }}</a>
+                    </div>
+                </div>
+            </div>
+            <!--
+            <div class="alert_content_wrap" id="alarm_project_wrap">
+                <div class="content_left">
+                    <sapn>{{ _('Project') }}</sapn>
+                </div>
+                <div class="content_right">
+                    <div class="alert_content_main" id="project_main">
+                       
+                    </div>
+                    <div class="alert_content_main" id="project_comment">
+                       
+                    </div>
+                </div>
+            </div>
+                -->
+        </div>
+    </div>
+    {% endif %}
+
+
+</body>
+
+
+
+
+
+
+</html>

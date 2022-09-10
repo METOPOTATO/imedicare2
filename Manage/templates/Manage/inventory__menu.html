@@ -1,0 +1,100 @@
+{% extends "app/layout.html" %}
+
+{% load staticfiles %}
+{% block content %}
+{% csrf_token %}
+
+<div class="inventory_menu_grid">
+    <div class="inventory_depart_database">
+        <div class="partition">
+            <div class="medicine_table_title">
+                <span class="btn btn-danger inventory_table_title_span">{{ _('Depart Menu Setting') }}</span>
+            </div>
+            <div class="precedure_database_table">
+                <table class="table table-bordered table-hover table-striped" id="inventory_database_table">
+                    <thead>
+                        <tr>
+                            <th>{{ _('No') }}</th>
+                            <th>{{ _('Nmae') }}</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for data in depart_list %}
+                        <tr onclick="inventory_menu_get(this,{{ data.id }})" style="cursor:pointer;">
+                            <td>{{ data.id }}</td>
+                            <td>{{ data.name }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <div class="inventory_class_database">
+        <div class="inventory_precedure_database partition">
+            <div class="medicine_table_title">
+                <span class="btn btn-danger inventory_table_title_span">{{ _('Class List') }}</span>
+            </div>
+            <input type="hidden" value="" id="selected_depart"/>
+            <div class="class_database_list">
+                <div class="menu_item_wrap">
+
+                    <div class="menu_sub_title">
+                        {{ _('Test Class List') }}
+                    </div>
+                    <div class="menu_item_div div_test_class">
+                        {% for data in test_class%}
+                        <div class="menu_item_content">
+                        <label style="position:relative; top:2px;"><input type="checkbox" class="tset_class" id="test_{{ data.id }}" />{{ data.name }}</label>
+                        </div>
+                        {% endfor %}
+                    </div>
+                    <div class="menu_sub_title">
+                        {{ _('Procedure Class List') }}
+                    </div>
+                    <div class="menu_item_div div_precedure_class">
+                        {% for data in precedure_class%}
+                        <div class="menu_item_content">
+                        <label style="position:relative; top:2px;"><input type="checkbox" class="precedure_class" id="precedure_{{ data.id }}" />{{ data.name }}</label>
+                        </div>
+                        {% endfor %}
+                    </div>
+                    <div class="menu_sub_title">
+                        {{ _('Medicine Class List') }}
+                    </div>
+                    <div class="menu_item_div div_medicine_class">
+                        {% for data in medicine_class%}
+                        <div class="menu_item_content">
+                        <label style="position:relative; top:2px;"><input type="checkbox" class="medicine_class" id="medicine_{{ data.id }}" />{{ data.name }}</label>
+                        </div>
+                        {% endfor %}
+                    </div>
+                    
+                </div>
+            </div>
+                <div style="float:right; margin-top:20px; margin-bottom:10px;">
+                    <input type="button" class="btn btn-primary" id="precedure_new" value="{{ _('Save') }}" onclick="inventory_menu_set()" />
+                </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+{% endblock %}
+
+{% block style %}
+<link rel="stylesheet" type="text/css" href="{% static 'css/inventory__menu.css' %}" />
+<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+{% endblock %}
+
+{% block scripts %}
+<script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.js"></script>
+<script src="{% static 'js/inventory__menu.js' %}" type="text/javascript"></script>
+{% endblock %}

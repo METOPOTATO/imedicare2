@@ -1,0 +1,641 @@
+{% extends "app/layout.html" %}
+
+{% load staticfiles %}
+
+{% block content %}
+
+
+    {% csrf_token %}
+
+    <div class="storage_grid">
+        <!--Strage list-->
+        <div class="storage_list partition">
+            <div class="storage_list_title">
+                <span class="btn btn-danger">{{ _('Payment Waiting List') }}</span>
+                <input type="text" name="search_input" id="payment_waiting_list" style="width: 15%;"
+                    class="form-control custom-select storage_search_input" aria-describedby="basic-addon1" autocomplete="off">
+                <input type="button" class="btn btn-default" value="Search" onclick="get_today_list()" />
+                <div style="text-align:right; display:inline; float:right; vertical-align:middle;">
+            
+                   
+                    <div class="input-group" style="width:115px; display:inline-table;">
+            
+            
+            
+                        <span class="input-group-addon reception_table_title" id="basic-addon1">Depart</span>
+                        <select name="depart" id="depart_select" style="width:85px;" class="form-control costom-select"
+                            aria-describedby="basic-addon1">
+                            <option value="">{{ _('All') }}</option>
+                            {% for data in depart %}
+                            <option value="{{ data.id }}">{{ data.name }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="storage_today_table_wrap">
+                <table class="table table-striped table-hover storage_list_table" id="storage_today_table">
+                    <thead>
+                        <tr>
+                            <th style="width:30px">{{ _('No')}}</th>
+                            <th style="width:30px">{{ _('Chart No')}}</th>
+                            <th style="width:30px">{{ _('Name')}}</th>
+                            <th style="width:30px">{{ _('Depart')}}</th>
+                            <th style="width:30px">{{ _('Time')}}</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <!--Storage contents-->
+        <div class="storage_contents partition">
+            <div class="storage_list_title">
+            <span class="btn btn-danger" >{{ _('Reciept') }}</span>
+                <input type="hidden" id="check_bf_af" value="" />
+            </div>
+            <table class="table table-bordered" style="margin-bottom:10px;">
+                <tr>
+                    <td >
+                    <div class="input-group ">
+                        <span class="input-group-addon storage_contents_table_title" id="basic-addon1">{{ _('Name') }}</span>
+                        <input type="text" id="patient_name" class="form-control" aria-describedby="basic-addon1" autocomplete="off"/>
+                        </div>
+                    </td>
+                    <td >
+                    <div class="input-group ">
+                        <span class="input-group-addon storage_contents_table_title" id="basic-addon1">{{ _('Doctor') }}</span>
+                        <input type="text" id="patient_doctor" class="form-control" aria-describedby="basic-addon1" autocomplete="off"/>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td >
+                    <div class="input-group ">
+                        <span class="input-group-addon storage_contents_table_title" id="basic-addon1">{{ _('Phone Number') }}</span>
+                        <input type="text" id="patient_phone" class="form-control" aria-describedby="basic-addon1" autocomplete="off"/>
+                        </div>
+                    </td>
+
+                    <td >
+                        <div class="input-group ">
+                        <span class="input-group-addon storage_contents_table_title" id="basic-addon1">{{ _('Address') }}</span>
+                        <input type="text" id="patient_address" class="form-control" aria-describedby="basic-addon1" autocomplete="off"/>
+                        </div>
+                    </td>
+                </tr>
+            </table>
+            <input type="hidden" id="selected_reception"/>
+            <input type="hidden" id="selected_record" value=""/>
+            <input type="hidden" id="total_amount" />
+            <div class="storage_item_table">
+                <table class="table table-bordered table-hover table-striped" id="storage_bills">
+                    <thead class="storage_item_table_contents">
+                        <tr>
+                            <th style="width:380px; vertical-align:middle;" colspan="2">&nbsp;&nbsp;{{ _('Itemcode / Description')}}</th>
+                            <!--<th style="width:80px; text-align:center; vertical-align:middle;">{{ _('Consult')}}</th>-->
+                            <th style="width:110px; text-align:center; vertical-align:middle;">{{ _('Unit price')}}</th>
+                            <th style="width:80px; text-align:center; vertical-align:middle;">{{ _('Quantity')}}</th>
+                            <th style="width:120px; text-align:center; vertical-align:middle;">{{ _('Amount(VND)')}}</th>
+                        </tr>
+                    </thead>
+                    <tbody >
+                        
+                    </tbody>
+                </table>
+            </div>
+            <table class="storage_item_table_control">
+                <tbody>
+                    <tr>
+                        <td style="width:188px;"><label style="position:relative; top:2px;"><input type="checkbox" id="show_medication_contents" />{{_('Medicine in detail')}}</label></td>
+                        <td>
+                            <div class="input-group" style=" display:inline-table">
+                            <span class="input-group-addon" id="basic-addon1" style="">{{ _('Paid') }}</span>
+                            {{storage.pay}}
+                           </div>
+                        </td>
+                        <td>
+                            <div class="input-group" style="display:inline-table">
+                                <span class="input-group-addon" id="basic-addon1" style="">{{ _('Paid by') }}</span>
+                                <select name="payment_info" class="form-control costom-select" aria-describedby="basic-addon1" id="id_payment_info">
+                                    <option value="">----------</option>
+                                    {% for data in payment_method %}
+                                    <option value="{{ data.code }}">{{ data.name }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td >
+                            <input type="button" onclick="showpayments()" value="{{_('Show Past')}}" class="btn btn-default" />
+                        </td>
+                        <td colspan="2" style="padding-top:1vh; padding-bottom:2vh; text-align:right;">
+                            
+                            <!--<input type="button" id="Report" value="{{ _('Print Medical Report') }}" class="btn btn-success" />-->
+                            <input type="button" id="Bill" value="{{ _('Print Reciept') }}" class="btn btn-warning" />
+                            <input type="button" id="Cancel" value="{{ _('Cancel') }}" class="btn btn-default" />
+                            <input type="button" id="save" value="{{ _('Save') }}" class="btn btn-primary" onclick="save_storage()"/>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <table class="table">
+                <tr><!--Next Visiting Date-->
+                    <td>
+                        <div class="input-group" >
+                            <span class="input-group-addon storage_contents_table_title" id="basic-addon1">{{ _('Next Visiting Date') }}</span>
+                            <input type="text" name="follow_update" class="form-control costom-select" aria-describedby="basic-addon1" required="" id="id_follow_update" autocomplete="off">
+                        </div>
+
+                    </td>
+                    <td>
+                        <div class="input-group" >
+                            <span class="input-group-addon" id="basic-addon1">{{ _('Memo') }}</span>
+                            <input type="text" class="form-control costom-select" aria-describedby="basic-addon1" id="storage_memo" autocomplete="off">
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2">
+                        <a class='btn btn-default btn-xs' href='javascript: void (0);' id="patient_tax_invoice_click"><i class='fa fa-lg fa-caret-down'></i> {{ _('Inform Tax Invoice')}}</a>
+                        <div style="float:right;">
+                            <label class="need_something_check" style="margin-right:10px;"><input type="checkbox" id="need_invoice" /><text>{{_('Red Invoice') }}</text></label>
+                            <label class="need_something_check"><input type="checkbox" id="need_insurance" /><text>{{_('Insurance') }}</text></label>
+                        </div>
+                        <div id="patient_tax_invoice" style="display:none;">
+                            <div class="input-group">
+                                <span class="input-group-addon storage_contents_table_title" id="basic-addon1">{{ _('Tax code') }}</span>
+                                <input type="text" class="form-control" aria-describedby="basic-addon1" id="tax_invoice_number">
+                            </div>
+                            <div class="input-group">
+                                <span class="input-group-addon storage_contents_table_title" id="basic-addon1">{{ _('Company Name') }}</span>
+                                <input type="text" class="form-control" aria-describedby="basic-addon1" id="tax_invoice_company_name">
+                            </div>
+                            <div class="input-group">
+                                <span class="input-group-addon storage_contents_table_title" id="basic-addon1">{{ _('Address') }}</span>
+                                <input type="text" class="form-control" aria-describedby="basic-addon1" id="tax_invoice_address">
+                            </div>
+                            <div>
+                                <div class="input-group">
+                                    <span class="input-group-addon" id="basic-addon1" style="font-weight:700; color:#449d44;">{{ _('Recommend') }}</span>
+                                    <input id="tax_recommendation" class="form-control" style="height:30px; width:100%; font-size:12px;" aria-describedby="basic-addon1" autocomplete="off"/>
+                                </div>
+                            </div> 
+                            <!-- <div>
+                                <tr>
+                                    <td colspan="2" style="padding-top:1vh; padding-bottom:1vh; text-align:right;">
+                                        <input type="button" id="save_tax" value="{{ _('Save') }}" class="btn btn-primary" onclick="save_tax()"/>
+                                    </td>
+                                </tr>
+                            </div>   -->
+                        </div>
+     
+                    </td> 
+                </tr>
+            </table>
+            
+            
+        </div>
+        <!--Storage History-->
+        <div class="storage_paid_list partition">
+            <div class="storage_list_title" >
+            <span class="btn btn-danger" style="margin-bottom:1vh;" >{{_('Paid List')}}</span>
+            <div class="status_table_filter">
+                <input id="storage_list_calendar_start" class="form-control storage_list_calendar" />
+                ~
+                <input id="storage_list_calendar_end" class="form-control storage_list_calendar" />
+                <div class="input-group contents_filter_div" id="contents_filter_div_depart" {% if user.doctor %}style="display:none;"{% endif %}>
+                    <span class="input-group-addon reception_table_title" id="basic-addon1">Depart</span>
+                    <select name="depart" id="reception_waiting_depart" class="form-control costom-select reception_waiting_depart" aria-describedby="basic-addon1">
+                        <option value="">{{ _('All') }}</option>
+                        {% for data in depart_medical %}
+                        <option value="{{ data.code }}" {% if user.doctor.depart.id == data.code %} selected {% endif%}>{{ data.name }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                
+                <select name="filter" id="storage_search_select" class="form-control storage_search_select" aria-describedby="basic-addon1" autocomplete="off" style="display:none;">
+                    <option value="">{{ _('ALL') }}</option>
+                    <option value="name">{{ _('Name') }}</option>
+                    <option value="chart">{{ _('Chart No') }}</option>
+                </select>
+                <input type="text" name="search_input" id="storage_search_input" class="form-control custom-select storage_search_input" aria-describedby="basic-addon1" autocomplete="off">
+                <input type="button" class="btn btn-default" value="Search" onclick="waiting_list()"/>
+            </div>
+            </div>
+            <div class="storage_list_table_wrap">
+                <table class="table table-striped table-hover storage_today_table" id="storage_list_table">
+                    <thead>
+                        <tr>
+                            <th>{{ _('No')}}</th>
+                            <th>{{ _('Chart No')}}</th>
+                            <th>{{ _('Name')}}</th>
+                            <th>{{ _('Date Visited')}}</th>
+                            <th>{{ _('Date Paid')}}</th>
+                            <th>{{ _('Depart')}}</th>
+                            <th>{{ _('Paid')}}</th>
+                            <th>{{ _('Balance')}}</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    </tbody>
+                </table>
+            </div>
+            <table class="table" id="storage_list_total">
+                <tr>
+                    <th><a class="btn btn-default" onclick="download_excel_today()"><i class="fa fa-lg fa-file-excel-o"> {{ _('Today Report') }}</i></a></th>
+                    <th><div>{{ _('Total') }} : </div></th>
+                    <th>
+                        <div>
+                            <span id="storage_list_total_paid">0</span>
+                        </div>
+                    </th>
+                    <th>
+                        <div>
+                            <span id="storage_list_total_balance">0</span>
+                        </div>
+                    </th>
+                    <th></th>
+                </tr>
+            </table>
+        </div>
+    </div>
+<script>
+    worker_on('{% static 'js/event_listener.js' %}');
+</script>
+
+<div class="page_bill" style="background-image:url({% static 'img/background_back.png'%}) !important">
+        <div class="print_top_info">
+            <img src="{% static 'img/recepts_top.png' %}" style="width:16cm;"/>
+        </div>
+        <div class="title" >MEDICAL RECEIPT</div>
+        <div class="chart">
+            <table class="chart_table" style="border:none; width:550px;">
+                <tbody class="chart_table_info" >
+                    <tr>
+                        <td colspan="2" style="font-size:14px; width:200px; text-align:left;">Depart : </td>
+                        <td id="recept_depart"></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td colspan="2" style="font-size:14px; width:200px; text-align:left;">Name of Patient : </td>
+                        <td id="recept_patient" colspan="3"></td>
+                    </tr>
+                    <tr>
+                        <td colspan="2" style="font-size:14px; width:200px; text-align:left;">Date of Birth : </td>
+                        <td id="recept_date_of_birth"></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td colspan="2" style="font-size:14px; width:200px; text-align:left;">Date of Service : </td>
+                        <td id="recept_date"></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr style="height:15px;">
+                        <td colspan="6"></td>
+                    </tr>
+                    <tr style="border-top:1px solid black">
+                        <td colspan="6"></td>
+                    </tr>
+                    <tr class="tr_small" >
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+
+                    <!--
+                    <tr style="border-bottom:30px solid rgba(0,0,0,0);">
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td>Doctor</td>
+                        <td></td>
+                        <td id="recept_doctor"></td>
+                    </tr>-->
+                </tbody>
+            <tbody id="space">
+                <tr>
+                    <td style="height:18px;"></td>
+                </tr>
+            </tbody>
+            <tbody class="chart_table_contents_title">
+                <tr>
+                    <th colspan="2">ITEM</th>
+                    <th style="width:2cm; text-align:right">Unit Price</th>
+                    <th style="width:2cm; text-align:center;">Quantity</th>
+                    <th style="width:2.5cm;text-align:right;">Amount</th>
+                    <th style="text-align:right; width: 1cm;">VND</th>
+                </tr>
+            </tbody>
+            <tbody id="space">
+                <tr>
+                    <td style="height:18px;"></td>
+                </tr>
+            </tbody>
+            <tbody id="chart_table_contents_items">
+
+            </tbody>
+            <tbody id="additional_items">
+
+            </tbody>
+            <tbody id="space">
+                <tr>
+                    <td style="height:40px;"></td>
+                </tr>
+            </tbody>
+            <tbody class="chart_table_total">
+                <tr>
+                    <td></td>
+                    <td colspan="2" style="text-align:right">Total</td>
+                    <td id="chart_table_total_amount"></td>
+                    <td id="chart_table_total"></td>
+                    <td>VND</td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td colspan="2" style="text-align:right">Discount</td>
+                    <td id="chart_table_discount"></td>
+                    <td id="chart_table_discount_amount"></td>
+                    <td>VND</td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td colspan="2" style="text-align:right">Estimated Insurance Coverage</td>
+                    <td id="chart_table_insurance"></td>
+                    <td id="chart_table_insurance_amount"></td>
+                    <td>VND</td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td colspan="2" style="text-align:right">Patient Amount Due</td>
+                    <td id="chart_table_discount"></td>
+                    <td id="chart_table_discount_amount"></td>
+                    <td>VND</td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td colspan="2" style="text-align:right">Paid</td>
+                    <td id="chart_table_paid"></td>
+                    <td id="chart_table_paid_amount"></td>
+                    <td>VND</td>
+                </tr>
+               
+
+            </tbody>
+            <!--
+            <tbody>
+                <tr>
+                    <td></td>
+                    <td colspan="5">
+                        <br />
+                        <br />
+                        <br />
+                        <br />
+                        <br />
+                        Note :<span></span>
+                        * 세금계산서 해당날에 발급 가능합니다.<br />
+                        * Please contact us to receive invoice during the day.<br />
+                        * Đề nghị Quý khách có nhu cầu liên hệ lấy hóa đơn trong ngày.<br />
+                    </td>
+                </tr>
+            </tbody>-->
+        </table>
+        </div>
+        
+        <!--<div class="bottom" style="padding-top:100px; font-size:14px; font-weight:700;">
+            <span>I-MEDICARE</span>
+        </div>
+            -->
+</div>
+<input type="hidden" id="report_id" />
+
+<div class="page_report" >
+    <div class="title">진&nbsp;료&nbsp;확&nbsp;인&nbsp;서</div>
+    <div class="chart">
+        <table class="" style="empty-cells: hide;">
+            <tbody>
+                <tr class="tr_small">
+                    <td style="width:28mm">병록번호</td>
+                    <td style="width:36mm; text-align:left;" id="patient_chart_print" ></td>
+                </tr>
+                <tr class="tr_small">
+                    <td style="width:28mm">연 번 호</td>
+                    <td style="width:36mm; text-align:left;" id="patient_serial_print"></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="middle">
+        <table>
+            <tbody>
+                <tr class="tr_small">
+                    <td style="width:28mm;">환자의 성명</td>
+                    <td style="width:57mm;" id="patient_name_print"></td>
+                    <td style="text-align:center; width:18.5mm;">성별</td>
+                    <td style="text-align:center; width:20.5mm;" id="patient_gender_print"></td>
+                    <td style="text-align:center; width:14mm;">연령</td>
+                    <td style="text-align:center; width:29.5mm;" id="patient_age_print"></td>
+                </tr>
+                <tr class="tr_small">
+                    <td>주민등록번호</td>
+                    <td id="patient_ID_print"></td>
+                    <td style="text-align:center;">생년월일</td>
+                    <td colspan="3" id="patient_date_of_birth_print"> </td>
+                </tr>
+                <tr class="tr_small">
+                    <td>주&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;소</td>
+                    <td colspan="5" id="patient_address_print"> </td>
+                </tr>
+                <tr class="tr_small">
+                    <td>통&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;원</td>
+                    <td colspan="5" id="date_of_hospitalization_print"></td>
+                </tr>
+                <tr>
+                    <td style="height:78mm">{{ _('의사소견') }}</td>
+                    <td colspan="5" id="reception_report_print"></td>
+                </tr>
+                <tr>
+                    <td class="tr_small">용&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;도</td>
+                    <td colspan="5" id="reception_usage_print"></td>
+                </tr>
+                <tr>
+                    <td style="display:none;"></td>
+                    <td colspan="6" class="last">
+                        <div style=" text-align:center; font-size:12px">상기와 같이 진료 받았음을 확인 합니다.</div>
+                        <br />
+                        <br />
+                        <div class="last_contents" style="letter-spacing:-0.2px;">발&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;행&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;일&nbsp;:&nbsp; <span id="publication_date_print"></span></div>
+                        <div class="last_contents">의료기관 명칭 : &nbsp;I - MEDICARE</div>
+                        <div class="last_contents">의료기관 주소 : &nbsp;Tang 1, The Garden, My Dinh, Hanoi</div>
+                        <div class="last_contents">대표 전화번호 : &nbsp;081 - 933 - 0102</div>
+                        <br />
+                        <div style="margin-left:210px; line-height:200%;">면허번호 : &nbsp;&nbsp; 제  호</div>
+                        <div style="margin-left:210px">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;성명 : &nbsp;&nbsp;<span id=""></span>(서명 또는 인)</div>
+                        <br />
+                        <div style="text-align:center; font-weight:bold;">I-MEDICARE</div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+
+
+<div id="payment_list" class="modal fade">
+     <div class="modal-dialog" style="width:800px;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span> <span class="sr-only">close</span></button>
+                <h4>{{ _('Payment Record') }}</h4>
+                <div id="modalBody" class="modal-body">
+                    <table class="table table-hover" id="payment_record_table">
+                        <thead>
+                            <tr>
+                                <th>{{ _('Chart No') }}</th>
+                                <th>{{ _('Name') }}</th>
+                                <th>{{ _('Date Paid') }}</th>
+                                <th>{{ _('Paid') }}</th>
+                                <th>{{ _('Paid by') }}</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody id="payment_record">
+
+                        </tbody>
+                    </table>
+
+                    <div class="modal-footer">
+                        <ul class="pagination" id="record_pagnation" style="float:left;">
+
+                        </ul>
+                        <a class="btn btn-danger" onclick="refund_modal()">{{ _('Refund') }}</a>
+                        <a class="btn btn-default" data-dismiss="modal" aria-hidden="true">{{ _('Close') }}</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+
+
+
+
+<div id="refund_modal" class="modal fade">
+     <div class="modal-dialog" style="width:500px;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span> <span class="sr-only">close</span></button>
+                <h4>{{ _('Refund') }}</h4>
+                <div id="modalBody" class="modal-body">
+                    <table class="table">
+                        <tr>
+                            <td>
+                                <div class="input-group">
+                                    <span class="input-group-addon storage_contents_table_title" id="basic-addon1">{{ _('Chart No') }}</span>
+                                    <input type="text" class="form-control" aria-describedby="basic-addon1" id="refund_chart" readonly>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div class="input-group">
+                                    <span class="input-group-addon storage_contents_table_title" id="basic-addon1">{{ _('Name') }}</span>
+                                    <input type="text" class="form-control" aria-describedby="basic-addon1" id="refund_name" readonly>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div class="input-group">
+                                    <span class="input-group-addon storage_contents_table_title" id="basic-addon1">{{ _('Reason') }}</span>
+                                    <input type="text" class="form-control" aria-describedby="basic-addon1" id="refund_reason">
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div class="input-group">
+                                    <span class="input-group-addon storage_contents_table_title" id="basic-addon1">{{ _('Amount') }}</span>
+                                    <input type="number" class="form-control" aria-describedby="basic-addon1" id="refund_amount" >
+                                </div>
+                            </td>
+                        </tr>
+                    </table>
+
+                </div>
+                <div class="modal-footer">
+                        <a class="btn btn-danger" onclick="refund_save()">{{ _('Submit') }}</a>
+                        <a class="btn btn-default" data-dismiss="modal" aria-hidden="true">{{ _('Close') }}</a>
+                    </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+
+
+<div id="report_list" class="modal fade">
+     <div class="modal-dialog" style="width:800px;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span> <span class="sr-only">close</span></button>
+                <h4>{{ _('Report List') }}</h4>
+                <div id="modalBody" class="modal-body report_list_wrap">
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th>{{ _('Chart No') }}</th>
+                                <th>{{ _('Name') }}</th>
+                                <th>{{ _('Date of Birth') }}</th>
+                                <th>{{ _('Depart') }}</th>
+                                <th>{{ _('Doctor') }}</th>
+                                <th>{{ _('Date of Hospitalization') }}</th>
+                            </tr>
+                        </thead>
+                        <tbody id="Report_List">
+
+                        </tbody>
+                    </table>
+
+                    <div class="modal-footer">
+                        <ul class="pagination" id="report_pagnation" style="float:left;">
+
+                        </ul>
+                        <a class="btn btn-default" data-dismiss="modal" aria-hidden="true">{{ _('Close') }}</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+
+<div id="dynamic_div">
+
+</div>
+
+{% endblock %}
+
+{% block style %}
+<link rel="stylesheet" type="text/css" href="{% static 'css/storage_page.css' %}" />
+<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
+{% endblock %}
+
+{% block scripts %}
+<script src="{% static 'js/storage_page.js' %}" type="text/javascript"></script>
+{% endblock %}

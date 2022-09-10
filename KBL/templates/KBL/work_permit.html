@@ -1,0 +1,258 @@
+{% extends "app/layout_KBL.html" %}
+
+{% load staticfiles %}
+{% block content %}
+
+{% csrf_token %}
+    <div class="background_grid">
+        <div class="customer_list partition">
+            <div class="status_table_title">
+                <span class="btn btn-danger title_span">{{ _('Work Permit List') }}</span>
+            
+                <div class="search_control_div">
+                    <div class="input-group depart_select" id="filter_status">
+                        <span class="input-group-addon patient_table_title" id="basic-addon1">{{ _('Status') }}</span>
+                        <select id="wp_status" class="form-control costom-select " aria-describedby="basic-addon1" >
+                            <option value="" selected>{{ _('ALL') }}</option>
+                            {% for data in list_project_status %}
+                            <option value="{{ data.code }}">{{ data.name }}</option>
+                            {%endfor%}
+                        </select>
+                    </div>
+                    <div class="input-group depart_select" id="filter_date">
+                        <span class="input-group-addon patient_table_title" id="basic-addon1">{{ _('Date type') }}</span>
+                        <select id="wp_date_type" class="form-control costom-select " aria-describedby="basic-addon1" >
+                            <option value="date_register" selected>{{ _("Register Date") }}</option>
+                            <option value="EA_application_date">{{ _("EA Application Date") }}</option>
+                            <option value="EA_exp_date">{{ _("EA Exp Date") }}</option>
+                            <option value="WP_application_date">{{ _("WP Application Date") }}</option>
+                            <option value="WP_exp_date">{{ _("WP Exp Date") }}</option>
+                            <option value="expected_date">{{ _("Expect Date") }}</option>
+                        </select>
+                    </div>
+                    <input type="text" id="wp_date_start" class="form-control date_input">
+                    ~
+                    <input type="text" id="wp_date_end" class="form-control date_input">
+                    <input type="text" id="wp_search" class="form-control"/>
+                    <input type="button" id="wp_search_btn" class="btn btn-default" value="{{ _('Search') }}" style="display:inline;"/>
+                </div>
+            </div>
+               
+            <div class="patient_list_table_wrap">
+                <table class="table table-bordered table-hover table-striped" id="work_permit_list_table">
+                    <thead>
+                        <tr>
+                            <th>{{ _('No') }}</th>
+                            <th>{{ _('Status') }}</th>
+                            <th>{{ _('Company Name') }}</th>
+                            <th>{{ _('Customer Name ( ENG )') }}</th>
+                            <th>{{ _('Position') }}</th>
+                            <th>{{ _('Requiredment Documents') }}</th>
+                            <th>{{ _('Employment Apporval Application Date') }}</th>
+                            <th>{{ _('Employment Apporval Expected Date') }}</th>
+                            <th>{{ _('Work Permit Application Date') }}</th>
+                            <th>{{ _('Work Permit Expected Date') }}</th>
+                            <th>{{ _('Expected Date') }}</th>
+                            <th>{{ _('Note') }}</th>
+                            <th>{{ _('File') }}</th>
+                            <th>{{ _('Manage') }}</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+
+                    </tbody>
+                </table>
+                <ul class="pagination" id="table_pagnation">
+
+                </ul>
+                <!--<button class="btn btn-primary" style="float:right" onclick="work_permit_modal()">+ {{ _('Register') }}</button>-->
+            </div>
+        </div>
+    </div>
+
+
+
+<!--Work Permit Modal-->
+<div id="work_permit_modal" class="modal fade">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span> <span class="sr-only">close</span></button>
+                <h2>{{ _('Work Permit') }}</h2>
+                <div id="modalBody" class="modal-body" >
+
+                    <input type="hidden" id="selected_wp" value="" />
+                    
+                    <div class="input-group">
+						<span class="input-group-addon" id="basic-addon1">* {{ _('Company Name') }}</span>
+						<input type="text" id="wp_company_name" class="form-control" aria-describedby="basic-addon1" readonly>
+						<input type="hidden" id="wp_company_id" value="">
+					</div>
+
+                    <div class="input-group">
+						<span class="input-group-addon" id="basic-addon1">* {{ _('Customer Name') }}</span>
+						<input type="text" id="wp_employee_name" class="form-control" aria-describedby="basic-addon1">
+						<input type="hidden" id="wp_employee_id" value="">
+					</div>
+
+
+                    <span style="font-size:9px; letter-spacing:0px;">* {{ _('Employment Approval') }}</span>
+					<div class="input-group">
+						<span class="input-group-addon" id="basic-addon1">{{ _('EA Application Date') }}</span>
+						<input type="text" id="wp_EA_application_date" class="form-control date_input" aria-describedby="basic-addon1" placeholder="0000-00-00"/>
+					</div>
+
+					<div class="input-group">
+						<span class="input-group-addon" id="basic-addon1">{{ _('EA Expected Date') }}</span>
+						<input type="text" id="wp_EA_exp_date" class="form-control date_input" aria-describedby="basic-addon1" placeholder="0000-00-00"/>
+					</div>
+
+                    <span style="font-size:9px; letter-spacing:0px;">* {{ _('Work Permit') }}</span>
+					<div class="input-group">
+						<span class="input-group-addon" id="basic-addon1">{{ _('WP Submit Date') }}</span>
+						<input type="text" id="wp_application_date" class="form-control date_input" aria-describedby="basic-addon1" placeholder="0000-00-00"/>
+					</div>
+
+                    <div class="input-group">
+						<span class="input-group-addon" id="basic-addon1">{{ _('WP Expected Date') }}</span>
+						<input type="text" id="wp_WP_exp_date" class="form-control date_input" aria-describedby="basic-addon1" placeholder="0000-00-00"/>
+					</div>
+
+                    <div class="input-group">
+						<span class="input-group-addon" id="basic-addon1">{{ _('Expected Date') }}</span>
+						<input type="text" id="wp_exp_date" class="form-control date_input" aria-describedby="basic-addon1" placeholder="0000-00-00"/>
+					</div>
+
+                    <div class="input-group">
+						<span class="input-group-addon" id="basic-addon1">{{ _('Required Documents') }}</span>
+						<input type="text" id="wp_requirement" class="form-control" aria-describedby="basic-addon1">
+					</div>
+
+                    <div class="input-group">
+						<span class="input-group-addon" id="basic-addon1">{{ _('Note') }}</span>
+						<input type="text" id="wp_note" class="form-control" aria-describedby="basic-addon1">
+					</div>
+
+					<div class="input-group">
+						<span class="input-group-addon" id="basic-addon1">* {{ _('Status') }}</span>
+						<select id="wp_edit_status" class="form-control" aria-describedby="basic-addon1">
+							<option value="">----------</option>
+							{% for data in list_project_status %}
+                            <option value="{{ data.code }}">{{ data.name }}</option>
+                            {% endfor %}
+						</select>
+					</div>
+
+                </div>
+                <div class="modal-footer">
+                    <!--
+                    <a class="btn btn-primary" onclick="work_permit_save()">{{ _('Save') }}</a>
+                    <a class="btn btn-default" data-dismiss="modal" aria-hidden="true">{{ _('Cancel') }}</a>
+                    -->
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<!--Detailed Info Modal-->
+<div id="detailed_info_modal" class="modal fade">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span> <span class="sr-only">close</span></button>
+                <h2>{{ _('Project Detail Information Register / Edit') }}</h2>
+                <div id="modalBody" class="modal-body" >
+
+                    <div class="input-group">
+						<span class="input-group-addon" id="basic-addon1">{{ _('Type') }}</span>
+						<select id="register_register" class="form-control" aria-describedby="basic-addon1">
+						<option value="">Korean</option>
+						<option value="">Foreigner</option>
+					</select>
+					</div>
+					<div class="input-group">
+						<span class="input-group-addon" id="basic-addon1">{{ _('Project Progress Status') }}</span>
+						<input type="text" id="register_name" class="form-control" aria-describedby="basic-addon1">
+					</div>
+					<div class="input-group">
+						<span class="input-group-addon" id="basic-addon1">{{ _('Date') }}</span>
+						<input type="text" id="register_name" class="form-control" aria-describedby="basic-addon1">
+					</div>
+					<div class="input-group">
+						<span class="input-group-addon" id="basic-addon1">{{ _('Note') }}</span>
+						<input type="text" id="register_name" class="form-control" aria-describedby="basic-addon1">
+					</div>
+                </div>
+                <div class="modal-footer">
+                    <a class="btn btn-primary" onclick="">{{ _('Save') }}</a>
+                    <a class="btn btn-default" data-dismiss="modal" aria-hidden="true">{{ _('Cancel') }}</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<!-- File -->
+<form enctype="multipart/form-data" id="id_ajax_upload_form" method="POST" novalidate="">
+<div id="new_edit_file_list" class="modal fade">
+    <div class="modal-dialog" style="width:1100px;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span> <span class="sr-only">close</span></button>
+                <h4 id="password_database_header">{{ _('File List') }}</h4>
+                <div id="modalBody" class="modal-body">
+                    <input type="hidden" value="" id="selected_file_list" name="selected_file_list"/>
+                    <input type="hidden" value="" id="board_type" name="board_type"/>
+                    <table class="table table-hover table-striped" id="file_table">
+                        <thead>
+                            <tr>
+                                <th>{{ _('No') }}</th>
+                                <th>{{ _('Document Name') }}</th>
+                                <th>{{ _('Registered Date') }}</th>
+                                <th>{{ _('User ID') }}</th>
+                                <th>{{ _('Remark') }}</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+
+                        </tbody>
+                    </table>
+                </div>
+                <div class="modal-footer">
+                    <!--<a class="btn btn-primary" onclick="file_add_modal()">+ {{ _('New') }}</a>-->
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div id="overlay">
+	<div class="cv-spinner">
+		<span class="spinner"></span>
+	</div>
+</div>
+
+
+
+
+{% endblock %}
+
+
+{% block style %}
+<link rel="stylesheet" type="text/css" href="{% static 'css/work_permit.css' %}" />
+<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
+
+{% endblock %}
+
+{% block scripts %}
+<script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.js"></script>
+<script src="{% static 'js/work_permit.js' %}" type="text/javascript"></script>
+{% endblock %}

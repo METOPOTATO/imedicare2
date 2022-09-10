@@ -1,0 +1,375 @@
+th{
+    
+}
+
+
+.contents_wrap {
+    width: 95%;
+    margin: 0 auto;
+    margin-top: 40px;
+}
+    .contents_wrap > div{
+        margin-bottom:20px;
+    }
+
+    .contents_Title_wrap {
+        display: inline;
+    }
+
+.contents_Title {
+    background: rgb(237,237,237);
+    text-align: center;
+    font-size: 20px;
+    padding: 10px 20px
+}
+
+
+
+
+.contents_filter_div{
+    display:inline-table;
+}
+
+#contents_filter_div_context_count {
+    float: right;
+    width: 130px;
+}
+
+
+#contents_filter_div_depart {
+    width: 150px;
+}
+
+#contents_filter_div_doctor{
+    width:150px;
+}
+
+
+#contents_filter_div_method{
+    width:230px;
+}
+
+#contents_filter_div_status{
+    width:200px;
+}
+
+
+
+.search_table_No {
+    width: 3vw;
+}
+
+.search_table_Date {
+    width: 5vw;
+}
+.search_table_Patient {
+    width: 7vw;
+}
+.search_table_Date_of_Birth {
+    width: 7vw;
+}
+.search_table_Address {
+    width: 8vw;
+}
+.search_table_Depart {
+    width: 4vw;
+}
+.search_table_Doctor {
+    width: 7vw;
+}
+.search_table_Order{
+    width:10vw;
+}
+
+.search_table_PaidBy{
+
+}
+
+.search_table_Payment {
+}
+.search_table_Unpaid {
+
+}
+.search_table_Total{
+
+}
+
+
+
+.payment_table_result > tr {
+    height: 4vh;
+}
+
+
+
+.payment_graph{
+    margin-bottom:9.6vh;
+}
+
+.payment_graph_wrap {
+    margin-left:5vw;
+    width: 40vw;
+    height: 40vh;
+    display:inline-block;
+}
+
+.payment_pie_wrap {
+    margin-left:10vw;
+    display: inline-block;
+}
+
+.payment_total {
+
+    font-weight: bold;
+    font-size: 18px;
+    text-align: right;
+}
+
+
+
+
+
+.date_input_div {
+    display:inline;
+    margin-right:20px;
+}
+
+.date_input {
+    display: inline;
+    width: 90px;
+}
+
+.payment_search_depart {
+    display: inline;
+    width: 85px;
+}
+
+.payment_search_doctor {
+    display: inline;
+    width: 110px;
+}
+
+.payment_search_exam_fee, .payment_search_medicine, .payment_search_lab, .payment_search_precedure {
+    display: inline;
+    width: 10vw;
+}
+
+.payment_search_check_paid, .payment_search_paid_by {
+    display: inline;
+    width: 5vw;
+}
+
+    .payment_search_input {
+        display: inline;
+        width: 8vw;
+        margin-left: 3.4vw;
+    }
+
+.contents_filter_top{
+    margin-top:20px;
+}
+
+
+#payment_search_table {
+    margin-top: 20px;
+    width: 100%;
+    table-layout: fixed;
+    letter-spacing: -1px;
+}
+
+    #payment_search_table thead tr th{
+        vertical-align:middle;
+        text-align:center;
+    }
+        #payment_search_table thead tr th:nth-child(1) {
+            width: 50px;
+        }
+    #payment_search_table thead tr th:nth-child(2) {
+        width: 70px;
+    }
+        #payment_search_table thead tr th:nth-child(3) {
+            width: 120px;
+        }
+    #payment_search_table thead tr th:nth-child(4) {
+        width: 60px;
+    }
+    #payment_search_table thead tr th:nth-child(5) {
+        width: 60px;
+    }
+
+
+        #payment_search_table thead tr th:nth-child(6),
+        #payment_search_table thead tr th:nth-child(7),
+        #payment_search_table thead tr th:nth-child(8),
+        #payment_search_table thead tr th:nth-child(9) {
+            /*width: 70px;*/
+        }
+#payment_search_table thead tr th:nth-child(11) {
+    width: 60px;
+}
+        #payment_search_table thead tr th:nth-child(12),
+        #payment_search_table thead tr th:nth-child(13),
+        #payment_search_table thead tr th:nth-child(14),
+        #payment_search_table thead tr th:nth-child(15),
+        #payment_search_table thead tr th:nth-child(16),
+        #payment_search_table thead tr th:nth-child(17),
+        #payment_search_table thead tr th:nth-child(18),
+        #payment_search_table thead tr th:nth-child(19) {
+            width: 80px;
+        }
+
+
+    #payment_search_table tbody tr td {
+        vertical-align: middle;
+        text-align: center;
+    }
+
+        #payment_search_table tbody tr td:nth-child(6),
+        #payment_search_table tbody tr td:nth-child(7),
+        #payment_search_table tbody tr td:nth-child(8),
+        #payment_search_table tbody tr td:nth-child(9),
+        #payment_search_table tbody tr td:nth-child(10) {
+            line-height:15px;
+        }
+        #payment_search_table tbody tr td:nth-child(12),
+        #payment_search_table tbody tr td:nth-child(13),
+        #payment_search_table tbody tr td:nth-child(14),
+        #payment_search_table tbody tr td:nth-child(15),
+        #payment_search_table tbody tr td:nth-child(16),
+        #payment_search_table tbody tr td:nth-child(17),
+        #payment_search_table tbody tr td:nth-child(18),
+        #payment_search_table tbody tr td:nth-child(19){
+            text-align: right;
+        }
+
+.empty_cell {
+    border: none;
+    background: none;
+}
+
+.total_table {
+    table-layout: fixed;
+    border: none;
+    letter-spacing: -1px;
+    font-weight: 600;
+}
+
+    .total_table tbody tr td {
+        vertical-align: middle;
+        text-align: center;
+        
+        
+    }
+
+
+        .total_table tbody tr td:nth-child(1) {
+            width: 842px;
+            border: none;
+            background: none;
+        }
+        .total_table tbody tr td:nth-child(2) {
+            width: 177px;
+        }
+    .total_table tbody tr td:nth-child(3), .total_table tbody tr td:nth-child(4), .total_table tbody tr td:nth-child(5), .total_table tbody tr td:nth-child(6), .total_table tbody tr td:nth-child(7) {
+        text-align: right;
+        width: 80px;
+        
+    }
+    /****** Doctor Profit    *******/
+    .doctor_search_table_filter {
+        text-align: right;
+        margin-top: 10px;
+        margin-bottom: 10px;
+    }
+
+    .doctor_search_table_filter select {
+        margin-right: 20px;
+    }
+
+        .doctor_search_table_filter select:last-child {
+            margin-right: 0px;
+        }
+
+.doctor_search_table {
+    width: 100%;
+}
+
+.doctor_search_general, .doctor_search_medicine, .doctor_search_lab, .doctor_search_scaling, .doctor_search_panorama {
+    display: inline;
+    width: 160px;
+}
+
+
+.doctor_search_date {
+    display: inline;
+    width: 170px;
+}
+
+.doctors_search_depart {
+    width: 85px;
+    display: inline;
+}
+.doctors_search_doctor {
+    width: 85px;
+    display: inline;
+}
+
+.form-control{
+    font-size:12px;
+    padding: 3px 12px;
+}
+
+.doctor_profit_control{
+    display:inline;
+    width:50px;
+}
+
+.doctors_table_profit tr td{
+    text-align:right;
+}
+
+.medicine_search_input{
+    display:inline;
+    width:200px;
+}
+
+.medicine_search_date {
+    width: 160px;
+    display: inline;
+    margin-right: 20px;
+}
+
+.medicine_search_filter {
+    width: 110px;
+    display: inline;
+    
+}
+
+.table table-striped {
+
+}
+
+
+
+
+#profit_table thead tr th:nth-child(6) {
+    width:260px;
+}
+
+#profit_table thead tr th:nth-child(7) {
+    width: 260px;
+}
+
+#profit_table thead tr th:nth-child(8) {
+    width: 260px;
+}
+
+@media ( min-width: 1900px ) {
+    .total_table tbody tr td:nth-child(1) {
+        width: 1145px;
+    }
+
+    .total_table tbody tr td:nth-child(2) {
+        width: 260px;
+    }
+}

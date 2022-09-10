@@ -1,0 +1,188 @@
+{% extends "app/layout.html" %}
+
+{% load staticfiles %}
+{% block content %}
+{% csrf_token %}
+<audio controls="controls" id="audio" style="display:none;">
+    <source src="{% static 'sound/ring.mp3' %}" type="audio/mp3" />
+</audio>
+
+    <div class="nurse_grid">
+        <div class="nurse_list partition">
+            <div class="medicine_table_title">
+                <span class="btn btn-danger medicine_table_title_span" >{{ _('Patient List') }}</span>
+            
+                <div class="pharmacy_list_control" style="">
+                    {{ _('Date') }} : 
+                    <input id="pharmacy_list_calendar_start" class="form-control pharmacy_list_calendar" />
+                    ~
+                    <input id="pharmacy_list_calendar_end" class="form-control pharmacy_list_calendar" />
+                    
+                    <div class="input-group" style="width:155px; display:inline-table;{% if user.doctor%}display:none{% endif%}">
+                        <span class="input-group-addon" id="basic-addon1">{{ _('Depart') }}</span>
+                        <select id="pharmacy_list_depart" class="form-control" aria-describedby="basic-addon1" >
+                            <option value="">{{ _('All') }}</option>' +
+                            {% for data in depart %}
+                                <option value="{{ data.id }}">{{ data.name }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+
+                    <select name="filter" id="pharmacy_search_select" class="form-control costom-select pharmacy_search_select" aria-describedby="basic-addon1">
+                        <option value="">{{ _('All') }}</option>
+                        <option value="name">{{ _('Name') }}</option>
+                        <option value="chart">{{ _('Chart') }}</option>
+                    </select>
+                    <input type="text" class="form-control" id="search_str" />
+                    <input type="button" id="pharmacy_list_search" class="btn btn-default" value="{{ _('Search') }}" onclick="waiting_list()"/>
+                    <br />
+
+                </div>
+            </div>
+            <div class="pharmacy_list_table_wrap" style="margin-top:15px;">
+                <table class="table table-hover pharmacy_list_table table-striped table-bordered" id="pharmacy_list_table">
+                    <thead>
+                        <tr>
+                            <th>{{ _('No') }}</th>
+                            <th>{{ _('Chart No') }}</th>
+                            <th>{{ _('Name') }}</th>
+                            <th>{{ _('Date of Birth') }}</th>
+                            <th>{{ _('Depart') }}</th>
+                            <th>{{ _('Order Date') }}</th>
+                            <th>{{ _('Completed Date') }}</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        
+        <div class="pharmacy_patient_info partition">
+            <div class="medicine_table_title">
+                <span class="btn btn-danger medicine_table_title_span" >{{ _('Patient Information') }}</span>
+             </div>
+            <div>
+                <table class="table" id="patient_info_table">
+                    <tr>
+                        <td>
+                            <div class="input-group">
+                                <span class="input-group-addon" id="basic-addon1">{{ _('Chart No') }}</span>
+                                <input type="text" class="form-control" aria-describedby="sizing-addon1" id="patient_chart" readonly/>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="input-group">
+                                <span class="input-group-addon" id="basic-addon1">{{ _('Name') }}</span>
+                                <input type="text" class="form-control" aria-describedby="sizing-addon1" id="patient_name"/>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="input-group">
+                                <span class="input-group-addon" style="border:1px solid #ccc" id="basic-addon1">{{ _('Gender') }}</span>
+                                <ul id="patient_gender">
+                                    <li>
+                                        <label for="patient_gender_0"><input type="radio" name="gender" value="Male" id="patient_gender_0">Male</label>
+                                    </li>
+                                    <li>
+                                        <label for="patient_gender_1"><input type="radio" name="gender" value="Female" id="patient_gender_1">Female</label>
+                                    </li>
+                                </ul>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="input-group">
+                                <span class="input-group-addon" id="basic-addon1">{{ _('Date of Birth') }}</span>
+                                <input type="text" class="form-control" aria-describedby="sizing-addon1" id="patient_dob"/>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="input-group">
+                                <span class="input-group-addon" id="basic-addon1">{{ _('Depart') }}</span>
+                                <input type="text" class="form-control" aria-describedby="sizing-addon1" id="patient_depart"/>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="input-group">
+                                <span class="input-group-addon" id="basic-addon1">{{ _('Phone Number') }}</span>
+                                <input type="text" class="form-control" aria-describedby="sizing-addon1" id="patient_phone"/>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr><!--
+                        <td>
+                            <div style="display:inline;">
+                                &emsp;&emsp;
+                                <label class="need_something_check" style="margin-right:10px;"><input type="checkbox" id="need_invoice" /><text>{{_('Red Invoice') }}</text></label>
+                                <label class="need_something_check"><input type="checkbox" id="need_insurance" /><text> {{_('Insurance') }}</text></label>
+                            </div>
+                        </td>-->
+                    </tr>
+                </table>
+            </div>
+        </div>
+
+
+        <div class="pharmacy_contents partition">
+            <div class="medicine_table_title">
+                <span class="btn btn-danger medicine_table_title_span" >{{ _('Ordered Items') }}</span>
+                <div style="float:right; display:inline;">
+                    <input type="button" class="btn btn-default" id="" value="{{ _('Cancel') }}" onclick="pharmacy_control_save('CANCLE')" />
+                    <input type="button" class="btn btn-warning" id="" value="{{ _('Proceeding') }}" onclick="pharmacy_control_save('PROCEEDING')"/>
+                    <input type="button" class="btn btn-danger" value="{{ _('Done') }}" onclick="pharmacy_control_save('DONE')"/>
+                </div>
+            </div>
+            <input type="hidden" id="selected_diagnosis"/>
+            <input type="hidden" id="selected_diagnosis_status"/>
+
+            <div class="pharmacy_contents_overflow">
+                <table class="table pharmacy_contents_table table-striped table-bordered" id="pharmacy_contents_table">
+                    <thead>
+                        <tr>
+                            <th>{{ _('Code') }}</th>
+                            <th>{{ _('Type') }}</th>
+                            <th>{{ _('Name') }}</th>
+                            <th>{{ _('Depart') }}</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+
+<div id="overlay">
+	<div class="cv-spinner">
+		<span class="spinner"></span>
+	</div>
+</div>
+
+
+
+<script>
+    function get_listener_path() {
+        return '{% static 'js/event_listener.js' %}';
+    }
+</script>
+{% endblock %}
+
+
+{% block style %}
+<link rel="stylesheet" type="text/css" href="{% static 'css/nurse.css' %}" />
+<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
+
+{% endblock %}
+
+{% block scripts %}
+<script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.js"></script>
+<script src="{% static 'js/nurse.js' %}" type="text/javascript"></script>
+{% endblock %}

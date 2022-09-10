@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <style>
+        @media print {
+            #wrap {
+                margin: 0px;
+                padding: 45px;
+                font-size: 10px;
+                font-family: "Times New Roman", Times, serif;
+            }
+
+            table {
+                height:100%;
+            }
+                table tr td {
+                    font-size: 12px;
+                }
+
+            #logo {
+                width:100%;
+            }
+
+            .top {
+                
+            
+            }
+
+            .top tr:first-child td:nth-child(2) {
+                font-weight:700;
+            }
+
+            .patient_info {
+                width:100%;
+                margin-top:10px;
+                border-collapse: separate;
+                border-spacing: 0px 5px;
+            }
+            .patient_info tr td{
+                width:50%;
+            }
+
+
+            .title {
+                width: 100%;
+                text-align: center;
+                font-size: 14px;
+                font-weight: 700;
+                margin-top: 40px;
+            }
+
+            .contents {
+                margin-top: 15px;
+                width: 100%;
+                border: 1px solid black;
+                border-collapse: collapse;
+                
+            }
+                .contents tr td, .contents tr th {
+                    border: 1px solid black;
+                }
+
+                .contents thead tr:first-child td {
+                    text-align: center;
+                    vertical-align: middle;
+                }
+
+            #contents tr, #contents td {
+                padding:2px;
+            }
+
+            #contents_datas tr td {
+                text-align: center;
+                        vertical-align: middle;
+            }
+
+            .footer {
+                margin-top:60px;
+                width:100%;
+            }
+                .footer tr td:first-child {
+                width:50%;
+                
+                }
+
+                .footer tr td:nth-child(2) {
+                    width:50%;
+                    text-align:center;
+                }
+        }
+    </style>
+</head>
+<body>
+    <div id="wrap">
+        <table class="top">
+            <tr>
+                <td>
+                    <img src="/static/img/document_top.png" id="logo" />
+                </td>
+                <!--<td>Công ty TNHH International Medicare - Phòng khám đa khoa quốc tế I-Medicare</td>
+            </tr>
+            <tr>
+                <td>Địa chỉ : Tầng 1 - Tòa nhà The Garden - đường Mễ Trì - phường Mĩ Đình 1 </td>
+            </tr>
+            <tr>
+                <td>Quận Nam Từ Liêm - Hà Nội</td>
+            </tr>
+            <tr>
+                <td>Hotline : 081.340.0101 - 081.760.0105</td>-->
+            </tr>
+        </table>
+
+
+        <div class="title">
+            <text>GIẤY HẸN/ APPOINTMENT LETTER	</text>
+        </div>
+        <br />
+        <table class="patient_info">
+            <tr>
+                <td><b><i>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    Khám chữa bệnh/Medical:           </i></b>&#9634<br /></td>              
+                <td><b><i>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    Tiêm chủng/Vaccine:               </i></b>&#9634<br /></td>
+            </tr>           
+        </table>        
+        <table class="patient_info">
+            <tr>
+                <td><b>I. THÔNG TIN BỆNH NHÂN </b>/ <b><i>PATIENT'S INFORMATION</i></b></td>
+            </tr>            
+            <tr>
+                <td><b>1. Họ và tên</b>/ <i>Fullname</i> : <text id="patient_info_name">{{ name }}</text></td>
+                <td><b>2. Giới tính</b>/ <i>Gender</i> : {{ gender }}</td>
+                
+            </tr>
+            <tr>
+                <td><b>3. Ngày sinh</b>/ <i>D.O.B</i> : {{date_of_birth}}</td>
+                <td><b>4. Quốc tịch</b>/ <i>Nationality</i> : {{ nationality }}</td>
+            </tr>
+            <tr>
+                <td><b>5. Địa chỉ</b>/ <i>Address</i> : {{address}}</td>  
+                <td><b>6. Số điện thoại</b>/<i>Phone number</i> : {{ phone }}</td>              
+            </tr>
+            <tr>
+                <td colspan="2"><b>7. Số CMT/ Hộ chiếu</b>/ <i>ID Number/Passport</i> : </td>                
+            </tr>
+            <tr>
+                <td><b>II. THÔNG TIN ĐẶT HẸN </b>/ <b><i>APPOINTMENT INFORMATION</i></b></td>
+            </tr>     
+            <tr>
+                <td><b>1. Thời gian đặt hẹn</b>/ <i>Appointment time</i> : </td>
+                <td> {{ res_time }} Ngày/date {{ res_date }}, Tháng/Month {{ res_month }}, Năm/Year {{ res_year }}  </td>
+            </tr>    
+            <tr>
+                <td colspan="2"><b>2. Khoa yêu cầu</b>/ <i>Examination Dept</i> : {{ depart_full_vie }}/{{ depart_full }}</td>
+            </tr>   
+            <tr>
+
+            </tr>                       
+        </table>
+        <td colspan="2">Giấy hẹn khám chỉ có giá trị dùng trong ngày. Khách hàng mang theo giấy tờ tùy thân để đối chiếu thông tin khi được yêu cầu. </text></td>
+        <td colspan="2">The appointment letter is only valid for the specified date. Customers bring identification documents to compare information when required./. </text></td>
+        <table class="patient_info">
+            <tr>
+                <td>
+                    <i>Người đi cùng</i></b> / <i>Accompany person: </i><br />
+                </td>
+
+            </tr>
+            <tr>
+                <td><i>Bố/ Dad:      </i>&#9634 <i>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Mẹ/ Mom:      </i>&#9634 <i>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Khác/ Other:  </i>&#9634</td>
+                
+            </tr>   
+            <tr>   
+                <td>
+                </td>
+                <td>
+                    <div class="centered">
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;   Ngày/date {{ res_date }}, Tháng/Month {{ res_month }}, Năm/Year {{ res_year }}  <br>
+                <b>CÔNG TY TNHH INTERNATIONAL MEDICARE<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <b>   PHÒNG KHÁM ĐA KHOA I-MEDICARE<br />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        <b>   PHÓ GIÁM ĐỐC
+                        </div>
+            </td>
+            </tr> 
+            <tr>
+                <td>
+                </td>
+                <td>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                             <img src="/static/img/chu_ky.png" />
+                </td>
+            </tr>            
+        </table>            
+    </div>
+</body>
+</html>

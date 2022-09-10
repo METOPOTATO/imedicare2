@@ -1,0 +1,1360 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2020-06-11 10:55+0700\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+
+#: .\Doctor\static\js\doctor.js:754 .\Doctor\static\js\doctor.js:951
+#: .\Doctor\static\js\doctor.js:995 .\Doctor\static\js\doctor_DERM.js:821
+#: .\Doctor\static\js\doctor_DERM.js:1043
+#: .\Doctor\static\js\doctor_DERM.js:1087
+#: .\Doctor\static\js\doctor_DERM.js:1399 .\Doctor\static\js\doctor_PM.js:695
+#: .\Doctor\static\js\doctor_PM.js:1082 .\Doctor\static\js\doctor_PM.js:1279
+#: .\Doctor\static\js\doctor_PM.js:1323
+#: .\Manage\static\js\employee_manage.js:166
+#: .\Manage\static\js\inventory_precedure.js:142
+#: .\Manage\static\js\inventory_test.js:143
+#: .\Pharmacy\static\js\inventory.js:190 .\Pharmacy\static\js\pharmacy.js:149
+#: .\Receptionist\static\js\storage_page.js:173
+#: .\Receptionist\static\js\storage_page.js:187
+#: .\Receptionist\static\js\storage_page.js:1284
+#: .\physical_therapist\static\js\physical_therapist.js:320
+#: .\physical_therapist\static\js\physical_therapist.js:703
+#: .\physical_therapist\static\js\physical_therapist.js:924
+#: .\physical_therapist\static\js\physical_therapist.js:958
+#: .\static\js\doctor.js:754 .\static\js\doctor.js:951
+#: .\static\js\doctor.js:995 .\static\js\doctor_DERM.js:821
+#: .\static\js\doctor_DERM.js:1043 .\static\js\doctor_DERM.js:1087
+#: .\static\js\doctor_DERM.js:1399 .\static\js\doctor_PM.js:695
+#: .\static\js\doctor_PM.js:1082 .\static\js\doctor_PM.js:1279
+#: .\static\js\doctor_PM.js:1323 .\static\js\employee_manage.js:166
+#: .\static\js\inventory.js:190 .\static\js\inventory_precedure.js:142
+#: .\static\js\inventory_test.js:143 .\static\js\pharmacy.js:147
+#: .\static\js\physical_therapist.js:320 .\static\js\physical_therapist.js:703
+#: .\static\js\physical_therapist.js:924 .\static\js\physical_therapist.js:958
+#: .\static\js\storage_page.js:173 .\static\js\storage_page.js:187
+#: .\static\js\storage_page.js:1284
+msgid "Select patient first."
+msgstr "먼저 환자를 선택하세요."
+
+#: .\Doctor\static\js\doctor.js:893 .\Doctor\static\js\doctor_DERM.js:985
+#: .\Doctor\static\js\doctor_PM.js:1222
+#: .\Receptionist\static\js\reception.js:1295
+#: .\Receptionist\static\js\reception.js:1428
+#: .\Receptionist\static\js\reception.js:1505
+#: .\Receptionist\static\js\reception.js:1557 .\app\static\js\signpad.js:65
+#: .\physical_therapist\static\js\physical_therapist.js:884
+#: .\static\js\doctor.js:893 .\static\js\doctor_DERM.js:985
+#: .\static\js\doctor_PM.js:1222 .\static\js\physical_therapist.js:884
+#: .\static\js\reception.js:1295 .\static\js\reception.js:1428
+#: .\static\js\reception.js:1505 .\static\js\reception.js:1557
+#: .\static\js\signpad.js:65
+msgid "No Result !!"
+msgstr "결과 없음 !!"
+
+#: .\Doctor\static\js\doctor.js:1000 .\Doctor\static\js\doctor_DERM.js:1092
+#: .\Doctor\static\js\doctor_PM.js:1328 .\static\js\doctor.js:1000
+#: .\static\js\doctor_DERM.js:1092 .\static\js\doctor_PM.js:1328
+msgid ""
+"Subjective Data is Empty.\n"
+"Please fill in all the input of History Taking."
+msgstr ""
+"주호소가 비었습니다..\n"
+"진료 내용의 모든 입력창을 채워주세요."
+
+#: .\Doctor\static\js\doctor.js:1004 .\Doctor\static\js\doctor_DERM.js:1096
+#: .\Doctor\static\js\doctor_PM.js:1332 .\static\js\doctor.js:1004
+#: .\static\js\doctor_DERM.js:1096 .\static\js\doctor_PM.js:1332
+msgid ""
+"Objective Data is Empty.\n"
+"Please fill in all the input of History Taking."
+msgstr ""
+"진료내역이 비었습니다..\n"
+"진료 내용의 모든 입력창을 채워주세요."
+
+#: .\Doctor\static\js\doctor.js:1008 .\Doctor\static\js\doctor_DERM.js:1100
+#: .\Doctor\static\js\doctor_PM.js:1336 .\static\js\doctor.js:1008
+#: .\static\js\doctor_DERM.js:1100 .\static\js\doctor_PM.js:1336
+msgid ""
+"Assessment is Empty.\n"
+"Please fill in all the input of History Taking."
+msgstr ""
+"사정이 비었습니다..\n"
+"진료 내용의 모든 입력창을 채워주세요."
+
+#: .\Doctor\static\js\doctor.js:1012 .\Doctor\static\js\doctor_DERM.js:1104
+#: .\Doctor\static\js\doctor_PM.js:1340 .\static\js\doctor.js:1012
+#: .\static\js\doctor_DERM.js:1104 .\static\js\doctor_PM.js:1340
+msgid ""
+"Plan is Empty.\n"
+"Please fill in all the input of History Taking."
+msgstr ""
+"치료계획이 비었습니다..\n"
+"진료 내용의 모든 입력창을 채워주세요."
+
+#: .\Doctor\static\js\doctor.js:1016 .\Doctor\static\js\doctor_DERM.js:1108
+#: .\Doctor\static\js\doctor_PM.js:1344 .\static\js\doctor.js:1016
+#: .\static\js\doctor_DERM.js:1108 .\static\js\doctor_PM.js:1344
+msgid ""
+"Diagnosis is Empty.\n"
+"Please fill in all the input of History Taking."
+msgstr ""
+"진단명이 비었습니다..\n"
+"진료 내용의 모든 입력창을 채워주세요."
+
+#: .\Doctor\static\js\doctor.js:1020 .\static\js\doctor.js:1020
+msgid ""
+"Sub Clinical Test is Empty.\n"
+"Please fill in all the input of History Taking."
+msgstr ""
+"임상이 비었습니다..\n"
+"진료 내용의 모든 입력창을 채워주세요."
+
+#: .\Doctor\static\js\doctor.js:1060 .\Doctor\static\js\doctor.js:1066
+#: .\Doctor\static\js\doctor_DERM.js:1148
+#: .\Doctor\static\js\doctor_DERM.js:1154 .\Doctor\static\js\doctor_PM.js:1391
+#: .\Doctor\static\js\doctor_PM.js:1399
+#: .\physical_therapist\static\js\physical_therapist.js:1000
+#: .\static\js\doctor.js:1060 .\static\js\doctor.js:1066
+#: .\static\js\doctor_DERM.js:1148 .\static\js\doctor_DERM.js:1154
+#: .\static\js\doctor_PM.js:1391 .\static\js\doctor_PM.js:1399
+#: .\static\js\physical_therapist.js:1000
+msgid "amount is empty."
+msgstr "수량은 필수 입니다."
+
+#: .\Doctor\static\js\doctor.js:1072 .\Doctor\static\js\doctor_DERM.js:1160
+#: .\Doctor\static\js\doctor_PM.js:1404
+#: .\physical_therapist\static\js\physical_therapist.js:1005
+#: .\static\js\doctor.js:1072 .\static\js\doctor_DERM.js:1160
+#: .\static\js\doctor_PM.js:1404 .\static\js\physical_therapist.js:1005
+msgid "days is empty."
+msgstr "일수는 필수 입니다."
+
+#: .\Doctor\static\js\doctor.js:1137 .\Doctor\static\js\doctor_DERM.js:1244
+#: .\Doctor\static\js\doctor_PM.js:1444
+#: .\KBL\static\js\document_management.js:63
+#: .\KBL\static\js\project_management.js:267 .\Manage\static\js\Draft.js:52
+#: .\physical_therapist\static\js\physical_therapist.js:1038
+#: .\static\js\Draft.js:52 .\static\js\doctor.js:1137
+#: .\static\js\doctor_DERM.js:1244 .\static\js\doctor_PM.js:1444
+#: .\static\js\document_management.js:63 .\static\js\physical_therapist.js:1038
+#: .\static\js\project_management.js:267
+msgid "Saved"
+msgstr "저장 됐습니다."
+
+#: .\Doctor\static\js\doctor_DERM.js:1242 .\static\js\doctor_DERM.js:1242
+msgid ""
+"Failed \n"
+"already settled or is settled."
+msgstr ""
+"실패 했습니다.\n"
+"이미 계산중 이거나 계산 되었습니다."
+
+#: .\Doctor\static\js\doctor_DERM.js:1502 .\Doctor\static\js\report.js:104
+#: .\KBL\static\js\audit_management.js:450
+#: .\KBL\static\js\customer_management.js:546
+#: .\KBL\static\js\customer_management.js:633
+#: .\KBL\static\js\estimate_sheet.js:369 .\KBL\static\js\estimate_sheet.js:488
+#: .\KBL\static\js\invoice_management.js:234
+#: .\KBL\static\js\project_management.js:791
+#: .\KBL\static\js\project_management.js:981
+#: .\KBL\static\js\project_management.js:1164
+#: .\KBL\static\js\project_management.js:1338
+#: .\Laboratory\static\js\laboratory.js:101
+#: .\Manage\static\js\code_setting.js:291
+#: .\Manage\static\js\employee_manage.js:121
+#: .\Manage\static\js\employee_manage.js:189
+#: .\Manage\static\js\inventory_precedure.js:97
+#: .\Manage\static\js\inventory_precedure.js:165
+#: .\Manage\static\js\inventory_test.js:98
+#: .\Manage\static\js\inventory_test.js:166
+#: .\Manage\static\js\inventory_test.js:410
+#: .\Pharmacy\static\js\inventory.js:145 .\Pharmacy\static\js\inventory.js:213
+#: .\Pharmacy\static\js\pharmacy.js:98 .\Pharmacy\static\js\pharmacy.js:172
+#: .\Receptionist\static\js\reception.js:1032
+#: .\Receptionist\static\js\reception.js:1651
+#: .\Receptionist\static\js\reception.js:1943
+#: .\Receptionist\static\js\reception.js:1944 .\app\static\js\signpad.js:127
+#: .\static\js\audit_management.js:450 .\static\js\code_setting.js:291
+#: .\static\js\customer_management.js:546
+#: .\static\js\customer_management.js:633 .\static\js\doctor_DERM.js:1502
+#: .\static\js\employee_manage.js:121 .\static\js\employee_manage.js:189
+#: .\static\js\estimate_sheet.js:369 .\static\js\estimate_sheet.js:488
+#: .\static\js\inventory.js:145 .\static\js\inventory.js:213
+#: .\static\js\inventory_precedure.js:97 .\static\js\inventory_precedure.js:165
+#: .\static\js\inventory_test.js:98 .\static\js\inventory_test.js:166
+#: .\static\js\inventory_test.js:410 .\static\js\invoice_management.js:234
+#: .\static\js\laboratory.js:101 .\static\js\pharmacy.js:98
+#: .\static\js\pharmacy.js:173 .\static\js\project_management.js:791
+#: .\static\js\project_management.js:981 .\static\js\project_management.js:1164
+#: .\static\js\project_management.js:1338 .\static\js\reception.js:1032
+#: .\static\js\reception.js:1651 .\static\js\reception.js:1943
+#: .\static\js\reception.js:1944 .\static\js\report.js:104
+#: .\static\js\signpad.js:127
+msgid "Saved."
+msgstr "저장 됐습니다."
+
+#: .\Doctor\static\js\doctor_DERM.js:1518
+#: .\KBL\static\js\audit_management.js:468
+#: .\KBL\static\js\document_management.js:252
+#: .\KBL\static\js\estimate_sheet.js:384
+#: .\KBL\static\js\invoice_management.js:254
+#: .\KBL\static\js\project_management.js:806
+#: .\KBL\static\js\project_management.js:997
+#: .\KBL\static\js\project_management.js:1188
+#: .\KBL\static\js\project_management.js:1354
+#: .\KBL\static\js\project_management.js:1524 .\Manage\static\js\Draft.js:289
+#: .\Manage\static\js\Draft.js:648 .\Manage\static\js\code_setting.js:307
+#: .\Manage\static\js\inventory_test.js:426 .\static\js\Draft.js:289
+#: .\static\js\Draft.js:648 .\static\js\audit_management.js:468
+#: .\static\js\code_setting.js:307 .\static\js\doctor_DERM.js:1518
+#: .\static\js\document_management.js:252 .\static\js\estimate_sheet.js:384
+#: .\static\js\inventory_test.js:426 .\static\js\invoice_management.js:254
+#: .\static\js\project_management.js:806 .\static\js\project_management.js:997
+#: .\static\js\project_management.js:1188
+#: .\static\js\project_management.js:1354
+#: .\static\js\project_management.js:1524
+msgid "Do you want to delete?"
+msgstr "댓글을 삭제 하시겠습니까?"
+
+#: .\Doctor\static\js\doctor_DERM.js:1529
+#: .\KBL\static\js\audit_management.js:480
+#: .\KBL\static\js\customer_management.js:278
+#: .\KBL\static\js\customer_management.js:669
+#: .\KBL\static\js\document_management.js:264
+#: .\KBL\static\js\estimate_sheet.js:396 .\KBL\static\js\estimate_sheet.js:527
+#: .\KBL\static\js\invoice_management.js:266
+#: .\KBL\static\js\project_management.js:818
+#: .\KBL\static\js\project_management.js:1011
+#: .\KBL\static\js\project_management.js:1202
+#: .\KBL\static\js\project_management.js:1368
+#: .\KBL\static\js\project_management.js:1536 .\Manage\static\js\Draft.js:660
+#: .\Manage\static\js\code_setting.js:319
+#: .\Manage\static\js\inventory_test.js:437
+#: .\Receptionist\static\js\reception.js:1675 .\static\js\Draft.js:660
+#: .\static\js\audit_management.js:480 .\static\js\code_setting.js:319
+#: .\static\js\customer_management.js:278
+#: .\static\js\customer_management.js:669 .\static\js\doctor_DERM.js:1529
+#: .\static\js\document_management.js:264 .\static\js\estimate_sheet.js:396
+#: .\static\js\estimate_sheet.js:527 .\static\js\inventory_test.js:437
+#: .\static\js\invoice_management.js:266 .\static\js\project_management.js:818
+#: .\static\js\project_management.js:1011
+#: .\static\js\project_management.js:1202
+#: .\static\js\project_management.js:1368
+#: .\static\js\project_management.js:1536 .\static\js\reception.js:1675
+msgid "Deleted."
+msgstr "삭제 됐습니다."
+
+#: .\Doctor\static\js\doctor_PM.js:349
+#: .\Receptionist\static\js\reception.js:551 .\static\js\doctor_PM.js:349
+#: .\static\js\reception.js:551
+msgid "Question 5 is empty."
+msgstr "5번 문항이 비어있습니다."
+
+#: .\Doctor\static\js\doctor_PM.js:381
+#: .\Receptionist\static\js\reception.js:583 .\static\js\doctor_PM.js:381
+#: .\static\js\reception.js:583
+msgid "Question 8 is empty."
+msgstr "8번 문항이 비어있습니다."
+
+#: .\Doctor\static\js\doctor_PM.js:388
+#: .\Receptionist\static\js\reception.js:590 .\static\js\doctor_PM.js:388
+#: .\static\js\reception.js:590
+msgid "Question 9 is empty."
+msgstr "9번 문항이 비어있습니다."
+
+#: .\Doctor\static\js\doctor_PM.js:1442
+#: .\physical_therapist\static\js\physical_therapist.js:1036
+#: .\static\js\doctor_PM.js:1442 .\static\js\physical_therapist.js:1036
+msgid ""
+"Only SOAPD and Recommend are saved. \n"
+"already settled or is settled."
+msgstr ""
+"주호소, 진료내역, 사정, 치료계획, 진단명만 저장 됩니다. \n"
+"이미 계산 중이거나 계산 되었습니다."
+
+#: .\Doctor\static\js\report.js:343 .\static\js\report.js:343
+msgid "Type a text for searching"
+msgstr "검색 할 텍스트를 입력하세요."
+
+#: .\KBL\static\js\audit_management.js:367
+#: .\KBL\static\js\project_management.js:742
+#: .\static\js\audit_management.js:367 .\static\js\project_management.js:742
+msgid "Please search and select Company."
+msgstr "회사를 검색하고 선택 해주세요."
+
+#: .\KBL\static\js\audit_management.js:371 .\static\js\audit_management.js:371
+msgid "Company Name is empty."
+msgstr "회사 이름이 비었습니다.."
+
+#: .\KBL\static\js\audit_management.js:375 .\static\js\audit_management.js:375
+msgid "Select Service Type."
+msgstr "서비스 구분을 선택해주세요."
+
+#: .\KBL\static\js\audit_management.js:379
+#: .\KBL\static\js\estimate_sheet.js:328
+#: .\KBL\static\js\invoice_management.js:210
+#: .\static\js\audit_management.js:379 .\static\js\estimate_sheet.js:328
+#: .\static\js\invoice_management.js:210
+msgid "Title is empty."
+msgstr "제목은 필수 입니다."
+
+#: .\KBL\static\js\audit_management.js:383 .\static\js\audit_management.js:383
+msgid "Service Fee is empty."
+msgstr "5번 문항이 비어있습니다."
+
+#: .\KBL\static\js\audit_management.js:387
+#: .\KBL\static\js\estimate_sheet.js:448 .\static\js\audit_management.js:387
+#: .\static\js\estimate_sheet.js:448
+msgid "Quantity is empty."
+msgstr "수량은 필수 입니다."
+
+#: .\KBL\static\js\audit_management.js:391
+#: .\KBL\static\js\estimate_sheet.js:452 .\static\js\audit_management.js:391
+#: .\static\js\estimate_sheet.js:452
+msgid "Quantity should be in numbers."
+msgstr "수량은 숫자이어야 합니다."
+
+#: .\KBL\static\js\audit_management.js:396 .\static\js\audit_management.js:396
+msgid "Service Fee should be in numbers."
+msgstr "서비스 비용은 숫자이어야 합니다."
+
+#: .\KBL\static\js\audit_management.js:401 .\static\js\audit_management.js:401
+msgid "Service Fee(VAT) is empty."
+msgstr "서비스 비용(부가세)가 비었습니다."
+
+#: .\KBL\static\js\audit_management.js:405 .\static\js\audit_management.js:405
+msgid "Service Fee(VAT) should be in numbers."
+msgstr "서비스 비용(부가세)는 숫자로 되어야 합니다."
+
+#: .\KBL\static\js\audit_management.js:410 .\static\js\audit_management.js:410
+msgid "Paid(Total) is empty."
+msgstr "총계는 필수 입니다."
+
+#: .\KBL\static\js\audit_management.js:414 .\static\js\audit_management.js:414
+msgid "Paid(Total) should be in numbers."
+msgstr "수량은 숫자이어야 합니다."
+
+#: .\KBL\static\js\audit_management.js:419 .\static\js\audit_management.js:419
+msgid "Select Service Status."
+msgstr "약을 먼저 선택해주세요."
+
+#: .\KBL\static\js\audit_management.js:502 .\Manage\static\js\Draft.js:471
+#: .\static\js\Draft.js:471 .\static\js\audit_management.js:502
+msgid "Do you want to approve?"
+msgstr "예약을 변경 하시겠습니까?"
+
+#: .\KBL\static\js\audit_management.js:504 .\Manage\static\js\Draft.js:473
+#: .\static\js\Draft.js:473 .\static\js\audit_management.js:504
+msgid "Do you want cancel approval?"
+msgstr "예약을 변경 하시겠습니까?"
+
+#: .\KBL\static\js\audit_management.js:554 .\static\js\audit_management.js:554
+msgid "Select Audit items first."
+msgstr "먼저 검사를 선택하세요."
+
+#: .\KBL\static\js\audit_management.js:569 .\static\js\audit_management.js:569
+msgid "Do you want to Create Invoice?"
+msgstr "댓글을 삭제 하시겠습니까?"
+
+#: .\KBL\static\js\audit_management.js:583 .\static\js\audit_management.js:583
+msgid "Created."
+msgstr "삭제 됐습니다."
+
+#: .\KBL\static\js\customer_management.js:89
+#: .\static\js\customer_management.js:89
+msgid "Select Company first."
+msgstr "먼저 환자를 선택하세요."
+
+#: .\KBL\static\js\customer_management.js:262
+#: .\KBL\static\js\customer_management.js:653
+#: .\static\js\customer_management.js:262
+#: .\static\js\customer_management.js:653
+msgid "Do you want to delete ?"
+msgstr "댓글을 삭제 하시겠습니까?"
+
+#: .\KBL\static\js\customer_management.js:495
+#: .\KBL\static\js\customer_management.js:585
+#: .\static\js\customer_management.js:495
+#: .\static\js\customer_management.js:585
+msgid "Name (KOR) field is empty."
+msgstr "한글 이름 필드가 비었습니다."
+
+#: .\KBL\static\js\customer_management.js:499
+#: .\KBL\static\js\customer_management.js:589
+#: .\static\js\customer_management.js:499
+#: .\static\js\customer_management.js:589
+msgid "Name (ENG) field is empty."
+msgstr "한글 이름 필드가 비었습니다."
+
+#: .\KBL\static\js\customer_management.js:503
+#: .\static\js\customer_management.js:503
+msgid "CEO Name field is empty."
+msgstr "영문 이름 필드가 비었습니다."
+
+#: .\KBL\static\js\customer_management.js:507
+#: .\static\js\customer_management.js:507
+msgid "Phone Number 1 field is empty."
+msgstr "전화번호1 필드가 비었습니다."
+
+#: .\KBL\static\js\customer_management.js:511
+#: .\KBL\static\js\customer_management.js:601
+#: .\static\js\customer_management.js:511
+#: .\static\js\customer_management.js:601
+msgid "Condition field is empty."
+msgstr "구분 필드가 비었습니다."
+
+#: .\KBL\static\js\customer_management.js:580
+#: .\KBL\static\js\project_management.js:746
+#: .\static\js\customer_management.js:580 .\static\js\project_management.js:746
+msgid "Type field is empty."
+msgstr "ID 필드가 비었습니다."
+
+#: .\KBL\static\js\customer_management.js:593
+#: .\static\js\customer_management.js:593
+msgid "Date of Birth field is empty."
+msgstr "생년월일 필드가 비었습니다."
+
+#: .\KBL\static\js\customer_management.js:597
+#: .\static\js\customer_management.js:597
+msgid "Phone Number field is empty."
+msgstr "전화번호1 필드가 비었습니다."
+
+#: .\KBL\static\js\customer_management.js:695
+#: .\static\js\customer_management.js:695
+msgid "Select customer(s) to be sent"
+msgstr ""
+
+#: .\KBL\static\js\customer_management.js:703
+#: .\static\js\customer_management.js:703
+msgid " 님 외 "
+msgstr ""
+
+#: .\KBL\static\js\customer_management.js:730
+#: .\KBL\static\js\invoice_management.js:318 .\Manage\static\js\CRM.js:246
+#: .\static\js\CRM.js:246 .\static\js\customer_management.js:730
+#: .\static\js\invoice_management.js:318
+msgid "Name is Empty."
+msgstr "수량은 필수 입니다."
+
+#: .\KBL\static\js\customer_management.js:734
+#: .\KBL\static\js\invoice_management.js:322 .\Manage\static\js\CRM.js:250
+#: .\static\js\CRM.js:250 .\static\js\customer_management.js:734
+#: .\static\js\invoice_management.js:322
+msgid "Phone Number is Empty."
+msgstr "전화번호1 필드가 비었습니다."
+
+#: .\KBL\static\js\customer_management.js:738
+#: .\KBL\static\js\invoice_management.js:326 .\Manage\static\js\CRM.js:254
+#: .\static\js\CRM.js:254 .\static\js\customer_management.js:738
+#: .\static\js\invoice_management.js:326
+msgid "Content is Empty."
+msgstr "수량은 필수 입니다."
+
+#: .\KBL\static\js\document_management.js:224
+#: .\KBL\static\js\project_management.js:1496 .\Manage\static\js\Draft.js:620
+#: .\static\js\Draft.js:620 .\static\js\document_management.js:224
+#: .\static\js\project_management.js:1496
+msgid "Select File."
+msgstr "아이템을 선택하세요."
+
+#: .\KBL\static\js\document_management.js:233
+#: .\KBL\static\js\project_management.js:1505 .\Manage\static\js\Draft.js:629
+#: .\static\js\Draft.js:629 .\static\js\document_management.js:233
+#: .\static\js\project_management.js:1505
+msgid "File Name is Empty."
+msgstr "수량은 필수 입니다."
+
+#: .\KBL\static\js\estimate_sheet.js:320
+#: .\KBL\static\js\invoice_management.js:214 .\static\js\estimate_sheet.js:320
+#: .\static\js\invoice_management.js:214
+msgid "Recipient is empty."
+msgstr "소견이 비어있습니다."
+
+#: .\KBL\static\js\estimate_sheet.js:324 .\static\js\estimate_sheet.js:324
+msgid "E - Mail is empty."
+msgstr "ID 필드가 비었습니다."
+
+#: .\KBL\static\js\estimate_sheet.js:332 .\static\js\estimate_sheet.js:332
+msgid "Remark is empty."
+msgstr "일수는 필수 입니다."
+
+#: .\KBL\static\js\estimate_sheet.js:336 .\static\js\estimate_sheet.js:336
+msgid "Payment Unit is empty."
+msgstr "수량은 필수 입니다."
+
+#: .\KBL\static\js\estimate_sheet.js:340
+#: .\KBL\static\js\project_management.js:1305 .\static\js\estimate_sheet.js:340
+#: .\static\js\project_management.js:1305
+msgid "Status is empty."
+msgstr "상태 필드가 비었습니다."
+
+#: .\KBL\static\js\estimate_sheet.js:344 .\static\js\estimate_sheet.js:344
+msgid "Date is empty."
+msgstr "수량은 필수 입니다."
+
+#: .\KBL\static\js\estimate_sheet.js:431 .\static\js\estimate_sheet.js:431
+msgid "Selet Type field."
+msgstr "먼저 환자를 선택하세요."
+
+#: .\KBL\static\js\estimate_sheet.js:435 .\static\js\estimate_sheet.js:435
+msgid "Content is empty."
+msgstr "수량은 필수 입니다."
+
+#: .\KBL\static\js\estimate_sheet.js:439 .\static\js\estimate_sheet.js:439
+msgid "Unit Price is empty."
+msgstr "ID 필드가 비었습니다."
+
+#: .\KBL\static\js\estimate_sheet.js:443 .\static\js\estimate_sheet.js:443
+msgid "Unit Price should be in numbers."
+msgstr "수량은 숫자이어야 합니다."
+
+#: .\KBL\static\js\estimate_sheet.js:457 .\static\js\estimate_sheet.js:457
+msgid "Cost is empty."
+msgstr "수량은 필수 입니다."
+
+#: .\KBL\static\js\estimate_sheet.js:461 .\static\js\estimate_sheet.js:461
+msgid "Cost should be in numbers."
+msgstr "수량은 숫자이어야 합니다."
+
+#: .\KBL\static\js\estimate_sheet.js:555
+#: .\KBL\static\js\invoice_management.js:504 .\static\js\estimate_sheet.js:555
+#: .\static\js\invoice_management.js:504
+msgid "Do you want to send E-Mail?"
+msgstr "예약을 변경 하시겠습니까?"
+
+#: .\KBL\static\js\estimate_sheet.js:570
+#: .\KBL\static\js\invoice_management.js:518 .\static\js\estimate_sheet.js:570
+#: .\static\js\invoice_management.js:518
+msgid "Email has been sent."
+msgstr "접수됐습니다."
+
+#: .\KBL\static\js\project_management.js:367
+#: .\static\js\project_management.js:367
+msgid "Select a project."
+msgstr "과를 선택해주세요."
+
+#: .\KBL\static\js\project_management.js:738
+#: .\static\js\project_management.js:738
+msgid "Company field is empty."
+msgstr "이메일 필드가 비었습니다."
+
+#: .\KBL\static\js\project_management.js:750
+#: .\static\js\project_management.js:750
+msgid "Project Name field is empty."
+msgstr "한글 이름 필드가 비었습니다."
+
+#: .\KBL\static\js\project_management.js:754
+#: .\static\js\project_management.js:754
+msgid "Level field is empty."
+msgstr "ID 필드가 비었습니다."
+
+#: .\KBL\static\js\project_management.js:758
+#: .\static\js\project_management.js:758
+msgid "Progress field is empty."
+msgstr "암호 필드가 비었습니다."
+
+#: .\KBL\static\js\project_management.js:762
+#: .\static\js\project_management.js:762
+msgid "Approval field is empty."
+msgstr "이메일 필드가 비었습니다."
+
+#: .\KBL\static\js\project_management.js:890
+#: .\static\js\project_management.js:890
+msgid "Do you want to uncheck?"
+msgstr "예약을 변경 하시겠습니까?"
+
+#: .\KBL\static\js\project_management.js:892
+#: .\static\js\project_management.js:892
+msgid "Do you want to check?"
+msgstr "예약을 변경 하시겠습니까?"
+
+#: .\KBL\static\js\project_management.js:949
+#: .\KBL\static\js\project_management.js:1107
+#: .\KBL\static\js\project_management.js:1293
+#: .\static\js\project_management.js:949 .\static\js\project_management.js:1107
+#: .\static\js\project_management.js:1293
+msgid "Error occured. Please press F5 then retry."
+msgstr ""
+
+#: .\KBL\static\js\project_management.js:953
+#: .\static\js\project_management.js:953
+msgid "Type is empty."
+msgstr "일수는 필수 입니다."
+
+#: .\KBL\static\js\project_management.js:957
+#: .\static\js\project_management.js:957
+msgid "Project Progress Detail is empty."
+msgstr ""
+
+#: .\KBL\static\js\project_management.js:1041
+#: .\KBL\static\js\visa_management.js:89 .\static\js\project_management.js:1041
+#: .\static\js\visa_management.js:89
+msgid "EMC"
+msgstr ""
+
+#: .\KBL\static\js\project_management.js:1111
+#: .\KBL\static\js\project_management.js:1297
+#: .\static\js\project_management.js:1111
+#: .\static\js\project_management.js:1297
+msgid "Please search and select Customer."
+msgstr ""
+
+#: .\KBL\static\js\project_management.js:1115
+#: .\KBL\static\js\project_management.js:1301
+#: .\static\js\project_management.js:1115
+#: .\static\js\project_management.js:1301
+msgid "Customer Name is empty."
+msgstr "5번 문항이 비어있습니다."
+
+#: .\KBL\static\js\project_management.js:1119
+#: .\static\js\project_management.js:1119
+msgid "Select Visa Type."
+msgstr "아이템을 선택하세요."
+
+#: .\KBL\static\js\project_management.js:1123
+#: .\static\js\project_management.js:1123
+msgid "Select is Emergency."
+msgstr ""
+
+#: .\KBL\static\js\project_management.js:1127
+#: .\static\js\project_management.js:1127
+msgid "Select Status."
+msgstr "과를 선택해주세요."
+
+#: .\Laboratory\static\js\laboratory.js:78 .\static\js\laboratory.js:78
+msgid "Select test first."
+msgstr "먼저 검사를 선택하세요."
+
+#: .\Manage\static\js\Draft.js:215 .\static\js\Draft.js:215
+msgid "Select Type"
+msgstr "아이템을 선택하세요."
+
+#: .\Manage\static\js\Draft.js:219 .\static\js\Draft.js:219
+msgid "Select Depart"
+msgstr "과를 선택해주세요."
+
+#: .\Manage\static\js\Draft.js:224 .\static\js\Draft.js:224
+msgid "Name is Empty"
+msgstr "수량은 필수 입니다."
+
+#: .\Manage\static\js\Draft.js:229 .\static\js\Draft.js:229
+msgid "Title is Empty"
+msgstr "이메일 필드가 비었습니다."
+
+#: .\Manage\static\js\Draft.js:234 .\static\js\Draft.js:234
+msgid "Select CNSLT_DPRTM"
+msgstr ""
+
+#: .\Manage\static\js\Draft.js:239 .\static\js\Draft.js:239
+msgid "Select MORE_CMNTS"
+msgstr ""
+
+#: .\Manage\static\js\Draft.js:285 .\Manage\static\js\employee_manage.js:472
+#: .\Manage\static\js\employee_manage.js:525
+#: .\Manage\static\js\inventory_medical_tool.js:41
+#: .\Manage\static\js\inventory_medical_tool.js:420
+#: .\Manage\static\js\inventory_precedure.js:357
+#: .\Manage\static\js\inventory_test.js:511
+#: .\Pharmacy\static\js\inventory.js:41 .\Pharmacy\static\js\inventory.js:518
+#: .\static\js\Draft.js:285 .\static\js\employee_manage.js:472
+#: .\static\js\employee_manage.js:525 .\static\js\inventory.js:41
+#: .\static\js\inventory.js:518 .\static\js\inventory_medical_tool.js:41
+#: .\static\js\inventory_medical_tool.js:420
+#: .\static\js\inventory_precedure.js:357 .\static\js\inventory_test.js:511
+msgid "Select Item."
+msgstr "아이템을 선택하세요."
+
+#: .\Manage\static\js\Draft.js:305
+#: .\Manage\static\js\inventory_medical_tool.js:436
+#: .\Manage\static\js\inventory_precedure.js:373
+#: .\Manage\static\js\inventory_test.js:527
+#: .\Pharmacy\static\js\inventory.js:534
+#: .\Receptionist\static\js\storage_page.js:279 .\static\js\Draft.js:305
+#: .\static\js\inventory.js:534 .\static\js\inventory_medical_tool.js:436
+#: .\static\js\inventory_precedure.js:373 .\static\js\inventory_test.js:527
+#: .\static\js\storage_page.js:279
+msgid "Deleted"
+msgstr "삭제 됐습니다."
+
+#: .\Manage\static\js\board\create_edit.js:27
+#: .\Manage\static\js\board_work\create_edit.js:27
+#: .\static\js\board\create_edit.js:27 .\static\js\board_work\create_edit.js:27
+msgid "Are you sure you want to cancel writing?"
+msgstr "삭제하시겠습니까?"
+
+#: .\Manage\static\js\board\create_edit.js:41
+#: .\Manage\static\js\board_work\create_edit.js:41
+#: .\static\js\board\create_edit.js:41 .\static\js\board_work\create_edit.js:41
+msgid "Do you want to delete ? "
+msgstr "댓글을 삭제 하시겠습니까?"
+
+#: .\Manage\static\js\board\list.js:43 .\Manage\static\js\board_work\list.js:58
+#: .\static\js\board\list.js:43 .\static\js\board_work\list.js:58
+msgid "Add<br />Comment"
+msgstr ""
+
+#: .\Manage\static\js\board\list.js:105
+#: .\Manage\static\js\board_work\list.js:120 .\static\js\board\list.js:105
+#: .\static\js\board_work\list.js:120
+msgid "Comments"
+msgstr ""
+
+#: .\Manage\static\js\board\list.js:128 .\Manage\static\js\board\list.js:162
+#: .\Manage\static\js\board_work\list.js:143
+#: .\Manage\static\js\board_work\list.js:181 .\static\js\board\list.js:128
+#: .\static\js\board\list.js:162 .\static\js\board_work\list.js:143
+#: .\static\js\board_work\list.js:181
+msgid "Input Text"
+msgstr ""
+
+#: .\Manage\static\js\board\list.js:192
+#: .\Manage\static\js\board_work\list.js:211 .\static\js\board\list.js:192
+#: .\static\js\board_work\list.js:211
+msgid "Do you want to delete this comment?"
+msgstr "댓글을 삭제 하시겠습니까?"
+
+#: .\Manage\static\js\employee_manage.js:97
+#: .\Manage\static\js\inventory_precedure.js:73
+#: .\Manage\static\js\inventory_test.js:74
+#: .\Pharmacy\static\js\inventory.js:121 .\Pharmacy\static\js\pharmacy.js:74
+#: .\static\js\employee_manage.js:97 .\static\js\inventory.js:121
+#: .\static\js\inventory_precedure.js:73 .\static\js\inventory_test.js:74
+#: .\static\js\pharmacy.js:74
+msgid "Select medicine first."
+msgstr "약을 먼저 선택해주세요."
+
+#: .\Manage\static\js\employee_manage.js:101
+#: .\Manage\static\js\inventory_precedure.js:77
+#: .\Manage\static\js\inventory_test.js:78
+#: .\Pharmacy\static\js\inventory.js:125 .\Pharmacy\static\js\pharmacy.js:78
+#: .\static\js\employee_manage.js:101 .\static\js\inventory.js:125
+#: .\static\js\inventory_precedure.js:77 .\static\js\inventory_test.js:78
+#: .\static\js\pharmacy.js:78
+msgid "Amount should be number"
+msgstr "수량은 숫자이어야 합니다."
+
+#: .\Manage\static\js\employee_manage.js:170
+#: .\Manage\static\js\inventory_precedure.js:146
+#: .\Manage\static\js\inventory_test.js:147
+#: .\Pharmacy\static\js\inventory.js:194 .\Pharmacy\static\js\pharmacy.js:153
+#: .\static\js\employee_manage.js:170 .\static\js\inventory.js:194
+#: .\static\js\inventory_precedure.js:146 .\static\js\inventory_test.js:147
+#: .\static\js\pharmacy.js:151
+msgid "Already done."
+msgstr "이미 완료 됐습니다."
+
+#: .\Manage\static\js\employee_manage.js:338 .\static\js\employee_manage.js:338
+msgid "Edit Employee"
+msgstr "직원 수정"
+
+#: .\Manage\static\js\employee_manage.js:380
+#: .\Manage\static\js\employee_manage.js:449
+#: .\Manage\static\js\employee_manage.js:503
+#: .\Manage\static\js\employee_manage.js:559
+#: .\Manage\static\js\inventory_medical_tool.js:259
+#: .\Manage\static\js\inventory_medical_tool.js:333
+#: .\Manage\static\js\inventory_precedure.js:283
+#: .\Manage\static\js\inventory_precedure.js:342
+#: .\Manage\static\js\inventory_test.js:287
+#: .\Manage\static\js\inventory_test.js:496
+#: .\Pharmacy\static\js\inventory.js:350 .\Pharmacy\static\js\inventory.js:431
+#: .\static\js\employee_manage.js:380 .\static\js\employee_manage.js:449
+#: .\static\js\employee_manage.js:503 .\static\js\employee_manage.js:559
+#: .\static\js\inventory.js:350 .\static\js\inventory.js:431
+#: .\static\js\inventory_medical_tool.js:259
+#: .\static\js\inventory_medical_tool.js:333
+#: .\static\js\inventory_precedure.js:283
+#: .\static\js\inventory_precedure.js:342 .\static\js\inventory_test.js:287
+#: .\static\js\inventory_test.js:496
+msgid "Please Refresh this page."
+msgstr "페지지를 새로고침 해주세요"
+
+#: .\Manage\static\js\employee_manage.js:390 .\static\js\employee_manage.js:390
+msgid "New Employee"
+msgstr "신규 직원"
+
+#: .\Manage\static\js\employee_manage.js:574
+#: .\Manage\static\js\employee_manage.js:616 .\static\js\employee_manage.js:574
+#: .\static\js\employee_manage.js:616
+msgid "ID field is empty."
+msgstr "ID 필드가 비었습니다."
+
+#: .\Manage\static\js\employee_manage.js:589 .\static\js\employee_manage.js:589
+msgid "Can be used."
+msgstr "사용 가능 합니다."
+
+#: .\Manage\static\js\employee_manage.js:594 .\static\js\employee_manage.js:594
+msgid "Cannot be used. Type other ID."
+msgstr "사용 불가능 합니다. 다른 아이디를 입력하세요."
+
+#: .\Manage\static\js\employee_manage.js:623 .\static\js\employee_manage.js:623
+msgid "Check ID."
+msgstr "아이디 확인"
+
+#: .\Manage\static\js\employee_manage.js:630 .\static\js\employee_manage.js:630
+msgid "Password field is empty"
+msgstr "암호 필드가 비었습니다."
+
+#: .\Manage\static\js\employee_manage.js:637 .\static\js\employee_manage.js:637
+msgid "Password Confirm field is empty"
+msgstr "암호 확인 필드가 비었습니다."
+
+#: .\Manage\static\js\employee_manage.js:643 .\static\js\employee_manage.js:643
+msgid "Check Password."
+msgstr "비밀번호를 확인하세요"
+
+#: .\Manage\static\js\employee_manage.js:650 .\static\js\employee_manage.js:650
+msgid "Korean Name field is empty"
+msgstr "한글 이름 필드가 비었습니다."
+
+#: .\Manage\static\js\employee_manage.js:657 .\static\js\employee_manage.js:657
+msgid "English Name field is empty"
+msgstr "영문 이름 필드가 비었습니다."
+
+#: .\Manage\static\js\employee_manage.js:664 .\static\js\employee_manage.js:664
+msgid "Vietnamese Name field is empty"
+msgstr "베트남 이름 필드가 비었습니다."
+
+#: .\Manage\static\js\employee_manage.js:671 .\static\js\employee_manage.js:671
+msgid "Phone Number1 field is empty"
+msgstr "전화번호1 필드가 비었습니다."
+
+#: .\Manage\static\js\employee_manage.js:678 .\static\js\employee_manage.js:678
+msgid "Date of Birth field is empty"
+msgstr "생년월일 필드가 비었습니다."
+
+#: .\Manage\static\js\employee_manage.js:685 .\static\js\employee_manage.js:685
+msgid "Email field is empty"
+msgstr "이메일 필드가 비었습니다."
+
+#: .\Manage\static\js\employee_manage.js:692 .\static\js\employee_manage.js:692
+msgid "Division field is empty"
+msgstr "구분 필드가 비었습니다."
+
+#: .\Manage\static\js\employee_manage.js:700 .\static\js\employee_manage.js:700
+msgid "Status field is empty"
+msgstr "상태 필드가 비었습니다."
+
+#: .\Manage\static\js\employee_manage.js:707 .\static\js\employee_manage.js:707
+msgid "Date of Employment field is empty"
+msgstr "입사일 필드가 비었습니다."
+
+#: .\Manage\static\js\inventory_medical_tool.js:216
+#: .\Pharmacy\static\js\inventory.js:308 .\static\js\inventory.js:308
+#: .\static\js\inventory_medical_tool.js:216
+msgid "New Medicine"
+msgstr "새로운 약"
+
+#: .\Manage\static\js\inventory_medical_tool.js:225
+#: .\Manage\static\js\inventory_precedure.js:263
+#: .\Manage\static\js\inventory_test.js:267
+#: .\Pharmacy\static\js\inventory.js:317 .\static\js\inventory.js:317
+#: .\static\js\inventory_medical_tool.js:225
+#: .\static\js\inventory_precedure.js:263 .\static\js\inventory_test.js:267
+msgid "Edit Data"
+msgstr "데이터 수정"
+
+#: .\Manage\static\js\inventory_medical_tool.js:283
+#: .\Manage\static\js\inventory_precedure.js:307
+#: .\Manage\static\js\inventory_test.js:459
+#: .\Pharmacy\static\js\inventory.js:374 .\static\js\inventory.js:374
+#: .\static\js\inventory_medical_tool.js:283
+#: .\static\js\inventory_precedure.js:307 .\static\js\inventory_test.js:459
+msgid "Name is necessary! "
+msgstr "이름은 필수 입니다!"
+
+#: .\Manage\static\js\inventory_medical_tool.js:288
+#: .\Manage\static\js\inventory_precedure.js:312
+#: .\Manage\static\js\inventory_test.js:464
+#: .\Pharmacy\static\js\inventory.js:379 .\static\js\inventory.js:379
+#: .\static\js\inventory_medical_tool.js:288
+#: .\static\js\inventory_precedure.js:312 .\static\js\inventory_test.js:464
+msgid "Name in Vietnamese is necessary! "
+msgstr "베트남 이름은 필수 입니다!"
+
+#: .\Manage\static\js\inventory_medical_tool.js:424
+#: .\Manage\static\js\inventory_precedure.js:361
+#: .\Manage\static\js\inventory_test.js:515
+#: .\Pharmacy\static\js\inventory.js:522
+#: .\Receptionist\static\js\reception.js:1663 .\static\js\inventory.js:522
+#: .\static\js\inventory_medical_tool.js:424
+#: .\static\js\inventory_precedure.js:361 .\static\js\inventory_test.js:515
+#: .\static\js\reception.js:1663
+msgid "Are you sure you want to delete ?"
+msgstr "삭제하시겠습니까?"
+
+#: .\Manage\static\js\inventory_medical_tool.js:642
+#: .\Pharmacy\static\js\inventory.js:725 .\static\js\inventory.js:725
+#: .\static\js\inventory_medical_tool.js:642
+msgid "You really want to disposal medicines?"
+msgstr "정말로 폐기 하시겠습니까?"
+
+#: .\Manage\static\js\inventory_medical_tool.js:656
+#: .\Pharmacy\static\js\inventory.js:739 .\static\js\inventory.js:739
+#: .\static\js\inventory_medical_tool.js:656
+msgid "deleted"
+msgstr "삭제 됐습니다."
+
+#: .\Manage\static\js\inventory_medical_tool.js:669
+#: .\Pharmacy\static\js\inventory.js:752 .\static\js\inventory.js:752
+#: .\static\js\inventory_medical_tool.js:669
+msgid "Count is more than left"
+msgstr "수량이 남은것 보다 많습니다."
+
+#: .\Manage\static\js\inventory_precedure.js:254
+#: .\static\js\inventory_precedure.js:254
+msgid "New Procedure"
+msgstr "새로운 처치"
+
+#: .\Manage\static\js\inventory_test.js:257 .\static\js\inventory_test.js:257
+msgid "New Test"
+msgstr "새로운 검사"
+
+#: .\Manage\static\js\sms_history.js:83 .\static\js\sms_history.js:83
+msgid "Manual"
+msgstr "1월"
+
+#: .\Manage\static\js\sms_history.js:85 .\static\js\sms_history.js:85
+msgid "Auto"
+msgstr ""
+
+#: .\Manage\static\js\sms_history.js:98 .\static\js\sms_history.js:98
+msgid "Sending..."
+msgstr ""
+
+#: .\Manage\static\js\sms_history.js:100 .\static\js\sms_history.js:100
+msgid "Done"
+msgstr ""
+
+#: .\Manage\static\js\sms_history.js:102 .\static\js\sms_history.js:102
+msgid "Failed"
+msgstr "실패했습니다."
+
+#: .\Radiation\static\js\radiation.js:51 .\static\js\radiation.js:51
+msgid "Image Select or save First."
+msgstr "우선 이미지를 선택하거나 저장 해주세요."
+
+#: .\Radiation\static\js\radiation.js:195 .\static\js\radiation.js:195
+msgid "deleted."
+msgstr "삭제 됐습니다."
+
+#: .\Receptionist\static\js\reception.js:933 .\static\js\reception.js:933
+msgid "'Gender' is necessary."
+msgstr "'성별'은 필수 입니다."
+
+#: .\Receptionist\static\js\reception.js:937 .\static\js\reception.js:937
+msgid "'Nationality' is necessary."
+msgstr "'국적'은 필수 입니다."
+
+#: .\Receptionist\static\js\reception.js:948
+#: .\Receptionist\static\js\reception.js:1080 .\static\js\reception.js:948
+#: .\static\js\reception.js:1080
+msgid "'"
+msgstr ""
+
+#: .\Receptionist\static\js\reception.js:1054 .\static\js\reception.js:1054
+msgid "Failed."
+msgstr "실패했습니다."
+
+#: .\Receptionist\static\js\reception.js:1116
+#: .\Receptionist\static\js\reception.js:1630 .\static\js\reception.js:1116
+#: .\static\js\reception.js:1630
+msgid "Select Depart."
+msgstr "과를 선택해주세요."
+
+#: .\Receptionist\static\js\reception.js:1122
+#: .\Receptionist\static\js\reception.js:1634 .\static\js\reception.js:1122
+#: .\static\js\reception.js:1634
+msgid "Select Doctor."
+msgstr "의사를 선택해주세요."
+
+#: .\Receptionist\static\js\reception.js:1186
+#: .\Receptionist\static\js\reception.js:1807 .\static\js\reception.js:1186
+#: .\static\js\reception.js:1807
+msgid "has been Recepted."
+msgstr "접수됐습니다."
+
+#: .\Receptionist\static\js\reception.js:1211 .\static\js\reception.js:1211
+msgid "failed to recepted."
+msgstr "접수에 실패했습니다."
+
+#: .\Receptionist\static\js\reception.js:1279 .\static\js\reception.js:1279
+msgid "Input search string."
+msgstr "검색어를 입력해주세요."
+
+#: .\Receptionist\static\js\reception.js:1344 .\static\js\reception.js:1344
+msgid "Abnormal approach"
+msgstr "비정상적인 접근"
+
+#: .\Receptionist\static\js\reception.js:1750 .\static\js\reception.js:1750
+msgid "Registration"
+msgstr ""
+
+#: .\Receptionist\static\js\reception.js:1924 .\static\js\reception.js:1924
+msgid "Select Depart and Doctor first."
+msgstr "먼저 환자를 선택하세요."
+
+#: .\Receptionist\static\js\reception.js:1928 .\static\js\reception.js:1928
+msgid "Do you want to add the service to the patient?"
+msgstr "댓글을 삭제 하시겠습니까?"
+
+#: .\Receptionist\static\js\reception.js:1943 .\static\js\reception.js:1943
+msgid "Make payments on the storage screen"
+msgstr ""
+
+#: .\Receptionist\static\js\storage_page.js:42 .\static\js\storage_page.js:42
+msgid "Do you want to change reservation?"
+msgstr "예약을 변경 하시겠습니까?"
+
+#: .\Receptionist\static\js\storage_page.js:1292
+#: .\static\js\storage_page.js:1292
+msgid "Select Payment method"
+msgstr "먼저 환자를 선택하세요."
+
+#: .\Receptionist\static\js\storage_page.js:1343
+#: .\static\js\storage_page.js:1343
+msgid "Already paid."
+msgstr "이미 지불 되었습니다."
+
+#: .\Receptionist\static\js\storage_page.js:1347
+#: .\static\js\storage_page.js:1347
+msgid "Payment amount should be lower than remaining."
+msgstr "지불금액은 총액보다 높을 수 없습니다."
+
+#: .\Receptionist\static\js\storage_page.js:1349
+#: .\static\js\storage_page.js:1349
+msgid "Paid"
+msgstr "지불 했습니다."
+
+#: .\app\static\js\main.js:15 .\static\js\main.js:15
+msgid "Right click is not available."
+msgstr "우클릭은 불가능 합니다."
+
+#: .\app\static\js\signpad.js:111 .\static\js\signpad.js:111
+msgid "Select Patient first."
+msgstr "먼저 환자를 선택하세요."
+
+#: .\obj\Release\Package\PackageTmp\static\admin\js\SelectFilter2.js:47
+#: .\static\admin\js\SelectFilter2.js:47
+#, javascript-format
+msgid "Available %s"
+msgstr ""
+
+#: .\obj\Release\Package\PackageTmp\static\admin\js\SelectFilter2.js:53
+#: .\static\admin\js\SelectFilter2.js:53
+#, javascript-format
+msgid ""
+"This is the list of available %s. You may choose some by selecting them in "
+"the box below and then clicking the \"Choose\" arrow between the two boxes."
+msgstr ""
+
+#: .\obj\Release\Package\PackageTmp\static\admin\js\SelectFilter2.js:69
+#: .\static\admin\js\SelectFilter2.js:69
+#, javascript-format
+msgid "Type into this box to filter down the list of available %s."
+msgstr ""
+
+#: .\obj\Release\Package\PackageTmp\static\admin\js\SelectFilter2.js:74
+#: .\static\admin\js\SelectFilter2.js:74
+msgid "Filter"
+msgstr ""
+
+#: .\obj\Release\Package\PackageTmp\static\admin\js\SelectFilter2.js:78
+#: .\static\admin\js\SelectFilter2.js:78
+msgid "Choose all"
+msgstr ""
+
+#: .\obj\Release\Package\PackageTmp\static\admin\js\SelectFilter2.js:78
+#: .\static\admin\js\SelectFilter2.js:78
+#, javascript-format
+msgid "Click to choose all %s at once."
+msgstr ""
+
+#: .\obj\Release\Package\PackageTmp\static\admin\js\SelectFilter2.js:84
+#: .\static\admin\js\SelectFilter2.js:84
+msgid "Choose"
+msgstr ""
+
+#: .\obj\Release\Package\PackageTmp\static\admin\js\SelectFilter2.js:86
+#: .\static\admin\js\SelectFilter2.js:86
+msgid "Remove"
+msgstr ""
+
+#: .\obj\Release\Package\PackageTmp\static\admin\js\SelectFilter2.js:92
+#: .\static\admin\js\SelectFilter2.js:92
+#, javascript-format
+msgid "Chosen %s"
+msgstr ""
+
+#: .\obj\Release\Package\PackageTmp\static\admin\js\SelectFilter2.js:98
+#: .\static\admin\js\SelectFilter2.js:98
+#, javascript-format
+msgid ""
+"This is the list of chosen %s. You may remove some by selecting them in the "
+"box below and then clicking the \"Remove\" arrow between the two boxes."
+msgstr ""
+
+#: .\obj\Release\Package\PackageTmp\static\admin\js\SelectFilter2.js:108
+#: .\static\admin\js\SelectFilter2.js:108
+msgid "Remove all"
+msgstr ""
+
+#: .\obj\Release\Package\PackageTmp\static\admin\js\SelectFilter2.js:108
+#: .\static\admin\js\SelectFilter2.js:108
+#, javascript-format
+msgid "Click to remove all chosen %s at once."
+msgstr ""
+
+#: .\obj\Release\Package\PackageTmp\static\admin\js\actions.js:48
+#: .\obj\Release\Package\PackageTmp\static\admin\js\actions.min.js:2
+#: .\static\admin\js\actions.js:48 .\static\admin\js\actions.min.js:2
+msgid "%(sel)s of %(cnt)s selected"
+msgid_plural "%(sel)s of %(cnt)s selected"
+msgstr[0] ""
+msgstr[1] ""
+
+#: .\obj\Release\Package\PackageTmp\static\admin\js\actions.js:117
+#: .\obj\Release\Package\PackageTmp\static\admin\js\actions.min.js:5
+#: .\static\admin\js\actions.js:117 .\static\admin\js\actions.min.js:5
+msgid ""
+"You have unsaved changes on individual editable fields. If you run an "
+"action, your unsaved changes will be lost."
+msgstr ""
+
+#: .\obj\Release\Package\PackageTmp\static\admin\js\actions.js:129
+#: .\obj\Release\Package\PackageTmp\static\admin\js\actions.min.js:5
+#: .\static\admin\js\actions.js:129 .\static\admin\js\actions.min.js:5
+msgid ""
+"You have selected an action, but you haven't saved your changes to "
+"individual fields yet. Please click OK to save. You'll need to re-run the "
+"action."
+msgstr ""
+
+#: .\obj\Release\Package\PackageTmp\static\admin\js\actions.js:131
+#: .\obj\Release\Package\PackageTmp\static\admin\js\actions.min.js:6
+#: .\static\admin\js\actions.js:131 .\static\admin\js\actions.min.js:6
+msgid ""
+"You have selected an action, and you haven't made any changes on individual "
+"fields. You're probably looking for the Go button rather than the Save "
+"button."
+msgstr ""
+
+#: .\obj\Release\Package\PackageTmp\static\admin\js\admin\DateTimeShortcuts.js:13
+#: .\obj\Release\Package\PackageTmp\static\admin\js\admin\DateTimeShortcuts.js:115
+#: .\static\admin\js\admin\DateTimeShortcuts.js:13
+#: .\static\admin\js\admin\DateTimeShortcuts.js:118
+msgid "Now"
+msgstr ""
+
+#: .\obj\Release\Package\PackageTmp\static\admin\js\admin\DateTimeShortcuts.js:14
+#: .\static\admin\js\admin\DateTimeShortcuts.js:14
+msgid "Midnight"
+msgstr "새벽"
+
+#: .\obj\Release\Package\PackageTmp\static\admin\js\admin\DateTimeShortcuts.js:15
+#: .\static\admin\js\admin\DateTimeShortcuts.js:15
+msgid "6 a.m."
+msgstr ""
+
+#: .\obj\Release\Package\PackageTmp\static\admin\js\admin\DateTimeShortcuts.js:16
+#: .\static\admin\js\admin\DateTimeShortcuts.js:16
+msgid "Noon"
+msgstr "오후"
+
+#: .\obj\Release\Package\PackageTmp\static\admin\js\admin\DateTimeShortcuts.js:17
+#: .\static\admin\js\admin\DateTimeShortcuts.js:17
+msgid "6 p.m."
+msgstr ""
+
+#: .\obj\Release\Package\PackageTmp\static\admin\js\admin\DateTimeShortcuts.js:82
+#: .\static\admin\js\admin\DateTimeShortcuts.js:83
+#, javascript-format
+msgid "Note: You are %s hour ahead of server time."
+msgid_plural "Note: You are %s hours ahead of server time."
+msgstr[0] ""
+msgstr[1] ""
+
+#: .\obj\Release\Package\PackageTmp\static\admin\js\admin\DateTimeShortcuts.js:90
+#: .\static\admin\js\admin\DateTimeShortcuts.js:91
+#, javascript-format
+msgid "Note: You are %s hour behind server time."
+msgid_plural "Note: You are %s hours behind server time."
+msgstr[0] ""
+msgstr[1] ""
+
+#: .\obj\Release\Package\PackageTmp\static\admin\js\admin\DateTimeShortcuts.js:133
+#: .\static\admin\js\admin\DateTimeShortcuts.js:136
+msgid "Choose a Time"
+msgstr ""
+
+#: .\obj\Release\Package\PackageTmp\static\admin\js\admin\DateTimeShortcuts.js:163
+#: .\static\admin\js\admin\DateTimeShortcuts.js:166
+msgid "Choose a time"
+msgstr ""
+
+#: .\obj\Release\Package\PackageTmp\static\admin\js\admin\DateTimeShortcuts.js:180
+#: .\obj\Release\Package\PackageTmp\static\admin\js\admin\DateTimeShortcuts.js:340
+#: .\static\admin\js\admin\DateTimeShortcuts.js:183
+#: .\static\admin\js\admin\DateTimeShortcuts.js:343
+msgid "Cancel"
+msgstr ""
+
+#: .\obj\Release\Package\PackageTmp\static\admin\js\admin\DateTimeShortcuts.js:245
+#: .\obj\Release\Package\PackageTmp\static\admin\js\admin\DateTimeShortcuts.js:325
+#: .\static\admin\js\admin\DateTimeShortcuts.js:248
+#: .\static\admin\js\admin\DateTimeShortcuts.js:328
+msgid "Today"
+msgstr ""
+
+#: .\obj\Release\Package\PackageTmp\static\admin\js\admin\DateTimeShortcuts.js:262
+#: .\static\admin\js\admin\DateTimeShortcuts.js:265
+msgid "Choose a Date"
+msgstr ""
+
+#: .\obj\Release\Package\PackageTmp\static\admin\js\admin\DateTimeShortcuts.js:319
+#: .\static\admin\js\admin\DateTimeShortcuts.js:322
+msgid "Yesterday"
+msgstr ""
+
+#: .\obj\Release\Package\PackageTmp\static\admin\js\admin\DateTimeShortcuts.js:331
+#: .\static\admin\js\admin\DateTimeShortcuts.js:334
+msgid "Tomorrow"
+msgstr ""
+
+#: .\obj\Release\Package\PackageTmp\static\admin\js\calendar.js:12
+#: .\static\admin\js\calendar.js:12
+msgid "January"
+msgstr "1월"
+
+#: .\obj\Release\Package\PackageTmp\static\admin\js\calendar.js:13
+#: .\static\admin\js\calendar.js:13
+msgid "February"
+msgstr "2월"
+
+#: .\obj\Release\Package\PackageTmp\static\admin\js\calendar.js:14
+#: .\static\admin\js\calendar.js:14
+msgid "March"
+msgstr "3월"
+
+#: .\obj\Release\Package\PackageTmp\static\admin\js\calendar.js:15
+#: .\static\admin\js\calendar.js:15
+msgid "April"
+msgstr "4월"
+
+#: .\obj\Release\Package\PackageTmp\static\admin\js\calendar.js:16
+#: .\static\admin\js\calendar.js:16
+msgid "May"
+msgstr "5월"
+
+#: .\obj\Release\Package\PackageTmp\static\admin\js\calendar.js:17
+#: .\static\admin\js\calendar.js:17
+msgid "June"
+msgstr "6월"
+
+#: .\obj\Release\Package\PackageTmp\static\admin\js\calendar.js:18
+#: .\static\admin\js\calendar.js:18
+msgid "July"
+msgstr "7월"
+
+#: .\obj\Release\Package\PackageTmp\static\admin\js\calendar.js:19
+#: .\static\admin\js\calendar.js:19
+msgid "August"
+msgstr "8월"
+
+#: .\obj\Release\Package\PackageTmp\static\admin\js\calendar.js:20
+#: .\static\admin\js\calendar.js:20
+msgid "September"
+msgstr "9월"
+
+#: .\obj\Release\Package\PackageTmp\static\admin\js\calendar.js:21
+#: .\static\admin\js\calendar.js:21
+msgid "October"
+msgstr "10월"
+
+#: .\obj\Release\Package\PackageTmp\static\admin\js\calendar.js:22
+#: .\static\admin\js\calendar.js:22
+msgid "November"
+msgstr "11월"
+
+#: .\obj\Release\Package\PackageTmp\static\admin\js\calendar.js:23
+#: .\static\admin\js\calendar.js:23
+msgid "December"
+msgstr "12월"
+
+#: .\obj\Release\Package\PackageTmp\static\admin\js\calendar.js:26
+#: .\static\admin\js\calendar.js:26
+msgctxt "one letter Sunday"
+msgid "S"
+msgstr "일"
+
+#: .\obj\Release\Package\PackageTmp\static\admin\js\calendar.js:27
+#: .\static\admin\js\calendar.js:27
+msgctxt "one letter Monday"
+msgid "M"
+msgstr "월"
+
+#: .\obj\Release\Package\PackageTmp\static\admin\js\calendar.js:28
+#: .\static\admin\js\calendar.js:28
+msgctxt "one letter Tuesday"
+msgid "T"
+msgstr "화"
+
+#: .\obj\Release\Package\PackageTmp\static\admin\js\calendar.js:29
+#: .\static\admin\js\calendar.js:29
+msgctxt "one letter Wednesday"
+msgid "W"
+msgstr "수"
+
+#: .\obj\Release\Package\PackageTmp\static\admin\js\calendar.js:30
+#: .\static\admin\js\calendar.js:30
+msgctxt "one letter Thursday"
+msgid "T"
+msgstr "목"
+
+#: .\obj\Release\Package\PackageTmp\static\admin\js\calendar.js:31
+#: .\static\admin\js\calendar.js:31
+msgctxt "one letter Friday"
+msgid "F"
+msgstr "금"
+
+#: .\obj\Release\Package\PackageTmp\static\admin\js\calendar.js:32
+#: .\static\admin\js\calendar.js:32
+msgctxt "one letter Saturday"
+msgid "S"
+msgstr "토"
+
+#: .\obj\Release\Package\PackageTmp\static\admin\js\collapse.js:27
+#: .\obj\Release\Package\PackageTmp\static\admin\js\collapse.js:45
+#: .\obj\Release\Package\PackageTmp\static\admin\js\collapse.min.js:2
+#: .\static\admin\js\collapse.js:10 .\static\admin\js\collapse.js:21
+#: .\static\admin\js\collapse.min.js:4 .\static\admin\js\collapse.min.js:5
+msgid "Show"
+msgstr ""
+
+#: .\obj\Release\Package\PackageTmp\static\admin\js\collapse.js:41
+#: .\obj\Release\Package\PackageTmp\static\admin\js\collapse.min.js:2
+#: .\static\admin\js\collapse.js:18 .\static\admin\js\collapse.min.js:4
+msgid "Hide"
+msgstr ""
+
+#: .\physical_therapist\static\js\physical_therapist.js:963
+#: .\static\js\physical_therapist.js:963
+msgid "Diagnosis is empty."
+msgstr "진단명은 필수 입니다."
+
+#~ msgid "Outbreak Day is empty."
+#~ msgstr "발생일이 비어있습니다."

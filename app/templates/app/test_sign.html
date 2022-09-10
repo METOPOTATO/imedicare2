@@ -1,0 +1,34 @@
+
+
+{% load staticfiles %}
+{% block content %}
+
+
+<script src="{% static 'js/jquery.ajax-cross-origin.min.js'%}"></script>
+<script src="{% static 'signature_pad-master/docs/js/app.js'%}"></script>
+<script src="{% static 'signature_pad-master/docs/js/signature_pad.umd.js'%}"></script>
+
+<link rel="stylesheet" href="{% static 'signature_pad-master/docs/css/signature-pad.css'%}">
+
+
+
+<div class="index_wrap">
+    <img src="http://localhost\Users\khm43\Downloads\IMEDICARE_NEW LOGO.jpg" id="image_view"/>
+     <label class="btn btn-warning need_medical_report" ><input type="checkbox" id="need_medical_report" /><text> Set System Mode</text></label>
+</div>
+
+
+<script>
+
+
+    var loadFile = function (event) {
+        var output = document.getElementById('image_view');
+        output.src = URL.createObjectURL(event.target.files[0]);
+
+    }
+
+
+
+</script>
+
+{% endblock %}

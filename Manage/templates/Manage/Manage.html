@@ -1,0 +1,646 @@
+{% extends "app/layout.html" %}
+
+{% load staticfiles %}
+{% block content %}
+
+
+<!--Payment-->
+<div class="contents_wrap" >
+    <div id="REVENUE_TOTAL">
+         <!--
+        <div class="contents_Title_wrap">
+            <span class="contents_Title">{{ _('REVENUE TOTAL') }}</span>
+        </div>
+
+       
+        <div class="payment_graph">
+            <div id="payment_graph_wrap" class="payment_graph_wrap">
+                <canvas id="payment_graph" style="height:300px"></canvas>
+            </div>
+            <div class="payment_pie_wrap">
+                <canvas id="payment_graph_doughnut" style="height:300px; width:540px;"></canvas>
+            </div>
+        </div>
+            -->
+        <div class="contents_filter_wrap">
+            <div class="contents_Title_wrap">
+                <span class="btn btn-danger contents_Title">{{ _('REVENUE STATUS') }}</span>
+                <!--페이지 수-->
+                <div class="input-group contents_filter_div" id="contents_filter_div_context_count">
+                    <span class="input-group-addon">{{ _('Per Page') }}</span>
+                    <select id="contents_filter_context_count" class="form-control costom-select" aria-describedby="basic-addon1" >
+                        <option value="10">10</option>
+                        <option value="20">20</option>
+                        <option value="30">30</option>
+                        <option value="50">50</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="contents_filter_top">
+                <!-- 날짜 형식 -->
+               <div class="input-group contents_filter_div" id="contents_filter_div_date_type">
+                    <span class="input-group-addon">{{ _('Date Type') }}</span>
+                    <select id="contents_filter_date_type" class="form-control costom-select" aria-describedby="basic-addon1">
+                        <option value="RECEPTION">{{ _('Reception') }}</option>
+                        <!-- <option value="PAID">{{ _('Date Paid') }}</option> -->
+                    </select>
+                </div>
+                <!--날짜-->
+                <div class="date_input_div">
+                    {{ _('Date')}}:
+                    <input type="text" class="form-control date_input" id="payment_search_date_start" /> ~ 
+                    <input type="text" class="form-control date_input" id="payment_search_date_end" />
+                </div>
+                <!-- 과 -->
+               <div class="input-group contents_filter_div" id="contents_filter_div_depart" {% if user.doctor %}style="display:none;"{% endif %}>
+                    <span class="input-group-addon">{{ _('Depart') }}</span>
+                    <select id="contents_filter_depart" class="form-control costom-select" aria-describedby="basic-addon1">
+                        <option value="">{{ _('All') }}</option>
+                        {% for data in depart_medical %}
+                        <option value="{{ data.code }}" {% if user.doctor.depart.id == data.code %} selected {% endif%}>{{ data.name }}</option>
+                        {% endfor %}
+                        <!--
+                        {% for data in depart_medical %}
+                        <option value="{{ data.code }}">{{ data.name }}</option>
+                        {% endfor %}
+                        -->
+                    </select>
+                </div>
+                <!-- 의사 -->
+               <div class="input-group contents_filter_div" id="contents_filter_div_doctor" {% if user.doctor %}style="display:none;"{% endif %}>
+                    <span class="input-group-addon">{{ _('Doctor') }}</span>
+                    <select id="contents_filter_doctor" class="form-control costom-select" aria-describedby="basic-addon1">
+                        <option value="">{{ _('All') }}</option>
+                        {% for data in doctor %}
+                        <option value="{{ data.id }}" >{{ data.name_short }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                
+                <!--결제 방법-->
+                <div class="input-group contents_filter_div" id="contents_filter_div_method">
+                    <span class="input-group-addon">{{ _('Payment Method') }}</span>
+                    <select id="contents_filter_payment_method" class="form-control costom-select" aria-describedby="basic-addon1" >
+                        <option value="">{{ _('All') }}</option>
+                        {% for data in payment_method %}
+                        <option value="{{ data.code }}">{{ data.name }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <!--결제 상태-->
+                <div class="input-group contents_filter_div" id="contents_filter_div_status">
+                    <span class="input-group-addon">{{ _('Payment Status') }}</span>
+                    <select id="contents_filter_payment_status" class="form-control costom-select" aria-describedby="basic-addon1" >
+                        <option value="">{{ _('All') }}</option>
+                        <option value="paid">{{ _('Paid') }}</option>
+                        <option value="unpaid">{{ _('Unpaid') }}</option>
+                        <!--
+                        {% for data in payment_status %}
+                        <option value="{{ data.code }}">{{ data.name }}</option>
+                        {% endfor %}
+                        -->
+                    </select>
+                </div>
+
+                <div class="contents_filter_div" id="contents_filter_div_patient_name">
+                    <span class="input-group-addon">{{ _('Payment Name') }}</span>
+                    <select name="filter" id="patient_search_select" class="form-control patient_search_select hide" aria-describedby="basic-addon1">
+                        <option value="" selected>{{_('All') }}</option>
+                        <option value="name">{{_('Name') }}</option>
+                        <option value="chart">{{_('Chart No') }}</option>
+                        <option value="date_of_birth">{{_('Date of Birth') }}</option>
+                        <option value="phone">{{_('Phone Number') }}</option>
+                    </select>
+                    <input type="text" name="search_input" id="patient_search_input" class="form-control patient_search_input" aria-describedby="basic-addon1" autocomplete="off" placeholder="{{ _('At least 2 characters') }}"/>
+                </div>
+                <label style="display:none; margin-right:10px;"><input type="checkbox" id="is_vaccine" style="vertical-align: middle; margin-top: -1px;"/><text> {{_('Vaccine') }}</text></label>
+                
+				<label class="red_invoice_label" style="margin-right:10px;">
+                    <input type="checkbox" id="is_red_invoice">
+                    <text> Red Invoice</text>
+                </label>
+
+				
+				<div style="float:right;">
+                    <a class="btn btn-default" onclick="excel_download()"><i class="fa fa-file-excel-o"></i>{{ _('Download') }}</a>
+                    <a class="btn btn-default" onclick="excel_download_debit()"><i class="fa fa-file-excel-o"></i>{{ _('Debit Report') }}</a>
+                </div>
+            </div>
+        </div>
+        <div class="payment_search">
+          
+            <div class="payment_search_table_div">
+                <table class="table table-bordered table-hover table-striped revenue_table" id="payment_search_table">
+                    <thead>
+                        <tr>
+                            <th>{{_('No')}}</th>
+                            <th>{{_('Date Visited')}}</th>
+                            <th>{{_('Date Paid')}}</th>
+                            <th>{{_('Patient')}}</th>
+                            <th>{{_('Depart')}}</th>
+                            <th>{{_('Doctor')}}</th>
+                            <th>{{_('Exam Fee')}}</th>
+                            <th>{{_('Lab')}}</th>
+                            <th>{{_('Procedure')}}</th>
+                            <th>{{_('Radiation')}}</th>
+                            <th>{{_('Medicine')}}</th>
+                            <th>{{_('Paid by')}}</th>
+                            <th>{{_('Sub Total')}}</th>
+                            <!--<th>{{_('Medicine Fee')}}</th>-->
+                            <th>{{_('Additional')}}</th>
+                            <th>{{_('Discount')}}</th>
+                            <!--<th>{{_('Refund')}}</th>-->
+                            <th>{{_('Total')}}</th>
+                            <th>{{_('Unpaid')}}</th>
+                            <th>{{_('Paid')}}</th>
+                            <!--<th>{{_('Remark')}}</th>-->
+                        </tr>
+                    </thead>
+                    <tbody id="payment_table_result" class="payment_table_result">
+               
+                    </tbody>
+                </table>
+                <table class="table table-bordered table-striped total_table">
+                    <tbody>
+                        <tr>
+                            <td></td>
+                            <td>{{_('Total')}} ( ₫ ) </td>
+                            <td><span id="payment_sub_total_total"></span></td>
+                            <td><span id="payment_additional_total"></span></td>
+                            <td><span id="payment_discount_total"></span></td>
+                            <td><span id="payment_total_total"></span></td>
+                            <td><span id="payment_unpaid_total" style="color:red;"></span></td>
+                            <td><span id="payment_paid_total" ></span></td>
+                        </tr>
+                    </tbody>
+                </table>
+
+
+                <!--페이징-->
+        
+                <ul class="pagination" id="payment_pagnation">
+
+                </ul>
+                <table class="table table-bordered table-hover table-striped payment_total">
+                    <tr>
+
+                    </tr>
+                </table>
+        
+            </div>
+        </div>
+    </div>
+
+
+    <!--의사 별로 소팅-->
+    <!--
+    <div id="DOCTOR_PROFIT">
+        
+        <div style="margin-top:100px;">
+            <div class="contents_Title_wrap">
+                <span class="contents_Title">{{ _('Doctors') }}</span>
+            </div>
+
+            <div class="contents_filter_top" id="doctor_filter_top">
+
+            </div>
+        </div>
+        <div>
+            <div class="doctor_search_table_filter">
+                <div id="doctor_search" class="doctor_search_table_filter">
+                Date:
+                <input type="text" id="doctor_search_date" class="form-control costom-select doctor_search_date" aria-describedby="basic-addon1"/>
+                {{doctor_search.depart_filter.label}}
+                {{doctor_search.depart_filter}}
+                {{doctor_search.doctor_filter.label}}
+                {{doctor_search.doctor_filter}}
+
+                {{ _('Exam Fee') }}:
+                <select id="doctor_search_exam_fee" class="form-control costom-select payment_search_exam_fee">
+                    <option value="" selected>{{ _('ALL') }}</option>
+                    {% for exam in list_exam_fee %}
+                        <option value="{{ exam.code }}">{{ exam.value }}</option>
+                    {% endfor%}
+                </select>
+
+                {{ _('Lab')}}:
+                <select id="doctor_search_lab" class="form-control costom-select payment_search_lab">
+                    <option value="" selected>{{ _('ALL') }}</option>
+                    {% for lab in list_lab %}
+                        <option value="{{ lab.code }}">{{ lab.value }}</option>
+                    {% endfor %}
+                </select>
+
+                {{ _('Precedure')}}:
+                <select id="doctor_search_precedure" class="form-control costom-select payment_search_precedure">
+                    <option value="" selected >{{ _('ALL') }}</option>
+                    {% for precedure in list_precedure  %}
+                        <option value="{{ precedure.code }}">{{ precedure.value }}</option>
+                    {% endfor %}
+                </select>
+
+                {{ _('Medicine')}}:
+                <select id="doctor_search_medicine" class="form-control costom-select payment_search_medicine">
+                    <option value="" selected>{{ _('ALL') }}</option>
+                    {% for medicine in list_medicine %}
+                        <option value="{{ medicine.code }}">{{ medicine.value }}</option>
+                    {% endfor %}
+                </select>
+                
+            </div>
+            </div>
+            <div class="payment_search_table">
+            <table class="table table-striped" id="profit_table">
+                <thead>
+                    <tr>
+                        <th>{{ _('No.') }}</th>
+                        <th>{{ _('Date') }}</th>
+                        <th>{{ _('Patient') }}</th>
+                        <th>{{ _('Depart') }}</th>
+                        <th>{{ _('Doctor') }}</th>
+                        <th>{{ _('Lab') }}</th>
+                        <th>{{ _('Precedure') }}</th>
+                        <th>{{ _('Medicine') }}</th>
+                    </tr>
+                </thead>
+                <tbody  id="doctors_table_result" class="payment_table_result">
+
+                </tbody>
+                <tbody id="doctors_table_profit" class="doctors_table_profit">
+                    <tr>
+                        <td colspan="4">
+                        </td>
+                        <td>
+                            <span style="font-weight:bold;">Subtotal</span>
+                        </td>
+                        <td id="subtotal_general"></td>
+                        <td id="subtotal_medicine"></td>
+                        <td id="subtotal_lab"></td>
+                    </tr>
+                    <tr>
+                        <td colspan="4">
+                        </td>
+                        <td>
+                            <span style="font-weight:bold;">Profit</span>
+                        </td>
+                        <td><input type="text" class="form-control doctor_profit_control" id="profit_general" /><span style="font-weight:bold;">%</span></td>
+                        <td><input type="text" class="form-control doctor_profit_control" id="profit_medicine" />%</td>
+                        <td><input type="text" class="form-control doctor_profit_control" id="profit_lab" />%</td>
+                    </tr>
+                    <tr>
+                        <td colspan="4">
+                        </td>
+                        <td>
+                            <span style="font-weight:bold;">Profit Total</span>
+                        </td>
+                        <td id="profit_total_general"></td>
+                        <td id="profit_total_medicine"></td>
+                        <td id="profit_total_lab"></td>
+                    </tr>
+                    <tr style="font-weight:bold;">
+                        <td colspan="5"></td>
+                        <td style="font-size:20px;">Total</td>
+                        <td colspan="2" style="font-size:20px;" id="profit_total_total"></td>
+                    </tr>
+                </tbody>
+            </table>
+            <ul class="pagination" id="doctors_pagnation">
+
+            </ul>
+            </div>
+        </div>
+    </div>
+        -->
+
+
+
+    <!--MediCine-->
+    <!--
+    <div id="MEDICINE_TOTAL">
+        <div class="contents_Title_wrap">
+            <span class="contents_Title">{{ _('MEDICINE') }}</span>
+        </div>
+        <div>
+            <div class="payment_search_table_filter">
+                <input type="text" class="form-control medicine_search_date"," id="medicine_search_date" />
+                {{medicine_search.search_filter}}
+                {{medicine_search.search_input}}
+                <input type="button" class="btn btn-default" value="Search" onclick="search_medicine()" />
+            </div>
+            <div class="payment_search_table">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>No.</th>
+                        <th>Code</th>
+                        <th>Name</th>
+                        <th>Ingredient</th>
+                        <th>Company</th>
+                        <th style='text-align:center;'>Count</th>
+                        <th style='text-align:center;'>Price</th>
+                        <th style='text-align:center;'>Sales</th>
+                        <th style='text-align:center;'>Total Sales</th>
+                    </tr>
+                </thead>
+                <tbody id="medicine_table_result" class="payment_table_result">
+
+                </tbody>
+                <tbody>
+                    <tr>
+                        <td colspan="6"></td>
+                        <td style="font-size:20px; font-weight:bold; text-align:right;">Total</td>
+                        <td style="font-size:20px; font-weight:bold; text-align:right;" colspan="2" id="medicine_table_total"></td>
+                    </tr>
+                </tbody>
+            </table>
+            <ul class="pagination" id="medicine_pagnation">
+
+            </ul>
+            </div>
+        </div>
+    </div>
+        -->
+</div>
+
+    <!--
+<script>
+
+    var bar_labels = []//'total','dental','medical'];
+    var doughnut_labels=[];
+    {% for doctor in doctors %}
+        bar_labels.push('{{doctor.get_name}}');
+    {% endfor%}
+
+
+    var payment_doughnut_ctx = document.getElementById('payment_graph_doughnut').getContext('2d');
+    var payment_doughnut_chart = new Chart(payment_doughnut_ctx, {
+        type: 'doughnut',
+        display: true,
+        data: {
+             labels: doughnut_labels,
+            datasets: []
+        },
+        // Configuration options go here
+        options: {
+            responsive: false,
+            animation: {
+                duration: 2000,
+            },
+            tooltips:{
+                callbacks: {
+                            label: function(tooltipItem, data) {
+                                var label = numberWithCommas( data.datasets[tooltipItem.datasetIndex].data[tooltipItem.index] ) + ' VND';
+
+                                    
+                                    //label += Math.round(tooltipItem.yLabel * 100) / 100;
+                                    return label;
+                                }
+                            }
+            },
+            plugins: {
+                datalabels: {
+                    color: '#111',
+                    textAlign: 'center',
+                    font: {
+                        lineHeight: 1.6,
+                        size:15,
+                    },
+                    formatter: function (value, ctx) {
+                        return ctx.chart.data.labels[ctx.dataIndex];
+                    }
+                }
+            }
+
+        }
+
+    });
+   
+
+    /////////////////Payment Graph///////////////////////////
+    var payment_chart_labels_months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+
+
+
+    var payment_ctx = document.getElementById('payment_graph').getContext('2d');
+    var payment_chart = new Chart(payment_ctx, {
+        // The type of chart we want to create
+        type: 'bar',
+        // The data for our dataset
+        data: {
+            labels: bar_labels,
+            datasets: [{
+                barThickness:1,
+            }]
+        },
+        // Configuration options go here
+        options: {
+            responsive: false,
+            
+            scales: { 
+                xAxes:[{
+                    barThickness : 'flex',
+                    maxBarThickness :50,
+                }],
+
+                yAxes: [{ 
+                    ticks: { 
+ 
+                        beginAtZero: true,
+                        callback: function(value, index, values) { 
+                            if (value > 1000) {
+                                    return numberWithCommas((value / 1000) + '   K');
+                                }
+ 
+                            return value ;
+                        }
+                    }
+                }],
+            },
+        animation: {
+            duration: 2000,
+        },
+        tooltips:{
+            callbacks: {
+                label: function(tooltipItem, data) {
+                    var label = numberWithCommas( data.datasets[tooltipItem.datasetIndex].data[tooltipItem.index] ) + ' VND';
+   
+                        //label += Math.round(tooltipItem.yLabel * 100) / 100;
+                        return label;
+                    }
+                }
+            },
+        plugins: {
+                    datalabels: {
+                        formatter: function (value, ctx) {
+                            return null;
+                        }
+                    }
+                },
+        }
+
+    });
+
+    function payment_set_graph(datas) {
+        //
+        datas_set = {}
+        for (var i in datas) {
+            var doctor_name = datas[i]['Doctor'];
+            if (!datas_set[doctor_name]) {
+                datas_set[doctor_name] = {};
+            }
+            if (!datas_set[doctor_name]['total']) {
+                datas_set[doctor_name]['total'] = 0;
+            }
+            //if (!datas_set[doctor_name]['unpaid']) {
+            //    datas_set[doctor_name]['unpaid'] = 0;
+            //}
+            //if (!datas_set[doctor_name]['paid']) {
+            //    datas_set[doctor_name]['paid'] = 0;
+            //}
+            datas_set[doctor_name]['depart'] = datas[i]['Depart'];
+            datas_set[doctor_name]['total'] += datas[i]['total'];
+            //datas_set[doctor_name]['unpaid'] += datas[i]['unpaid'];
+            //datas_set[doctor_name]['paid'] += datas[i]['total'] - datas[i]['unpaid'];
+        }
+        //bar
+
+        var Total_bar_data=[]
+        //var Paid_bar_data=[]
+        //var Unpaid_bar_data=[]
+
+        for( var i = 0 ; i < payment_chart.data.labels.length ; i ++){
+            if(!datas_set[payment_chart.data.labels[i]]){
+                Total_bar_data.push(0);
+            }else{
+                Total_bar_data.push(datas_set[payment_chart.data.labels[i]]['total']);
+            }
+
+            //if(!datas_set[payment_chart.data.labels[i]]){
+            //    Paid_bar_data.push(0);
+            //}else{
+            //    Paid_bar_data.push(datas_set[payment_chart.data.labels[i]]['paid']);
+            //}
+            //
+            //if(!datas_set[payment_chart.data.labels[i]]){
+            //    Unpaid_bar_data.push(0);
+            //}else{
+            //    Unpaid_bar_data.push(datas_set[payment_chart.data.labels[i]]['unpaid']);
+            //}   
+        }
+
+        var Total_bar = {
+            label: 'Total',
+            backgroundColor: 'rgb(206, 17, 39)',
+            borderColor: 'rgb(206, 17, 39)',
+            data:Total_bar_data,
+        }
+        //var Paid_bar = {
+        //    label: 'Paid',
+        //    backgroundColor: 'rgb(253,209,22)',
+        //    borderColor: 'rgb(253,209,22)',     
+        //    data:Paid_bar_data,
+        //}
+        //var Unpaid_bar = {
+        //    label: 'Unpaid',
+        //    backgroundColor: 'rgb(128, 128, 128)',
+        //    borderColor: 'rgb(128, 128, 128)', 
+        //    data:Unpaid_bar_data,
+        //}
+        payment_chart.data.datasets = [];
+        payment_chart.data.datasets.push(Total_bar);
+        //payment_chart.data.datasets.push(Paid_bar);
+        //payment_chart.data.datasets.push(Unpaid_bar);
+
+        payment_chart.update();
+
+        //doughnut
+
+
+        var Total_doughnut_data=[];
+        var backgroundColor = [];
+        var borderColor = [];
+        
+        var payment_doughnut_labels=[];
+        var tmp_Dent_dict = {};
+        var tmp_else_dict = {};
+        for (var key in datas_set){
+            if( datas_set[key]['depart'] == 'Dent' ){
+                tmp_Dent_dict[key] = datas_set[key];
+            }else{
+                tmp_else_dict[key] = datas_set[key];
+            }
+        }
+
+        for (var key in tmp_Dent_dict){
+            payment_doughnut_labels.push(key);
+            Total_doughnut_data.push(tmp_Dent_dict[key]['total']);
+            //backgroundColor.push('rgba(206, 17, 39, 1)');
+            //borderColor.push('rgba(206, 17, 39, 0)');
+        }
+        for (var key in tmp_else_dict){ 
+            payment_doughnut_labels.push(key);
+            Total_doughnut_data.push(tmp_else_dict[key]['total']);
+            //backgroundColor.push('rgba(253,209,22, 1)');
+            //borderColor.push('rgba(253,209,22, 0)');  
+        }   
+        backgroundColor.push('rgba(103, 174, 214, 1)');
+        borderColor.push('rgba(103, 174, 214, 0)');
+
+        backgroundColor.push('rgba(248, 109, 43, 1)');
+        borderColor.push('rgba(248, 109, 43, 0)');
+
+        backgroundColor.push('rgba(193, 248, 239, 1)');
+        borderColor.push('rgba(193, 248, 239, 0)');
+
+        backgroundColor.push('rgba(165, 157, 195, 1)');
+        borderColor.push('rgba(165, 157, 195, 0)');
+
+        backgroundColor.push('rgba(206, 17, 39, 1)');
+        borderColor.push('rgba(206, 17, 39, 0)');
+
+        backgroundColor.push('rgba(206, 17, 39, 1)');
+        borderColor.push('rgba(206, 17, 39, 0)');
+
+        backgroundColor.push('rgba(206, 17, 39, 1)');
+        borderColor.push('rgba(206, 17, 39, 0)');
+
+        backgroundColor.push('rgba(206, 17, 39, 1)');
+        borderColor.push('rgba(206, 17, 39, 0)');
+
+
+        payment_doughnut_chart.data.datasets = [];
+        payment_doughnut_chart.data.labels = [];
+          
+        payment_doughnut_chart.data.labels = payment_doughnut_labels;
+        payment_doughnut_chart.data.datasets.push({
+                                    data :Total_doughnut_data,
+                                    backgroundColor:backgroundColor,
+                                    borderColor:borderColor,
+                                    });
+        payment_doughnut_chart.update();
+
+    }
+
+
+
+</script>
+        -->
+
+
+
+{% endblock %}
+
+{% block style %}
+<link rel="stylesheet" type="text/css" href="{% static 'css/manage.css' %}" />
+{% endblock %}
+
+{% block scripts %}
+<script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels"></script>
+
+<script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.js"></script>
+<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
+<script src="{% static 'js/manage.js' %}" type="text/javascript"></script>
+{% endblock%}

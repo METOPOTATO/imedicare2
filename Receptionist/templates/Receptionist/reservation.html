@@ -1,0 +1,1331 @@
+{% extends "app/layout.html" %}
+
+{% load staticfiles %}
+
+
+{% block content %}
+
+
+<script src="{% static 'calendar/core/main.js' %}"></script>
+<script src="{% static 'calendar/daygrid/main.js' %}"></script>
+<script src="{% static 'calendar/timegrid/main.js' %}"></script>
+<script src="{% static 'calendar/interaction/main.js' %}"></script>
+
+<link rel="stylesheet" type="text/css" href="{% static 'calendar/core/main.css' %}" />
+<link rel="stylesheet" type="text/css" href="{% static 'calendar/timegrid/main.css' %}" />
+<link rel="stylesheet" type="text/css" href="{% static 'calendar/daygrid/main.css' %}" />
+<link rel="stylesheet" type="text/css" href="{% static 'css/reservation.css' %}" />
+
+
+
+{% csrf_token %}
+
+
+ <div class="reservation_wrap">
+     <div id="cal_fc-left" style="display:none">
+
+    </div>
+      <div style="height:100%; width:100%;margin:auto;">
+    <div id='calendar' style="overflow:auto;"></div>
+    </div>
+</div>  
+
+<div id="createEventModal" class="modal fade">
+     <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span> <span class="sr-only">close</span></button>
+                <h4>Add Reservation</h4>
+                <div id="modalBody" class="modal-body" >
+
+
+                    <table class="table table-bordered" id="retable" style="border-top: none; border-right: none; border-left: none;">
+                        <tr  style="border: none !important; border-left: none;">
+                            <th  style="border: none !important;">
+                                <h5>{{ _('Reservation') }}</h5>
+                            </th>
+                            <th  style="border: none !important;">                        
+                                <div class="input-group" style="width:100%;" >
+                                    <span class="input-group-addon" style="width:42%;  height:30px !important" id="basic-addon1">{{ _('Chart No') }}</span>
+                                    <input type="hidden" id="reservation_chart"/>
+                                    <input type="text" id="reservation_chart_number" class="form-control" readonly aria-describedby="basic-addon1" autocomplete="off"/>
+                                </div>
+                            </th>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div class="input-group" style="width:100%" >
+                                    <span class="input-group-addon" style="width:42%" id="basic-addon1">{{ _('Reservation Date') }}</span>
+                                    <input type="text" id="reservation_date" class="form-control" aria-describedby="basic-addon1" autocomplete="off"/>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="input-group" style="width:100%" >
+                                    <span class="input-group-addon" style="width:42%" id="basic-addon1">{{ _('Changed Date') }}</span>
+                                    <input type="text" id="re_reservation_date" class="form-control" aria-describedby="basic-addon1" autocomplete="off"/>
+                                </div>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td>
+
+                               <div class="input-group" style="width:100%" >
+                                <span class="input-group-addon " style="width:42%" id="basic-addon1">{{ _('Depart') }}</span>
+                                {{reservation_dialog.depart}}
+                           </div>
+                            </td>
+                            <td>
+                                <div class="input-group" style="width:100%" >
+                                    <span class="input-group-addon " style="width:42%" id="basic-addon1">{{ _('Doctor') }}</span>
+                                    {{reservation_dialog.doctor}}
+                               </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div class="input-group" style="width:100%" >
+                                    <span class="input-group-addon" style="width:42%" id="basic-addon1">{{ _('Name Kor') }}</span>
+                                    <input type="text" id="reservation_patient" class="form-control" aria-describedby="basic-addon1" autocomplete="off"/>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="input-group" style="width:100%" >
+                                    <span class="input-group-addon" style="width:42%" id="basic-addon1">{{ _('Name Eng') }}</span>
+                                    <input type="text" id="reservation_patient_eng" class="form-control" aria-describedby="basic-addon1" autocomplete="off"/>
+                               </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div class="input-group" style="width:100%">
+                                    <span class="input-group-addon" style="width:42%" id="basic-addon1">{{ _('Nationality') }}</span>
+                                    <div class="input-group-btn patient_funnels_div" style="width:100%;">
+                                        <select name="nationality" id="reservation_nationality" class="form-control costom-select"
+                                            aria-describedby="basic-addon1" required="">
+                                            <option value="">---------</option>
+                                            <option value="Korea">{{ _('HÀN QUỐC / REPUBLIC OF KOREA') }}</option>
+                                            <option value="Vietnam">{{ _('Vietnam') }}</option>
+                                            <option value="Other">{{ _('Other') }}</option>
+                                        </select>
+                                    </div>
+
+                                </div>
+                            </td>
+                            <td>
+                                <div class="input-group" style="width:100%">
+                                    <!-- <span class="input-group-addon" style="width:42%; visibility: hidden;" id="basic-addon1"></span> -->
+                                    <input type="text" id="reservation_nationality_etc" class="form-control" style="width:100%;"
+                                        aria-describedby="basic-addon1" autocomplete="off" />
+                                </div>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div class="input-group" style="width:100%" >
+                                    <span class="input-group-addon " style="width:42%" id="basic-addon1">{{ _('Phone') }}</span>
+                                    <input type="text" id="reservation_phone" class="form-control" aria-describedby="basic-addon1" autocomplete="off"/>
+                               </div>
+                            </td>
+                            <td>
+                                <div class="input-group" style="width:100%">
+                                    <span class="input-group-addon" style="width:42%" id="basic-addon1">{{ _('Passport') }}</span>
+                                    <input type="text" id="reservation_passport" class="form-control" style="width:100%;" aria-describedby="basic-addon1" autocomplete="off"/>
+                               </div>
+                            </td>  
+                        </tr>
+                        <tr>
+                            <td>
+                                <div class="input-group" style="width:100%" >
+                                    <span class="input-group-addon " style="width:42%" id="basic-addon1">{{ _('Date of Birth') }}</span>
+                                    <input type="text" id="reservation_date_of_birth" class="form-control" aria-describedby="basic-addon1" autocomplete="off"/>
+                               </div>
+                            </td>
+
+                            <td>
+                                <div class="input-group" style="width:100%" >
+                                    <!-- <span class="input-group-addon " style="width:42%" id="basic-addon1">{{ _('Gender') }}</span>
+                                    <input type="text" id="reservation_gender" class="form-control" aria-describedby="basic-addon1" autocomplete="off"/> -->
+                                    <span class="input-group-addon " style="width:42%" id="basic-addon1">{{ _('Gender') }}</span>
+                                    <select name="gender" id="reservation_gender" class="form-control costom-select" aria-describedby="basic-addon1" required="">
+                                        <option value="">---------</option>
+                                        <option value="Male">{{ _('Male (Nam)') }}</option>
+                                        <option value="Female">{{ _('Female (Nữ)') }}</option>
+                                    </select>
+                               </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+
+                                <div class="input-group" style="width:100%">
+                                    <span class="input-group-addon" style="width:42%" id="basic-addon1">{{ _('Address') }}</span>
+                                    <input type="text" id="reservation_address" class="form-control" style="width:100%;" aria-describedby="basic-addon1" autocomplete="off"/>
+                               </div>
+                            </td>  
+                            <td>
+                                <div class="input-group" style="width:100%">
+                                    <span class="input-group-addon" style="width:42%">{{ _('Division') }}</span>
+                                    <select id="reservation_division" class="form-control costom-select" aria-describedby="basic-addon1">
+                                        <option value="">----------</option>
+                                        {% for data in list_reservation_division %}
+                                        <option value="{{ data.code }}">{{ data.name }}</option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div class="input-group" style="width:100%">
+                                    <span class="input-group-addon" style="width:42%">{{ _('Funnels') }}</span>
+                                    <select id="patient_funnel" class="form-control">
+                                        <option value="">----------</option>
+                                        {% for data in list_funnels %}
+                                        <option value="{{ data.code }}">{{ data.name }}</option>
+                                        {% endfor %}
+                                    </select>
+                                </div>
+                            </td>
+                            <td>
+                                <div>
+                                    <div class="input-group" style="width:100%">
+                                        <span class="input-group-addon" style="width:42%">{{ _('Category') }}</span>
+                                        <select name="patient_category" id="patient_category" class="form-control costom-select" aria-describedby="basic-addon1" required="">
+                                            <option value="">---------</option>
+                                            <option value="VIP">{{ _('VIP') }}</option>
+                                            <option value="Black 1">{{ _('Black 1') }}</option>
+                                            <option value="Black 2">{{ _('Black 2') }}</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="2">
+
+                                <div class="input-group" style="width:100%">
+                                    <span class="input-group-addon" style="width:20%" id="basic-addon1">{{ _('Memo') }}</span>
+                                    <input type="text" id="reservation_memo" class="form-control" style="width:100%;" aria-describedby="basic-addon1" autocomplete="off"/>
+                               </div>
+                            </td> 
+                        </tr>                         
+
+                    </table>
+                    <!-- Add auto fill data -->
+                    <textarea id="tmp_text" class="form-control" aria-describedby="basic-addon1" autocomplete="off" style="height: 100px;"></textarea>
+                    <input type="button" class="btn btn-primary" value="{{ _('Auto Fill') }}" onclick="auto_fill()"/>
+                    <h5>{{ _('Pick Up') }}</h5>
+                    <td>
+                        <label class="need_medical_report" style="margin-right:10px;"><input type="checkbox" id="need_pick_up" /><text> {{_('Pick Up') }}</text></label>
+                    </td>                    
+                    <table class="table table-bordered" id = "pick_up_table">
+                        <tr>
+                            <td colspan="2">
+                                <div class="input-group" style="width:100%">
+                                    <span class="input-group-addon" style="width:21%" id="basic-addon1">{{ _('Pick up Address') }}</span>
+                                    <input type="text" id="patient_address" class="form-control" style="width:100%;" aria-describedby="basic-addon1" autocomplete="off"/>
+                                </div>
+                            </td>
+                        </tr>   
+                        <tr>
+                            <td>
+                                <div class="input-group" style="width:100%" >
+                                    <span class="input-group-addon" style="width:21%" id="basic-addon1">{{ _('Pick Up Time') }}</span>
+                                    <input type="text" id="pick_up_time" class="form-control" aria-describedby="basic-addon1" autocomplete="off"/>
+                                </div>
+                            </td>   
+                            <td>
+                                <div class="input-group" style="width:100%">
+                                    <span class="input-group-addon" style="width:42%">{{ _('Person') }}</span>
+                                    <select id="follower" class="form-control">
+                                        <option value="0" selected="">{{ _('0') }}</option>
+                                            <option value="1">{{ _('1') }}</option>
+                                            <option value="2">{{ _('2') }}</option>
+                                            <option value="3">{{ _('3') }}</option>
+                                            <option value="4">{{ _('4') }}</option>
+                                            <option value="5">{{ _('5') }}</option>
+                                        </select>   
+                                </div>
+                            </td>                                                        
+                        </tr>  
+                        <tr>
+                            <td colspan="2">
+                                <div class="input-group" style="width:100%">
+                                    <span class="input-group-addon" style="width:21%" id="basic-addon1">{{ _('Pick Up Memo') }}</span>
+                                    <input type="text" id="pick_up_memo" class="form-control" style="width:100%;" aria-describedby="basic-addon1" autocomplete="off"/>
+                               </div>
+                            </td>
+                        </tr>                                                               
+                    </table>
+                    
+                    <div class="modal-footer">
+                        <input type="hidden" id="selected_reservation" />
+                        <input type="button" class="btn btn-danger btn_reservation_delete" id="btn_reservation_delete" value="{{ _('Delete')}}" onclick="delete_reservation()" />
+                        <a class="btn btn-default" data-dismiss="modal" aria-hidden="true" onclick="reset_inputs">{{ _('Cancel') }}</a>
+                        <input type="button" class="btn btn-primary" value="{{ _('Save') }}" onclick="reservation_save()"/>
+                    </div>
+                </div>
+
+                
+            </div>
+        </div>
+
+    </div>
+</div>
+
+
+
+<div id="patient_list" class="modal fade">
+     <div class="modal-dialog" style="width:800px;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span> <span class="sr-only">close</span></button>
+                <h4>{{ _('Patient List') }}</h4>
+                <div id="modalBody" class="modal-body">
+                    <table class="table table-hover">
+                        <thead>
+                            <tr>
+                                <th>{{ _('ID') }}</th>
+                                <th>{{ _('Chart No') }}</th>
+                                <th>{{ _('Name') }}</th>
+                                <th>{{ _('Date of Birth') }}</th>
+                                <th>{{ _('Depart') }}</th>
+                                <th>{{ _('Phone') }}</th>
+                            </tr>
+                        </thead>
+                        <tbody id="patient_list_contents">
+                           
+                        </tbody>
+                    </table>
+                    
+                    <div class="modal-footer">
+                        <a class="btn btn-default" data-dismiss="modal" aria-hidden="true">Cancel</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+
+
+<script>
+
+    $(document).ready(function() {
+        if ($('#reservation_nationality').val() != 'Other'){
+            $('#reservation_nationality_etc').prop("disabled",true);
+        }
+        $('#reservation_nationality').change(function(){
+            var patient_nationality = $('#reservation_nationality').val()
+            if (patient_nationality != "Other"){
+                $('#reservation_nationality_etc').prop("disabled",true);
+            }else{
+                $('#reservation_nationality_etc').prop("disabled",false);
+            }
+        });
+    });
+
+    var calendar_p;
+    document.addEventListener('DOMContentLoaded', function() {
+        var calendarEl = document.getElementById('calendar');
+
+        var calendar = new FullCalendar.Calendar(calendarEl, {
+            plugins: [ 'interaction', 'dayGrid', 'timeGrid', ],
+            header: {
+                left: ' ',
+                center: 'title',
+                right: 'Add_New, prev,next'
+            },
+
+
+            defaultDate: '{% now "Y-m-d" %}',
+            defaultView: 'timeGridWeek',
+            navLinks: true, // can click day/week names to navigate views
+            
+            slotDuration: '00:05',
+            minTime : "08:00:00",
+            maxTime : "22:15:00",
+            defaultTimedEventDuration:'00:20',
+            //editable:true,
+            height: 'parent',
+            hiddenDays: [],
+            firstDay:1,
+            eventTextColor:'#000000',
+            //eventBorderColor:'#a9dded',
+            //eventBackgroundColor:'#d7f0f7',
+            customButtons: {
+                Add_New: {
+                    text: "{{ _('New Reservation') }}",
+                    click: function() {
+
+                    $('#createEventModal').modal({backdrop: 'static', keyboard: false});
+                    set_reservation();
+                    $('#createEventModal').modal('show');
+                    }
+                },
+
+
+                },
+            eventClick: function(info) {
+
+                //alert('Event: ' + info.event.id);
+                //alert('Coordinates: ' + info.jsEvent.pageX + ',' + info.jsEvent.pageY);
+                //alert('View: ' + info.view.type);
+            },
+            eventDrop:function(eventDropInfo ){
+                modifySchedule(eventDropInfo.event);
+            },
+            
+            events: function(info, successCallback, failureCallback) {
+                var depart = {% if user.doctor %}{{ user.doctor.depart.id }}{% else %}$('#reservation_search_depart option:selected').val();{%endif%}
+
+                var division = $("#reservation_search_division").val();
+                var patient_name = $("#patient_search_input").val();
+
+                $.ajax({
+                    type: 'POST',
+                    url: '/receptionist/reservation_events/',
+                    data: {
+                        'csrfmiddlewaretoken': $('#csrf').val(),
+                        'date_start':info.startStr,
+                        'date_end':info.endStr,
+                        'depart':depart,
+                        'division':division,
+                        'name':patient_name,
+                    },
+                    dataType: 'Json',
+                    success: function (response) {
+                        
+                        successCallback(response.datas);
+                        for ( var i in response.count_patient){
+                            $("th[data-date='" + i + "']").html( response.count_patient[i].date + " ( " + response.count_patient[i].count + " )");
+                            
+                        } 
+
+                    },
+                    error: function (request, status, error) {
+                        console.log("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
+                    },
+                });
+            },
+            eventRender: function(info){
+                $(info.el).on('dblclick', function() {
+
+                    $('#createEventModal').modal({backdrop: 'static', keyboard: false});
+                    set_reservation(info.event.id);
+                    $('#createEventModal').modal('show');
+                        
+                    });
+            },
+            eventMouseEnter:function(info){
+                $(info.el).attr('title',gettext('Double click to edit this content.'));
+            },
+            eventMouseLeave:function(info){
+                $(info.el).attr('title','');
+            },
+
+        });
+        calendar.render();
+        calendar_p = calendar;
+
+
+
+
+        function modifySchedule(event){
+            $.ajax({
+                type: 'POST',
+                url: '/receptionist/reservation_events_modify/',
+                data: {
+                    'csrfmiddlewaretoken': $('#csrf').val(),
+                    'date_start':event.start,//event.start.getFullYear() + "-" + (event.start.getMonth()+1) + "-" + event.start.getDate() + " " + event.start.getHours() +":"+ event.start.getMinutes() + ":00",
+                    'id':event.id,
+                },
+                dataType: 'Json',
+                success: function (response) {
+               
+                },
+                error: function (request, status, error) {
+                    console.log("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
+                },
+            });
+        };
+    });
+
+
+    jQuery.fn.center = function () {
+        this.css("position","absolute");
+
+        this.css("left", Math.max(0, (($(window).width() - $(this).outerWidth()) / 2) +
+        $(window).scrollLeft()) + "px");
+        return this;
+        }
+
+    function get_doctor(part, depart = null,doctor_id = null) {
+        var part_id = part.attr('id');
+        var doctor;
+        if (part_id == 'reservation_search_depart') {
+            doctor = $('#reservation_search_doctor');
+        } else if (part_id == 'reservation_depart') {
+            doctor = $('#reservation_doctor');
+        }
+        if (depart == null)
+            depart = part.val();
+
+        if (part.val() == '') {
+            doctor.empty();
+            doctor.append(new Option('---------', ''));
+            return;
+        }
+
+        $.ajax({
+            type: 'POST',
+            url: '/receptionist/get_depart_doctor/',
+            data: {
+                'csrfmiddlewaretoken': $('#csrf').val(),
+                'depart': part.val(),
+            },
+            dataType: 'Json',
+            success: function (response) {
+                doctor.empty();
+                doctor.append(new Option('---------', ''));
+                for (var i in response.datas){
+
+                    if(doctor_id==response.datas[i]){
+
+                        doctor.append("<option value='" + response.datas[i] + "' selected>" + i + "</Option>");
+                    }
+                    else{
+                        doctor.append("<option value='" + response.datas[i] + "'>" + i + "</Option>");
+                    }
+                }
+
+            },
+            error: function (request, status, error) {
+                console.log("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
+
+            },
+        })
+    }
+
+    $(function () {
+        $('.fc-left').html('<div class="reservation_title">' + 
+            '<span class="btn btn-danger" style="font-size:16px; height:26.5px; padding-top:1.5px; background:#d2322d;">{{ _('Reservation')}}</span>' +
+            '<b>&emsp;Date</b> : <input type="text" id="reservation_search_date" class="form-control reservation_input" aria-describedby="sizing-addon1" />' +
+            '&emsp;&emsp;' +
+            '<div class="input-group" style="margin-right:15px; width:145px; display:inline-table;{% if user.doctor%}display:none{% endif%}">' +
+            '<span class="input-group-addon reception_table_title" id="basic-addon1">{{ _('Depart') }}</span>' +
+            '<select name="depart" id="reservation_search_depart" class="form-control reservation_select" aria-describedby="basic-addon1" >' +
+            '<option value="">{{ _('All') }}</option>' +
+            {% for depart in list_depart%}
+                '<option value="{{ depart.id }}" {% if user.doctor.depart == depart.id %}selected{% endif %}>{{ depart.name }}</option>' +
+            {% endfor %}
+            '</select>' + 
+            '</div>' + 
+
+            '<div class="input-group" style="width:175px; display:inline-table;{% if user.doctor%}display:none{% endif%}">' +
+            '<span class="input-group-addon reception_table_title" id="basic-addon1">{{ _('Division') }}</span>' +
+            '<select id="reservation_search_division" class="form-control reservation_select" aria-describedby="basic-addon1" >' +
+            '<option value="">{{ _('All') }}</option>' +
+            {% for data in list_reservation_division %}
+                '<option value="{{ data.code}}">{{ data.name }}</option>' +
+            {% endfor %}   
+            '</select>' + 
+            '</div>' + 
+            '<div class="input-group" style="width:275px; display:inline-table">' +
+                    '<span class="input-group-addon">{{ _('Name') }}</span>' +
+                    '<input type="text" name="search_input" id="patient_search_input" class="form-control patient_search_input" aria-describedby="basic-addon1" autocomplete="off" placeholder="{{ _('At least 2 characters') }}"/>' +
+            '</div>' +
+
+            //'<option value="" selected="">---------</option>' +
+            //{% for depart in list_depart%}
+            //    '<option value="{{ depart.id }}">{{ depart.name }}</option>' +
+            //{% endfor %}
+            //'</select>' +
+            //'<select name="doctor" id="reservation_search_doctor" class="form-control reservation_select" placeholder="" aria-describedby="basic-addon1" required="">' +
+            //'<option value="" selected="">---------</option>' +
+            //'</select>' +
+            //'<input type="text" id="reservation_search_string" class="form-control reservation_input" aria-describedby="sizing-addon1" autocomplete="off"/>' + 
+            '</div>');
+
+        $('.fc-center').css("position","absolute");
+        $('.fc-center').css('left', '950px');
+
+        $('.fc-right > div, .fc-right > button').attr('font-size', '16px');
+        $('.fc-right > div, .fc-right > button').css('height','26.5px;');
+        $('.fc-right > div').css('padding-top', '1.5px');
+        $('.fc-button').css('padding-top', '0');
+        $('.fc-button').css('padding-bottom', '0');
+        $('.fc-right > button').css('padding-top', '0px');
+        $('.fc-right > button').css('padding-bottom', '0px');
+
+        $('#reservation_date, #re_reservation_date').daterangepicker({
+            autoUpdateInput: false,
+            singleDatePicker: true,
+            timePicker: true,
+            timePicker24Hour: true,
+            timePickerIncrement: 10,
+            showDropdowns: true,
+            drops: "down",
+            
+            locale: {
+                format: 'YYYY-MM-DD HH:mm:ss',
+                locale: { cancelLabel: 'Clear' },
+
+            },
+            clickPrev : function(){alert()},
+
+        }).on('show.daterangepicker', function (ev, picker) {
+        picker.container.find(".hourselect").empty()
+        picker.container.find(".hourselect").append('<option value = "7" > 7</option>');
+        picker.container.find(".hourselect").append('<option value = "8" > 8</option>');
+        picker.container.find(".hourselect").append('<option value = "9" > 9</option>');
+        picker.container.find(".hourselect").append('<option value = "10" > 10</option>');
+        picker.container.find(".hourselect").append('<option value = "11" > 11</option>');
+        picker.container.find(".hourselect").append('<option value = "12" > 12</option>');
+        picker.container.find(".hourselect").append('<option value = "13" > 13</option>');
+        picker.container.find(".hourselect").append('<option value = "14" > 14</option>');
+        picker.container.find(".hourselect").append('<option value = "15" > 15</option>');
+        picker.container.find(".hourselect").append('<option value = "16" > 16</option>');
+        picker.container.find(".hourselect").append('<option value = "17" > 17</option>');
+        picker.container.find(".hourselect").append('<option value = "18" > 18</option>');
+        picker.container.find(".hourselect").append('<option value = "19" > 19</option>');
+        picker.container.find(".hourselect").append('<option value = "20" > 20</option>');
+        picker.container.find(".hourselect").append('<option value = "21" > 21</option>');
+
+        });
+
+        $(' #pick_up_time').daterangepicker({
+            autoUpdateInput: false,
+            singleDatePicker: true,
+            timePicker: true,
+            timePicker24Hour: true,
+            timePickerIncrement: 10,
+            showDropdowns: false,
+            drops: "up",
+            
+            locale: {
+                format: 'YYYY-MM-DD HH:mm:ss',
+                locale: { cancelLabel: 'Clear' },
+
+            },
+            clickPrev : function(){alert()},
+
+        }).on('show.daterangepicker', function (ev, picker) {
+        picker.container.find(".hourselect").empty()
+        picker.container.find(".hourselect").append('<option value = "7" > 7</option>');
+        picker.container.find(".hourselect").append('<option value = "8" > 8</option>');
+        picker.container.find(".hourselect").append('<option value = "9" > 9</option>');
+        picker.container.find(".hourselect").append('<option value = "10" > 10</option>');
+        picker.container.find(".hourselect").append('<option value = "11" > 11</option>');
+        picker.container.find(".hourselect").append('<option value = "12" > 12</option>');
+        picker.container.find(".hourselect").append('<option value = "13" > 13</option>');
+        picker.container.find(".hourselect").append('<option value = "14" > 14</option>');
+        picker.container.find(".hourselect").append('<option value = "15" > 15</option>');
+        picker.container.find(".hourselect").append('<option value = "16" > 16</option>');
+        picker.container.find(".hourselect").append('<option value = "17" > 17</option>');
+        picker.container.find(".hourselect").append('<option value = "18" > 18</option>');
+        picker.container.find(".hourselect").append('<option value = "19" > 19</option>');
+        picker.container.find(".hourselect").append('<option value = "20" > 20</option>');
+        picker.container.find(".hourselect").append('<option value = "21" > 21</option>');
+
+        });
+    
+        $('#reservation_date,#re_reservation_date, #pick_up_time').on('apply.daterangepicker', function (ev, picker) {
+            var hour = picker.container.find(".hourselect").children("option:selected").val();
+            if (hour < 7)
+                hour = 7;
+            else if (hour > 22)
+                hour = 22;
+            picker.startDate.set({ hour: hour, });
+            // if ($("#language").val() == 'vi') {
+            //     $(this).val(picker.startDate.format('HH:mm:ss DD/MM/YYYY'));
+            // }else{
+                $(this).val(picker.startDate.format('YYYY-MM-DD HH:mm:ss'));
+            //}
+        });
+        $('#reservation_date,#re_reservation_date, #pick_up_time').on('cancel.daterangepicker', function(ev, picker) {
+            $(this).val('');
+        });
+
+        $('#reservation_date_of_birth').daterangepicker({
+            autoUpdateInput: false,
+            singleDatePicker: true,
+            showDropdowns: true,
+            drops: "down",
+            locale: {
+                format: 'YYYY-MM-DD',
+            },
+        });
+
+        $('#reservation_date_of_birth').on('apply.daterangepicker', function (ev, picker) {
+            // if ($("#language").val() == 'vi') {
+            //     $('#reservation_date_of_birth').val(picker.startDate.format('DD/MM/YYYY'));
+            // }else{
+                $('#reservation_date_of_birth').val(picker.startDate.format('YYYY-MM-DD'));
+            //}
+        });
+
+        $('#reservation_search_date').daterangepicker({
+            autoUpdateInput: true,
+            singleDatePicker: true,
+            showDropdowns: true,
+            drops: "down",
+            locale: {
+                format: 'YYYY-MM-DD',
+            },
+        });
+        $('#reservation_search_date').on('apply.daterangepicker', function (ev, picker) {
+            if ($("#language").val() == 'vi') {
+                $('#reservation_search_date').val(picker.startDate.format('DD/MM/YYYY'));
+                calendar_p.gotoDate( picker.startDate.format('YYYY-MM-DD') )
+            }else{
+                $('#reservation_search_date').val(picker.startDate.format('YYYY-MM-DD'));
+                calendar_p.gotoDate( picker.startDate.format('YYYY-MM-DD') )
+            }
+            
+
+        });
+        if ($("#language").val() == 'vi') {
+            var today = moment().format('DD[/]MM[/]YYYY');
+            $('#reservation_search_date').val(today);
+        }
+
+        
+        $('#reservation_search_doctor').empty();
+        $('#reservation_search_doctor').append(new Option('---------', ''));
+        $("#reservation_search_depart").change(function () {
+            get_doctor($("#reservation_search_depart"));
+        });
+
+
+        $('#reservation_doctor').empty();
+        $('#reservation_doctor').append(new Option('---------', ''));
+        $("#reservation_depart").change(function () {
+            get_doctor($("#reservation_depart"));
+        });
+
+        $('#reservation_patient').on('keydown', function (e) {
+            if (e.keyCode == 13) {
+                    
+                var string = $('#reservation_patient').val();
+
+                $.ajax({
+                    type: 'POST',
+                    url: '/receptionist/patient_search/',
+                    data: {
+                        'csrfmiddlewaretoken': $('#csrf').val(),
+                        'date_start':event.start,
+                        'category': 'name',
+                        'string':string,
+                    },
+                    dataType: 'Json',
+                    success: function (response) {
+
+                        if (response.datas.length == 0) {
+                            alert( "{{ _('No Patient') }}" );
+                        }
+                        else if (response.datas.length == 1) {
+                            $('#reservation_chart').val(response.datas[0].id);
+                            $('#reservation_chart_number').val(response.datas[0].chart);
+                            $('#reservation_patient').val(response.datas[0].name_kor);
+                            $('#reservation_patient_eng').val( response.datas[0].name_eng);
+                            $('#reservation_date_of_birth').val(response.datas[0].date_of_birth);
+                            $('#reservation_phone').val(response.datas[0].phonenumber);
+                        }
+                        else {
+                            $('#patient_list_contents').empty();
+
+                            $('#patient_list').modal({backdrop: 'static', keyboard: false});
+                            $('#patient_list').modal('show');
+
+                            var str = '';
+                            for (var i = 0; i < response.datas.length; i++) {
+                                str += '<tr style="cursor:pointer;" onclick="select_patient(this)"><td>' + response.datas[i].id + '</td>' +
+                                    '<td>' + response.datas[i].chart + '</td>' +
+                                    '<td>' + response.datas[i].name_kor + '</td>' +
+                                    '<td>' + response.datas[i].name_eng  + '</td>' +
+                                    '<td>' + response.datas[i].date_of_birth + '</td>' +
+                                    '<td>' + response.datas[i].depart + '</td>' +
+                                    '<td>' + response.datas[i].phonenumber + '</td>'+
+                                    '<td>' + response.datas[i].nationality + '</td>' +
+                                    '<td>' + response.datas[i].passport + '</td>' +
+                                    '<td>' + response.datas[i].email + '</td>' +
+                                    '<td style="display: none">' + response.datas[i].category + '</td>' +
+                                    '<td style="display: none;">' + response.datas[i].address + '</td>' +
+                                    '<td style="display: nonen;">' + response.datas[i].gender + '</td>' +
+                                    '</tr>' ;
+                            }
+                            $('#patient_list_contents').append(str);
+
+
+                        }
+                        
+
+                    },
+                    error: function (request, status, error) {
+                        console.log("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
+                    },
+                });
+            }
+
+        });
+
+        $('#reservation_search_depart, #reservation_search_doctor, #reservation_search_division, #patient_search_input').change(function () {
+            calendar_p.refetchEvents();
+        });
+
+        var table = document.getElementById('pick_up_table'),
+        inputs = table.getElementsByTagName('input'),
+        selects = table.getElementsByTagName('select'),
+        checkbox = document.getElementById('need_pick_up');
+        disableTable(true);
+        checkbox.onchange = function(e) {
+            if(checkbox.checked) {
+                disableTable(false);
+            } else {
+                disableTable(true);
+            }
+        }  
+        function disableTable(disableState) {
+        for (var i = 0, l = inputs.length; i < l; i++) {
+            inputs[i].disabled = disableState;
+        }
+        for (var i = 0, l = selects.length; i < l; i++) {
+            selects[i].disabled = disableState;
+        }        
+    }                
+   });
+
+    function search_reservation() {
+        $.ajax({
+            type: 'POST',
+            url: '/receptionist/reservation_events/',
+            data: {
+                'csrfmiddlewaretoken': $('#csrf').val(),
+                'search_string': $('reservation_search_string').val(),
+                'name': $('patient_search_input').val(),
+            },
+            dataType: 'Json',
+            success: function (response) {
+                successCallback(response.datas);
+            },
+            error: function (request, status, error) {
+                console.log("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
+            },
+        });
+
+    }
+
+    function select_patient(content) {
+        $('#reservation_chart').val(content.children[0].textContent);
+        $('#reservation_chart_number').val(content.children[1].textContent);
+        $('#reservation_patient').val(content.children[2].textContent);
+        $('#reservation_patient_eng').val(content.children[3].textContent);
+        $('#reservation_date_of_birth').val(content.children[4].textContent);
+        $('#reservation_phone').val(content.children[6].textContent);
+        if(content.children[7].textContent == 'Vietnam' || content.children[7].textContent == 'Vietnam'){
+            $('#reservation_nationality').val(content.children[7].textContent);
+        }else{
+            $('#reservation_nationality').val('Other');
+            $('#reservation_nationality_etc').val(content.children[7].textContent);
+        }
+        // $('#reservation_nationality').val(content.children[7].textContent);
+        $('#reservation_passport').val(content.children[8].textContent);
+        $('#reservation_email').val(content.children[9].textContent);
+        $('#patient_category').val(content.children[10].textContent);
+
+        $('#reservation_address').val(content.children[11].textContent);
+        $('#reservation_gender').val(content.children[12].textContent);
+        // $('#patient_category').val(content.children[10].textContent);
+
+        $('#patient_list').modal('hide');
+        reset_inputs();
+    }
+
+
+
+    function reservation_save() {
+
+        if ($('#reservation_date').val() == '') {
+            alert(" {{ _('selecte Reservation Date ! ') }} ");
+            return;
+        }
+        if ($('#reservation_patient').val() == '') {
+            alert(" {{ _('Name is necessary! ') }} ");
+            return;
+        }
+        
+        if ($('#reservation_depart').val() == '') {
+            alert(" {{ _('Depart is necessary! ! ') }} ");
+            return;
+        }
+
+        if ($('#reservation_doctor').val() == '') {
+            alert(" {{ _('Doctor is necessary! ! ') }} ");
+            return;
+        }
+        
+        // if ($('#patient_address').val() == '') {
+        //    alert(" {{ _('Address is necessary! ! ') }} ");
+        //    return;
+        // }
+
+        if ($('#reservation_division').val() == '') {
+                alert(" {{ _('Select Division. ') }} ");
+                return;
+            }
+ 
+        var phone = $('#reservation_phone').val();
+        var NumberRegex = /^[0]*(\d{9})*\s*$/;
+
+        var nation =  $('#patient_nationality').val();
+        console.log(nation)
+        if(nation == 'Vietnam'){
+            if(phone.length == 10){
+                if(NumberRegex.test(phone)){
+                //do whatever you want to
+                }else{
+                    alert('Invalid phone number')
+                    return false;
+                }
+            }else if(phone.length > 10){
+                alert('Invalid phone number')
+                return false;
+            }else if(phone.length < 10){
+                if(phone != 'na' && phone != 'NA' ){
+                    alert('Invalid phone number')
+                    return false;
+                }              
+            } 
+        }
+        else if(nation == 'Korea'){
+            NumberRegex2 = /^[0]*(\d{10})*\s*$/;
+            if(phone.length == 10 || phone.length == 11){
+                if(NumberRegex.test(phone) || NumberRegex2.test(phone)){
+                //do whatever you want to
+                }else{
+                    alert('Invalid phone number')
+                    return false;
+                }
+            }else if(phone.length > 11){
+                alert('Invalid phone number')
+                return false;
+            }else if(phone.length < 10){
+                if(phone != 'na' && phone != 'NA' ){
+                    alert('Invalid phone number')
+                    return false;
+                }              
+            } 
+        }            
+
+
+        var date_pattern = /^[0-9]{4}-(0[1-9]|1[0-2])-(0[1-9]|[1-2][0-9]|3[0-1]) (0[0-9]|1[0-9]|2[0-3]):([0-5][0-9]):([0-5][0-9])$/; 
+        var date_of_birth_pattern = /^((?:(?:1[6-9]|2[0-9])\d{2})(-)(?:(?:(?:0[13578]|1[02])(-)31)|((0[1,3-9]|1[0-2])(-)(29|30))))$|^(?:(?:(?:(?:1[6-9]|[2-9]\d)?(?:0[48]|[2468][048]|[13579][26])|(?:(?:16|[2468][048]|[3579][26])00)))(-)02(-)29)$|^(?:(?:1[6-9]|2[0-9])\d{2})(-)(?:(?:0[1-9])|(?:1[0-2]))(-)(?:0[1-9]|1\d|2[0-8])$/; 
+        var reservation_date = $('#reservation_date').val();
+        var pick_up_time = $('#pick_up_time').val();
+        var re_reservation_date = $('#re_reservation_date').val();
+        var reservation_date_of_birth = $('#reservation_date_of_birth').val();
+        // if ($("#language").val() == 'vi') {
+        //     reservation_date = moment(reservation_date, 'HH:mm:ss DD/MM/YYYY').format('YYYY-MM-DD HH:mm:ss');
+        //     reservation_date_of_birth = moment(reservation_date_of_birth, 'DD/MM/YYYY').format('YYYY-MM-DD');
+        // }
+        if (reservation_date_of_birth != '') {
+            if ( !date_of_birth_pattern.test(reservation_date_of_birth)){
+                alert("{{ _('Date of birth should be 0000(year)-00(month)-00(day)') }}");
+                return;
+            }
+        }
+
+        if (reservation_date != '') {
+            if ( !date_pattern.test(reservation_date)){
+                alert("{{ _('Reservation date should be 0000(year)-00(month)-00(day) hh:mm:ss') }}");
+                return;
+            }
+        }
+
+        if (pick_up_time != '') {
+            if ( !date_pattern.test(pick_up_time)){
+                alert("{{ _('Pick up time should be 0000(year)-00(month)-00(day) hh:mm:ss') }}");
+                return;
+            }
+        }        
+    
+        if (re_reservation_date != '') {
+                if ( !date_pattern.test(re_reservation_date)){
+                alert("{{ _('Changed date should be 0000(year)-00(month)-00(day) hh:mm:ss') }}");
+                return;
+            }
+        }
+        var nationality = $("#reservation_nationality").val();
+    
+        if (nationality == "Other"){
+            nationality = $('#reservation_nationality_etc').val();
+        }
+        $.ajax({
+            type: 'POST',
+            url: '/receptionist/reservation_save/',
+            data: {
+                'csrfmiddlewaretoken': $('#csrf').val(),
+                'selected_reservation':$('#selected_reservation').val(),
+                'reservation_date': reservation_date,
+                're_reservation_date': re_reservation_date,
+                'reservation_name': $('#reservation_patient').val(),
+                'reservation_name_eng': $('#reservation_patient_eng').val(),
+                'reservation_gender': $('#reservation_gender').val(),
+                'reservation_chart':$('#reservation_chart').val(),
+                
+                // 'reservation_email':$('#reservation_email').val(),
+                'reservation_nationality':nationality,// $('#reservation_nationality').val(),
+
+                'reservation_date_of_birth':reservation_date_of_birth,
+                'reservation_phone':$('#reservation_phone').val(),
+                'reservation_memo':$('#reservation_memo').val(),
+                'reservation_address':$('#reservation_address').val(),
+                'reservation_passport':$('#reservation_passport').val(),
+                'reservation_depart':$('#reservation_depart option:selected').val(),
+                'reservation_doctor':$('#reservation_doctor option:selected').val(),
+
+                'reservation_division':$('#reservation_division').val(),
+                'address':$('#patient_address').val(),
+                'category': $('#patient_category').val(),
+                'need_pick_up':$('#need_pick_up').prop("checked"),
+                'follower':$('#follower option:selected').val(),
+                'pick_up_time': pick_up_time,
+                'patient_funnel':$('#patient_funnel option:selected').val(),
+                'patient_funnel_etc': $('#patient_funnel_etc').val(),      
+                'apointment_memo':$('#pick_up_memo').val(),         
+            },
+            dataType: 'Json',
+            success: function (response) {
+                alert("{{ _('saved') }}");
+                location.reload();
+            },
+            error: function (request, status, error) {
+                console.log("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
+            },
+        });
+    }
+
+    function reset_inputs() {
+        $('.modalBody input').val();
+        $('.modalBody select').find('option:first').attr('selected', 'selected');
+    }
+
+    
+function set_reservation(reservation_id = null) {
+    $('#selected_reservation').val(reservation_id);
+
+    $("#reservation_date, #re_reservation_date").prop("disabled",true);
+
+
+    if (reservation_id == null) {
+        $('.modal-header h4').html("{{ _('Add Reservation') }}" );
+        $('#btn_reservation_delete').attr('style','display:none;');
+
+        $('#reservation_date').val('');
+        $('#reservation_date').prop("disabled",false);
+        $('#reservation_chart_number').val('');
+        $('#re_reservation_date').val('');
+        $('#reservation_patient').val('');
+        $('#reservation_chart').val('');
+        $('#reservation_date_of_birth').val('');
+        $('#reservation_phone').val('');
+        $('#reservation_depart').val('---------');
+        $('#reservation_doctor').val('---------');
+        $('#reservation_memo').val('');
+        $('#reservation_address').val('');
+        $('#reservation_passport').val('');
+        $('#reservation_division').val('');
+        
+        $('#patient_funnel').val('---------');
+        $('#reservation_gender').val('');
+        $('#reservation_patient_eng').val('');
+        $('#reservation_nationality').val('');
+
+        $('#tmp_text').val('');
+        $('#reservation_nationality_etc').val('');
+
+    } else {
+        $('.modal-header h4').html(" {{_('Edit Reservation') }} ");
+        $('#btn_reservation_delete').attr('style','display:block; float:left;');
+    
+        $('#re_reservation_date').prop("disabled",false);
+        $.ajax({
+            type: 'POST',
+            url: '/receptionist/reservation_info/',
+            data: {
+                'csrfmiddlewaretoken': $('#csrf').val(),
+                'reservation_id': reservation_id,
+            },
+            dataType: 'Json',
+            success: function (response) {
+
+                // if ($("#language").val() == 'vi') {
+                //     $('#reservation_date').val(moment(response.reservation_date, 'YYYY-MM-DD HH:mm:ss').format('HH:mm:ss DD/MM/YYYY'));
+                //     $('#re_reservation_date').val(moment(response.reservation_re_date, 'YYYY-MM-DD HH:mm:ss').format('HH:mm:ss DD/MM/YYYY'));
+                //     $('#reservation_date_of_birth').val(moment(response.reservation_date_of_birth,'YYYY-MM-DD').format('DD/MM/YYYY'));
+
+                // }else{
+                    $('#reservation_date').val(response.reservation_date);
+                    $('#re_reservation_date').val(response.reservation_re_date);
+                    $('#reservation_date_of_birth').val(response.reservation_date_of_birth);
+                //}
+
+                
+                $('#reservation_patient').val(response.reservation_patient);
+                $('#reservation_chart').val(response.reservation_patient_id);
+                $('#reservation_chart_number').val(response.reservation_chart);
+               
+                $('#reservation_phone').val(response.reservation_phone);
+
+                $('#reservation_memo').val(response.reservation_memo);
+                $('#reservation_address').val(response.reservation_address);
+                $('#reservation_passport').val(response.reservation_passport);
+                $('#reservation_division').val(response.reservation_division);
+
+                $('#patient_address').val(response.address);
+
+                $('#follower').val(response.follower);    
+                $('#reservation_nationality').val(response.patient_nationality);
+                $('#reservation_gender').val(response.patient_gender);
+                $('#patient_funnel').val(response.funnel).change();
+                $('#reservation_patient_eng').val(response.reservation_patient_eng);
+
+
+                $('#need_pick_up').prop('checked', false)
+                if (response.need_pick_up) {
+                    $('#need_pick_up').prop('checked', true)
+                }                      
+                disableTable(true);
+                if(response.need_pick_up) {
+                    disableTable(false);
+                } else {
+                    disableTable(true);
+                }
+
+                $('#reservation_depart').val(response.reservation_depart);
+                get_doctor($("#reservation_depart"),null,response.reservation_doctor);
+
+                $('#reservation_doctor').val(response.reservation_doctor).change();
+                
+            },
+            error: function (request, status, error) {
+                console.log("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
+
+            },
+        })
+    }
+
+}
+function disableTable(disableState) {
+    var table = document.getElementById('pick_up_table'),
+                inputs = table.getElementsByTagName('input'),
+                selects = table.getElementsByTagName('select'),
+                checkbox = document.getElementById('need_pick_up');
+            for (var i = 0, l = inputs.length; i < l; i++) {
+                inputs[i].disabled = disableState;
+            }
+            for (var i = 0, l = selects.length; i < l; i++) {
+                selects[i].disabled = disableState;
+            } 
+} 
+    function delete_reservation(){
+        if(confirm(" {{ _('Do you want to delete?') }}") ){
+            $.ajax({
+                type: 'POST',
+                url: '/receptionist/reservation_events_delete/',
+                data: {
+                    'csrfmiddlewaretoken': $('#csrf').val(),
+                    'id':$('#selected_reservation').val(),
+                },
+                dataType: 'Json',
+                success: function (response) {
+                    alert(" {{ _('Deleted') }}");
+                    location.reload();                
+    //info.event.remove();
+                },
+                error: function (request, status, error) {
+                    console.log("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
+                },
+            });
+        }
+    }
+
+    function auto_fill(){
+        var text = $('#tmp_text').val()
+        var lines = text.split(/\r?\n/)
+
+        for(let line of lines){
+            console.log(line)
+            if(line.startsWith('▪︎전화 번호') || line.startsWith('▪︎전화 번호 (Điện Thoại) :') || line.includes('전화 번호') || line.includes('Điện Thoại')|| line.includes('전화번호')){
+                
+                var phone = line.split(':')[1]
+                if(phone != '' && phone != null){
+                    phone = phone.replace(/\s/g,'')
+                    $('#reservation_phone').val(phone.trim())
+                }
+            }
+            else if(line.startsWith('▪︎베트남 주소지 (있다면 간단히)') || line.startsWith('▪︎베트남 주소지 (D/c ở VN) :') || line.includes('베트남 주소지')|| line.includes('Địa chỉ') || line.includes('주소') ){
+               
+                var address = line.split(':')[1]
+                if(address != '' && address != null){
+                    $('#reservation_address').val(address)
+                }
+            }
+            else if( line.includes('이름') || line.includes('Tên') || line.includes('성함')|| line.includes('이름')){
+                console.log('=======')
+                var names = line.split(':')[1]
+                if (names.includes(',') == true){
+                    if(name != ','){
+                        var kor_name = names.split(',')[0]
+                        $('#reservation_patient').val(kor_name.trim())
+
+                        var eng_name = names.split(',')[1]
+                        $('#reservation_patient_eng').val(eng_name.trim())
+                    }
+                }
+                else if (names.includes('/') == true){
+                    console.log(names)
+                    var kor_name = names.split('/')[0]
+                    $('#reservation_patient').val(kor_name.trim())
+
+                    var eng_name = names.split('/')[1]
+                    $('#reservation_patient_eng').val(eng_name.trim())
+
+                }
+                else{
+                    console.log(names)
+                    $('#reservation_patient').val(names.trim())
+                }
+        
+
+            }
+            else if(line.startsWith('*생년월일(Y.M.D)') || line.startsWith('*생년월일(Y.M.D)Ngày tháng năm sinh :') || line.includes('생년월일')){
+                
+                var dob = line.split(':')[1]
+                if(dob != '' && dob != null){
+                    if (dob.includes('.')){
+                        var y = dob.split('.')[0]
+                        var m = dob.split('.')[1]
+                        if(m.length == 1){
+                            m = '0'.concat(m)
+                        }
+                        var d = dob.split('.')[2]
+                        var date = y.concat('-',m,'-',d)
+                        $('#reservation_date_of_birth').val(date.trim())
+                    }
+                    if (dob.includes('/')){
+                        var y = dob.split('/')[0]
+                        var m = dob.split('/')[1]
+                        if(m.length == 1){
+                            m = '0'.concat(m)
+                        }
+                        var d = dob.split('/')[2]
+                        var date = y.concat('-',m,'-',d)
+                        $('#reservation_date_of_birth').val(date.trim())
+                    }
+                    if (dob.includes('-')){
+                        var y = dob.split('-')[0]
+                        var m = dob.split('-')[1]
+                        if(m.length == 1){
+                            m = '0'.concat(m)
+                        }
+                        var d = dob.split('-')[2]
+                        var date = y.concat('-',m,'-',d)
+                        $('#reservation_date_of_birth').val(date.trim())
+                    }
+
+                }
+            }
+            else if(line.startsWith('*성별') || line.startsWith('*성별Giới tính :') || line.includes('성별')){
+                var gender = line.split(':')[1]
+                if(gender != '' && gender != null){
+                    if(gender.includes('여') || gender.toLowerCase().includes('nữ')){
+                        $('#reservation_gender').val('Female')
+                    }
+                    else{
+                        $('#reservation_gender').val('Male')
+                    }
+                }
+            }
+            else if(line.startsWith('*국적 :') || line.startsWith('*국적Quốc tịch :') || line.includes('국적')){
+                var nation = line.split(':')[1]
+                if(nation != '' && nation != null){
+                    if(nation.includes('한국') || nation.toLowerCase().includes('korea')){
+                        $('#reservation_nationality').val('Korea')
+                    }
+                    else if(nation.includes('베트남') || nation.toLowerCase().includes('viet')){
+                        $('#reservation_nationality').val('Vietnam')
+                    }
+                    else{
+                        $('#reservation_nationality').val('Other')
+                        $('#reservation_nationality_etc').val(nation)
+                    }
+                }
+            }
+            else if(line.startsWith('*여권번호') || line.startsWith('*여권번호 Số hộ chiếu :')  || line.includes('여권번호')){
+                // console.log(1)
+                var passport = line.split(':')[1]
+                // console.log(passport)
+                if(passport != '' && passport != null){
+                    $('#reservation_passport').val(passport)
+                }
+            }
+            else if(line.startsWith('- 검사 종류') || line.startsWith('- 검사 종류 Lý do khám bệnh :')  || line.includes('검사 종류')){
+                var memo = line.split(':')[1]
+                if(memo != '' && memo != null){
+                    $('#reservation_memo').val(memo)
+                }
+            }
+            else if(line.startsWith('- 검사 예약 일시' || line.startsWith('- 검사 예약 일시 Ngày giờ đặt lịch') || line.includes('검사 예약 일시'))){
+                if(line.includes(':')){
+                    var date1 = line.split(':')[1]
+                if(date1 != '' && date1 != null){
+                    if (date1.includes('.')){
+                        var dy = date1.split('.')[0]
+                        var dm = date1.split('.')[1]
+                        if(dm.length == 1){
+                            dm = '0'.concat(dm)
+                        }
+                        var dd = date1.split('.')[2]
+                        var date2 = dy.concat('-',dm,'-',dd,' 07:00:00')
+                        $('#reservation_date').val(date2.trim())
+                    }
+                    if (date1.includes('-')){
+                        var dy = date1.split('-')[0]
+                        var dm = date1.split('-')[1]
+                        if(dm.length == 1){
+                            dm = '0'.concat(dm)
+                        }
+                        var dd = date1.split('-')[2]
+                        var date2 = dy.concat('-',dm,'-',dd,' 07:00:00')
+                        $('#reservation_date').val(date2.trim())
+                    }
+                    if (date1.includes('/')){
+                        var dy = date1.split('/')[0]
+                        var dm = date1.split('/')[1]
+                        if(dm.length == 1){
+                            dm = '0'.concat(dm)
+                        }
+                        var dd = date1.split('/')[2]
+                        var date2 = dy.concat('-',dm,'-',dd,' 07:00:00')
+                        $('#reservation_date').val(date2.trim())
+                    }
+
+                }
+                }
+
+            }
+        }
+        // $('#reservation_patient').val(text)
+        // console.log(text)
+    }
+</script>
+
+{% endblock %}
+
+{% block scripts %}
+
+
+{% endblock %}

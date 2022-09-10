@@ -1,0 +1,126 @@
+﻿<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    {% load staticfiles %}
+
+    <link rel="stylesheet" href="/static/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+
+    <script src="{% static 'js/Etc/jquery-3.5.1.min.js' %}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+    <script type="text/javascript" src="{% static 'js/Etc/waiting_list_sys_admin.js' %} "></script>
+
+    <style>
+        input[type='text'] {
+            width:75%;
+        }
+        input[type='number'] {
+            width:60px;
+        }
+    </style>
+</head>
+<body>
+    {% csrf_token %}
+    <div class="container">
+        <div class="row">
+            <div class="col h2 text-center">
+                <p>Screen Settings</p>
+            </div>
+        </div>
+
+        <div class="row">
+            <table class="table table-bordered">
+                <tr>
+                    <th class="text-center align-middle">Interval</th>
+                    <td colspan="3">
+                        <input type="number" id="interval" min="1" max="99" />
+                        <span class="font-weight-bold">Sec.</span>
+                        <span>( 1 ~ 99 )</span>
+                    </td>
+                </tr>
+                <tr>
+                    <th class="text-center align-middle" rowspan="6">
+                        Comment
+                        <br />
+                        (80자 이내)
+                    </th>
+                    <td colspan="2">
+                        <span class="font-weight-bold">Comment Interval</span>
+                        <input type="number" id="text_interval" min="1" max="99" />
+                        <span class="font-weight-bold">Sec.</span>
+                        <span>( 1 ~ 99 )</span>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <span>1.</span>
+                        <input type="text" id="text_1" />
+                        <span>(KOR)</span>
+                    </td>
+                    <td>
+                        <span>1.</span>
+                        <input type="text" id="text_2" />
+                        <span>(VIE)</span>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <span>2.</span>
+                        <input type="text" id="text_3" />
+                        <span>(KOR)</span>
+                    </td>
+                    <td>
+                        <span>2.</span>
+                        <input type="text" id="text_4" />
+                        <span>(VIE)</span>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <span>3.</span>
+                        <input type="text" id="text_5" />
+                        <span>(KOR)</span>
+                    </td>
+                    <td>
+                        <span>3.</span>
+                        <input type="text" id="text_6" />
+                        <span>(VIE)</span>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <span>4.</span>
+                        <input type="text" id="text_7" />
+                        <span>(KOR)</span>
+                    </td>
+                    <td>
+                        <span>4.</span>
+                        <input type="text" id="text_8" />
+                        <span>(VIE)</span>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <span>5.</span>
+                        <input type="text" id="text_9" />
+                        <span>(KOR)</span>
+                    </td>
+                    <td>
+                        <span>5.</span>
+                        <input type="text" id="text_10" />
+                        <span>(VIE)</span>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="3" style="text-align:right">
+                        <input class="btn btn-primary" type="button" value="Save" onclick="waiting_list_sys_admin_set()"/>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>
+</body>
+</html>

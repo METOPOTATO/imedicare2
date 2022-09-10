@@ -1,0 +1,4859 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#: .\Manage\templates\Manage\sms_history.html:56
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2020-06-10 15:39+0700\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+
+#: .\Doctor\templates\Doctor\audit.html:12
+#: .\Doctor\templates\Doctor\audit_PM.html:14
+msgid "AUDIT"
+msgstr "회계"
+
+#: .\Doctor\templates\Doctor\audit.html:22
+#: .\Doctor\templates\Doctor\audit.html:60
+#: .\Doctor\templates\Doctor\audit_PM.html:26
+#: .\Doctor\templates\Doctor\audit_PM.html:75
+#: .\Doctor\templates\Doctor\index.html:101
+#: .\Doctor\templates\Doctor\index.html:130
+#: .\Doctor\templates\Doctor\index_DERM.html:103
+#: .\Doctor\templates\Doctor\index_DERM.html:135
+#: .\Doctor\templates\Doctor\index_PM.html:97
+#: .\Doctor\templates\Doctor\index_PM.html:129
+#: .\Doctor\templates\Doctor\index_PS.html:97
+#: .\Doctor\templates\Doctor\index_PS.html:129
+#: .\Doctor\templates\Doctor\report.html:11
+#: .\Doctor\templates\Doctor\report.html:29
+#: .\KBL\templates\KBL\document_management.html:40
+#: .\KBL\templates\KBL\project_management.html:98
+#: .\KBL\templates\KBL\project_management.html:312
+#: .\KBL\templates\KBL\statistics.html:13
+#: .\KBL\templates\KBL\work_permit.html:165
+#: .\Laboratory\templates\Laboratory\index.html:15
+#: .\Manage\templates\Manage\Draft.html:60
+#: .\Manage\templates\Manage\Draft.html:61
+#: .\Manage\templates\Manage\Draft.html:62
+#: .\Manage\templates\Manage\Draft.html:63
+#: .\Manage\templates\Manage\Draft_KBL.html:60
+#: .\Manage\templates\Manage\Draft_KBL.html:61
+#: .\Manage\templates\Manage\Draft_KBL.html:62
+#: .\Manage\templates\Manage\Draft_KBL.html:63
+#: .\Manage\templates\Manage\Manage.html:43
+#: .\Manage\templates\Manage\Manage.html:107
+#: .\Manage\templates\Manage\Manage.html:225
+#: .\Manage\templates\Manage\inventory_medical_tool.html:57
+#: .\Manage\templates\Manage\inventory_medical_tool.html:74
+#: .\Manage\templates\Manage\sms_history.html:15
+#: .\Manage\templates\board\list.html:169
+#: .\Manage\templates\statistics\statistics_customer_info.html:14
+#: .\Manage\templates\statistics\statistics_depart.html:14
+#: .\Manage\templates\statistics\statistics_medicine.html:14
+#: .\Manage\templates\statistics\statistics_procedure.html:14
+#: .\Manage\templates\statistics\statistics_test.html:14
+#: .\Pharmacy\templates\Pharmacy\index.html:16
+#: .\Pharmacy\templates\Pharmacy\inventory.html:59
+#: .\Pharmacy\templates\Pharmacy\inventory.html:76
+#: .\Radiation\templates\Radiation\index.html:19
+#: .\Receptionist\templates\Receptionist\index.html:259
+#: .\Receptionist\templates\Receptionist\storage_page.html:219
+#: .\app\templates\app\notice.html:16
+#: .\obj\Release\Package\PackageTmp\Doctor\templates\Doctor\audit.html:33
+#: .\obj\Release\Package\PackageTmp\Doctor\templates\Doctor\index.html:93
+#: .\obj\Release\Package\PackageTmp\Doctor\templates\Doctor\index.html:121
+#: .\obj\Release\Package\PackageTmp\Laboratory\templates\Laboratory\index.html:11
+#: .\obj\Release\Package\PackageTmp\Manage\templates\Manage\manage.html:94
+#: .\obj\Release\Package\PackageTmp\Pharmacy\templates\Pharmacy\index.html:12
+#: .\obj\Release\Package\PackageTmp\Receptionist\templates\Receptionist\storage_page.html:185
+#: .\physical_therapist\templates\physical_therapist\index.html:87
+msgid "Date"
+msgstr "날짜"
+
+#: .\Doctor\templates\Doctor\audit.html:25
+#: .\Doctor\templates\Doctor\audit.html:64
+#: .\Doctor\templates\Doctor\audit_PM.html:79
+#: .\Doctor\templates\Doctor\index.html:283
+#: .\Doctor\templates\Doctor\index_DERM.html:296
+#: .\Manage\templates\Manage\Manage.html:111
+#: .\Manage\templates\Manage\Manage.html:186
+msgid "Exam Fee"
+msgstr "진료비"
+
+#: .\Doctor\templates\Doctor\audit.html:27
+#: .\Doctor\templates\Doctor\audit.html:34
+#: .\Doctor\templates\Doctor\audit.html:41
+#: .\Doctor\templates\Doctor\audit.html:48
+#: .\KBL\templates\KBL\scheduler.html:52 .\KBL\templates\KBL\statistics.html:23
+#: .\Manage\templates\Manage\CRM.html:15
+#: .\Manage\templates\Manage\Draft.html:16
+#: .\Manage\templates\Manage\Draft.html:25
+#: .\Manage\templates\Manage\Draft.html:34
+#: .\Manage\templates\Manage\Draft_KBL.html:16
+#: .\Manage\templates\Manage\Draft_KBL.html:25
+#: .\Manage\templates\Manage\Draft_KBL.html:34
+#: .\Manage\templates\Manage\Manage.html:51
+#: .\Manage\templates\Manage\Manage.html:66
+#: .\Manage\templates\Manage\Manage.html:78
+#: .\Manage\templates\Manage\Manage.html:88
+#: .\Manage\templates\board\list.html:144
+#: .\Manage\templates\statistics\statistics_customer_info.html:23
+#: .\Manage\templates\statistics\statistics_daily.html:52
+#: .\Manage\templates\statistics\statistics_depart.html:23
+#: .\Manage\templates\statistics\statistics_medicine.html:23
+#: .\Manage\templates\statistics\statistics_procedure.html:23
+#: .\Manage\templates\statistics\statistics_test.html:23
+#: .\Manage\templates\statistics\statistics_ymw.html:25
+#: .\Pharmacy\templates\Pharmacy\index.html:21
+#: .\Radiation\templates\Radiation\index.html:34
+#: .\Receptionist\templates\Receptionist\Documents.html:21
+#: .\Receptionist\templates\Receptionist\index.html:181
+#: .\Receptionist\templates\Receptionist\reservation.html:338
+#: .\Receptionist\templates\Receptionist\storage_page.html:19
+#: .\Receptionist\templates\Receptionist\storage_page.html:196
+msgid "All"
+msgstr "전체"
+
+#: .\Doctor\templates\Doctor\audit.html:32
+#: .\Doctor\templates\Doctor\audit.html:65
+msgid "Test"
+msgstr "검사"
+
+#: .\Doctor\templates\Doctor\audit.html:39
+#: .\Doctor\templates\Doctor\audit.html:66
+#: .\Manage\templates\Manage\Manage.html:202
+#: .\Manage\templates\Manage\Manage.html:230
+#: .\obj\Release\Package\PackageTmp\Doctor\templates\Doctor\audit.html:40
+msgid "Precedure"
+msgstr "처치"
+
+#: .\Doctor\templates\Doctor\audit.html:46
+#: .\Doctor\templates\Doctor\audit.html:67
+#: .\Doctor\templates\Doctor\index.html:286
+#: .\Doctor\templates\Doctor\index_DERM.html:299
+#: .\Manage\templates\Manage\Manage.html:115
+#: .\Manage\templates\Manage\Manage.html:210
+#: .\Manage\templates\Manage\Manage.html:231
+#: .\obj\Release\Package\PackageTmp\Doctor\templates\Doctor\audit.html:41
+#: .\obj\Release\Package\PackageTmp\Manage\templates\Manage\manage.html:99
+msgid "Medicine"
+msgstr "약"
+
+#: .\Doctor\templates\Doctor\audit.html:59
+#: .\Doctor\templates\Doctor\audit_PM.html:74
+#: .\Doctor\templates\Doctor\index.html:142
+#: .\Doctor\templates\Doctor\index_DERM.html:146
+#: .\Doctor\templates\Doctor\index_PM.html:140
+#: .\Doctor\templates\Doctor\index_PS.html:140
+#: .\Doctor\templates\Doctor\report.html:24 .\KBL\templates\KBL\index.html:99
+#: .\Laboratory\templates\Laboratory\checklist.html:23
+#: .\Laboratory\templates\Laboratory\index.html:42
+#: .\Laboratory\templates\Laboratory\index.html:121
+#: .\Manage\templates\Manage\CRM.html:108
+#: .\Manage\templates\Manage\Manage.html:224
+#: .\Manage\templates\Manage\employee_manage.html:38
+#: .\Manage\templates\Manage\inventory_medical_tool.html:34
+#: .\Manage\templates\board\list.html:166
+#: .\Manage\templates\board_work\list.html:192
+#: .\Manage\templates\statistics\statistics_customer_info.html:94
+#: .\Manage\templates\statistics\statistics_medicine.html:43
+#: .\Pharmacy\templates\Pharmacy\inventory.html:34
+#: .\Receptionist\templates\Receptionist\index.html:198
+#: .\Receptionist\templates\Receptionist\index.html:236
+#: .\Receptionist\templates\Receptionist\index.html:278
+#: .\obj\Release\Package\PackageTmp\Doctor\templates\Doctor\index.html:130
+#: .\obj\Release\Package\PackageTmp\Laboratory\templates\Laboratory\index.html:21
+#: .\obj\Release\Package\PackageTmp\Pharmacy\templates\Pharmacy\index.html:52
+#: .\obj\Release\Package\PackageTmp\Receptionist\templates\Receptionist\index.html:158
+#: .\obj\Release\Package\PackageTmp\Receptionist\templates\Receptionist\index.html:191
+#: .\obj\Release\Package\PackageTmp\Receptionist\templates\Receptionist\index.html:225
+#: .\physical_therapist\templates\physical_therapist\index.html:95
+msgid "No."
+msgstr "번호"
+
+#: .\Doctor\templates\Doctor\audit.html:61
+#: .\Doctor\templates\Doctor\audit_PM.html:76
+#: .\Manage\templates\Manage\Manage.html:108
+#: .\Manage\templates\Manage\Manage.html:226
+#: .\obj\Release\Package\PackageTmp\Doctor\templates\Doctor\audit.html:34
+#: .\obj\Release\Package\PackageTmp\Manage\templates\Manage\manage.html:95
+msgid "Patient"
+msgstr "환자"
+
+#: .\Doctor\templates\Doctor\audit.html:62
+#: .\Doctor\templates\Doctor\audit_PM.html:77
+#: .\Doctor\templates\Doctor\index_DERM.html:598
+#: .\KBL\templates\KBL\document_management.html:38
+#: .\KBL\templates\KBL\index.html:100 .\KBL\templates\KBL\scheduler.html:50
+#: .\Laboratory\templates\Laboratory\index.html:46
+#: .\Laboratory\templates\Laboratory\index.html:99
+#: .\Manage\templates\Manage\CRM.html:13 .\Manage\templates\Manage\CRM.html:109
+#: .\Manage\templates\Manage\Draft.html:57
+#: .\Manage\templates\Manage\Draft.html:102
+#: .\Manage\templates\Manage\Draft_KBL.html:57
+#: .\Manage\templates\Manage\Draft_KBL.html:102
+#: .\Manage\templates\Manage\Manage.html:49
+#: .\Manage\templates\Manage\Manage.html:109
+#: .\Manage\templates\Manage\Manage.html:227
+#: .\Manage\templates\Manage\employee_manage.html:21
+#: .\Manage\templates\Manage\employee_manage.html:40
+#: .\Manage\templates\Manage\employee_manage.html:160
+#: .\Manage\templates\statistics\statistics_customer_info.html:21
+#: .\Manage\templates\statistics\statistics_daily.html:50
+#: .\Manage\templates\statistics\statistics_depart.html:21
+#: .\Manage\templates\statistics\statistics_medicine.html:21
+#: .\Manage\templates\statistics\statistics_procedure.html:21
+#: .\Manage\templates\statistics\statistics_test.html:21
+#: .\Manage\templates\statistics\statistics_ymw.html:23
+#: .\Pharmacy\templates\Pharmacy\index.html:39
+#: .\Pharmacy\templates\Pharmacy\index.html:117
+#: .\Pharmacy\templates\Pharmacy\index.html:160
+#: .\Radiation\templates\Radiation\index.html:51
+#: .\Radiation\templates\Radiation\index.html:80
+#: .\Receptionist\templates\Receptionist\Documents.html:19
+#: .\Receptionist\templates\Receptionist\Documents.html:39
+#: .\Receptionist\templates\Receptionist\index.html:88
+#: .\Receptionist\templates\Receptionist\index.html:203
+#: .\Receptionist\templates\Receptionist\index.html:222
+#: .\Receptionist\templates\Receptionist\index.html:240
+#: .\Receptionist\templates\Receptionist\index.html:264
+#: .\Receptionist\templates\Receptionist\index.html:283
+#: .\Receptionist\templates\Receptionist\index.html:721
+#: .\Receptionist\templates\Receptionist\index.html:834
+#: .\Receptionist\templates\Receptionist\index.html:871
+#: .\Receptionist\templates\Receptionist\index.html:936
+#: .\Receptionist\templates\Receptionist\reservation.html:82
+#: .\Receptionist\templates\Receptionist\reservation.html:131
+#: .\Receptionist\templates\Receptionist\reservation.html:336
+#: .\Receptionist\templates\Receptionist\storage_page.html:34
+#: .\Receptionist\templates\Receptionist\storage_page.html:220
+#: .\Receptionist\templates\Receptionist\storage_page.html:531
+#: .\app\templates\app\login.html:78 .\app\templates\app\login_KBL.html:78
+#: .\obj\Release\Package\PackageTmp\Doctor\templates\Doctor\audit.html:37
+#: .\obj\Release\Package\PackageTmp\Laboratory\templates\Laboratory\index.html:24
+#: .\obj\Release\Package\PackageTmp\Manage\templates\Manage\manage.html:96
+#: .\obj\Release\Package\PackageTmp\Pharmacy\templates\Pharmacy\index.html:31
+#: .\obj\Release\Package\PackageTmp\Radiation\templates\Radiation\index.html:27
+#: .\obj\Release\Package\PackageTmp\Receptionist\templates\Receptionist\index.html:81
+#: .\obj\Release\Package\PackageTmp\Receptionist\templates\Receptionist\index.html:178
+#: .\obj\Release\Package\PackageTmp\Receptionist\templates\Receptionist\index.html:195
+#: .\obj\Release\Package\PackageTmp\Receptionist\templates\Receptionist\index.html:212
+#: .\obj\Release\Package\PackageTmp\Receptionist\templates\Receptionist\index.html:230
+#: .\obj\Release\Package\PackageTmp\Receptionist\templates\Receptionist\reservation.html:100
+#: .\obj\Release\Package\PackageTmp\Receptionist\templates\Receptionist\storage_page.html:24
+#: .\obj\Release\Package\PackageTmp\Receptionist\templates\Receptionist\storage_page.html:186
+#: .\obj\Release\Package\PackageTmp\app\templates\app\login.html:80
+msgid "Depart"
+msgstr "과"
+
+#: .\Doctor\templates\Doctor\audit.html:63
+#: .\Doctor\templates\Doctor\audit_PM.html:78
+#: .\Doctor\templates\Doctor\report.html:28 .\KBL\templates\KBL\index.html:101
+#: .\Manage\templates\Manage\CRM.html:110
+#: .\Manage\templates\Manage\Manage.html:64
+#: .\Manage\templates\Manage\Manage.html:110
+#: .\Manage\templates\Manage\Manage.html:228
+#: .\Pharmacy\templates\Pharmacy\index.html:161
+#: .\Receptionist\templates\Receptionist\index.html:94
+#: .\Receptionist\templates\Receptionist\index.html:226
+#: .\Receptionist\templates\Receptionist\index.html:241
+#: .\Receptionist\templates\Receptionist\index.html:268
+#: .\Receptionist\templates\Receptionist\index.html:284
+#: .\Receptionist\templates\Receptionist\index.html:733
+#: .\Receptionist\templates\Receptionist\index.html:880
+#: .\Receptionist\templates\Receptionist\index.html:945
+#: .\Receptionist\templates\Receptionist\reservation.html:88
+#: .\Receptionist\templates\Receptionist\storage_page.html:59
+#: .\Receptionist\templates\Receptionist\storage_page.html:532
+#: .\obj\Release\Package\PackageTmp\Doctor\templates\Doctor\audit.html:38
+#: .\obj\Release\Package\PackageTmp\Manage\templates\Manage\manage.html:97
+#: .\obj\Release\Package\PackageTmp\Receptionist\templates\Receptionist\index.html:87
+#: .\obj\Release\Package\PackageTmp\Receptionist\templates\Receptionist\index.html:182
+#: .\obj\Release\Package\PackageTmp\Receptionist\templates\Receptionist\index.html:196
+#: .\obj\Release\Package\PackageTmp\Receptionist\templates\Receptionist\index.html:216
+#: .\obj\Release\Package\PackageTmp\Receptionist\templates\Receptionist\index.html:231
+#: .\obj\Release\Package\PackageTmp\Receptionist\templates\Receptionist\reservation.html:106
+#: .\obj\Release\Package\PackageTmp\Receptionist\templates\Receptionist\storage_page.html:48
+msgid "Doctor"
+msgstr "의사"
+
+#: .\Doctor\templates\Doctor\audit.html:68
+#: .\Doctor\templates\Doctor\audit_PM.html:83
+#: .\Manage\templates\Manage\Manage.html:117
+msgid "Sub Total"
+msgstr "소계"
+
+#: .\Doctor\templates\Doctor\audit.html:69
+#: .\Doctor\templates\Doctor\audit_PM.html:85
+#: .\Manage\templates\Manage\Manage.html:120
+msgid "Discount"
+msgstr "할인"
+
+#: .\Doctor\templates\Doctor\audit.html:70
+#: .\Doctor\templates\Doctor\audit_PM.html:86
+#: .\KBL\templates\KBL\statistics.html:48
+#: .\Manage\templates\Manage\Manage.html:122
+#: .\Manage\templates\Manage\Manage.html:136
+#: .\Manage\templates\Manage\inventory_medical_tool.html:63
+#: .\Pharmacy\templates\Pharmacy\index.html:165
+#: .\Pharmacy\templates\Pharmacy\inventory.html:65
+#: .\Receptionist\templates\Receptionist\storage_page.html:232
+#: .\obj\Release\Package\PackageTmp\Doctor\templates\Doctor\audit.html:45
+#: .\obj\Release\Package\PackageTmp\Doctor\templates\Doctor\audit.html:54
+#: .\obj\Release\Package\PackageTmp\Manage\templates\Manage\manage.html:106
+#: .\obj\Release\Package\PackageTmp\Manage\templates\Manage\manage.html:124
+msgid "Total"
+msgstr "총계"
+
+#: .\Doctor\templates\Doctor\audit_PM.html:18
+#: .\Manage\templates\Manage\Manage.html:96
+msgid "Download"
+msgstr "다운로드"
+
+#: .\Doctor\templates\Doctor\audit_PM.html:30
+#: .\Doctor\templates\Doctor\index.html:134
+#: .\Doctor\templates\Doctor\index.html:279
+#: .\Doctor\templates\Doctor\index_DERM.html:140
+#: .\Doctor\templates\Doctor\index_DERM.html:292
+#: .\Doctor\templates\Doctor\index_PM.html:134
+#: .\Doctor\templates\Doctor\index_PM.html:287
+#: .\Doctor\templates\Doctor\index_PS.html:134
+#: .\Doctor\templates\Doctor\index_PS.html:287
+#: .\KBL\templates\KBL\audit_management.html:40
+#: .\KBL\templates\KBL\customer_management.html:24
+#: .\KBL\templates\KBL\document_management.html:27
+#: .\KBL\templates\KBL\estimate_sheet.html:31 .\KBL\templates\KBL\index.html:20
+#: .\KBL\templates\KBL\invoice_management.html:44
+#: .\KBL\templates\KBL\project_management.html:41
+#: .\KBL\templates\KBL\visa_management.html:31
+#: .\KBL\templates\KBL\work_permit.html:36
+#: .\Laboratory\templates\Laboratory\checklist.html:15
+#: .\Laboratory\templates\Laboratory\index.html:35
+#: .\Manage\templates\Manage\CRM.html:29
+#: .\Manage\templates\Manage\Draft.html:45
+#: .\Manage\templates\Manage\Draft_KBL.html:45
+#: .\Manage\templates\Manage\code_setting.html:22
+#: .\Manage\templates\Manage\employee_manage.html:30
+#: .\Manage\templates\Manage\inventory_medical_tool.html:26
+#: .\Manage\templates\Manage\inventory_precedure.html:21
+#: .\Manage\templates\Manage\inventory_test.html:26
+#: .\Manage\templates\Manage\sms_history.html:38
+#: .\Manage\templates\board\list.html:151
+#: .\Manage\templates\board_work\list.html:177
+#: .\Pharmacy\templates\Pharmacy\index.html:26
+#: .\Pharmacy\templates\Pharmacy\inventory.html:26
+#: .\Radiation\templates\Radiation\index.html:40
+#: .\Receptionist\templates\Receptionist\Documents.html:28
+#: .\Receptionist\templates\Receptionist\index.html:188
+#: .\Receptionist\templates\Receptionist\index.html:889
+#: .\Receptionist\templates\Receptionist\reservation.html:334
+#: .\obj\Release\Package\PackageTmp\Pharmacy\templates\Pharmacy\index.html:45
+#: .\physical_therapist\templates\physical_therapist\index.html:89
+msgid "Search"
+msgstr "검색"
+
+#: .\Doctor\templates\Doctor\audit_PM.html:41
+#: .\Doctor\templates\Doctor\audit_PM.html:81
+msgid "Radiography"
+msgstr "방사선과"
+
+#: .\Doctor\templates\Doctor\audit_PM.html:80
+#: .\Doctor\templates\Doctor\index.html:285
+#: .\Doctor\templates\Doctor\index_DERM.html:298
+#: .\Manage\templates\Manage\Manage.html:113
+msgid "Procedure"
+msgstr "처치"
+
+#: .\Doctor\templates\Doctor\audit_PM.html:82
+msgid "Paid By"
+msgstr "지불방법"
+
+#: .\Doctor\templates\Doctor\audit_PM.html:84
+#: .\Manage\templates\Manage\Manage.html:119
+msgid "Additional"
+msgstr "방사선과"
+
+#: .\Doctor\templates\Doctor\index.html:15
+#: .\Doctor\templates\Doctor\index_DERM.html:18
+#: .\Doctor\templates\Doctor\index_PM.html:18
+#: .\Doctor\templates\Doctor\index_PS.html:18
+#: .\Laboratory\templates\Laboratory\index.html:57
+#: .\Pharmacy\templates\Pharmacy\index.html:54
+#: .\Pharmacy\templates\Pharmacy\index.html:75
+#: .\Radiation\templates\Radiation\index.html:64
+#: .\Receptionist\templates\Receptionist\index.html:613
+#: .\Receptionist\templates\Receptionist\index.html:688
+#: .\Receptionist\templates\Receptionist\index.html:797
+#: .\obj\Release\Package\PackageTmp\Doctor\templates\Doctor\index.html:10
+#: .\obj\Release\Package\PackageTmp\Radiation\templates\Radiation\index.html:40
+#: .\physical_therapist\templates\physical_therapist\index.html:11
+msgid "Patient Information"
+msgstr "환자 정보"
+
+#: .\Doctor\templates\Doctor\index.html:16
+#: .\Doctor\templates\Doctor\index_DERM.html:20
+#: .\Doctor\templates\Doctor\index_DERM.html:22
+#: .\Doctor\templates\Doctor\index_PM.html:20
+#: .\Doctor\templates\Doctor\index_PM.html:22
+#: .\Doctor\templates\Doctor\index_PS.html:20
+#: .\Doctor\templates\Doctor\index_PS.html:22
+#: .\Receptionist\templates\Receptionist\Documents.html:46
+#: .\Receptionist\templates\Receptionist\index.html:160
+#: .\Receptionist\templates\Receptionist\index.html:771
+#: .\app\templates\app\layout.html:101
+#: .\obj\Release\Package\PackageTmp\app\templates\app\layout.html:92
+#: .\physical_therapist\templates\physical_therapist\index.html:14
+msgid "Medical Report"
+msgstr "소견서"
+
+#: .\Doctor\templates\Doctor\index.html:22
+#: .\Doctor\templates\Doctor\index.html:143
+#: .\Doctor\templates\Doctor\index_DERM.html:28
+#: .\Doctor\templates\Doctor\index_DERM.html:147
+#: .\Doctor\templates\Doctor\index_PM.html:28
+#: .\Doctor\templates\Doctor\index_PM.html:141
+#: .\Doctor\templates\Doctor\index_PS.html:28
+#: .\Doctor\templates\Doctor\index_PS.html:141
+#: .\Doctor\templates\Doctor\report.html:484
+#: .\Laboratory\templates\Laboratory\index.html:43
+#: .\Laboratory\templates\Laboratory\index.html:64
+#: .\Laboratory\templates\Laboratory\index.html:150
+#: .\Pharmacy\templates\Pharmacy\index.html:36
+#: .\Pharmacy\templates\Pharmacy\index.html:82
+#: .\Receptionist\templates\Receptionist\index.html:17
+#: .\Receptionist\templates\Receptionist\index.html:199
+#: .\Receptionist\templates\Receptionist\index.html:237
+#: .\Receptionist\templates\Receptionist\index.html:279
+#: .\Receptionist\templates\Receptionist\index.html:619
+#: .\Receptionist\templates\Receptionist\index.html:694
+#: .\Receptionist\templates\Receptionist\index.html:802
+#: .\Receptionist\templates\Receptionist\reservation.html:59
+#: .\Receptionist\templates\Receptionist\reservation.html:128
+#: .\Receptionist\templates\Receptionist\storage_page.html:490
+#: .\Receptionist\templates\Receptionist\storage_page.html:528
+#: .\obj\Release\Package\PackageTmp\Doctor\templates\Doctor\index.html:16
+#: .\obj\Release\Package\PackageTmp\Doctor\templates\Doctor\index.html:131
+#: .\obj\Release\Package\PackageTmp\Laboratory\templates\Laboratory\index.html:22
+#: .\obj\Release\Package\PackageTmp\Laboratory\templates\Laboratory\index.html:48
+#: .\obj\Release\Package\PackageTmp\Pharmacy\templates\Pharmacy\index.html:28
+#: .\obj\Release\Package\PackageTmp\Receptionist\templates\Receptionist\index.html:19
+#: .\obj\Release\Package\PackageTmp\Receptionist\templates\Receptionist\index.html:159
+#: .\obj\Release\Package\PackageTmp\Receptionist\templates\Receptionist\index.html:192
+#: .\obj\Release\Package\PackageTmp\Receptionist\templates\Receptionist\index.html:226
+#: .\obj\Release\Package\PackageTmp\Receptionist\templates\Receptionist\reservation.html:78
+#: .\physical_therapist\templates\physical_therapist\index.html:20
+#: .\physical_therapist\templates\physical_therapist\index.html:96
+msgid "Chart No."
+msgstr "차트 번호"
+
+#: .\Doctor\templates\Doctor\index.html:29
+#: .\Doctor\templates\Doctor\index.html:144
+#: .\Doctor\templates\Doctor\index.html:221
+#: .\Doctor\templates\Doctor\index.html:297
+#: .\Doctor\templates\Doctor\index.html:325
+#: .\Doctor\templates\Doctor\index.html:366
+#: .\Doctor\templates\Doctor\index.html:417
+#: .\Doctor\templates\Doctor\index.html:458
+#: .\Doctor\templates\Doctor\index_DERM.html:35
+#: .\Doctor\templates\Doctor\index_DERM.html:148
+#: .\Doctor\templates\Doctor\index_DERM.html:239
+#: .\Doctor\templates\Doctor\index_DERM.html:311
+#: .\Doctor\templates\Doctor\index_DERM.html:339
+#: .\Doctor\templates\Doctor\index_DERM.html:380
+#: .\Doctor\templates\Doctor\index_DERM.html:431
+#: .\Doctor\templates\Doctor\index_DERM.html:470
+#: .\Doctor\templates\Doctor\index_DERM.html:489
+#: .\Doctor\templates\Doctor\index_PM.html:35
+#: .\Doctor\templates\Doctor\index_PM.html:142
+#: .\Doctor\templates\Doctor\index_PM.html:234
+#: .\Doctor\templates\Doctor\index_PM.html:305
+#: .\Doctor\templates\Doctor\index_PM.html:332
+#: .\Doctor\templates\Doctor\index_PM.html:386
+#: .\Doctor\templates\Doctor\index_PM.html:411
+#: .\Doctor\templates\Doctor\index_PM.html:436
+#: .\Doctor\templates\Doctor\index_PS.html:35
+#: .\Doctor\templates\Doctor\index_PS.html:142
+#: .\Doctor\templates\Doctor\index_PS.html:234
+#: .\Doctor\templates\Doctor\index_PS.html:305
+#: .\Doctor\templates\Doctor\index_PS.html:332
+#: .\Doctor\templates\Doctor\index_PS.html:386
+#: .\Doctor\templates\Doctor\index_PS.html:411
+#: .\Doctor\templates\Doctor\index_PS.html:436
+#: .\Doctor\templates\Doctor\report.html:26
+#: .\Doctor\templates\Doctor\report.html:56
+#: .\Doctor\templates\Doctor\report.html:485
+#: .\Doctor\templates\Doctor\reportwindow.html:70
+#: .\KBL\templates\KBL\customer_management.html:449
+#: .\KBL\templates\KBL\index.html:29 .\KBL\templates\KBL\index.html:132
+#: .\Laboratory\templates\Laboratory\checklist.html:26
+#: .\Laboratory\templates\Laboratory\checklist.html:60
+#: .\Laboratory\templates\Laboratory\index.html:44
+#: .\Laboratory\templates\Laboratory\index.html:70
+#: .\Laboratory\templates\Laboratory\index.html:158
+#: .\Manage\templates\Manage\CRM.html:38 .\Manage\templates\Manage\CRM.html:141
+#: .\Manage\templates\Manage\Draft.html:116
+#: .\Manage\templates\Manage\Draft_KBL.html:115
+#: .\Manage\templates\Manage\employee_manage.html:43
+#: .\Manage\templates\Manage\inventory_medical_tool.html:156
+#: .\Manage\templates\Manage\inventory_medical_tool.html:162
+#: .\Manage\templates\Manage\inventory_precedure.html:31
+#: .\Manage\templates\Manage\inventory_precedure.html:78
+#: .\Manage\templates\Manage\inventory_precedure.html:84
+#: .\Manage\templates\Manage\inventory_test.html:36
+#: .\Manage\templates\Manage\inventory_test.html:84
+#: .\Manage\templates\Manage\inventory_test.html:90
+#: .\Manage\templates\Manage\inventory_test.html:121
+#: .\Manage\templates\Manage\sms_history.html:81
+#: .\Manage\templates\statistics\statistics_customer_info.html:95
+#: .\Pharmacy\templates\Pharmacy\index.html:22
+#: .\Pharmacy\templates\Pharmacy\index.html:37
+#: .\Pharmacy\templates\Pharmacy\index.html:88
+#: .\Pharmacy\templates\Pharmacy\inventory.html:156
+#: .\Pharmacy\templates\Pharmacy\inventory.html:162
+#: .\Radiation\templates\Radiation\index.html:35
+#: .\Radiation\templates\Radiation\index.html:49
+#: .\Receptionist\templates\Receptionist\Documents.html:37
+#: .\Receptionist\templates\Receptionist\index.html:182
+#: .\Receptionist\templates\Receptionist\index.html:200
+#: .\Receptionist\templates\Receptionist\index.html:238
+#: .\Receptionist\templates\Receptionist\index.html:280
+#: .\Receptionist\templates\Receptionist\index.html:628
+#: .\Receptionist\templates\Receptionist\index.html:703
+#: .\Receptionist\templates\Receptionist\index.html:811
+#: .\Receptionist\templates\Receptionist\index.html:897
+#: .\Receptionist\templates\Receptionist\reservation.html:53
+#: .\Receptionist\templates\Receptionist\reservation.html:129
+#: .\Receptionist\templates\Receptionist\storage_page.html:33
+#: .\Receptionist\templates\Receptionist\storage_page.html:53
+#: .\Receptionist\templates\Receptionist\storage_page.html:205
+#: .\Receptionist\templates\Receptionist\storage_page.html:218
+#: .\Receptionist\templates\Receptionist\storage_page.html:491
+#: .\Receptionist\templates\Receptionist\storage_page.html:529
+#: .\obj\Release\Package\PackageTmp\Doctor\templates\Doctor\index.html:22
+#: .\obj\Release\Package\PackageTmp\Doctor\templates\Doctor\index.html:132
+#: .\obj\Release\Package\PackageTmp\Doctor\templates\Doctor\index.html:186
+#: .\obj\Release\Package\PackageTmp\Doctor\templates\Doctor\report.html:48
+#: .\obj\Release\Package\PackageTmp\Doctor\templates\Doctor\reportwindow.html:70
+#: .\obj\Release\Package\PackageTmp\Laboratory\templates\Laboratory\index.html:23
+#: .\obj\Release\Package\PackageTmp\Laboratory\templates\Laboratory\index.html:56
+#: .\obj\Release\Package\PackageTmp\Pharmacy\templates\Pharmacy\index.html:29
+#: .\obj\Release\Package\PackageTmp\Radiation\templates\Radiation\index.html:26
+#: .\obj\Release\Package\PackageTmp\Receptionist\templates\Receptionist\index.html:160
+#: .\obj\Release\Package\PackageTmp\Receptionist\templates\Receptionist\index.html:193
+#: .\obj\Release\Package\PackageTmp\Receptionist\templates\Receptionist\index.html:227
+#: .\obj\Release\Package\PackageTmp\Receptionist\templates\Receptionist\reservation.html:72
+#: .\obj\Release\Package\PackageTmp\Receptionist\templates\Receptionist\storage_page.html:23
+#: .\obj\Release\Package\PackageTmp\Receptionist\templates\Receptionist\storage_page.html:42
+#: .\obj\Release\Package\PackageTmp\Receptionist\templates\Receptionist\storage_page.html:184
+#: .\physical_therapist\templates\physical_therapist\index.html:27
+#: .\physical_therapist\templates\physical_therapist\index.html:97
+#: .\physical_therapist\templates\physical_therapist\index.html:164
+msgid "Name"
+msgstr "이름"
+
+#: .\Doctor\templates\Doctor\index.html:37
+#: .\Doctor\templates\Doctor\index.html:145
+#: .\Doctor\templates\Doctor\index_DERM.html:43
+#: .\Doctor\templates\Doctor\index_DERM.html:149
+#: .\Doctor\templates\Doctor\index_PM.html:43
+#: .\Doctor\templates\Doctor\index_PM.html:143
+#: .\Doctor\templates\Doctor\index_PS.html:43
+#: .\Doctor\templates\Doctor\index_PS.html:143
+#: .\Doctor\templates\Doctor\report.html:486
+#: .\KBL\templates\KBL\customer_management.html:142
+#: .\KBL\templates\KBL\customer_management.html:306
+#: .\KBL\templates\KBL\index.html:30 .\KBL\templates\KBL\index.html:71
+#: .\Laboratory\templates\Laboratory\index.html:45
+#: .\Laboratory\templates\Laboratory\index.html:91
+#: .\Laboratory\templates\Laboratory\index.html:166
+#: .\Manage\templates\Manage\CRM.html:39 .\Manage\templates\Manage\CRM.html:80
+#: .\Manage\templates\Manage\employee_manage.html:135
+#: .\Manage\templates\statistics\statistics_customer_info.html:96
+#: .\Pharmacy\templates\Pharmacy\index.html:38
+#: .\Pharmacy\templates\Pharmacy\index.html:109
+#: .\Radiation\templates\Radiation\index.html:50
+#: .\Radiation\templates\Radiation\index.html:74
+#: .\Receptionist\templates\Receptionist\Documents.html:38
+#: .\Receptionist\templates\Receptionist\index.html:59
+#: .\Receptionist\templates\Receptionist\index.html:184
+#: .\Receptionist\templates\Receptionist\index.html:201
+#: .\Receptionist\templates\Receptionist\index.html:239
+#: .\Receptionist\templates\Receptionist\index.html:281
+#: .\Receptionist\templates\Receptionist\index.html:634
+#: .\Receptionist\templates\Receptionist\index.html:709
+#: .\Receptionist\templates\Receptionist\index.html:817
+#: .\Receptionist\templates\Receptionist\reservation.html:68
+#: .\Receptionist\templates\Receptionist\reservation.html:130
+#: .\Receptionist\templates\Receptionist\storage_page.html:530
+#: .\obj\Release\Package\PackageTmp\Doctor\templates\Doctor\audit.html:35
+#: .\obj\Release\Package\PackageTmp\Doctor\templates\Doctor\index.html:30
+#: .\obj\Release\Package\PackageTmp\Doctor\templates\Doctor\index.html:133
+#: .\obj\Release\Package\PackageTmp\Laboratory\templates\Laboratory\index.html:25
+#: .\obj\Release\Package\PackageTmp\Laboratory\templates\Laboratory\index.html:64
+#: .\obj\Release\Package\PackageTmp\Pharmacy\templates\Pharmacy\index.html:30
+#: .\obj\Release\Package\PackageTmp\Radiation\templates\Radiation\index.html:28
+#: .\obj\Release\Package\PackageTmp\Receptionist\templates\Receptionist\index.html:42
+#: .\obj\Release\Package\PackageTmp\Receptionist\templates\Receptionist\index.html:161
+#: .\obj\Release\Package\PackageTmp\Receptionist\templates\Receptionist\index.html:194
+#: .\obj\Release\Package\PackageTmp\Receptionist\templates\Receptionist\index.html:228
+#: .\obj\Release\Package\PackageTmp\Receptionist\templates\Receptionist\reservation.html:86
+#: .\physical_therapist\templates\physical_therapist\index.html:35
+#: .\physical_therapist\templates\physical_therapist\index.html:98
+msgid "Date of Birth"
+msgstr "생년월일"
+
+#: .\Doctor\templates\Doctor\index.html:43
+#: .\Doctor\templates\Doctor\index_DERM.html:49
+#: .\Doctor\templates\Doctor\index_PM.html:49
+#: .\Doctor\templates\Doctor\index_PS.html:49
+#: .\Doctor\templates\Doctor\report.html:60
+#: .\Doctor\templates\Doctor\reportwindow.html:78
+#: .\KBL\templates\KBL\index.html:75 .\Manage\templates\Manage\CRM.html:84
+#: .\Manage\templates\Manage\employee_manage.html:44
+#: .\Manage\templates\Manage\employee_manage.html:119
+#: .\Manage\templates\statistics\statistics_customer_info.html:33
+#: .\Manage\templates\statistics\statistics_customer_info.html:37
+#: .\Manage\templates\statistics\statistics_customer_info.html:97
+#: .\Pharmacy\templates\Pharmacy\index.html:96
+#: .\Receptionist\templates\Receptionist\index.html:33
+#: .\obj\Release\Package\PackageTmp\Doctor\templates\Doctor\index.html:36
+#: .\obj\Release\Package\PackageTmp\Doctor\templates\Doctor\report.html:52
+#: .\obj\Release\Package\PackageTmp\Doctor\templates\Doctor\reportwindow.html:78
+#: .\obj\Release\Package\PackageTmp\Receptionist\templates\Receptionist\index.html:49
+#: .\physical_therapist\templates\physical_therapist\index.html:41
+msgid "Gender"
+msgstr "성별"
+
+#: .\Doctor\templates\Doctor\index.html:51
+#: .\Doctor\templates\Doctor\index_DERM.html:57
+#: .\Doctor\templates\Doctor\index_PM.html:57
+#: .\Doctor\templates\Doctor\index_PS.html:57
+#: .\Doctor\templates\Doctor\report.html:70
+#: .\Doctor\templates\Doctor\report.html:487
+#: .\Doctor\templates\Doctor\reportwindow.html:93
+#: .\KBL\templates\KBL\customer_management.html:143
+#: .\Manage\templates\statistics\statistics_customer_info.html:98
+#: .\Receptionist\templates\Receptionist\Documents.html:41
+#: .\Receptionist\templates\Receptionist\index.html:73
+#: .\Receptionist\templates\Receptionist\reservation.html:74
+#: .\Receptionist\templates\Receptionist\reservation.html:132
+#: .\obj\Release\Package\PackageTmp\Doctor\templates\Doctor\index.html:54
+#: .\obj\Release\Package\PackageTmp\Doctor\templates\Doctor\report.html:62
+#: .\obj\Release\Package\PackageTmp\Doctor\templates\Doctor\reportwindow.html:93
+#: .\obj\Release\Package\PackageTmp\Receptionist\templates\Receptionist\index.html:67
+#: .\obj\Release\Package\PackageTmp\Receptionist\templates\Receptionist\reservation.html:92
+#: .\physical_therapist\templates\physical_therapist\index.html:49
+msgid "Phone"
+msgstr "전화번호"
+
+#: .\Doctor\templates\Doctor\index.html:57
+#: .\Doctor\templates\Doctor\index_DERM.html:63
+#: .\Doctor\templates\Doctor\index_PM.html:63
+#: .\Doctor\templates\Doctor\index_PS.html:63
+#: .\Doctor\templates\Doctor\report.html:80
+#: .\Doctor\templates\Doctor\reportwindow.html:107
+#: .\KBL\templates\KBL\customer_management.html:318
+#: .\KBL\templates\KBL\index.html:79 .\Manage\templates\Manage\CRM.html:88
+#: .\Manage\templates\Manage\employee_manage.html:143
+#: .\Receptionist\templates\Receptionist\Documents.html:40
+#: .\Receptionist\templates\Receptionist\index.html:65
+#: .\Receptionist\templates\Receptionist\index.html:662
+#: .\Receptionist\templates\Receptionist\storage_page.html:74
+#: .\Receptionist\templates\Receptionist\storage_page.html:167
+#: .\obj\Release\Package\PackageTmp\Doctor\templates\Doctor\audit.html:36
+#: .\obj\Release\Package\PackageTmp\Doctor\templates\Doctor\index.html:60
+#: .\obj\Release\Package\PackageTmp\Doctor\templates\Doctor\report.html:72
+#: .\obj\Release\Package\PackageTmp\Doctor\templates\Doctor\reportwindow.html:107
+#: .\obj\Release\Package\PackageTmp\Receptionist\templates\Receptionist\index.html:73
+#: .\obj\Release\Package\PackageTmp\Receptionist\templates\Receptionist\index.html:133
+#: .\obj\Release\Package\PackageTmp\Receptionist\templates\Receptionist\index.html:163
+#: .\obj\Release\Package\PackageTmp\Receptionist\templates\Receptionist\storage_page.html:63
+#: .\obj\Release\Package\PackageTmp\Receptionist\templates\Receptionist\storage_page.html:148
+#: .\physical_therapist\templates\physical_therapist\index.html:55
+msgid "Address"
+msgstr "주소"
+
+#: .\Doctor\templates\Doctor\index.html:66
+#: .\Doctor\templates\Doctor\index_DERM.html:72
+#: .\Doctor\templates\Doctor\index_PM.html:72
+#: .\Doctor\templates\Doctor\index_PS.html:72
+#: .\obj\Release\Package\PackageTmp\Doctor\templates\Doctor\index.html:69
+#: .\physical_therapist\templates\physical_therapist\index.html:64
+msgid "Past history"
+msgstr "과거력"
+
+#: .\Doctor\templates\Doctor\index.html:74
+#: .\Doctor\templates\Doctor\index_DERM.html:81
+#: .\Doctor\templates\Doctor\index_PM.html:81
+#: .\Doctor\templates\Doctor\index_PS.html:81
+#: .\obj\Release\Package\PackageTmp\Doctor\templates\Doctor\index.html:77
+#: .\physical_therapist\templates\physical_therapist\index.html:72
+msgid "Familiy history"
+msgstr "가족력"
+
+#: .\Doctor\templates\Doctor\index.html:81
+#: .\Pharmacy\templates\Pharmacy\index.html:59
+#: .\Pharmacy\templates\Pharmacy\index.html:132
+#: .\Receptionist\templates\Receptionist\index.html:161
+#: .\Receptionist\templates\Receptionist\storage_page.html:154
+msgid "Red Invoice"
+msgstr "세금계산서 정보"
+
+#: .\Doctor\templates\Doctor\index.html:82
+#: .\Pharmacy\templates\Pharmacy\index.html:60
+#: .\Pharmacy\templates\Pharmacy\index.html:133
+#: .\Receptionist\templates\Receptionist\index.html:162
+#: .\Receptionist\templates\Receptionist\storage_page.html:155
+msgid "Insurance"
+msgstr "보험"
+
+#: .\Doctor\templates\Doctor\index.html:94
+#: .\Receptionist\templates\Receptionist\index.html:751
+msgid "Vital Signs"
+msgstr "활력징후"
+
+#: .\Doctor\templates\Doctor\index.html:102
+msgid "Wt(kg)"
+msgstr ""
+
+#: .\Doctor\templates\Doctor\index.html:103
+msgid "Ht(cm)"
+msgstr ""
+
+#: .\Doctor\templates\Doctor\index.html:104
+msgid "BP(mmHg)"
+msgstr ""
+
+#: .\Doctor\templates\Doctor\index.html:105
+msgid "BT(˚c)"
+msgstr ""
+
+#: .\Doctor\templates\Doctor\index.html:106
+#: .\Receptionist\templates\Receptionist\index.html:132
+#: .\Receptionist\templates\Receptionist\index.html:764
+msgid "RR"
+msgstr ""
+
+#: .\Doctor\templates\Doctor\index.html:107
+#: .\Receptionist\templates\Receptionist\index.html:131
+#: .\Receptionist\templates\Receptionist\index.html:762
+msgid "PR"
+msgstr ""
+
+#: .\Doctor\templates\Doctor\index.html:128
+#: .\Doctor\templates\Doctor\index_DERM.html:131
+#: .\Doctor\templates\Doctor\index_PM.html:125
+#: .\Doctor\templates\Doctor\index_PS.html:125
+#: .\Receptionist\templates\Receptionist\index.html:215
+#: .\obj\Release\Package\PackageTmp\Doctor\templates\Doctor\index.html:120
+#: .\physical_therapist\templates\physical_therapist\index.html:83
+msgid "Reception Status"
+msgstr "접수상태"
+
+#: .\Doctor\templates\Doctor\index.html:146
+#: .\Doctor\templates\Doctor\index_DERM.html:150
+#: .\Doctor\templates\Doctor\index_PM.html:144
+#: .\Doctor\templates\Doctor\index_PS.html:144
+#: .\Receptionist\templates\Receptionist\storage_page.html:35
+#: .\obj\Release\Package\PackageTmp\Doctor\templates\Doctor\index.html:134
+#: .\obj\Release\Package\PackageTmp\Receptionist\templates\Receptionist\index.html:232
+#: .\obj\Release\Package\PackageTmp\Receptionist\templates\Receptionist\storage_page.html:25
+#: .\physical_therapist\templates\physical_therapist\index.html:99
+msgid "Time"
+msgstr "시간"
+
+#: .\Doctor\templates\Doctor\index.html:157
+#: .\Doctor\templates\Doctor\index_DERM.html:161
+#: .\Doctor\templates\Doctor\index_PM.html:155
+#: .\Doctor\templates\Doctor\index_PS.html:155
+#: .\obj\Release\Package\PackageTmp\Doctor\templates\Doctor\index.html:145
+#: .\physical_therapist\templates\physical_therapist\index.html:111
+msgid "History Taking"
+msgstr "진료내용"
+
+#: .\Doctor\templates\Doctor\index.html:160
+#: .\Doctor\templates\Doctor\index_DERM.html:163
+#: .\Doctor\templates\Doctor\index_PM.html:157
+#: .\Doctor\templates\Doctor\index_PS.html:157
+#: .\KBL\templates\KBL\audit_management.html:174
+#: .\KBL\templates\KBL\customer_management.html:267
+#: .\KBL\templates\KBL\customer_management.html:341
+#: .\KBL\templates\KBL\customer_management.html:428
+#: .\KBL\templates\KBL\customer_management.html:464
+#: .\KBL\templates\KBL\document_management.html:103
+#: .\KBL\templates\KBL\estimate_sheet.html:156
+#: .\KBL\templates\KBL\estimate_sheet.html:207
+#: .\KBL\templates\KBL\index.html:147
+#: .\KBL\templates\KBL\invoice_management.html:110
+#: .\KBL\templates\KBL\project_management.html:277
+#: .\KBL\templates\KBL\project_management.html:322
+#: .\KBL\templates\KBL\project_management.html:430
+#: .\KBL\templates\KBL\project_management.html:512
+#: .\KBL\templates\KBL\project_management.html:605
+#: .\KBL\templates\KBL\visa_management.html:159
+#: .\KBL\templates\KBL\work_permit.html:135
+#: .\KBL\templates\KBL\work_permit.html:175
+#: .\Laboratory\templates\Laboratory\index.html:219
+#: .\Manage\templates\Manage\CRM.html:156
+#: .\Manage\templates\Manage\Draft.html:151
+#: .\Manage\templates\Manage\Draft.html:238
+#: .\Manage\templates\Manage\Draft_KBL.html:150
+#: .\Manage\templates\Manage\Draft_KBL.html:237
+#: .\Manage\templates\Manage\code_setting.html:175
+#: .\Manage\templates\Manage\employee_manage.html:204
+#: .\Manage\templates\Manage\employee_manage.html:246
+#: .\Manage\templates\Manage\employee_manage.html:288
+#: .\Manage\templates\Manage\inventory_medical_tool.html:264
+#: .\Manage\templates\Manage\inventory_medical_tool.html:336
+#: .\Manage\templates\Manage\inventory_medical_tool.html:377
+#: .\Manage\templates\Manage\inventory_precedure.html:109
+#: .\Manage\templates\Manage\inventory_test.html:163
+#: .\Manage\templates\Manage\inventory_test.html:238
+#: .\Manage\templates\Manage\sms_history.html:96
+#: .\Manage\templates\board\create_edit.html:89
+#: .\Manage\templates\board_work\create_edit.html:137
+#: .\Pharmacy\templates\Pharmacy\index.html:64
+#: .\Pharmacy\templates\Pharmacy\index.html:146
+#: .\Pharmacy\templates\Pharmacy\inventory.html:264
+#: .\Pharmacy\templates\Pharmacy\inventory.html:333
+#: .\Pharmacy\templates\Pharmacy\inventory.html:374
+#: .\Receptionist\templates\Receptionist\index.html:165
+#: .\Receptionist\templates\Receptionist\index.html:669
+#: .\Receptionist\templates\Receptionist\reservation.html:106
+#: .\Receptionist\templates\Receptionist\storage_page.html:128
+#: .\Receptionist\templates\Receptionist\storage_page.html:507
+#: .\Receptionist\templates\Receptionist\storage_page.html:545
+#: .\physical_therapist\templates\physical_therapist\index.html:113
+msgid "Cancel"
+msgstr "취소"
+
+#: .\Doctor\templates\Doctor\index.html:161
+#: .\Doctor\templates\Doctor\index_DERM.html:164
+#: .\Doctor\templates\Doctor\index_DERM.html:647
+#: .\Doctor\templates\Doctor\index_PM.html:158
+#: .\Doctor\templates\Doctor\index_PS.html:158
+#: .\Doctor\templates\Doctor\report.html:110
+#: .\KBL\templates\KBL\audit_management.html:173
+#: .\KBL\templates\KBL\customer_management.html:130
+#: .\KBL\templates\KBL\customer_management.html:266
+#: .\KBL\templates\KBL\customer_management.html:340
+#: .\KBL\templates\KBL\customer_management.html:427
+#: .\KBL\templates\KBL\document_management.html:104
+#: .\KBL\templates\KBL\estimate_sheet.html:155
+#: .\KBL\templates\KBL\estimate_sheet.html:206
+#: .\KBL\templates\KBL\invoice_management.html:109
+#: .\KBL\templates\KBL\project_management.html:276
+#: .\KBL\templates\KBL\project_management.html:321
+#: .\KBL\templates\KBL\project_management.html:429
+#: .\KBL\templates\KBL\project_management.html:511
+#: .\KBL\templates\KBL\project_management.html:606
+#: .\KBL\templates\KBL\visa_management.html:158
+#: .\KBL\templates\KBL\work_permit.html:134
+#: .\KBL\templates\KBL\work_permit.html:174
+#: .\Laboratory\templates\Laboratory\checklist.html:46
+#: .\Laboratory\templates\Laboratory\index.html:140
+#: .\Manage\templates\Manage\Draft.html:152
+#: .\Manage\templates\Manage\Draft.html:239
+#: .\Manage\templates\Manage\Draft_KBL.html:151
+#: .\Manage\templates\Manage\Draft_KBL.html:238
+#: .\Manage\templates\Manage\code_setting.html:174
+#: .\Manage\templates\Manage\employee_manage.html:205
+#: .\Manage\templates\Manage\employee_manage.html:247
+#: .\Manage\templates\Manage\employee_manage.html:289
+#: .\Manage\templates\Manage\inventory_medical_tool.html:263
+#: .\Manage\templates\Manage\inventory_medical_tool.html:335
+#: .\Manage\templates\Manage\inventory_medical_tool.html:376
+#: .\Manage\templates\Manage\inventory_precedure.html:108
+#: .\Manage\templates\Manage\inventory_test.html:162
+#: .\Manage\templates\Manage\inventory_test.html:237
+#: .\Manage\templates\board\create_edit.html:90
+#: .\Manage\templates\board_work\create_edit.html:138
+#: .\Pharmacy\templates\Pharmacy\inventory.html:263
+#: .\Pharmacy\templates\Pharmacy\inventory.html:332
+#: .\Pharmacy\templates\Pharmacy\inventory.html:373
+#: .\Radiation\templates\Radiation\index.html:65
+#: .\Receptionist\templates\Receptionist\index.html:166
+#: .\Receptionist\templates\Receptionist\index.html:670
+#: .\Receptionist\templates\Receptionist\index.html:779
+#: .\Receptionist\templates\Receptionist\index.html:956
+#: .\Receptionist\templates\Receptionist\reservation.html:107
+#: .\Receptionist\templates\Receptionist\storage_page.html:129
+#: .\physical_therapist\templates\physical_therapist\index.html:114
+msgid "Save"
+msgstr "저장"
+
+#: .\Doctor\templates\Doctor\index.html:162
+#: .\Doctor\templates\Doctor\index_DERM.html:165
+#: .\Doctor\templates\Doctor\index_PM.html:159
+#: .\Doctor\templates\Doctor\index_PS.html:159
+#: .\Pharmacy\templates\Pharmacy\index.html:66
+#: .\Pharmacy\templates\Pharmacy\index.html:148
+#: .\physical_therapist\templates\physical_therapist\index.html:115
+msgid "Done"
+msgstr "완료"
+
+#: .\Doctor\templates\Doctor\index.html:167
+#: .\Doctor\templates\Doctor\index_DERM.html:177
+#: .\Doctor\templates\Doctor\index_PM.html:172
+#: .\Doctor\templates\Doctor\index_PS.html:172
+#: .\obj\Release\Package\PackageTmp\Doctor\templates\Doctor\index.html:154
+#: .\physical_therapist\templates\physical_therapist\index.html:128
+msgid "Subjective Data"
+msgstr "주호소"
+
+#: .\Doctor\templates\Doctor\index.html:171
+#: .\Doctor\templates\Doctor\index_DERM.html:181
+#: .\Doctor\templates\Doctor\index_PM.html:176
+#: .\Doctor\templates\Doctor\index_PS.html:176
+#: .\obj\Release\Package\PackageTmp\Doctor\templates\Doctor\index.html:158
+#: .\physical_therapist\templates\physical_therapist\index.html:132
+msgid "Objective Data"
+msgstr "진료 내역"
+
+#: .\Doctor\templates\Doctor\index.html:175
+#: .\Doctor\templates\Doctor\index_DERM.html:185
+#: .\Doctor\templates\Doctor\index_PM.html:180
+#: .\Doctor\templates\Doctor\index_PS.html:180
+#: .\obj\Release\Package\PackageTmp\Doctor\templates\Doctor\index.html:162
+#: .\physical_therapist\templates\physical_therapist\index.html:136
+msgid "Assessment"
+msgstr "사정"
+
+#: .\Doctor\templates\Doctor\index.html:179
+msgid "Sub Clinical Test"
+msgstr "임상"
+
+#: .\Doctor\templates\Doctor\index.html:183
+#: .\Doctor\templates\Doctor\index_DERM.html:193
+#: .\Doctor\templates\Doctor\index_PM.html:188
+#: .\Doctor\templates\Doctor\index_PS.html:188
+#: .\obj\Release\Package\PackageTmp\Doctor\templates\Doctor\index.html:170
+#: .\physical_therapist\templates\physical_therapist\index.html:144
+msgid "Diagnosis"
+msgstr "진단명"
+
+#: .\Doctor\templates\Doctor\index.html:187
+#: .\Doctor\templates\Doctor\index_DERM.html:189
+#: .\Doctor\templates\Doctor\index_PM.html:184
+#: .\Doctor\templates\Doctor\index_PS.html:184
+#: .\obj\Release\Package\PackageTmp\Doctor\templates\Doctor\index.html:166
+#: .\physical_therapist\templates\physical_therapist\index.html:140
+msgid "Plan"
+msgstr "치료계획"
+
+#: .\Doctor\templates\Doctor\index.html:191
+#: .\Doctor\templates\Doctor\index_DERM.html:197
+#: .\Doctor\templates\Doctor\index_PM.html:192
+#: .\Doctor\templates\Doctor\index_PS.html:192
+msgid "ICD Code"
+msgstr "ICD 코드"
+
+#: .\Doctor\templates\Doctor\index.html:211
+#: .\Doctor\templates\Doctor\index_DERM.html:229
+#: .\Doctor\templates\Doctor\index_PM.html:224
+#: .\Doctor\templates\Doctor\index_PS.html:224
+#: .\obj\Release\Package\PackageTmp\Doctor\templates\Doctor\index.html:176
+#: .\physical_therapist\templates\physical_therapist\index.html:154
+msgid "Order List"
+msgstr "오더내역"
+
+#: .\Doctor\templates\Doctor\index.html:220
+#: .\Doctor\templates\Doctor\index.html:296
+#: .\Doctor\templates\Doctor\index.html:324
+#: .\Doctor\templates\Doctor\index.html:365
+#: .\Doctor\templates\Doctor\index.html:416
+#: .\Doctor\templates\Doctor\index.html:457
+#: .\Doctor\templates\Doctor\index_DERM.html:238
+#: .\Doctor\templates\Doctor\index_DERM.html:310
+#: .\Doctor\templates\Doctor\index_DERM.html:338
+#: .\Doctor\templates\Doctor\index_DERM.html:379
+#: .\Doctor\templates\Doctor\index_DERM.html:430
+#: .\Doctor\templates\Doctor\index_DERM.html:488
+#: .\Doctor\templates\Doctor\index_PM.html:233
+#: .\Doctor\templates\Doctor\index_PM.html:304
+#: .\Doctor\templates\Doctor\index_PM.html:331
+#: .\Doctor\templates\Doctor\index_PM.html:385
+#: .\Doctor\templates\Doctor\index_PM.html:410
+#: .\Doctor\templates\Doctor\index_PM.html:435
+#: .\Doctor\templates\Doctor\index_PS.html:233
+#: .\Doctor\templates\Doctor\index_PS.html:304
+#: .\Doctor\templates\Doctor\index_PS.html:331
+#: .\Doctor\templates\Doctor\index_PS.html:385
+#: .\Doctor\templates\Doctor\index_PS.html:410
+#: .\Doctor\templates\Doctor\index_PS.html:435
+#: .\KBL\templates\KBL\audit_management.html:48
+#: .\Laboratory\templates\Laboratory\checklist.html:51
+#: .\Manage\templates\Manage\code_setting.html:35
+#: .\Manage\templates\Manage\code_setting.html:71
+#: .\Manage\templates\Manage\code_setting.html:97
+#: .\Manage\templates\Manage\inventory_precedure.html:29
+#: .\Manage\templates\Manage\inventory_test.html:34
+#: .\Pharmacy\templates\Pharmacy\index.html:158
+#: .\Receptionist\templates\Receptionist\index.html:896
+#: .\obj\Release\Package\PackageTmp\Doctor\templates\Doctor\index.html:185
+#: .\physical_therapist\templates\physical_therapist\index.html:163
+msgid "Code"
+msgstr "코드"
+
+#: .\Doctor\templates\Doctor\index.html:222
+#: .\Doctor\templates\Doctor\index_DERM.html:240
+#: .\Doctor\templates\Doctor\index_PM.html:235
+#: .\Doctor\templates\Doctor\index_PS.html:235
+#: .\Manage\templates\Manage\inventory_medical_tool.html:37
+#: .\Manage\templates\Manage\inventory_medical_tool.html:184
+#: .\Manage\templates\Manage\inventory_medical_tool.html:190
+#: .\Manage\templates\Manage\inventory_test.html:125
+#: .\Manage\templates\Manage\inventory_test.html:149
+#: .\Manage\templates\Manage\inventory_test.html:198
+#: .\Manage\templates\statistics\statistics_medicine.html:45
+#: .\Pharmacy\templates\Pharmacy\index.html:162
+#: .\Pharmacy\templates\Pharmacy\inventory.html:39
+#: .\Pharmacy\templates\Pharmacy\inventory.html:184
+#: .\Pharmacy\templates\Pharmacy\inventory.html:190
+#: .\obj\Release\Package\PackageTmp\Doctor\templates\Doctor\index.html:187
+#: .\obj\Release\Package\PackageTmp\Pharmacy\templates\Pharmacy\index.html:57
+msgid "Unit"
+msgstr "단위"
+
+#: .\Doctor\templates\Doctor\index.html:223
+#: .\Doctor\templates\Doctor\index_DERM.html:241
+#: .\Doctor\templates\Doctor\index_PM.html:236
+#: .\Doctor\templates\Doctor\index_PS.html:236
+#: .\Pharmacy\templates\Pharmacy\index.html:163
+#: .\obj\Release\Package\PackageTmp\Doctor\templates\Doctor\index.html:188
+msgid "Amount"
+msgstr "수량"
+
+#: .\Doctor\templates\Doctor\index.html:224
+#: .\Doctor\templates\Doctor\index_DERM.html:242
+#: .\Doctor\templates\Doctor\index_PM.html:237
+#: .\Doctor\templates\Doctor\index_PS.html:237
+#: .\Pharmacy\templates\Pharmacy\index.html:164
+#: .\obj\Release\Package\PackageTmp\Doctor\templates\Doctor\index.html:189
+msgid "Days"
+msgstr "일수"
+
+#: .\Doctor\templates\Doctor\index.html:225
+#: .\Doctor\templates\Doctor\index_DERM.html:243
+#: .\Doctor\templates\Doctor\index_PM.html:238
+#: .\Doctor\templates\Doctor\index_PS.html:238
+#: .\Pharmacy\templates\Pharmacy\index.html:166
+msgid "Use"
+msgstr "용법"
+
+#: .\Doctor\templates\Doctor\index.html:243
+#: .\Doctor\templates\Doctor\index_DERM.html:261
+#: .\Doctor\templates\Doctor\index_PM.html:256
+#: .\Doctor\templates\Doctor\index_PS.html:256
+#: .\obj\Release\Package\PackageTmp\Doctor\templates\Doctor\index.html:208
+msgid "Next Visiting Day"
+msgstr "다음 방문일"
+
+#: .\Doctor\templates\Doctor\index.html:248
+msgid "Total Price"
+msgstr "총 금액"
+
+#: .\Doctor\templates\Doctor\index.html:261
+#: .\Doctor\templates\Doctor\index_DERM.html:275
+#: .\Doctor\templates\Doctor\index_PM.html:270
+#: .\Doctor\templates\Doctor\index_PS.html:270
+#: .\KBL\templates\KBL\index.html:167 .\Manage\templates\Manage\CRM.html:176
+#: .\Receptionist\templates\Receptionist\index.html:142
+#: .\obj\Release\Package\PackageTmp\Doctor\templates\Doctor\index.html:217
+#: .\obj\Release\Package\PackageTmp\Receptionist\templates\Receptionist\index.html:106
+#: .\physical_therapist\templates\physical_therapist\index.html:186
+msgid "Past History"
+msgstr "과거력"
+
+#: .\Doctor\templates\Doctor\index.html:276
+#: .\Doctor\templates\Doctor\index_DERM.html:289
+#: .\Doctor\templates\Doctor\index_PM.html:284
+#: .\Doctor\templates\Doctor\index_PS.html:284
+#: .\Laboratory\templates\Laboratory\checklist.html:9
+#: .\obj\Release\Package\PackageTmp\Doctor\templates\Doctor\index.html:231
+msgid "Check List"
+msgstr "검진내역"
+
+#: .\Doctor\templates\Doctor\index.html:284
+#: .\Doctor\templates\Doctor\index_DERM.html:297
+#: .\Manage\templates\Manage\Manage.html:112
+#: .\Manage\templates\Manage\Manage.html:194
+#: .\Manage\templates\Manage\Manage.html:229
+#: .\obj\Release\Package\PackageTmp\Doctor\templates\Doctor\audit.html:39
+#: .\obj\Release\Package\PackageTmp\Manage\templates\Manage\manage.html:100
+msgid "Lab"
+msgstr "검사"
+
+#: .\Doctor\templates\Doctor\index.html:287
+#: .\Doctor\templates\Doctor\index_DERM.html:301
+msgid "Bundle Px"
+msgstr "묶음처방"
+
+#: .\Doctor\templates\Doctor\index.html:299
+#: .\Doctor\templates\Doctor\index.html:327
+#: .\Doctor\templates\Doctor\index.html:368
+#: .\Doctor\templates\Doctor\index.html:419
+#: .\Doctor\templates\Doctor\index.html:459
+#: .\Doctor\templates\Doctor\index_DERM.html:313
+#: .\Doctor\templates\Doctor\index_DERM.html:341
+#: .\Doctor\templates\Doctor\index_DERM.html:382
+#: .\Doctor\templates\Doctor\index_DERM.html:433
+#: .\Doctor\templates\Doctor\index_DERM.html:490
+#: .\Doctor\templates\Doctor\index_PM.html:306
+#: .\Doctor\templates\Doctor\index_PM.html:333
+#: .\Doctor\templates\Doctor\index_PM.html:387
+#: .\Doctor\templates\Doctor\index_PM.html:412
+#: .\Doctor\templates\Doctor\index_PM.html:437
+#: .\Doctor\templates\Doctor\index_PS.html:306
+#: .\Doctor\templates\Doctor\index_PS.html:333
+#: .\Doctor\templates\Doctor\index_PS.html:387
+#: .\Doctor\templates\Doctor\index_PS.html:412
+#: .\Doctor\templates\Doctor\index_PS.html:437
+#: .\Laboratory\templates\Laboratory\checklist.html:29
+#: .\Laboratory\templates\Laboratory\checklist.html:72
+#: .\Manage\templates\Manage\inventory_medical_tool.html:38
+#: .\Manage\templates\Manage\inventory_precedure.html:32
+#: .\Manage\templates\Manage\inventory_test.html:38
+#: .\Pharmacy\templates\Pharmacy\index.html:167
+#: .\Pharmacy\templates\Pharmacy\inventory.html:40
+#: .\Receptionist\templates\Receptionist\index.html:898
+#: .\obj\Release\Package\PackageTmp\Pharmacy\templates\Pharmacy\index.html:58
+msgid "Price"
+msgstr "금액"
+
+#: .\Doctor\templates\Doctor\index.html:418
+#: .\Doctor\templates\Doctor\index_DERM.html:432
+#: .\Doctor\templates\Doctor\index_DERM.html:471
+#: .\Manage\templates\Manage\inventory_medical_tool.html:39
+#: .\Manage\templates\statistics\statistics_customer_info.html:38
+#: .\Manage\templates\statistics\statistics_customer_info.html:52
+#: .\Manage\templates\statistics\statistics_customer_info.html:66
+#: .\Manage\templates\statistics\statistics_customer_info.html:80
+#: .\Manage\templates\statistics\statistics_procedure.html:42
+#: .\Manage\templates\statistics\statistics_test.html:41
+#: .\Manage\templates\statistics\statistics_ymw.html:39
+#: .\Manage\templates\statistics\statistics_ymw.html:51
+#: .\Manage\templates\statistics\statistics_ymw.html:65
+#: .\Manage\templates\statistics\statistics_ymw.html:77
+#: .\Pharmacy\templates\Pharmacy\inventory.html:41
+#: .\Receptionist\templates\Receptionist\index.html:836
+#: .\Receptionist\templates\Receptionist\index.html:899
+#: .\obj\Release\Package\PackageTmp\Pharmacy\templates\Pharmacy\index.html:59
+msgid "Count"
+msgstr "개수"
+
+#: .\Doctor\templates\Doctor\index.html:503
+#: .\Doctor\templates\Doctor\index_DERM.html:569
+#: .\Doctor\templates\Doctor\index_PM.html:748
+#: .\Doctor\templates\Doctor\index_PS.html:748
+msgid "Patient Past History"
+msgstr "환자 과거력"
+
+#: .\Doctor\templates\Doctor\index_DERM.html:21
+#: .\Doctor\templates\Doctor\index_PM.html:21
+#: .\Doctor\templates\Doctor\index_PM.html:466
+#: .\Doctor\templates\Doctor\index_PS.html:21
+#: .\Doctor\templates\Doctor\index_PS.html:466
+#: .\Receptionist\templates\Receptionist\index.html:159
+#: .\Receptionist\templates\Receptionist\index.html:332
+#: .\physical_therapist\templates\physical_therapist\index.html:13
+#: .\physical_therapist\templates\physical_therapist\index.html:207
+msgid "Initial Report"
+msgstr "사전 문진"
+
+#: .\Doctor\templates\Doctor\index_DERM.html:89
+#: .\Doctor\templates\Doctor\index_DERM.html:589
+msgid "Sign List"
+msgstr "서명 목록"
+
+#: .\Doctor\templates\Doctor\index_DERM.html:97
+#: .\Doctor\templates\Doctor\index_PM.html:91
+#: .\Doctor\templates\Doctor\index_PS.html:91
+#: .\obj\Release\Package\PackageTmp\Doctor\templates\Doctor\index.html:87
+msgid "Vital"
+msgstr "활력징후"
+
+#: .\Doctor\templates\Doctor\index_DERM.html:223
+#: .\Doctor\templates\Doctor\index_PM.html:218
+#: .\Doctor\templates\Doctor\index_PS.html:218
+#: .\Receptionist\templates\Receptionist\storage_page.html:178
+#: .\physical_therapist\templates\physical_therapist\index.html:148
+msgid "Recommend"
+msgstr "Recommend"
+
+#: .\Doctor\templates\Doctor\index_DERM.html:300
+#: .\Receptionist\templates\Receptionist\index.html:167
+msgid "Package"
+msgstr "패키지"
+
+#: .\Doctor\templates\Doctor\index_DERM.html:472
+#: .\KBL\templates\KBL\index.html:104 .\Manage\templates\Manage\CRM.html:113
+#: .\Receptionist\templates\Receptionist\index.html:837
+msgid "History"
+msgstr "이력"
+
+#: .\Doctor\templates\Doctor\index_DERM.html:532
+#: .\Receptionist\templates\Receptionist\index.html:971
+msgid "Package History"
+msgstr "패키지 이력"
+
+#: .\Doctor\templates\Doctor\index_DERM.html:537
+#: .\Doctor\templates\Doctor\index_DERM.html:597
+#: .\KBL\templates\KBL\customer_management.html:31
+#: .\KBL\templates\KBL\customer_management.html:137
+#: .\KBL\templates\KBL\customer_management.html:167
+#: .\KBL\templates\KBL\document_management.html:35
+#: .\KBL\templates\KBL\estimate_sheet.html:39
+#: .\KBL\templates\KBL\estimate_sheet.html:76 .\KBL\templates\KBL\index.html:27
+#: .\KBL\templates\KBL\project_management.html:49
+#: .\KBL\templates\KBL\project_management.html:94
+#: .\KBL\templates\KBL\project_management.html:120
+#: .\KBL\templates\KBL\project_management.html:150
+#: .\KBL\templates\KBL\project_management.html:541
+#: .\KBL\templates\KBL\visa_management.html:39
+#: .\KBL\templates\KBL\visa_management.html:182
+#: .\KBL\templates\KBL\work_permit.html:44
+#: .\KBL\templates\KBL\work_permit.html:198
+#: .\Manage\templates\Manage\CRM.html:36
+#: .\Manage\templates\Manage\Draft.html:53
+#: .\Manage\templates\Manage\Draft.html:174
+#: .\Manage\templates\Manage\Draft_KBL.html:53
+#: .\Manage\templates\Manage\Draft_KBL.html:173
+#: .\Manage\templates\Manage\Manage.html:106
+#: .\Manage\templates\Manage\code_setting.html:30
+#: .\Manage\templates\Manage\inventory_medical_tool.html:73
+#: .\Manage\templates\Manage\inventory_medical_tool.html:102
+#: .\Manage\templates\Manage\sms_history.html:46
+#: .\Pharmacy\templates\Pharmacy\index.html:35
+#: .\Pharmacy\templates\Pharmacy\inventory.html:75
+#: .\Pharmacy\templates\Pharmacy\inventory.html:104
+#: .\Radiation\templates\Radiation\index.html:47
+#: .\Receptionist\templates\Receptionist\Documents.html:35
+#: .\Receptionist\templates\Receptionist\index.html:833
+#: .\Receptionist\templates\Receptionist\index.html:976
+#: .\Receptionist\templates\Receptionist\storage_page.html:31
+#: .\Receptionist\templates\Receptionist\storage_page.html:216
+#: .\app\templates\app\notice.html:13
+#: .\obj\Release\Package\PackageTmp\Doctor\templates\Doctor\audit.html:32
+#: .\obj\Release\Package\PackageTmp\Manage\templates\Manage\manage.html:93
+#: .\obj\Release\Package\PackageTmp\Pharmacy\templates\Pharmacy\index.html:27
+#: .\obj\Release\Package\PackageTmp\Radiation\templates\Radiation\index.html:24
+#: .\obj\Release\Package\PackageTmp\Receptionist\templates\Receptionist\storage_page.html:21
+#: .\obj\Release\Package\PackageTmp\Receptionist\templates\Receptionist\storage_page.html:182
+msgid "No"
+msgstr "번호"
+
+#: .\Doctor\templates\Doctor\index_DERM.html:538
+#: .\Radiation\templates\Radiation\index.html:70
+#: .\Receptionist\templates\Receptionist\index.html:977
+msgid "Patient Name"
+msgstr "환자 이름"
+
+#: .\Doctor\templates\Doctor\index_DERM.html:539
+#: .\Receptionist\templates\Receptionist\index.html:978
+msgid "Precedure Name"
+msgstr "처치명"
+
+#: .\Doctor\templates\Doctor\index_DERM.html:540
+#: .\Receptionist\templates\Receptionist\index.html:979
+msgid "Round"
+msgstr "횟수"
+
+#: .\Doctor\templates\Doctor\index_DERM.html:541
+#: .\Receptionist\templates\Receptionist\index.html:980
+msgid "Date Bought"
+msgstr "구매 일"
+
+#: .\Doctor\templates\Doctor\index_DERM.html:542
+#: .\Receptionist\templates\Receptionist\index.html:981
+msgid "Date Used"
+msgstr "사용 날짜"
+
+#: .\Doctor\templates\Doctor\index_DERM.html:553
+#: .\Doctor\templates\Doctor\index_DERM.html:612
+#: .\Receptionist\templates\Receptionist\index.html:778
+#: .\Receptionist\templates\Receptionist\index.html:851
+#: .\Receptionist\templates\Receptionist\index.html:914
+#: .\Receptionist\templates\Receptionist\index.html:992
+msgid "Close"
+msgstr "닫기"
+
+#: .\Doctor\templates\Doctor\index_DERM.html:599
+#: .\KBL\templates\KBL\audit_management.html:14
+#: .\KBL\templates\KBL\customer_management.html:14
+#: .\KBL\templates\KBL\customer_management.html:32
+#: .\KBL\templates\KBL\customer_management.html:169
+#: .\KBL\templates\KBL\customer_management.html:286
+#: .\KBL\templates\KBL\document_management.html:15
+#: .\KBL\templates\KBL\document_management.html:36
+#: .\KBL\templates\KBL\estimate_sheet.html:78
+#: .\KBL\templates\KBL\estimate_sheet.html:175
+#: .\KBL\templates\KBL\index.html:13
+#: .\KBL\templates\KBL\invoice_management.html:14
+#: .\KBL\templates\KBL\project_management.html:14
+#: .\KBL\templates\KBL\project_management.html:51
+#: .\KBL\templates\KBL\project_management.html:96
+#: .\KBL\templates\KBL\project_management.html:198
+#: .\KBL\templates\KBL\project_management.html:298
+#: .\KBL\templates\KBL\statistics.html:21
+#: .\KBL\templates\KBL\work_permit.html:154
+#: .\Manage\templates\Manage\CRM.html:22
+#: .\Manage\templates\Manage\Draft.html:14
+#: .\Manage\templates\Manage\Draft.html:55
+#: .\Manage\templates\Manage\Draft.html:92
+#: .\Manage\templates\Manage\Draft_KBL.html:14
+#: .\Manage\templates\Manage\Draft_KBL.html:55
+#: .\Manage\templates\Manage\Draft_KBL.html:92
+#: .\Manage\templates\Manage\code_setting.html:13
+#: .\Manage\templates\Manage\inventory_medical_tool.html:76
+#: .\Manage\templates\Manage\inventory_medical_tool.html:131
+#: .\Manage\templates\Manage\sms_history.html:20
+#: .\Manage\templates\Manage\sms_history.html:47
+#: .\Manage\templates\board\list.html:142
+#: .\Manage\templates\board_work\list.html:168
+#: .\Pharmacy\templates\Pharmacy\inventory.html:78
+#: .\Pharmacy\templates\Pharmacy\inventory.html:133
+msgid "Type"
+msgstr "구분"
+
+#: .\Doctor\templates\Doctor\index_DERM.html:600
+msgid "Date of Sign"
+msgstr "서명 날짜"
+
+#: .\Doctor\templates\Doctor\index_DERM.html:601
+#: .\KBL\templates\KBL\audit_management.html:69
+#: .\KBL\templates\KBL\customer_management.html:39
+#: .\KBL\templates\KBL\customer_management.html:146
+#: .\KBL\templates\KBL\document_management.html:42
+#: .\KBL\templates\KBL\estimate_sheet.html:48
+#: .\KBL\templates\KBL\estimate_sheet.html:84 .\KBL\templates\KBL\index.html:36
+#: .\KBL\templates\KBL\invoice_management.html:61
+#: .\KBL\templates\KBL\project_management.html:62
+#: .\KBL\templates\KBL\project_management.html:101
+#: .\KBL\templates\KBL\project_management.html:132
+#: .\KBL\templates\KBL\project_management.html:162
+#: .\Manage\templates\Manage\CRM.html:45
+#: .\Manage\templates\Manage\Draft.html:65
+#: .\Manage\templates\Manage\Draft_KBL.html:65
+#: .\Manage\templates\Manage\code_setting.html:50
+msgid "Manage"
+msgstr "관리"
+
+#: .\Doctor\templates\Doctor\index_DERM.html:638
+msgid "Clear"
+msgstr "지우기"
+
+#: .\Doctor\templates\Doctor\index_DERM.html:639
+msgid "Undo"
+msgstr ""
+
+#: .\Doctor\templates\Doctor\index_PM.html:471
+#: .\Doctor\templates\Doctor\index_PS.html:471
+#: .\Receptionist\templates\Receptionist\index.html:337
+#: .\physical_therapist\templates\physical_therapist\index.html:212
+msgid "활력징후"
+msgstr ""
+
+#: .\Doctor\templates\Doctor\index_PM.html:475
+#: .\Doctor\templates\Doctor\index_PS.html:475
+#: .\Receptionist\templates\Receptionist\index.html:341
+#: .\physical_therapist\templates\physical_therapist\index.html:216
+msgid "키"
+msgstr ""
+
+#: .\Doctor\templates\Doctor\index_PM.html:481
+#: .\Doctor\templates\Doctor\index_PS.html:481
+#: .\Receptionist\templates\Receptionist\index.html:347
+#: .\physical_therapist\templates\physical_therapist\index.html:222
+msgid "몸무게"
+msgstr ""
+
+#: .\Doctor\templates\Doctor\index_PM.html:488
+#: .\Doctor\templates\Doctor\index_PS.html:488
+#: .\Receptionist\templates\Receptionist\index.html:354
+#: .\physical_therapist\templates\physical_therapist\index.html:229
+msgid "BMI"
+msgstr ""
+
+#: .\Doctor\templates\Doctor\index_PM.html:494
+#: .\Doctor\templates\Doctor\index_PS.html:494
+#: .\Receptionist\templates\Receptionist\index.html:360
+#: .\physical_therapist\templates\physical_therapist\index.html:235
+msgid "혈압"
+msgstr ""
+
+#: .\Doctor\templates\Doctor\index_PM.html:500
+#: .\Doctor\templates\Doctor\index_PS.html:500
+#: .\Receptionist\templates\Receptionist\index.html:366
+#: .\physical_therapist\templates\physical_therapist\index.html:241
+msgid "체온"
+msgstr ""
+
+#: .\Doctor\templates\Doctor\index_PM.html:517
+#: .\Doctor\templates\Doctor\index_PS.html:517
+#: .\Receptionist\templates\Receptionist\index.html:383
+#: .\physical_therapist\templates\physical_therapist\index.html:258
+msgid "2. 현재 불편한 부위와 증상에 표시하여 주세요."
+msgstr ""
+
+#: .\Doctor\templates\Doctor\index_PM.html:553
+#: .\Doctor\templates\Doctor\index_PS.html:553
+#: .\Receptionist\templates\Receptionist\index.html:419
+#: .\physical_therapist\templates\physical_therapist\index.html:294
+msgid "2)방향"
+msgstr ""
+
+#: .\Doctor\templates\Doctor\index_PM.html:554
+#: .\Doctor\templates\Doctor\index_PS.html:554
+#: .\Receptionist\templates\Receptionist\index.html:420
+#: .\physical_therapist\templates\physical_therapist\index.html:295
+msgid "왼쪽"
+msgstr ""
+
+#: .\Doctor\templates\Doctor\index_PM.html:555
+#: .\Doctor\templates\Doctor\index_PS.html:555
+#: .\Receptionist\templates\Receptionist\index.html:421
+#: .\physical_therapist\templates\physical_therapist\index.html:296
+msgid "가운데"
+msgstr ""
+
+#: .\Doctor\templates\Doctor\index_PM.html:556
+#: .\Doctor\templates\Doctor\index_PS.html:556
+#: .\Receptionist\templates\Receptionist\index.html:422
+#: .\physical_therapist\templates\physical_therapist\index.html:297
+msgid "오른쪽"
+msgstr ""
+
+#: .\Doctor\templates\Doctor\index_PM.html:562
+#: .\Doctor\templates\Doctor\index_PS.html:562
+#: .\Receptionist\templates\Receptionist\index.html:428
+#: .\physical_therapist\templates\physical_therapist\index.html:303
+msgid "3)증상"
+msgstr ""
+
+#: .\Doctor\templates\Doctor\index_PM.html:563
+#: .\Doctor\templates\Doctor\index_PS.html:563
+#: .\Receptionist\templates\Receptionist\index.html:429
+#: .\physical_therapist\templates\physical_therapist\index.html:304
+msgid "당긴다"
+msgstr ""
+
+#: .\Doctor\templates\Doctor\index_PM.html:564
+#: .\Doctor\templates\Doctor\index_PS.html:564
+#: .\Receptionist\templates\Receptionist\index.html:430
+#: .\physical_therapist\templates\physical_therapist\index.html:305
+msgid "저리다"
+msgstr ""
+
+#: .\Doctor\templates\Doctor\index_PM.html:565
+#: .\Doctor\templates\Doctor\index_PS.html:565
+#: .\Receptionist\templates\Receptionist\index.html:431
+#: .\physical_therapist\templates\physical_therapist\index.html:306
+msgid "쑤신다"
+msgstr ""
+
+#: .\Doctor\templates\Doctor\index_PM.html:566
+#: .\Doctor\templates\Doctor\index_PS.html:566
+#: .\Receptionist\templates\Receptionist\index.html:432
+#: .\physical_therapist\templates\physical_therapist\index.html:307
+msgid "감각이 둔하다"
+msgstr ""
+
+#: .\Doctor\templates\Doctor\index_PM.html:567
+#: .\Doctor\templates\Doctor\index_PS.html:567
+#: .\Receptionist\templates\Receptionist\index.html:433
+#: .\physical_therapist\templates\physical_therapist\index.html:308
+msgid "마비가 된다"
+msgstr ""
+
+#: .\Doctor\templates\Doctor\index_PM.html:570
+#: .\Doctor\templates\Doctor\index_PS.html:570
+#: .\Receptionist\templates\Receptionist\index.html:436
+#: .\physical_therapist\templates\physical_therapist\index.html:311
+msgid "발병시기"
+msgstr ""
+
+#: .\Doctor\templates\Doctor\index_PM.html:577
+#: .\Doctor\templates\Doctor\index_PS.html:577
+#: .\Receptionist\templates\Receptionist\index.html:443
+#: .\physical_therapist\templates\physical_therapist\index.html:318
+msgid ""
+"3. 최근 6개월 내 현재 증상으로 치료 받은 내역을 체크해주세요 (한의원 포함) "
+msgstr ""
+
+#: .\Doctor\templates\Doctor\index_PM.html:578
+#: .\Doctor\templates\Doctor\index_PM.html:646
+#: .\Doctor\templates\Doctor\index_PS.html:578
+#: .\Doctor\templates\Doctor\index_PS.html:646
+#: .\Receptionist\templates\Receptionist\index.html:444
+#: .\Receptionist\templates\Receptionist\index.html:512
+#: .\physical_therapist\templates\physical_therapist\index.html:319
+#: .\physical_therapist\templates\physical_therapist\index.html:387
+msgid "없음"
+msgstr ""
+
+#: .\Doctor\templates\Doctor\index_PM.html:582
+#: .\Doctor\templates\Doctor\index_PS.html:582
+#: .\Receptionist\templates\Receptionist\index.html:448
+#: .\physical_therapist\templates\physical_therapist\index.html:323
+msgid "물리치료"
+msgstr ""
+
+#: .\Doctor\templates\Doctor\index_PM.html:583
+#: .\Doctor\templates\Doctor\index_PM.html:586
+#: .\Doctor\templates\Doctor\index_PM.html:590
+#: .\Doctor\templates\Doctor\index_PM.html:593
+#: .\Doctor\templates\Doctor\index_PS.html:583
+#: .\Doctor\templates\Doctor\index_PS.html:586
+#: .\Doctor\templates\Doctor\index_PS.html:590
+#: .\Doctor\templates\Doctor\index_PS.html:593
+#: .\Receptionist\templates\Receptionist\index.html:449
+#: .\Receptionist\templates\Receptionist\index.html:452
+#: .\Receptionist\templates\Receptionist\index.html:456
+#: .\Receptionist\templates\Receptionist\index.html:459
+#: .\physical_therapist\templates\physical_therapist\index.html:324
+#: .\physical_therapist\templates\physical_therapist\index.html:327
+#: .\physical_therapist\templates\physical_therapist\index.html:331
+#: .\physical_therapist\templates\physical_therapist\index.html:334
+msgid "회"
+msgstr ""
+
+#: .\Doctor\templates\Doctor\index_PM.html:585
+#: .\Doctor\templates\Doctor\index_PS.html:585
+#: .\Receptionist\templates\Receptionist\index.html:451
+#: .\physical_therapist\templates\physical_therapist\index.html:326
+msgid "주사치료"
+msgstr ""
+
+#: .\Doctor\templates\Doctor\index_PM.html:589
+#: .\Doctor\templates\Doctor\index_PS.html:589
+#: .\Receptionist\templates\Receptionist\index.html:455
+#: .\physical_therapist\templates\physical_therapist\index.html:330
+msgid "약복용"
+msgstr ""
+
+#: .\Doctor\templates\Doctor\index_PM.html:592
+#: .\Doctor\templates\Doctor\index_PS.html:592
+#: .\Receptionist\templates\Receptionist\index.html:458
+#: .\physical_therapist\templates\physical_therapist\index.html:333
+msgid "침치료"
+msgstr ""
+
+#: .\Doctor\templates\Doctor\index_PM.html:599
+#: .\Doctor\templates\Doctor\index_PS.html:599
+#: .\Receptionist\templates\Receptionist\index.html:465
+#: .\physical_therapist\templates\physical_therapist\index.html:340
+msgid "4. 통증 정도가 어느정도인지 표시해주세요."
+msgstr ""
+
+#: .\Doctor\templates\Doctor\index_PM.html:613
+#: .\Doctor\templates\Doctor\index_PS.html:613
+#: .\Receptionist\templates\Receptionist\index.html:479
+#: .\physical_therapist\templates\physical_therapist\index.html:354
+msgid "5. 한번이라도 수술 받으신 적이 있나요 ?"
+msgstr ""
+
+#: .\Doctor\templates\Doctor\index_PM.html:617
+#: .\Doctor\templates\Doctor\index_PM.html:683
+#: .\Doctor\templates\Doctor\index_PS.html:617
+#: .\Doctor\templates\Doctor\index_PS.html:683
+#: .\Receptionist\templates\Receptionist\index.html:483
+#: .\Receptionist\templates\Receptionist\index.html:549
+#: .\physical_therapist\templates\physical_therapist\index.html:358
+#: .\physical_therapist\templates\physical_therapist\index.html:424
+msgid "예"
+msgstr ""
+
+#: .\Doctor\templates\Doctor\index_PM.html:618
+#: .\Doctor\templates\Doctor\index_PS.html:618
+#: .\Receptionist\templates\Receptionist\index.html:484
+#: .\physical_therapist\templates\physical_therapist\index.html:359
+msgid "년도"
+msgstr ""
+
+#: .\Doctor\templates\Doctor\index_PM.html:620
+#: .\Doctor\templates\Doctor\index_PS.html:620
+#: .\Receptionist\templates\Receptionist\index.html:486
+#: .\physical_therapist\templates\physical_therapist\index.html:361
+msgid "수술명"
+msgstr ""
+
+#: .\Doctor\templates\Doctor\index_PM.html:622
+#: .\Doctor\templates\Doctor\index_PM.html:685
+#: .\Doctor\templates\Doctor\index_PS.html:622
+#: .\Doctor\templates\Doctor\index_PS.html:685
+#: .\Receptionist\templates\Receptionist\index.html:488
+#: .\Receptionist\templates\Receptionist\index.html:551
+#: .\physical_therapist\templates\physical_therapist\index.html:363
+#: .\physical_therapist\templates\physical_therapist\index.html:426
+msgid "아니오"
+msgstr ""
+
+#: .\Doctor\templates\Doctor\index_PM.html:627
+#: .\Doctor\templates\Doctor\index_PS.html:627
+#: .\Receptionist\templates\Receptionist\index.html:493
+#: .\physical_therapist\templates\physical_therapist\index.html:368
+msgid "6. 위 증상과 관련된 어떤 검사를 하셨는지요?"
+msgstr ""
+
+#: .\Doctor\templates\Doctor\index_PM.html:630
+#: .\Doctor\templates\Doctor\index_PS.html:630
+#: .\Receptionist\templates\Receptionist\index.html:496
+#: .\physical_therapist\templates\physical_therapist\index.html:371
+msgid "MRI"
+msgstr ""
+
+#: .\Doctor\templates\Doctor\index_PM.html:631
+#: .\Doctor\templates\Doctor\index_PS.html:631
+#: .\Receptionist\templates\Receptionist\index.html:497
+#: .\physical_therapist\templates\physical_therapist\index.html:372
+msgid "CT"
+msgstr ""
+
+#: .\Doctor\templates\Doctor\index_PM.html:632
+#: .\Doctor\templates\Doctor\index_PS.html:632
+#: .\Receptionist\templates\Receptionist\index.html:498
+#: .\physical_therapist\templates\physical_therapist\index.html:373
+msgid "단순방사선촬영"
+msgstr ""
+
+#: .\Doctor\templates\Doctor\index_PM.html:633
+#: .\Doctor\templates\Doctor\index_PS.html:633
+#: .\Receptionist\templates\Receptionist\index.html:499
+#: .\physical_therapist\templates\physical_therapist\index.html:374
+msgid "근전도검사"
+msgstr ""
+
+#: .\Doctor\templates\Doctor\index_PM.html:634
+#: .\Doctor\templates\Doctor\index_PS.html:634
+#: .\Receptionist\templates\Receptionist\index.html:500
+#: .\physical_therapist\templates\physical_therapist\index.html:375
+msgid "척추조영술"
+msgstr ""
+
+#: .\Doctor\templates\Doctor\index_PM.html:638
+#: .\Doctor\templates\Doctor\index_PM.html:670
+#: .\Doctor\templates\Doctor\index_PM.html:723
+#: .\Doctor\templates\Doctor\index_PS.html:638
+#: .\Doctor\templates\Doctor\index_PS.html:670
+#: .\Doctor\templates\Doctor\index_PS.html:723
+#: .\Receptionist\templates\Receptionist\index.html:504
+#: .\Receptionist\templates\Receptionist\index.html:536
+#: .\Receptionist\templates\Receptionist\index.html:589
+#: .\physical_therapist\templates\physical_therapist\index.html:379
+#: .\physical_therapist\templates\physical_therapist\index.html:411
+#: .\physical_therapist\templates\physical_therapist\index.html:464
+msgid "기타"
+msgstr ""
+
+#: .\Doctor\templates\Doctor\index_PM.html:643
+#: .\Doctor\templates\Doctor\index_PS.html:643
+#: .\Receptionist\templates\Receptionist\index.html:509
+#: .\physical_therapist\templates\physical_therapist\index.html:384
+msgid "외부에서 가져온 CD나 필름이 있나요 ?"
+msgstr ""
+
+#: .\Doctor\templates\Doctor\index_PM.html:647
+#: .\Doctor\templates\Doctor\index_PS.html:647
+#: .\Receptionist\templates\Receptionist\index.html:513
+#: .\physical_therapist\templates\physical_therapist\index.html:388
+msgid "필름"
+msgstr ""
+
+#: .\Doctor\templates\Doctor\index_PM.html:648
+#: .\Doctor\templates\Doctor\index_PS.html:648
+#: .\Receptionist\templates\Receptionist\index.html:514
+#: .\physical_therapist\templates\physical_therapist\index.html:389
+msgid "CD"
+msgstr "카드"
+
+#: .\Doctor\templates\Doctor\index_PM.html:654
+#: .\Doctor\templates\Doctor\index_PS.html:654
+#: .\Receptionist\templates\Receptionist\index.html:520
+#: .\physical_therapist\templates\physical_therapist\index.html:395
+msgid ""
+"7. 현재 치료중인 질환과 복용약이 있으신가요? (아스피린, 쿠마딘, 와파린 등)"
+msgstr ""
+
+#: .\Doctor\templates\Doctor\index_PM.html:657
+#: .\Doctor\templates\Doctor\index_PS.html:657
+#: .\Receptionist\templates\Receptionist\index.html:523
+#: .\physical_therapist\templates\physical_therapist\index.html:398
+msgid "고혈압"
+msgstr ""
+
+#: .\Doctor\templates\Doctor\index_PM.html:658
+#: .\Doctor\templates\Doctor\index_PS.html:658
+#: .\Receptionist\templates\Receptionist\index.html:524
+#: .\physical_therapist\templates\physical_therapist\index.html:399
+msgid "당뇨"
+msgstr ""
+
+#: .\Doctor\templates\Doctor\index_PM.html:659
+#: .\Doctor\templates\Doctor\index_PS.html:659
+#: .\Receptionist\templates\Receptionist\index.html:525
+#: .\physical_therapist\templates\physical_therapist\index.html:400
+msgid "간질환"
+msgstr ""
+
+#: .\Doctor\templates\Doctor\index_PM.html:660
+#: .\Doctor\templates\Doctor\index_PS.html:660
+#: .\Receptionist\templates\Receptionist\index.html:526
+#: .\physical_therapist\templates\physical_therapist\index.html:401
+msgid "뇌질환(중풍)"
+msgstr ""
+
+#: .\Doctor\templates\Doctor\index_PM.html:661
+#: .\Doctor\templates\Doctor\index_PS.html:661
+#: .\Receptionist\templates\Receptionist\index.html:527
+#: .\physical_therapist\templates\physical_therapist\index.html:402
+msgid "폐결핵"
+msgstr ""
+
+#: .\Doctor\templates\Doctor\index_PM.html:664
+#: .\Doctor\templates\Doctor\index_PS.html:664
+#: .\Receptionist\templates\Receptionist\index.html:530
+#: .\physical_therapist\templates\physical_therapist\index.html:405
+msgid "심장질환"
+msgstr ""
+
+#: .\Doctor\templates\Doctor\index_PM.html:665
+#: .\Doctor\templates\Doctor\index_PS.html:665
+#: .\Receptionist\templates\Receptionist\index.html:531
+#: .\physical_therapist\templates\physical_therapist\index.html:406
+msgid "관절염"
+msgstr ""
+
+#: .\Doctor\templates\Doctor\index_PM.html:666
+#: .\Doctor\templates\Doctor\index_PS.html:666
+#: .\Receptionist\templates\Receptionist\index.html:532
+#: .\physical_therapist\templates\physical_therapist\index.html:407
+msgid "신장질환"
+msgstr ""
+
+#: .\Doctor\templates\Doctor\index_PM.html:667
+#: .\Doctor\templates\Doctor\index_PS.html:667
+#: .\Receptionist\templates\Receptionist\index.html:533
+#: .\physical_therapist\templates\physical_therapist\index.html:408
+msgid "갑상선질환"
+msgstr ""
+
+#: .\Doctor\templates\Doctor\index_PM.html:674
+#: .\Doctor\templates\Doctor\index_PS.html:674
+#: .\Receptionist\templates\Receptionist\index.html:540
+#: .\physical_therapist\templates\physical_therapist\index.html:415
+msgid "복용약"
+msgstr ""
+
+#: .\Doctor\templates\Doctor\index_PM.html:680
+#: .\Doctor\templates\Doctor\index_PS.html:680
+#: .\Receptionist\templates\Receptionist\index.html:546
+#: .\physical_therapist\templates\physical_therapist\index.html:421
+msgid "8. 약에 대한 부작용은 있으신가요?"
+msgstr ""
+
+#: .\Doctor\templates\Doctor\index_PM.html:693
+#: .\Doctor\templates\Doctor\index_PS.html:693
+#: .\Receptionist\templates\Receptionist\index.html:559
+#: .\physical_therapist\templates\physical_therapist\index.html:434
+msgid "9. 임신 가능성이 있으신가요?"
+msgstr ""
+
+#: .\Doctor\templates\Doctor\index_PM.html:697
+#: .\Doctor\templates\Doctor\index_PS.html:697
+#: .\Receptionist\templates\Receptionist\index.html:563
+#: .\physical_therapist\templates\physical_therapist\index.html:438
+msgid "해당없음"
+msgstr ""
+
+#: .\Doctor\templates\Doctor\index_PM.html:701
+#: .\Doctor\templates\Doctor\index_PS.html:701
+#: .\Receptionist\templates\Receptionist\index.html:567
+#: .\physical_therapist\templates\physical_therapist\index.html:442
+msgid "임신중"
+msgstr ""
+
+#: .\Doctor\templates\Doctor\index_PM.html:705
+#: .\Doctor\templates\Doctor\index_PS.html:705
+#: .\Receptionist\templates\Receptionist\index.html:571
+#: .\physical_therapist\templates\physical_therapist\index.html:446
+msgid "계획중"
+msgstr ""
+
+#: .\Doctor\templates\Doctor\index_PM.html:711
+#: .\Doctor\templates\Doctor\index_PS.html:711
+#: .\Receptionist\templates\Receptionist\index.html:577
+#: .\physical_therapist\templates\physical_therapist\index.html:452
+msgid "10. 내원 동기"
+msgstr ""
+
+#: .\Doctor\templates\Doctor\index_PM.html:714
+#: .\Doctor\templates\Doctor\index_PS.html:714
+#: .\Receptionist\templates\Receptionist\index.html:580
+#: .\physical_therapist\templates\physical_therapist\index.html:455
+msgid "전단지"
+msgstr ""
+
+#: .\Doctor\templates\Doctor\index_PM.html:715
+#: .\Doctor\templates\Doctor\index_PS.html:715
+#: .\Receptionist\templates\Receptionist\index.html:581
+#: .\physical_therapist\templates\physical_therapist\index.html:456
+msgid "카카오톡 오픈 채팅"
+msgstr ""
+
+#: .\Doctor\templates\Doctor\index_PM.html:716
+#: .\Doctor\templates\Doctor\index_PS.html:716
+#: .\Receptionist\templates\Receptionist\index.html:582
+#: .\physical_therapist\templates\physical_therapist\index.html:457
+msgid "페이스북"
+msgstr ""
+
+#: .\Doctor\templates\Doctor\index_PM.html:719
+#: .\Doctor\templates\Doctor\index_PS.html:719
+#: .\Receptionist\templates\Receptionist\index.html:585
+#: .\physical_therapist\templates\physical_therapist\index.html:460
+msgid "간판"
+msgstr ""
+
+#: .\Doctor\templates\Doctor\index_PM.html:720
+#: .\Doctor\templates\Doctor\index_PS.html:720
+#: .\Receptionist\templates\Receptionist\index.html:586
+#: .\physical_therapist\templates\physical_therapist\index.html:461
+msgid "지인소개"
+msgstr ""
+
+#: .\Doctor\templates\Doctor\report.html:8
+#: .\obj\Release\Package\PackageTmp\Doctor\templates\Doctor\report.html:8
+msgid "Search Report"
+msgstr "소견서 검색"
+
+#: .\Doctor\templates\Doctor\report.html:25
+#: .\Doctor\templates\Doctor\report.html:52
+#: .\Doctor\templates\Doctor\reportwindow.html:64
+#: .\Receptionist\templates\Receptionist\Documents.html:36
+#: .\Receptionist\templates\Receptionist\index.html:183
+#: .\Receptionist\templates\Receptionist\storage_page.html:32
+#: .\Receptionist\templates\Receptionist\storage_page.html:206
+#: .\Receptionist\templates\Receptionist\storage_page.html:217
+#: .\obj\Release\Package\PackageTmp\Doctor\templates\Doctor\report.html:44
+#: .\obj\Release\Package\PackageTmp\Doctor\templates\Doctor\reportwindow.html:64
+#: .\obj\Release\Package\PackageTmp\Receptionist\templates\Receptionist\storage_page.html:22
+#: .\obj\Release\Package\PackageTmp\Receptionist\templates\Receptionist\storage_page.html:183
+msgid "Chart No"
+msgstr "차트번호"
+
+#: .\Doctor\templates\Doctor\report.html:27
+#: .\Doctor\templates\Doctor\report.html:75
+#: .\Doctor\templates\Doctor\reportwindow.html:99
+#: .\obj\Release\Package\PackageTmp\Doctor\templates\Doctor\report.html:67
+#: .\obj\Release\Package\PackageTmp\Doctor\templates\Doctor\reportwindow.html:99
+msgid "ID Number"
+msgstr "주민번호"
+
+#: .\Doctor\templates\Doctor\report.html:45
+#: .\obj\Release\Package\PackageTmp\Doctor\templates\Doctor\report.html:37
+msgid "Report Context"
+msgstr "소견서 내용"
+
+#: .\Doctor\templates\Doctor\report.html:65
+#: .\Doctor\templates\Doctor\reportwindow.html:85
+#: .\obj\Release\Package\PackageTmp\Doctor\templates\Doctor\report.html:57
+#: .\obj\Release\Package\PackageTmp\Doctor\templates\Doctor\reportwindow.html:85
+msgid "Date Of Birth"
+msgstr "생년월일"
+
+#: .\Doctor\templates\Doctor\report.html:85
+#: .\Doctor\templates\Doctor\reportwindow.html:115
+#: .\obj\Release\Package\PackageTmp\Doctor\templates\Doctor\report.html:77
+#: .\obj\Release\Package\PackageTmp\Doctor\templates\Doctor\reportwindow.html:115
+msgid "Outbreak Date"
+msgstr "발생일"
+
+#: .\Doctor\templates\Doctor\report.html:90
+msgid "Recommendation <br/> and Follow-up:"
+msgstr "지시사항"
+
+#: .\Doctor\templates\Doctor\report.html:95
+#: .\Doctor\templates\Doctor\reportwindow.html:131
+#: .\obj\Release\Package\PackageTmp\Doctor\templates\Doctor\report.html:86
+#: .\obj\Release\Package\PackageTmp\Doctor\templates\Doctor\reportwindow.html:131
+msgid "Purpose"
+msgstr "용도"
+
+#: .\Doctor\templates\Doctor\report.html:100
+msgid "Publication Date"
+msgstr "발행 일자"
+
+#: .\Doctor\templates\Doctor\report.html:105
+msgid "Save + Print"
+msgstr "저장 + 인쇄"
+
+#: .\Doctor\templates\Doctor\report.html:106
+msgid "Print(English)"
+msgstr "인쇄(영어)"
+
+#: .\Doctor\templates\Doctor\report.html:107
+#: .\KBL\templates\KBL\dashboard.html:81
+#: .\KBL\templates\KBL\project_management.html:555
+#: .\KBL\templates\KBL\visa_management.html:195
+#: .\KBL\templates\KBL\work_permit.html:211
+#: .\Laboratory\templates\Laboratory\checklist.html:44
+#: .\Manage\templates\Manage\Draft.html:75
+#: .\Manage\templates\Manage\Draft.html:188
+#: .\Manage\templates\Manage\Draft_KBL.html:75
+#: .\Manage\templates\Manage\Draft_KBL.html:187
+#: .\Manage\templates\Manage\employee_manage.html:61
+#: .\Manage\templates\Manage\inventory_medical_tool.html:86
+#: .\Manage\templates\Manage\inventory_precedure.html:43
+#: .\Manage\templates\Manage\inventory_test.html:49
+#: .\Manage\templates\board\list.html:71 .\Manage\templates\board\list.html:156
+#: .\Manage\templates\board_work\list.html:71
+#: .\Manage\templates\board_work\list.html:182
+#: .\Pharmacy\templates\Pharmacy\inventory.html:88
+msgid "New"
+msgstr "신규"
+
+#: .\Doctor\templates\Doctor\report.html:109
+#: .\KBL\templates\KBL\invoice_management.html:60
+msgid "Print"
+msgstr "인쇄"
+
+#: .\Doctor\templates\Doctor\report.html:115
+#: .\obj\Release\Package\PackageTmp\Doctor\templates\Doctor\report.html:101
+msgid "Preview"
+msgstr "미리보기"
+
+#: .\Doctor\templates\Doctor\report.html:474
+#: .\Laboratory\templates\Laboratory\index.html:13
+#: .\Pharmacy\templates\Pharmacy\index.html:13
+#: .\Radiation\templates\Radiation\index.html:14
+#: .\Receptionist\templates\Receptionist\index.html:178
+#: .\Receptionist\templates\Receptionist\reservation.html:123
+#: .\obj\Release\Package\PackageTmp\Doctor\templates\Doctor\report.html:278
+#: .\obj\Release\Package\PackageTmp\Radiation\templates\Radiation\index.html:10
+#: .\obj\Release\Package\PackageTmp\Receptionist\templates\Receptionist\reservation.html:139
+msgid "Patient List"
+msgstr "환자 목록"
+
+#: .\Doctor\templates\Doctor\reportwindow.html:32
+#: .\Receptionist\templates\Receptionist\storage_page.html:523
+#: .\obj\Release\Package\PackageTmp\Doctor\templates\Doctor\reportwindow.html:32
+#: .\obj\Release\Package\PackageTmp\Receptionist\templates\Receptionist\storage_page.html:378
+msgid "Report List"
+msgstr "보고서 목록"
+
+#: .\Doctor\templates\Doctor\reportwindow.html:123
+#: .\obj\Release\Package\PackageTmp\Doctor\templates\Doctor\report.html:81
+#: .\obj\Release\Package\PackageTmp\Doctor\templates\Doctor\reportwindow.html:123
+msgid "Medical Opinion"
+msgstr "의사소견"
+
+#: .\Doctor\templates\Doctor\reportwindow.html:139
+#: .\obj\Release\Package\PackageTmp\Doctor\templates\Doctor\report.html:91
+#: .\obj\Release\Package\PackageTmp\Doctor\templates\Doctor\reportwindow.html:139
+msgid "발행일자"
+msgstr ""
+
+#: .\KBL\templates\KBL\audit_management.html:10
+#: .\KBL\templates\KBL\audit_management.html:96
+#: .\app\templates\app\layout_KBL.html:113
+msgid "Audit Management"
+msgstr "회계 관리"
+
+#: .\KBL\templates\KBL\audit_management.html:16
+#: .\KBL\templates\KBL\audit_management.html:25
+#: .\KBL\templates\KBL\audit_management.html:31
+#: .\KBL\templates\KBL\customer_management.html:16
+#: .\KBL\templates\KBL\document_management.html:17
+#: .\KBL\templates\KBL\document_management.html:23
+#: .\KBL\templates\KBL\estimate_sheet.html:16
+#: .\KBL\templates\KBL\estimate_sheet.html:25 .\KBL\templates\KBL\index.html:15
+#: .\KBL\templates\KBL\invoice_management.html:16
+#: .\KBL\templates\KBL\invoice_management.html:25
+#: .\KBL\templates\KBL\invoice_management.html:35
+#: .\KBL\templates\KBL\project_management.html:16
+#: .\KBL\templates\KBL\project_management.html:25
+#: .\KBL\templates\KBL\project_management.html:34
+#: .\KBL\templates\KBL\visa_management.html:16
+#: .\KBL\templates\KBL\visa_management.html:22
+#: .\KBL\templates\KBL\work_permit.html:16
+#: .\Laboratory\templates\Laboratory\index.html:22
+#: .\Laboratory\templates\Laboratory\index.html:29
+#: .\Manage\templates\Manage\CRM.html:24
+#: .\Manage\templates\Manage\Manage.html:188
+#: .\Manage\templates\Manage\Manage.html:196
+#: .\Manage\templates\Manage\Manage.html:204
+#: .\Manage\templates\Manage\Manage.html:212
+#: .\Manage\templates\Manage\code_setting.html:15
+#: .\Manage\templates\Manage\employee_manage.html:14
+#: .\Manage\templates\Manage\employee_manage.html:23
+#: .\Manage\templates\Manage\inventory_medical_tool.html:19
+#: .\Manage\templates\Manage\inventory_precedure.html:14
+#: .\Manage\templates\Manage\inventory_test.html:19
+#: .\Manage\templates\Manage\sms_history.html:22
+#: .\Manage\templates\Manage\sms_history.html:31
+#: .\Pharmacy\templates\Pharmacy\inventory.html:19
+#: .\Radiation\templates\Radiation\index.html:26
+#: .\Receptionist\templates\Receptionist\index.html:723
+#: .\Receptionist\templates\Receptionist\index.html:735
+#: .\Receptionist\templates\Receptionist\storage_page.html:204
+msgid "ALL"
+msgstr "전체"
+
+#: .\KBL\templates\KBL\audit_management.html:23
+#: .\KBL\templates\KBL\audit_management.html:62
+#: .\KBL\templates\KBL\audit_management.html:153
+#: .\KBL\templates\KBL\customer_management.html:175
+#: .\KBL\templates\KBL\customer_management.html:406
+#: .\KBL\templates\KBL\estimate_sheet.html:23
+#: .\KBL\templates\KBL\estimate_sheet.html:43
+#: .\KBL\templates\KBL\invoice_management.html:23
+#: .\KBL\templates\KBL\invoice_management.html:56
+#: .\KBL\templates\KBL\project_management.html:32
+#: .\KBL\templates\KBL\project_management.html:59
+#: .\KBL\templates\KBL\project_management.html:248
+#: .\Manage\templates\Manage\Draft.html:60
+#: .\Manage\templates\Manage\Draft_KBL.html:60
+msgid "In Charge"
+msgstr "담당자"
+
+#: .\KBL\templates\KBL\audit_management.html:29
+#: .\KBL\templates\KBL\audit_management.html:67
+#: .\KBL\templates\KBL\audit_management.html:162
+#: .\KBL\templates\KBL\customer_management.html:144
+#: .\KBL\templates\KBL\customer_management.html:174
+#: .\KBL\templates\KBL\customer_management.html:417
+#: .\KBL\templates\KBL\document_management.html:21
+#: .\KBL\templates\KBL\estimate_sheet.html:14
+#: .\KBL\templates\KBL\estimate_sheet.html:47
+#: .\KBL\templates\KBL\estimate_sheet.html:144
+#: .\KBL\templates\KBL\invoice_management.html:33
+#: .\KBL\templates\KBL\invoice_management.html:59
+#: .\KBL\templates\KBL\project_management.html:121
+#: .\KBL\templates\KBL\project_management.html:151
+#: .\KBL\templates\KBL\project_management.html:418
+#: .\KBL\templates\KBL\project_management.html:500
+#: .\KBL\templates\KBL\visa_management.html:20
+#: .\KBL\templates\KBL\visa_management.html:40
+#: .\KBL\templates\KBL\visa_management.html:148
+#: .\KBL\templates\KBL\work_permit.html:14
+#: .\KBL\templates\KBL\work_permit.html:45
+#: .\KBL\templates\KBL\work_permit.html:124
+#: .\Manage\templates\Manage\Draft.html:32
+#: .\Manage\templates\Manage\Draft.html:54
+#: .\Manage\templates\Manage\Draft.html:141
+#: .\Manage\templates\Manage\Draft_KBL.html:32
+#: .\Manage\templates\Manage\Draft_KBL.html:54
+#: .\Manage\templates\Manage\Draft_KBL.html:140
+#: .\Manage\templates\Manage\code_setting.html:48
+#: .\Manage\templates\Manage\code_setting.html:164
+#: .\Manage\templates\Manage\employee_manage.html:50
+#: .\Manage\templates\Manage\employee_manage.html:182
+#: .\Manage\templates\Manage\sms_history.html:53
+#: .\Manage\templates\board_work\create_edit.html:31
+#: .\Manage\templates\board_work\list.html:119
+#: .\Manage\templates\board_work\list.html:203
+msgid "Status"
+msgstr "상태"
+
+#: .\KBL\templates\KBL\audit_management.html:50
+#: .\KBL\templates\KBL\invoice_management.html:53
+msgid "Customer"
+msgstr "고객"
+
+#: .\KBL\templates\KBL\audit_management.html:51
+#: .\KBL\templates\KBL\invoice_management.html:55
+msgid "Service Title"
+msgstr "서비스 제목"
+
+#: .\KBL\templates\KBL\audit_management.html:52
+#: .\KBL\templates\KBL\invoice_management.html:54
+msgid "Type / Service"
+msgstr "구분 / 서비스"
+
+#: .\KBL\templates\KBL\audit_management.html:53
+#: .\KBL\templates\KBL\audit_management.html:123
+#: .\KBL\templates\KBL\statistics.html:39
+msgid "Service Fee"
+msgstr "서비스 비용"
+
+#: .\KBL\templates\KBL\audit_management.html:54
+#: .\KBL\templates\KBL\audit_management.html:128
+#: .\KBL\templates\KBL\estimate_sheet.html:81
+#: .\KBL\templates\KBL\estimate_sheet.html:193
+#: .\KBL\templates\KBL\statistics.html:38
+#: .\Manage\templates\Manage\inventory_medical_tool.html:75
+#: .\Manage\templates\Manage\inventory_medical_tool.html:105
+#: .\Pharmacy\templates\Pharmacy\inventory.html:77
+#: .\Pharmacy\templates\Pharmacy\inventory.html:107
+#: .\Receptionist\templates\Receptionist\storage_page.html:89
+#: .\obj\Release\Package\PackageTmp\Receptionist\templates\Receptionist\storage_page.html:79
+msgid "Quantity"
+msgstr "수량"
+
+#: .\KBL\templates\KBL\audit_management.html:55
+#: .\KBL\templates\KBL\audit_management.html:133
+msgid "Service Fee(VAT)"
+msgstr "서비스 비용(부가세)"
+
+#: .\KBL\templates\KBL\audit_management.html:56
+msgid "Service Fee(Total)"
+msgstr "서비스 비용(총계)"
+
+#: .\KBL\templates\KBL\audit_management.html:57
+#: .\KBL\templates\KBL\audit_management.html:138
+msgid "Paid(Total)"
+msgstr "총계"
+
+#: .\KBL\templates\KBL\audit_management.html:58
+#: .\KBL\templates\KBL\audit_management.html:143
+msgid "Paid Date"
+msgstr "지불 날짜"
+
+#: .\KBL\templates\KBL\audit_management.html:59
+#: .\KBL\templates\KBL\audit_management.html:60
+#: .\KBL\templates\KBL\audit_management.html:61
+msgid "Receivables"
+msgstr "미수"
+
+#: .\KBL\templates\KBL\audit_management.html:63
+msgid "Confirm / Date (In Charge)"
+msgstr "확인 / 확인 일(담당자)"
+
+#: .\KBL\templates\KBL\audit_management.html:64
+msgid "Approval / Date (TL)"
+msgstr "확인 / 확인 일(팀장)"
+
+#: .\KBL\templates\KBL\audit_management.html:65
+msgid "Approval / Date (Account)"
+msgstr "확인 / 확인 일(회계)"
+
+#: .\KBL\templates\KBL\audit_management.html:66
+msgid "Approval / Date (CEO)"
+msgstr "확인 / 확인 일(대표)"
+
+#: .\KBL\templates\KBL\audit_management.html:68
+msgid "Invoice"
+msgstr "인보이스"
+
+#: .\KBL\templates\KBL\audit_management.html:81
+#: .\KBL\templates\KBL\customer_management.html:49
+#: .\KBL\templates\KBL\customer_management.html:158
+#: .\KBL\templates\KBL\customer_management.html:185
+#: .\KBL\templates\KBL\document_management.html:52
+#: .\KBL\templates\KBL\estimate_sheet.html:58
+#: .\KBL\templates\KBL\estimate_sheet.html:93
+#: .\KBL\templates\KBL\project_management.html:74
+#: .\KBL\templates\KBL\project_management.html:110
+#: .\KBL\templates\KBL\project_management.html:141
+#: .\KBL\templates\KBL\project_management.html:171
+#: .\KBL\templates\KBL\visa_management.html:60
+#: .\KBL\templates\KBL\work_permit.html:66
+#: .\Manage\templates\Manage\code_setting.html:58
+#: .\app\templates\app\login.html:51 .\app\templates\app\login_KBL.html:51
+#: .\obj\Release\Package\PackageTmp\app\templates\app\login.html:54
+msgid "Register"
+msgstr "등록"
+
+#: .\KBL\templates\KBL\audit_management.html:82
+msgid "Create Invoice Sheet"
+msgstr "인보이스 전표 생성"
+
+#: .\KBL\templates\KBL\audit_management.html:102
+#: .\KBL\templates\KBL\customer_management.html:359
+#: .\KBL\templates\KBL\project_management.html:122
+#: .\KBL\templates\KBL\project_management.html:342
+#: .\KBL\templates\KBL\project_management.html:450
+#: .\KBL\templates\KBL\visa_management.html:42
+#: .\KBL\templates\KBL\visa_management.html:88
+#: .\KBL\templates\KBL\work_permit.html:46
+#: .\KBL\templates\KBL\work_permit.html:84
+#: .\Receptionist\templates\Receptionist\index.html:654
+#: .\Receptionist\templates\Receptionist\storage_page.html:163
+#: .\obj\Release\Package\PackageTmp\Receptionist\templates\Receptionist\index.html:128
+#: .\obj\Release\Package\PackageTmp\Receptionist\templates\Receptionist\storage_page.html:143
+msgid "Company Name"
+msgstr "회사명"
+
+#: .\KBL\templates\KBL\audit_management.html:108
+#: .\KBL\templates\KBL\statistics.html:37
+msgid "Service Type"
+msgstr "서비스 구분"
+
+#: .\KBL\templates\KBL\audit_management.html:118
+#: .\KBL\templates\KBL\estimate_sheet.html:42
+#: .\KBL\templates\KBL\estimate_sheet.html:123
+#: .\KBL\templates\KBL\invoice_management.html:102
+#: .\Manage\templates\Manage\Draft.html:44
+#: .\Manage\templates\Manage\Draft.html:56
+#: .\Manage\templates\Manage\Draft.html:121
+#: .\Manage\templates\Manage\Draft_KBL.html:44
+#: .\Manage\templates\Manage\Draft_KBL.html:56
+#: .\Manage\templates\Manage\Draft_KBL.html:120
+#: .\Manage\templates\board\list.html:167
+#: .\Manage\templates\board_work\list.html:194
+#: .\app\templates\app\notice.html:14
+msgid "Title"
+msgstr "제목"
+
+#: .\KBL\templates\KBL\audit_management.html:124
+#: .\KBL\templates\KBL\audit_management.html:134
+#: .\KBL\templates\KBL\audit_management.html:139
+#: .\KBL\templates\KBL\estimate_sheet.html:190
+#: .\KBL\templates\KBL\estimate_sheet.html:194
+#: .\KBL\templates\KBL\estimate_sheet.html:198
+msgid "Numbers Only"
+msgstr "숫자만 입력하세요"
+
+#: .\KBL\templates\KBL\audit_management.html:148
+#: .\KBL\templates\KBL\customer_management.html:176
+#: .\KBL\templates\KBL\estimate_sheet.html:83
+#: .\KBL\templates\KBL\estimate_sheet.html:201
+#: .\KBL\templates\KBL\project_management.html:61
+#: .\KBL\templates\KBL\project_management.html:99
+#: .\KBL\templates\KBL\project_management.html:160
+#: .\KBL\templates\KBL\project_management.html:270
+#: .\KBL\templates\KBL\project_management.html:316
+#: .\KBL\templates\KBL\project_management.html:495
+#: .\KBL\templates\KBL\work_permit.html:55
+#: .\KBL\templates\KBL\work_permit.html:119
+#: .\KBL\templates\KBL\work_permit.html:169
+msgid "Note"
+msgstr "비고"
+
+#: .\KBL\templates\KBL\customer_management.html:10
+#: .\KBL\templates\KBL\index.html:10 .\Manage\templates\Manage\CRM.html:10
+#: .\app\templates\app\layout_KBL.html:97
+msgid "Customer Management"
+msgstr "고객 관리"
+
+#: .\KBL\templates\KBL\customer_management.html:33
+msgid "Customer No"
+msgstr "고객 번호"
+
+#: .\KBL\templates\KBL\customer_management.html:34
+#: .\KBL\templates\KBL\visa_management.html:83
+msgid "Customer Name(ENG)"
+msgstr "고객 이름(영문)"
+
+#: .\KBL\templates\KBL\customer_management.html:35
+msgid "Corporation No"
+msgstr "법인번호"
+
+#: .\KBL\templates\KBL\customer_management.html:36
+msgid "Phone No"
+msgstr "전화번호"
+
+#: .\KBL\templates\KBL\customer_management.html:37
+#: .\KBL\templates\KBL\estimate_sheet.html:44 .\KBL\templates\KBL\index.html:32
+#: .\Manage\templates\Manage\CRM.html:41
+msgid "Date Registered"
+msgstr "등록 일"
+
+#: .\KBL\templates\KBL\customer_management.html:38
+#: .\KBL\templates\KBL\customer_management.html:126
+#: .\KBL\templates\KBL\customer_management.html:145
+#: .\KBL\templates\KBL\customer_management.html:260
+#: .\KBL\templates\KBL\customer_management.html:334
+#: .\KBL\templates\KBL\document_management.html:81
+#: .\KBL\templates\KBL\estimate_sheet.html:131
+#: .\KBL\templates\KBL\index.html:33
+#: .\KBL\templates\KBL\project_management.html:545
+#: .\KBL\templates\KBL\project_management.html:583
+#: .\KBL\templates\KBL\visa_management.html:186
+#: .\KBL\templates\KBL\work_permit.html:202
+#: .\Manage\templates\Manage\CRM.html:42
+#: .\Manage\templates\Manage\Draft.html:178
+#: .\Manage\templates\Manage\Draft.html:216
+#: .\Manage\templates\Manage\Draft_KBL.html:177
+#: .\Manage\templates\Manage\Draft_KBL.html:215
+#: .\Manage\templates\Manage\Manage.html:125
+#: .\Manage\templates\Manage\employee_manage.html:195
+#: .\Manage\templates\Manage\inventory_medical_tool.html:77
+#: .\Manage\templates\Manage\inventory_test.html:145
+#: .\Manage\templates\Manage\inventory_test.html:184
+#: .\Manage\templates\Manage\sms_history.html:54
+#: .\Pharmacy\templates\Pharmacy\inventory.html:79
+#: .\Radiation\templates\Radiation\index.html:117
+#: .\obj\Release\Package\PackageTmp\Radiation\templates\Radiation\index.html:76
+msgid "Remark"
+msgstr "비고"
+
+#: .\KBL\templates\KBL\customer_management.html:57
+msgid "Basic Information"
+msgstr "기본 정보"
+
+#: .\KBL\templates\KBL\customer_management.html:58
+msgid "Employee Information"
+msgstr "직원 정보"
+
+#: .\KBL\templates\KBL\customer_management.html:59
+msgid "Projects"
+msgstr "프로젝트"
+
+#: .\KBL\templates\KBL\customer_management.html:66
+msgid "Customer Number"
+msgstr "고객 번호"
+
+#: .\KBL\templates\KBL\customer_management.html:70
+#: .\KBL\templates\KBL\customer_management.html:140
+#: .\KBL\templates\KBL\customer_management.html:204
+#: .\KBL\templates\KBL\customer_management.html:298
+msgid "Name (KOR)"
+msgstr "이름 (한글)"
+
+#: .\KBL\templates\KBL\customer_management.html:74
+#: .\KBL\templates\KBL\customer_management.html:141
+#: .\KBL\templates\KBL\customer_management.html:208
+#: .\KBL\templates\KBL\customer_management.html:302
+msgid "Name (ENG)"
+msgstr "이름 (영문)"
+
+#: .\KBL\templates\KBL\customer_management.html:78
+#: .\KBL\templates\KBL\customer_management.html:212
+msgid "CEO Name"
+msgstr "대표자 명"
+
+#: .\KBL\templates\KBL\customer_management.html:82
+#: .\KBL\templates\KBL\customer_management.html:216
+msgid "Business Type"
+msgstr "업종"
+
+#: .\KBL\templates\KBL\customer_management.html:86
+#: .\KBL\templates\KBL\customer_management.html:220
+msgid "Corporation Number"
+msgstr "법인등록번호"
+
+#: .\KBL\templates\KBL\customer_management.html:90
+#: .\KBL\templates\KBL\customer_management.html:224
+msgid "Number of employees"
+msgstr "종업원 수"
+
+#: .\KBL\templates\KBL\customer_management.html:94
+#: .\KBL\templates\KBL\customer_management.html:228
+#: .\Manage\templates\Manage\employee_manage.html:127
+msgid "Phone Number 1"
+msgstr "전화번호1"
+
+#: .\KBL\templates\KBL\customer_management.html:98
+#: .\KBL\templates\KBL\customer_management.html:232
+#: .\Manage\templates\Manage\employee_manage.html:131
+msgid "Phone Number 2"
+msgstr "전화번호2"
+
+#: .\KBL\templates\KBL\customer_management.html:102
+#: .\KBL\templates\KBL\customer_management.html:236
+msgid "F A X"
+msgstr "F A X"
+
+#: .\KBL\templates\KBL\customer_management.html:106
+#: .\KBL\templates\KBL\customer_management.html:240
+msgid "Address 1"
+msgstr "주소 1"
+
+#: .\KBL\templates\KBL\customer_management.html:110
+#: .\KBL\templates\KBL\customer_management.html:244
+msgid "Address 2"
+msgstr "주소 2"
+
+#: .\KBL\templates\KBL\customer_management.html:114
+#: .\KBL\templates\KBL\customer_management.html:248
+msgid "Date of Establishment"
+msgstr "설립 일"
+
+#: .\KBL\templates\KBL\customer_management.html:118
+#: .\KBL\templates\KBL\customer_management.html:252
+#: .\KBL\templates\KBL\customer_management.html:326
+#: .\KBL\templates\KBL\customer_management.html:410
+msgid "Condition"
+msgstr "상태"
+
+#: .\KBL\templates\KBL\customer_management.html:139
+#: .\KBL\templates\KBL\customer_management.html:294
+#: .\KBL\templates\KBL\project_management.html:153
+#: .\KBL\templates\KBL\work_permit.html:48
+msgid "Position"
+msgstr "직위"
+
+#: .\KBL\templates\KBL\customer_management.html:155
+#: .\KBL\templates\KBL\customer_management.html:445
+#: .\KBL\templates\KBL\index.html:128 .\Manage\templates\Manage\CRM.html:137
+#: .\Manage\templates\Manage\sms_history.html:77
+msgid "Send SMS"
+msgstr "SMS 보내기"
+
+#: .\KBL\templates\KBL\customer_management.html:156
+msgid "WP Issued list"
+msgstr "노동허가서 발급 목록"
+
+#: .\KBL\templates\KBL\customer_management.html:157
+msgid "Visa Issued list"
+msgstr "비자 발급 목록"
+
+#: .\KBL\templates\KBL\customer_management.html:170
+#: .\KBL\templates\KBL\customer_management.html:374
+#: .\KBL\templates\KBL\project_management.html:52
+#: .\KBL\templates\KBL\project_management.html:208
+msgid "Project Name"
+msgstr "프로젝트 명"
+
+#: .\KBL\templates\KBL\customer_management.html:171
+#: .\KBL\templates\KBL\customer_management.html:378
+#: .\KBL\templates\KBL\project_management.html:53
+#: .\KBL\templates\KBL\project_management.html:213
+msgid "Level"
+msgstr "중요도"
+
+#: .\KBL\templates\KBL\customer_management.html:172
+#: .\KBL\templates\KBL\customer_management.html:386
+#: .\KBL\templates\KBL\project_management.html:55
+#: .\KBL\templates\KBL\project_management.html:223
+msgid "Start Date"
+msgstr "시작 일"
+
+#: .\KBL\templates\KBL\customer_management.html:173
+msgid "Finsh Date"
+msgstr "종료 일"
+
+#: .\KBL\templates\KBL\customer_management.html:177
+msgid "Management"
+msgstr "관리"
+
+#: .\KBL\templates\KBL\customer_management.html:201
+msgid "Customer Register"
+msgstr "고객 등록"
+
+#: .\KBL\templates\KBL\customer_management.html:282
+#: .\KBL\templates\KBL\estimate_sheet.html:171
+msgid "Employee Register / Edit"
+msgstr "직원 등록 / 수정"
+
+#: .\KBL\templates\KBL\customer_management.html:310
+msgid "Passport Number"
+msgstr "여권번호"
+
+#: .\KBL\templates\KBL\customer_management.html:314
+#: .\KBL\templates\KBL\customer_management.html:454
+#: .\KBL\templates\KBL\index.html:31 .\KBL\templates\KBL\index.html:83
+#: .\KBL\templates\KBL\index.html:137
+#: .\Laboratory\templates\Laboratory\index.html:105
+#: .\Manage\templates\Manage\CRM.html:40 .\Manage\templates\Manage\CRM.html:92
+#: .\Manage\templates\Manage\CRM.html:146
+#: .\Manage\templates\Manage\sms_history.html:50
+#: .\Manage\templates\Manage\sms_history.html:86
+#: .\Pharmacy\templates\Pharmacy\index.html:123
+#: .\Receptionist\templates\Receptionist\index.html:185
+#: .\Receptionist\templates\Receptionist\index.html:202
+#: .\Receptionist\templates\Receptionist\storage_page.html:67
+#: .\obj\Release\Package\PackageTmp\Receptionist\templates\Receptionist\index.html:162
+#: .\obj\Release\Package\PackageTmp\Receptionist\templates\Receptionist\storage_page.html:56
+msgid "Phone Number"
+msgstr "전화번호"
+
+#: .\KBL\templates\KBL\customer_management.html:322
+#: .\KBL\templates\KBL\index.html:87 .\Manage\templates\Manage\CRM.html:96
+#: .\Manage\templates\Manage\employee_manage.html:46
+#: .\Manage\templates\Manage\employee_manage.html:139
+#: .\Receptionist\templates\Receptionist\index.html:79
+msgid "Email"
+msgstr "이메일"
+
+#: .\KBL\templates\KBL\customer_management.html:356
+msgid "Project Register / Edit"
+msgstr "프로젝트 등록 / 수정"
+
+#: .\KBL\templates\KBL\customer_management.html:366
+msgid "Sort"
+msgstr "구분"
+
+#: .\KBL\templates\KBL\customer_management.html:382
+#: .\KBL\templates\KBL\project_management.html:54
+#: .\KBL\templates\KBL\project_management.html:218
+msgid "Priority"
+msgstr "우선 순위"
+
+#: .\KBL\templates\KBL\customer_management.html:390
+msgid "Exp. end Date"
+msgstr "결과예정일"
+
+#: .\KBL\templates\KBL\customer_management.html:394
+#: .\KBL\templates\KBL\project_management.html:228
+msgid "End Date"
+msgstr "종료 일"
+
+#: .\KBL\templates\KBL\customer_management.html:398
+msgid "Documents Receive Date"
+msgstr "서류 수령 일"
+
+#: .\KBL\templates\KBL\customer_management.html:402
+msgid "Result Date"
+msgstr "결과 예정 일"
+
+#: .\KBL\templates\KBL\customer_management.html:459
+#: .\KBL\templates\KBL\estimate_sheet.html:79
+#: .\KBL\templates\KBL\estimate_sheet.html:185
+#: .\KBL\templates\KBL\index.html:142 .\Manage\templates\Manage\CRM.html:151
+#: .\Manage\templates\Manage\sms_history.html:55
+#: .\Manage\templates\Manage\sms_history.html:91
+#: .\Manage\templates\board\list.html:34
+#: .\Manage\templates\board_work\list.html:34
+msgid "Content"
+msgstr "내용"
+
+#: .\KBL\templates\KBL\customer_management.html:465
+#: .\KBL\templates\KBL\index.html:148 .\Manage\templates\Manage\CRM.html:157
+msgid "Send"
+msgstr "전송"
+
+#: .\KBL\templates\KBL\dashboard.html:10
+msgid "Dash Board"
+msgstr "대쉬보드"
+
+#: .\KBL\templates\KBL\dashboard.html:15 .\app\templates\app\layout.html:165
+#: .\app\templates\app\layout_KBL.html:128
+msgid "Notice Board"
+msgstr "공지 게시판"
+
+#: .\KBL\templates\KBL\dashboard.html:37
+#: .\Manage\templates\board_work\list.html:151
+#: .\app\templates\app\layout.html:166 .\app\templates\app\layout_KBL.html:129
+msgid "Co-Work Board"
+msgstr "협업 게시판"
+
+#: .\KBL\templates\KBL\dashboard.html:60
+msgid "Work Progress"
+msgstr "업무 진행 상황"
+
+#: .\KBL\templates\KBL\dashboard.html:67
+msgid "New Customer"
+msgstr "신규 고객"
+
+#: .\KBL\templates\KBL\dashboard.html:82
+msgid "In Progress"
+msgstr "진행중"
+
+#: .\KBL\templates\KBL\dashboard.html:83
+#: .\Pharmacy\templates\Pharmacy\index.html:65
+#: .\Pharmacy\templates\Pharmacy\index.html:147
+msgid "Pending"
+msgstr "보류"
+
+#: .\KBL\templates\KBL\document_management.html:11
+#: .\app\templates\app\layout_KBL.html:110
+msgid "Document Management"
+msgstr "문서 관리"
+
+#: .\KBL\templates\KBL\document_management.html:37
+#: .\KBL\templates\KBL\document_management.html:76
+#: .\KBL\templates\KBL\project_management.html:542
+#: .\KBL\templates\KBL\project_management.html:578
+#: .\KBL\templates\KBL\visa_management.html:183
+#: .\KBL\templates\KBL\work_permit.html:199
+#: .\Manage\templates\Manage\Draft.html:175
+#: .\Manage\templates\Manage\Draft.html:211
+#: .\Manage\templates\Manage\Draft_KBL.html:174
+#: .\Manage\templates\Manage\Draft_KBL.html:210
+msgid "Document Name"
+msgstr "문서 이름"
+
+#: .\KBL\templates\KBL\document_management.html:39
+msgid "Written By"
+msgstr "작성자"
+
+#: .\KBL\templates\KBL\document_management.html:41
+#: .\KBL\templates\KBL\document_management.html:88
+#: .\KBL\templates\KBL\project_management.html:100
+#: .\KBL\templates\KBL\project_management.html:131
+#: .\KBL\templates\KBL\project_management.html:161
+#: .\KBL\templates\KBL\project_management.html:590
+#: .\KBL\templates\KBL\visa_management.html:50
+#: .\KBL\templates\KBL\work_permit.html:56
+#: .\Manage\templates\Manage\Draft.html:64
+#: .\Manage\templates\Manage\Draft.html:223
+#: .\Manage\templates\Manage\Draft_KBL.html:64
+#: .\Manage\templates\Manage\Draft_KBL.html:222
+#: .\Manage\templates\board\list.html:170
+#: .\Manage\templates\board_work\list.html:201
+msgid "File"
+msgstr "파일"
+
+#: .\KBL\templates\KBL\document_management.html:69
+#: .\KBL\templates\KBL\project_management.html:571
+#: .\Manage\templates\Manage\Draft.html:204
+#: .\Manage\templates\Manage\Draft_KBL.html:203
+msgid "New File"
+msgstr "신규 파일"
+
+#: .\KBL\templates\KBL\document_management.html:91
+#: .\KBL\templates\KBL\project_management.html:593
+#: .\Manage\templates\Manage\Draft.html:226
+#: .\Manage\templates\Manage\Draft_KBL.html:225
+msgid "Find File"
+msgstr "파일 찾기"
+
+#: .\KBL\templates\KBL\estimate_sheet.html:10
+#: .\KBL\templates\KBL\estimate_sheet.html:110
+#: .\app\templates\app\layout_KBL.html:98
+msgid "Estimate Sheet"
+msgstr "견적서"
+
+#: .\KBL\templates\KBL\estimate_sheet.html:40
+#: .\Laboratory\templates\Laboratory\checklist.html:25
+#: .\Laboratory\templates\Laboratory\checklist.html:55
+#: .\Manage\templates\Manage\inventory_precedure.html:30
+msgid "Classification"
+msgstr "구분"
+
+#: .\KBL\templates\KBL\estimate_sheet.html:41
+msgid "Received (Customer)"
+msgstr "수신 ( 고객 )"
+
+#: .\KBL\templates\KBL\estimate_sheet.html:45
+msgid "Date Dispatched"
+msgstr "발송 일"
+
+#: .\KBL\templates\KBL\estimate_sheet.html:46
+msgid "Paid by"
+msgstr "지불방법"
+
+#: .\KBL\templates\KBL\estimate_sheet.html:66
+msgid "Detailed Info"
+msgstr "환자 정보"
+
+#: .\KBL\templates\KBL\estimate_sheet.html:80
+#: .\KBL\templates\KBL\estimate_sheet.html:189
+msgid "Unit Price"
+msgstr "단가"
+
+#: .\KBL\templates\KBL\estimate_sheet.html:82
+#: .\KBL\templates\KBL\estimate_sheet.html:197
+msgid "Cost"
+msgstr "금액"
+
+#: .\KBL\templates\KBL\estimate_sheet.html:115
+#: .\KBL\templates\KBL\invoice_management.html:97
+msgid "Recipient"
+msgstr "수신자"
+
+#: .\KBL\templates\KBL\estimate_sheet.html:119
+msgid "E - Mail"
+msgstr "이메일"
+
+#: .\KBL\templates\KBL\estimate_sheet.html:127
+msgid "Estimated Date"
+msgstr "견적 일"
+
+#: .\KBL\templates\KBL\estimate_sheet.html:135
+msgid "Payment Unit"
+msgstr "금액 구분"
+
+#: .\KBL\templates\KBL\index.html:28 .\Manage\templates\Manage\CRM.html:37
+#: .\Pharmacy\templates\Pharmacy\index.html:23
+#: .\Radiation\templates\Radiation\index.html:36
+#: .\Radiation\templates\Radiation\index.html:48
+#: .\obj\Release\Package\PackageTmp\Radiation\templates\Radiation\index.html:25
+msgid "Chart"
+msgstr "차트"
+
+#: .\KBL\templates\KBL\index.html:34 .\Manage\templates\Manage\CRM.html:43
+msgid "Visits"
+msgstr "방문 수"
+
+#: .\KBL\templates\KBL\index.html:35 .\Manage\templates\Manage\CRM.html:44
+msgid "Total Paid"
+msgstr "총 금액"
+
+#: .\KBL\templates\KBL\index.html:46 .\Manage\templates\Manage\CRM.html:55
+msgid "Download All"
+msgstr "모두 내려받기"
+
+#: .\KBL\templates\KBL\index.html:54 .\Manage\templates\Manage\CRM.html:63
+msgid "Basic Info"
+msgstr "기본 정보"
+
+#: .\KBL\templates\KBL\index.html:55 .\Manage\templates\Manage\CRM.html:64
+msgid "Visit History"
+msgstr "방문 이력"
+
+#: .\KBL\templates\KBL\index.html:63 .\Manage\templates\Manage\CRM.html:72
+#: .\Manage\templates\Manage\employee_manage.html:107
+msgid "Korean Name"
+msgstr "한글 이름"
+
+#: .\KBL\templates\KBL\index.html:67 .\Manage\templates\Manage\CRM.html:76
+#: .\Manage\templates\Manage\employee_manage.html:111
+msgid "English Name"
+msgstr "영문 이름"
+
+#: .\KBL\templates\KBL\index.html:91 .\Manage\templates\Manage\CRM.html:100
+#: .\Manage\templates\Manage\inventory_medical_tool.html:316
+#: .\Manage\templates\Manage\inventory_medical_tool.html:368
+#: .\Pharmacy\templates\Pharmacy\inventory.html:313
+#: .\Pharmacy\templates\Pharmacy\inventory.html:365
+#: .\Receptionist\templates\Receptionist\index.html:108
+#: .\Receptionist\templates\Receptionist\reservation.html:96
+#: .\Receptionist\templates\Receptionist\storage_page.html:145
+#: .\obj\Release\Package\PackageTmp\Receptionist\templates\Receptionist\reservation.html:114
+msgid "Memo"
+msgstr "메모"
+
+#: .\KBL\templates\KBL\index.html:102 .\Manage\templates\Manage\CRM.html:111
+msgid "Date Visited"
+msgstr "방문 일"
+
+#: .\KBL\templates\KBL\index.html:103 .\Manage\templates\Manage\CRM.html:112
+#: .\Receptionist\templates\Receptionist\storage_page.html:104
+#: .\Receptionist\templates\Receptionist\storage_page.html:221
+#: .\Receptionist\templates\Receptionist\storage_page.html:493
+#: .\obj\Release\Package\PackageTmp\Doctor\templates\Doctor\audit.html:43
+#: .\obj\Release\Package\PackageTmp\Doctor\templates\Doctor\audit.html:56
+#: .\obj\Release\Package\PackageTmp\Manage\templates\Manage\manage.html:104
+#: .\obj\Release\Package\PackageTmp\Manage\templates\Manage\manage.html:120
+#: .\obj\Release\Package\PackageTmp\Receptionist\templates\Receptionist\storage_page.html:94
+#: .\obj\Release\Package\PackageTmp\Receptionist\templates\Receptionist\storage_page.html:187
+msgid "Paid"
+msgstr "수납"
+
+#: .\KBL\templates\KBL\invoice_management.html:10
+msgid "Invoice Management"
+msgstr "인보이스 관리"
+
+#: .\KBL\templates\KBL\invoice_management.html:52
+#: .\KBL\templates\KBL\invoice_management.html:92
+msgid "Slip Number"
+msgstr "전표 번호"
+
+#: .\KBL\templates\KBL\invoice_management.html:57
+msgid "Formation Date"
+msgstr "생성 일"
+
+#: .\KBL\templates\KBL\invoice_management.html:58
+msgid "Dispatch Date"
+msgstr "발송 일"
+
+#: .\KBL\templates\KBL\invoice_management.html:86
+msgid "Invoice Register / Edit"
+msgstr "인보이스 등록 / 수정"
+
+#: .\KBL\templates\KBL\project_management.html:10
+#: .\app\templates\app\layout_KBL.html:103
+msgid "Project Management"
+msgstr "프로젝트 관리"
+
+#: .\KBL\templates\KBL\project_management.html:23
+#: .\KBL\templates\KBL\project_management.html:58
+#: .\KBL\templates\KBL\project_management.html:238
+msgid "Progress"
+msgstr "진행 상태"
+
+#: .\KBL\templates\KBL\project_management.html:50
+#: .\KBL\templates\KBL\project_management.html:123
+#: .\KBL\templates\KBL\project_management.html:348
+#: .\KBL\templates\KBL\project_management.html:456
+msgid "Customer Name"
+msgstr "고객 명"
+
+#: .\KBL\templates\KBL\project_management.html:56
+msgid "Ended Date"
+msgstr "종료일"
+
+#: .\KBL\templates\KBL\project_management.html:57
+#: .\KBL\templates\KBL\project_management.html:159
+#: .\KBL\templates\KBL\project_management.html:233
+#: .\KBL\templates\KBL\project_management.html:485
+#: .\KBL\templates\KBL\work_permit.html:54
+#: .\Laboratory\templates\Laboratory\index.html:126
+#: .\Laboratory\templates\Laboratory\index.html:191
+#: .\Manage\templates\board_work\list.html:107
+#: .\Manage\templates\board_work\list.html:199
+msgid "Expected Date"
+msgstr "예정일"
+
+#: .\KBL\templates\KBL\project_management.html:60
+#: .\KBL\templates\KBL\project_management.html:259
+msgid "Approval"
+msgstr "결재"
+
+#: .\KBL\templates\KBL\project_management.html:82
+msgid "Detail Information"
+msgstr "상세 정보"
+
+#: .\KBL\templates\KBL\project_management.html:83
+#: .\KBL\templates\KBL\visa_management.html:10
+msgid "Visa List"
+msgstr "비자 목록"
+
+#: .\KBL\templates\KBL\project_management.html:84
+#: .\KBL\templates\KBL\work_permit.html:10
+#: .\app\templates\app\layout_KBL.html:105
+msgid "Work Permit List"
+msgstr "노동허가서 목록"
+
+#: .\KBL\templates\KBL\project_management.html:97
+#: .\KBL\templates\KBL\project_management.html:307
+msgid "Project Progress Detail"
+msgstr "프로젝트 진행 상세"
+
+#: .\KBL\templates\KBL\project_management.html:124
+#: .\KBL\templates\KBL\project_management.html:354
+#: .\KBL\templates\KBL\visa_management.html:43
+#: .\KBL\templates\KBL\visa_management.html:93
+msgid "Garanteed Company"
+msgstr "보증 회사"
+
+#: .\KBL\templates\KBL\project_management.html:125
+#: .\KBL\templates\KBL\visa_management.html:44
+msgid "Receipt Application"
+msgstr "신청서 수령"
+
+#: .\KBL\templates\KBL\project_management.html:126
+#: .\KBL\templates\KBL\project_management.html:359
+#: .\KBL\templates\KBL\visa_management.html:14
+#: .\KBL\templates\KBL\visa_management.html:45
+msgid "Visa Type"
+msgstr "비자 구분"
+
+#: .\KBL\templates\KBL\project_management.html:127
+#: .\KBL\templates\KBL\project_management.html:369
+#: .\KBL\templates\KBL\visa_management.html:46
+#: .\KBL\templates\KBL\visa_management.html:98
+#: .\Manage\templates\Manage\code_setting.html:49
+msgid "Date of Entry"
+msgstr "입국일"
+
+#: .\KBL\templates\KBL\project_management.html:128
+#: .\KBL\templates\KBL\visa_management.html:47
+msgid "Receipt Document"
+msgstr "서류수령일"
+
+#: .\KBL\templates\KBL\project_management.html:129
+#: .\KBL\templates\KBL\visa_management.html:48
+msgid "Submit Document"
+msgstr "서류제출일"
+
+#: .\KBL\templates\KBL\project_management.html:130
+#: .\KBL\templates\KBL\visa_management.html:49
+msgid "Exp. Result Date"
+msgstr "결과예정일"
+
+#: .\KBL\templates\KBL\project_management.html:152
+#: .\KBL\templates\KBL\work_permit.html:47
+msgid "Customer Name ( ENG )"
+msgstr "고객 명 (영문)"
+
+#: .\KBL\templates\KBL\project_management.html:154
+#: .\KBL\templates\KBL\work_permit.html:49
+msgid "Requiredment Documents"
+msgstr "필요서류"
+
+#: .\KBL\templates\KBL\project_management.html:155
+#: .\KBL\templates\KBL\work_permit.html:50
+msgid "Employment Apporval Application Date"
+msgstr "채용수요 승인서 신청일"
+
+#: .\KBL\templates\KBL\project_management.html:156
+#: .\KBL\templates\KBL\work_permit.html:51
+msgid "Employment Apporval Expected Date"
+msgstr "채용수요 승인서 결과 예정일"
+
+#: .\KBL\templates\KBL\project_management.html:157
+#: .\KBL\templates\KBL\work_permit.html:52
+msgid "Work Permit Application Date"
+msgstr "노동허가서 접수 일"
+
+#: .\KBL\templates\KBL\project_management.html:158
+#: .\KBL\templates\KBL\work_permit.html:53
+msgid "Work Permit Expected Date"
+msgstr "노동허가서 결과 예정일"
+
+#: .\KBL\templates\KBL\project_management.html:188
+msgid "Project Register"
+msgstr "프로젝트 등록"
+
+#: .\Manage\templates\Manage\sms_history.html:48
+#: .\KBL\templates\KBL\project_management.html:192
+msgid "Company"
+msgstr "회사"
+
+#: .\Manage\templates\Manage\inventory_medical_tool.html:36
+#: .\Manage\templates\Manage\inventory_medical_tool.html:212
+#: .\Pharmacy\templates\Pharmacy\inventory.html:37
+#: .\Pharmacy\templates\Pharmacy\inventory.html:212
+#: .\obj\Release\Package\PackageTmp\Pharmacy\templates\Pharmacy\index.html:54
+msgid "Company"
+msgstr "제약회사"
+
+#: .\KBL\templates\KBL\project_management.html:292
+msgid "Project Detail Information"
+msgstr "프로젝트 상세 정보"
+
+#: .\KBL\templates\KBL\project_management.html:336
+msgid "Visa"
+msgstr "비자"
+
+#: .\KBL\templates\KBL\project_management.html:374
+#: .\KBL\templates\KBL\visa_management.html:103
+msgid "Visa Exp. Date"
+msgstr "비자 예정일"
+
+#: .\KBL\templates\KBL\project_management.html:379
+#: .\KBL\templates\KBL\visa_management.html:108
+msgid "Date of Submission"
+msgstr "제출 일"
+
+#: .\KBL\templates\KBL\project_management.html:384
+#: .\KBL\templates\KBL\visa_management.html:113
+msgid "Doc. Reception Date"
+msgstr "서류 예정일"
+
+#: .\KBL\templates\KBL\project_management.html:389
+#: .\KBL\templates\KBL\visa_management.html:118
+msgid "Result Exp. Date"
+msgstr "결과 예정일"
+
+#: .\KBL\templates\KBL\project_management.html:394
+#: .\KBL\templates\KBL\visa_management.html:123
+#: .\Laboratory\templates\Laboratory\index.html:123
+#: .\Laboratory\templates\Laboratory\index.html:183
+msgid "Ordered Date"
+msgstr "주문일"
+
+#: .\KBL\templates\KBL\project_management.html:401
+#: .\KBL\templates\KBL\visa_management.html:128
+msgid "Receipt of Application"
+msgstr "신청서 수령 여부"
+
+#: .\KBL\templates\KBL\project_management.html:410
+#: .\KBL\templates\KBL\visa_management.html:141
+msgid "is Emergency"
+msgstr "긴급여부"
+
+#: .\KBL\templates\KBL\project_management.html:444
+msgid "Work Permit"
+msgstr "노동허가서"
+
+#: .\KBL\templates\KBL\project_management.html:462
+msgid "Employment Approval"
+msgstr "채용 승인"
+
+#: .\KBL\templates\KBL\project_management.html:464
+#: .\KBL\templates\KBL\work_permit.html:26
+msgid "EA Application Date"
+msgstr "채용수요승인서 신청일"
+
+#: .\KBL\templates\KBL\project_management.html:469
+msgid "EA Expected Date"
+msgstr "채용수요승인서 결과 예정일"
+
+#: .\KBL\templates\KBL\project_management.html:473
+msgid "Work Permit"
+msgstr "노동허가서"
+
+#: .\KBL\templates\KBL\project_management.html:475
+#: .\KBL\templates\KBL\work_permit.html:99
+msgid "WP Submit Date"
+msgstr "채용수요승인서 접수일"
+
+#: .\KBL\templates\KBL\project_management.html:480
+msgid "WP Expected Date"
+msgstr "채용수요승인서 예정일"
+
+#: .\KBL\templates\KBL\project_management.html:490
+msgid "Required Documents"
+msgstr "필요서류"
+
+#: .\KBL\templates\KBL\project_management.html:534
+#: .\KBL\templates\KBL\visa_management.html:175
+#: .\KBL\templates\KBL\work_permit.html:191
+#: .\Manage\templates\Manage\Draft.html:168
+#: .\Manage\templates\Manage\Draft_KBL.html:167
+msgid "File List"
+msgstr "파일목록"
+
+#: .\KBL\templates\KBL\project_management.html:543
+#: .\KBL\templates\KBL\visa_management.html:184
+#: .\KBL\templates\KBL\work_permit.html:200
+#: .\Manage\templates\Manage\Draft.html:176
+#: .\Manage\templates\Manage\Draft_KBL.html:175
+msgid "Registered Date"
+msgstr "등록일"
+
+#: .\KBL\templates\KBL\project_management.html:544
+#: .\KBL\templates\KBL\visa_management.html:185
+#: .\KBL\templates\KBL\work_permit.html:201
+#: .\Manage\templates\Manage\Draft.html:177
+#: .\Manage\templates\Manage\Draft_KBL.html:176
+msgid "User ID"
+msgstr "사용자 이름"
+
+#: .\KBL\templates\KBL\scheduler.html:18
+msgid "Project Scheduler"
+msgstr "업무 스케쥴러"
+
+#: .\KBL\templates\KBL\scheduler.html:22
+#: .\Manage\templates\statistics\statistics_daily.html:22
+#: .\Manage\templates\statistics\statistics_ymw.html:13
+#: .\Manage\templates\statistics\statistics_ymw.html:34
+#: .\Manage\templates\statistics\statistics_ymw.html:38
+msgid "Year"
+msgstr "년"
+
+#: .\KBL\templates\KBL\scheduler.html:30
+#: .\Manage\templates\statistics\statistics_daily.html:30
+#: .\Manage\templates\statistics\statistics_ymw.html:50
+msgid "Month"
+msgstr "월"
+
+#: .\KBL\templates\KBL\statistics.html:40
+msgid "Service Fee (Vat)"
+msgstr "서비스 비용(부가세)"
+
+#: .\KBL\templates\KBL\statistics.html:41
+msgid "Service Fee Total"
+msgstr "서비스 총 비용"
+
+#: .\KBL\templates\KBL\visa_management.html:41
+msgid "Company Name( KOR / ENG )"
+msgstr "회사 명 (한글/영문)"
+
+#: .\KBL\templates\KBL\visa_management.html:73
+msgid "Visa Register / Edit"
+msgstr "비자 등록 / 수정"
+
+#: .\KBL\templates\KBL\visa_management.html:78
+msgid "Customer Name(KOR)"
+msgstr "고객 명 (한글)"
+
+#: .\KBL\templates\KBL\visa_management.html:133
+msgid "Visa Status"
+msgstr "비자 상태"
+
+#: .\KBL\templates\KBL\work_permit.html:23
+msgid "Date type"
+msgstr "날짜 종류"
+
+#: .\KBL\templates\KBL\work_permit.html:25
+msgid "Register Date"
+msgstr "등록일"
+
+#: .\KBL\templates\KBL\work_permit.html:27
+msgid "EA Exp Date"
+msgstr "예정일"
+
+#: .\KBL\templates\KBL\work_permit.html:28
+msgid "WP Application Date"
+msgstr "신청일"
+
+#: .\KBL\templates\KBL\work_permit.html:29
+msgid "WP Exp Date"
+msgstr "예정일"
+
+#: .\KBL\templates\KBL\work_permit.html:30
+msgid "Expect Date"
+msgstr "예정일"
+
+#: .\KBL\templates\KBL\work_permit.html:79
+msgid "Work Permit Register / Edit"
+msgstr "노동허가서 등록 / 수정"
+
+#: .\KBL\templates\KBL\work_permit.html:89
+msgid "Employment Approval Application Date"
+msgstr "채용수요승인서 신청일"
+
+#: .\KBL\templates\KBL\work_permit.html:94
+msgid "EA Exp.Date"
+msgstr "채용수요승인서 예정일"
+
+#: .\KBL\templates\KBL\work_permit.html:104
+msgid "WP Exp.Date"
+msgstr "노동허가서 예정일"
+
+#: .\KBL\templates\KBL\work_permit.html:109
+msgid "Exp.Date"
+msgstr "결과예정일"
+
+#: .\KBL\templates\KBL\work_permit.html:114
+msgid "Required documents"
+msgstr "필요 서류"
+
+#: .\KBL\templates\KBL\work_permit.html:150
+msgid "Project Detail Information Register / Edit"
+msgstr "프로젝트 상세 정보 등록 / 수정"
+
+#: .\KBL\templates\KBL\work_permit.html:161
+msgid "Project Progress Status"
+msgstr "프로젝트 진행 상태"
+
+#: .\Laboratory\templates\Laboratory\checklist.html:24
+msgid "Code."
+msgstr "코드."
+
+#: .\Laboratory\templates\Laboratory\checklist.html:27
+#: .\Laboratory\templates\Laboratory\checklist.html:64
+msgid "Test Method"
+msgstr "검사 방법"
+
+#: .\Laboratory\templates\Laboratory\checklist.html:28
+#: .\Laboratory\templates\Laboratory\checklist.html:68
+msgid "Normal Range"
+msgstr "정상 범위"
+
+#: .\Laboratory\templates\Laboratory\checklist.html:30
+#: .\Laboratory\templates\Laboratory\checklist.html:77
+msgid "Waiting Time"
+msgstr "대기 시간"
+
+#: .\Laboratory\templates\Laboratory\checklist.html:45
+#: .\Manage\templates\Manage\inventory_test.html:114
+#: .\Receptionist\templates\Receptionist\index.html:827
+msgid "Add"
+msgstr "추가"
+
+#: .\Laboratory\templates\Laboratory\checklist.html:81
+#: .\Manage\templates\board\list.html:60
+#: .\Manage\templates\board_work\list.html:60
+#: .\Receptionist\templates\Receptionist\index.html:776
+#: .\Receptionist\templates\Receptionist\reservation.html:105
+msgid "Delete"
+msgstr "삭제"
+
+#: .\Laboratory\templates\Laboratory\index.html:115
+#: .\obj\Release\Package\PackageTmp\Laboratory\templates\Laboratory\index.html:10
+msgid "Lab Finding"
+msgstr "검사 목록"
+
+#: .\Laboratory\templates\Laboratory\index.html:122
+#: .\Laboratory\templates\Laboratory\index.html:175
+#: .\Radiation\templates\Radiation\index.html:52
+#: .\Radiation\templates\Radiation\index.html:84
+msgid "Request"
+msgstr "항목"
+
+#: .\Laboratory\templates\Laboratory\index.html:124
+msgid "Reference Interval"
+msgstr "정상치"
+
+#: .\Laboratory\templates\Laboratory\index.html:125
+#: .\Laboratory\templates\Laboratory\index.html:211
+#: .\obj\Release\Package\PackageTmp\Laboratory\templates\Laboratory\index.html:30
+#: .\obj\Release\Package\PackageTmp\Laboratory\templates\Laboratory\index.html:104
+msgid "Result"
+msgstr "결과"
+
+#: .\Laboratory\templates\Laboratory\index.html:138
+#: .\obj\Release\Package\PackageTmp\Laboratory\templates\Laboratory\index.html:41
+msgid "Result Report"
+msgstr "검사 결과"
+
+#: .\Laboratory\templates\Laboratory\index.html:199
+msgid "Examination Date"
+msgstr "유통기한"
+
+#: .\Manage\templates\Manage\Draft.html:10
+#: .\Manage\templates\Manage\Draft_KBL.html:10
+msgid "Draft"
+msgstr "기안서"
+
+#: .\Manage\templates\Manage\Draft.html:23
+#: .\Manage\templates\Manage\Draft_KBL.html:23
+#: .\Manage\templates\board_work\list.html:195
+msgid "Requester"
+msgstr "요청자"
+
+#: .\Manage\templates\Manage\Draft.html:58
+#: .\Manage\templates\Manage\Draft_KBL.html:58
+msgid "Requester Depart"
+msgstr "요청 부서"
+
+#: .\Manage\templates\Manage\Draft.html:59
+#: .\Manage\templates\Manage\Draft_KBL.html:59
+msgid "Date Requested"
+msgstr "요청일"
+
+#: .\Manage\templates\Manage\Draft.html:60
+#: .\Manage\templates\Manage\Draft.html:61
+#: .\Manage\templates\Manage\Draft.html:62
+#: .\Manage\templates\Manage\Draft.html:63
+#: .\Manage\templates\Manage\Draft_KBL.html:60
+#: .\Manage\templates\Manage\Draft_KBL.html:61
+#: .\Manage\templates\Manage\Draft_KBL.html:62
+#: .\Manage\templates\Manage\Draft_KBL.html:63
+msgid "Approve"
+msgstr "승인"
+
+#: .\Manage\templates\Manage\Draft.html:61
+#: .\Manage\templates\Manage\Draft_KBL.html:61
+msgid "Leader"
+msgstr "팀장"
+
+#: .\Manage\templates\Manage\Draft.html:62
+#: .\Manage\templates\Manage\Draft_KBL.html:62
+msgid "ACCOUNTING"
+msgstr "회계"
+
+#: .\Manage\templates\Manage\Draft.html:63
+#: .\Manage\templates\Manage\Draft_KBL.html:63
+msgid "CEO"
+msgstr "대표"
+
+#: .\Manage\templates\Manage\Draft.html:88
+#: .\Manage\templates\Manage\Draft_KBL.html:88
+msgid "New Draft"
+msgstr "신규 기안서"
+
+#: .\Manage\templates\Manage\Draft.html:128
+#: .\Manage\templates\Manage\Draft_KBL.html:127
+msgid "CNSLT_DPRTM"
+msgstr ""
+
+#: .\Manage\templates\Manage\Draft.html:133
+#: .\Manage\templates\Manage\Draft_KBL.html:132
+msgid "MORE_CMNTS"
+msgstr "추가 의견"
+
+#: .\Manage\templates\Manage\Manage.html:12
+msgid "REVENUE TOTAL"
+msgstr "총매출"
+
+#: .\Manage\templates\Manage\Manage.html:27
+msgid "REVENUE STATUS"
+msgstr "매출현황"
+
+#: .\Manage\templates\Manage\Manage.html:30
+#: .\Manage\templates\board\list.html:133
+msgid "Per Page"
+msgstr "페이지 당"
+
+#: .\Manage\templates\Manage\Manage.html:76
+#: .\Manage\templates\statistics\statistics_customer_info.html:61
+#: .\Manage\templates\statistics\statistics_customer_info.html:65
+msgid "Payment Method"
+msgstr "수납 방법"
+
+#: .\Manage\templates\Manage\Manage.html:86
+msgid "Payment Status"
+msgstr "수납 상태"
+
+#: .\Manage\templates\Manage\Manage.html:114
+msgid "Radiation"
+msgstr "방사선과"
+
+#: .\Manage\templates\Manage\Manage.html:116
+#: .\Receptionist\templates\Receptionist\storage_page.html:110
+#: .\Receptionist\templates\Receptionist\storage_page.html:494
+#: .\obj\Release\Package\PackageTmp\Doctor\templates\Doctor\audit.html:42
+#: .\obj\Release\Package\PackageTmp\Manage\templates\Manage\manage.html:103
+#: .\obj\Release\Package\PackageTmp\Receptionist\templates\Receptionist\storage_page.html:100
+msgid "Paid by"
+msgstr "지불방법"
+
+#: .\Manage\templates\Manage\Manage.html:118
+msgid "Medicine Fee"
+msgstr "약 가"
+
+#: .\Manage\templates\Manage\Manage.html:121
+msgid "Refund"
+msgstr "환불"
+
+#: .\Manage\templates\Manage\Manage.html:123
+#: .\obj\Release\Package\PackageTmp\Doctor\templates\Doctor\audit.html:44
+#: .\obj\Release\Package\PackageTmp\Doctor\templates\Doctor\audit.html:58
+#: .\obj\Release\Package\PackageTmp\Manage\templates\Manage\manage.html:105
+#: .\obj\Release\Package\PackageTmp\Manage\templates\Manage\manage.html:122
+#: .\obj\Release\Package\PackageTmp\Receptionist\templates\Receptionist\storage_page.html:188
+msgid "Unpaid"
+msgstr "미수"
+
+#: .\Manage\templates\Manage\Manage.html:124
+msgid "Remain"
+msgstr "잔금"
+
+#: .\Manage\templates\Manage\Manage.html:169
+msgid "Doctors"
+msgstr "의사"
+
+#: .\Manage\templates\Manage\Manage.html:289
+msgid "MEDICINE"
+msgstr "약"
+
+#: .\Manage\templates\Manage\code_setting.html:10
+msgid "Visa Management"
+msgstr "비자 관리"
+
+#: .\Manage\templates\Manage\code_setting.html:31
+#: .\Manage\templates\Manage\code_setting.html:77
+msgid "Upper Code"
+msgstr "상위 코드"
+
+#: .\Manage\templates\Manage\code_setting.html:32
+#: .\Manage\templates\Manage\code_setting.html:82
+msgid "Upper Code Name"
+msgstr "상품명"
+
+#: .\Manage\templates\Manage\code_setting.html:33
+#: .\Manage\templates\Manage\code_setting.html:87
+msgid "Group Code"
+msgstr "그룹 코드"
+
+#: .\Manage\templates\Manage\code_setting.html:34
+#: .\Manage\templates\Manage\code_setting.html:92
+msgid "Group Code Name"
+msgstr "상품명"
+
+#: .\Manage\templates\Manage\code_setting.html:36
+#: .\Manage\templates\Manage\code_setting.html:102
+msgid "Code Name (KOR)"
+msgstr "코드명(한국)"
+
+#: .\Manage\templates\Manage\code_setting.html:37
+#: .\Manage\templates\Manage\code_setting.html:107
+msgid "Code Name (ENG)"
+msgstr "코드명 (영어)"
+
+#: .\Manage\templates\Manage\code_setting.html:38
+msgid "Code Name (VN)"
+msgstr "코드명(베트남)"
+
+#: .\Manage\templates\Manage\code_setting.html:39
+#: .\Manage\templates\Manage\code_setting.html:117
+msgid "Detail 1"
+msgstr "상세 1"
+
+#: .\Manage\templates\Manage\code_setting.html:40
+#: .\Manage\templates\Manage\code_setting.html:122
+msgid "Detail 2"
+msgstr "상세 2"
+
+#: .\Manage\templates\Manage\code_setting.html:41
+#: .\Manage\templates\Manage\code_setting.html:127
+msgid "Detail 3"
+msgstr "상세 3"
+
+#: .\Manage\templates\Manage\code_setting.html:42
+#: .\Manage\templates\Manage\code_setting.html:132
+msgid "Detail 4"
+msgstr "상세 4"
+
+#: .\Manage\templates\Manage\code_setting.html:43
+#: .\Manage\templates\Manage\code_setting.html:137
+msgid "Detail 5"
+msgstr "상세 5"
+
+#: .\Manage\templates\Manage\code_setting.html:44
+#: .\Manage\templates\Manage\code_setting.html:142
+msgid "Detail 6"
+msgstr "상세 6"
+
+#: .\Manage\templates\Manage\code_setting.html:45
+#: .\Manage\templates\Manage\code_setting.html:147
+msgid "Detail 7"
+msgstr "상세 7"
+
+#: .\Manage\templates\Manage\code_setting.html:46
+#: .\Manage\templates\Manage\code_setting.html:152
+msgid "Detail 8"
+msgstr "상세 8"
+
+#: .\Manage\templates\Manage\code_setting.html:47
+#: .\Manage\templates\Manage\code_setting.html:157
+msgid "Sequence"
+msgstr "순번"
+
+#: .\Manage\templates\Manage\code_setting.html:112
+msgid "Code Name (VI)"
+msgstr "코드 명 (베트남)"
+
+#: .\Manage\templates\Manage\employee_manage.html:9
+#: .\app\templates\app\layout_KBL.html:135
+msgid "Employee Management"
+msgstr "직원 관리"
+
+#: .\Manage\templates\Manage\employee_manage.html:12
+#: .\Manage\templates\Manage\employee_manage.html:39
+#: .\Manage\templates\Manage\employee_manage.html:169
+#: .\Manage\templates\board\create_edit.html:22
+#: .\Manage\templates\board_work\create_edit.html:22
+#: .\Manage\templates\board_work\list.html:193
+msgid "Division"
+msgstr "구분"
+
+#: .\Manage\templates\Manage\employee_manage.html:41
+#: .\Manage\templates\Manage\employee_manage.html:151
+msgid "Rank"
+msgstr "직급"
+
+#: .\Manage\templates\Manage\employee_manage.html:42
+#: .\Manage\templates\Manage\employee_manage.html:84
+msgid "ID"
+msgstr "아이디"
+
+#: .\Manage\templates\Manage\employee_manage.html:45
+msgid "DOB"
+msgstr "생년월일"
+
+#: .\Manage\templates\Manage\employee_manage.html:47
+msgid "Phone1"
+msgstr "전화번호1"
+
+#: .\Manage\templates\Manage\employee_manage.html:48
+msgid "Phone2"
+msgstr "전화번호2"
+
+#: .\Manage\templates\Manage\employee_manage.html:49
+#: .\Manage\templates\Manage\employee_manage.html:191
+msgid "Date of Employment"
+msgstr "입사일"
+
+#: .\Manage\templates\Manage\employee_manage.html:51
+#: .\Manage\templates\Manage\inventory_medical_tool.html:40
+#: .\Manage\templates\Manage\inventory_medical_tool.html:107
+#: .\Manage\templates\Manage\inventory_precedure.html:33
+#: .\Manage\templates\Manage\inventory_test.html:39
+#: .\Manage\templates\board\list.html:57
+#: .\Manage\templates\board_work\list.html:57
+#: .\Pharmacy\templates\Pharmacy\inventory.html:42
+#: .\Pharmacy\templates\Pharmacy\inventory.html:109
+msgid "Edit"
+msgstr "수정"
+
+#: .\Manage\templates\Manage\employee_manage.html:85
+msgid "Type English and Numbers only."
+msgstr "영어와 숫자만 입력하세요."
+
+#: .\Manage\templates\Manage\employee_manage.html:87
+msgid "Check"
+msgstr "확인"
+
+#: .\Manage\templates\Manage\employee_manage.html:95
+#: .\Manage\templates\Manage\employee_manage.html:271
+#: .\app\templates\Admin\login_admin.html:59 .\app\templates\app\login.html:30
+#: .\app\templates\app\login.html:66 .\app\templates\app\login_KBL.html:30
+#: .\app\templates\app\login_KBL.html:66
+#: .\obj\Release\Package\PackageTmp\app\templates\app\login.html:30
+#: .\obj\Release\Package\PackageTmp\app\templates\app\login.html:68
+msgid "Password"
+msgstr "비밀번호"
+
+#: .\Manage\templates\Manage\employee_manage.html:99
+#: .\Manage\templates\Manage\employee_manage.html:279
+msgid "Password Confirm"
+msgstr "비밀번호 확인"
+
+#: .\Manage\templates\Manage\employee_manage.html:115
+msgid "Vietnamese Name"
+msgstr "베트남어 이름"
+
+#: .\Manage\templates\Manage\employee_manage.html:122
+#: .\Receptionist\templates\Receptionist\index.html:36
+msgid "Male"
+msgstr "남자"
+
+#: .\Manage\templates\Manage\employee_manage.html:123
+#: .\Receptionist\templates\Receptionist\index.html:37
+msgid "Female"
+msgstr "여자"
+
+#: .\Manage\templates\Manage\employee_manage.html:221
+msgid "Resignation"
+msgstr "퇴사"
+
+#: .\Manage\templates\Manage\employee_manage.html:224
+msgid "Would you like to make the employee resigned?"
+msgstr "이 직원을 퇴사 처리 하시겠습니까?"
+
+#: .\Manage\templates\Manage\employee_manage.html:230
+msgid "Date of Resignation"
+msgstr "등록 날"
+
+#: .\Manage\templates\Manage\employee_manage.html:238
+msgid "Reason"
+msgstr "사유"
+
+#: .\Manage\templates\Manage\employee_manage.html:262
+msgid "Change Password"
+msgstr "비밀번호"
+
+#: .\Manage\templates\Manage\employee_manage.html:265
+msgid "Would you like to change password ?"
+msgstr "비밀번호를 변경 하시겠습니까?"
+
+#: .\Manage\templates\Manage\inventory_medical_tool.html:9
+msgid "Tool List"
+msgstr "도구 목록"
+
+#: .\Manage\templates\Manage\inventory_medical_tool.html:17
+#: .\Manage\templates\Manage\inventory_medical_tool.html:142
+#: .\Manage\templates\Manage\inventory_precedure.html:12
+#: .\Manage\templates\Manage\inventory_precedure.html:63
+#: .\Manage\templates\Manage\inventory_test.html:17
+#: .\Manage\templates\Manage\inventory_test.html:35
+#: .\Manage\templates\Manage\inventory_test.html:69
+#: .\Pharmacy\templates\Pharmacy\inventory.html:17
+#: .\Pharmacy\templates\Pharmacy\inventory.html:143
+#: .\app\templates\app\login.html:72 .\app\templates\app\login_KBL.html:72
+#: .\obj\Release\Package\PackageTmp\app\templates\app\login.html:74
+msgid "Class"
+msgstr "구분"
+
+#: .\Manage\templates\Manage\inventory_medical_tool.html:35
+#: .\Pharmacy\templates\Pharmacy\index.html:159
+#: .\Pharmacy\templates\Pharmacy\inventory.html:35
+#: .\obj\Release\Package\PackageTmp\Pharmacy\templates\Pharmacy\index.html:53
+msgid "Trade Name"
+msgstr "상품명"
+
+#: .\Manage\templates\Manage\inventory_medical_tool.html:55
+#: .\Pharmacy\templates\Pharmacy\inventory.html:57
+msgid "Inventory History"
+msgstr "인벤토리 이력"
+
+#: .\Manage\templates\Manage\inventory_medical_tool.html:88
+#: .\Pharmacy\templates\Pharmacy\inventory.html:90
+msgid "+ Add"
+msgstr "+ 추가"
+
+#: .\Manage\templates\Manage\inventory_medical_tool.html:95
+#: .\Manage\templates\Manage\inventory_medical_tool.html:104
+#: .\Manage\templates\Manage\inventory_medical_tool.html:299
+#: .\Pharmacy\templates\Pharmacy\inventory.html:97
+#: .\Pharmacy\templates\Pharmacy\inventory.html:106
+#: .\Pharmacy\templates\Pharmacy\inventory.html:297
+msgid "Expiration Date"
+msgstr "유통기한"
+
+#: .\Manage\templates\Manage\inventory_medical_tool.html:96
+#: .\Pharmacy\templates\Pharmacy\inventory.html:98
+msgid "dsds"
+msgstr ""
+
+#: .\Manage\templates\Manage\inventory_medical_tool.html:103
+#: .\Pharmacy\templates\Pharmacy\inventory.html:105
+#: .\Receptionist\templates\Receptionist\index.html:168
+#: .\Receptionist\templates\Receptionist\index.html:838
+#: .\app\templates\app\layout.html:90
+#: .\obj\Release\Package\PackageTmp\app\templates\app\layout.html:82
+msgid "Registration"
+msgstr "등록"
+
+#: .\Manage\templates\Manage\inventory_medical_tool.html:106
+#: .\Pharmacy\templates\Pharmacy\inventory.html:108
+msgid "Remained Date"
+msgstr "남은 기간"
+
+#: .\Manage\templates\Manage\inventory_medical_tool.html:162
+#: .\Manage\templates\Manage\inventory_medical_tool.html:176
+#: .\Manage\templates\Manage\inventory_medical_tool.html:190
+#: .\Manage\templates\Manage\inventory_medical_tool.html:204
+#: .\Manage\templates\Manage\inventory_precedure.html:84
+#: .\Manage\templates\Manage\inventory_test.html:90
+#: .\Pharmacy\templates\Pharmacy\inventory.html:162
+#: .\Pharmacy\templates\Pharmacy\inventory.html:176
+#: .\Pharmacy\templates\Pharmacy\inventory.html:190
+#: .\Pharmacy\templates\Pharmacy\inventory.html:204
+msgid "in Vietnamese"
+msgstr "베트남어"
+
+#: .\Manage\templates\Manage\inventory_medical_tool.html:170
+#: .\Manage\templates\Manage\inventory_medical_tool.html:176
+#: .\Pharmacy\templates\Pharmacy\inventory.html:170
+#: .\Pharmacy\templates\Pharmacy\inventory.html:176
+msgid "Ingredient"
+msgstr "성분"
+
+#: .\Manage\templates\Manage\inventory_medical_tool.html:198
+#: .\Manage\templates\Manage\inventory_medical_tool.html:204
+#: .\Pharmacy\templates\Pharmacy\inventory.html:38
+#: .\Pharmacy\templates\Pharmacy\inventory.html:198
+#: .\Pharmacy\templates\Pharmacy\inventory.html:204
+#: .\obj\Release\Package\PackageTmp\Pharmacy\templates\Pharmacy\index.html:55
+msgid "Country"
+msgstr "국가"
+
+#: .\Manage\templates\Manage\inventory_medical_tool.html:220
+#: .\Pharmacy\templates\Pharmacy\inventory.html:220
+msgid "Displaying Name"
+msgstr "표시 될 이름"
+
+#: .\Manage\templates\Manage\inventory_medical_tool.html:228
+#: .\Pharmacy\templates\Pharmacy\inventory.html:228
+msgid "Price for Purchase"
+msgstr "구매가"
+
+#: .\Manage\templates\Manage\inventory_medical_tool.html:234
+#: .\Pharmacy\templates\Pharmacy\inventory.html:234
+msgid "Multiple Level"
+msgstr "가격 비율"
+
+#: .\Manage\templates\Manage\inventory_medical_tool.html:247
+#: .\Manage\templates\Manage\inventory_precedure.html:92
+#: .\Manage\templates\Manage\inventory_test.html:98
+#: .\Pharmacy\templates\Pharmacy\inventory.html:247
+msgid "Price for Sale"
+msgstr "판매가"
+
+#: .\Manage\templates\Manage\inventory_medical_tool.html:253
+#: .\Manage\templates\Manage\inventory_precedure.html:98
+#: .\Manage\templates\Manage\inventory_test.html:104
+#: .\Pharmacy\templates\Pharmacy\inventory.html:253
+msgid "Price(Dollar $)"
+msgstr "판매가(달러 $)"
+
+#: .\Manage\templates\Manage\inventory_medical_tool.html:282
+#: .\Pharmacy\templates\Pharmacy\inventory.html:282
+msgid "Goods Receipt"
+msgstr "입고"
+
+#: .\Manage\templates\Manage\inventory_medical_tool.html:289
+#: .\Pharmacy\templates\Pharmacy\inventory.html:289
+msgid "Date of Registration"
+msgstr "등록 날"
+
+#: .\Manage\templates\Manage\inventory_medical_tool.html:308
+#: .\Manage\templates\Manage\inventory_medical_tool.html:360
+#: .\Pharmacy\templates\Pharmacy\inventory.html:305
+#: .\Pharmacy\templates\Pharmacy\inventory.html:357
+msgid "Changes"
+msgstr "변동"
+
+#: .\Manage\templates\Manage\inventory_medical_tool.html:326
+#: .\Pharmacy\templates\Pharmacy\inventory.html:323
+msgid "Changed Input Price"
+msgstr "변동 된 입고가"
+
+#: .\Manage\templates\Manage\inventory_medical_tool.html:353
+#: .\Pharmacy\templates\Pharmacy\inventory.html:350
+msgid "Disposal"
+msgstr "폐기"
+
+#: .\Manage\templates\Manage\inventory_precedure.html:9
+msgid "Procedure Inventory"
+msgstr "처치 인벤토리"
+
+#: .\Manage\templates\Manage\inventory_test.html:9
+msgid "Test list"
+msgstr "검사 목록"
+
+#: .\Manage\templates\Manage\inventory_test.html:37
+msgid "unit"
+msgstr "단위"
+
+#: .\Manage\templates\Manage\inventory_test.html:113
+msgid "Result Table"
+msgstr "결과 표"
+
+#: .\Manage\templates\Manage\inventory_test.html:122
+msgid "Name(VI)"
+msgstr "이름(베트남)"
+
+#: .\Manage\templates\Manage\inventory_test.html:123
+msgid "Mininum"
+msgstr "최소치"
+
+#: .\Manage\templates\Manage\inventory_test.html:124
+#: .\Manage\templates\Manage\inventory_test.html:148
+#: .\Manage\templates\Manage\inventory_test.html:218
+msgid "Maximum"
+msgstr "최대치"
+
+#: .\Manage\templates\Manage\inventory_test.html:126
+msgid "Unit(VI)"
+msgstr "단위(베트남)"
+
+#: .\Manage\templates\Manage\inventory_test.html:139
+msgid "Normal Range List"
+msgstr "정상치 목록"
+
+#: .\Manage\templates\Manage\inventory_test.html:140
+msgid "Add Normal Range"
+msgstr "정상치 추가"
+
+#: .\Manage\templates\Manage\inventory_test.html:146
+#: .\Manage\templates\Manage\inventory_test.html:212
+msgid "Minimum"
+msgstr "최소치"
+
+#: .\Manage\templates\Manage\inventory_test.html:147
+#: .\Manage\templates\Manage\inventory_test.html:226
+msgid "Sign"
+msgstr "구분"
+
+#: .\Manage\templates\Manage\inventory_test.html:177
+msgid "Normal Range Information"
+msgstr "세금계산서 정보"
+
+#: .\Manage\templates\Manage\inventory_test.html:190
+msgid "Remark in Vietnamese"
+msgstr "베트남어"
+
+#: .\Manage\templates\Manage\inventory_test.html:204
+msgid "Unit in Vietnamese"
+msgstr "베트남어 단위"
+
+#: .\Manage\templates\Manage\sms_history.html:11
+#: .\app\templates\app\layout.html:150 .\app\templates\app\layout_KBL.html:124
+msgid "SMS History"
+msgstr "SMS 이력"
+
+#: .\Manage\templates\Manage\sms_history.html:29
+msgid "Searching Option"
+msgstr "옵션 검색"
+
+#: .\Manage\templates\Manage\sms_history.html:49
+msgid "Name Received"
+msgstr "수신자"
+
+#: .\Manage\templates\Manage\sms_history.html:51
+msgid "DateTime Sent"
+msgstr "보낸 시간"
+
+#: .\Manage\templates\Manage\sms_history.html:52
+msgid "Sender"
+msgstr "게시판 목록"
+
+#: .\Manage\templates\board\create_edit.html:13
+#: .\Manage\templates\board\list.html:125
+msgid "Board List"
+msgstr "수납 목록"
+
+#: .\Manage\templates\board\create_edit.html:18
+#: .\Manage\templates\board_work\create_edit.html:18
+msgid "Options"
+msgstr "접수"
+
+#: .\Manage\templates\board\create_edit.html:58
+#: .\Manage\templates\board\list.html:83
+#: .\Manage\templates\board_work\create_edit.html:106
+#: .\Manage\templates\board_work\list.html:83
+msgid "Attached Files"
+msgstr "정적 파일"
+
+#: .\Manage\templates\board\list.html:45 .\Manage\templates\board\list.html:171
+#: .\Manage\templates\board_work\list.html:45
+#: .\Manage\templates\board_work\list.html:202
+msgid "Views"
+msgstr "조회 수"
+
+#: .\Manage\templates\board\list.html:46
+#: .\Manage\templates\board_work\list.html:46
+msgid "Comments"
+msgstr "문서"
+
+#: .\Manage\templates\board\list.html:68
+#: .\Manage\templates\board_work\list.html:68
+msgid "List"
+msgstr "도구 목록"
+
+#: .\Manage\templates\board\list.html:108
+#: .\Manage\templates\board_work\list.html:134
+msgid "Add<br/>Comment"
+msgstr "내용<br/>추가"
+
+#: .\Manage\templates\board\list.html:129
+#: .\Manage\templates\board_work\list.html:155
+msgid "Total Contents"
+msgstr "내용"
+
+#: .\Manage\templates\board\list.html:150
+#: .\Manage\templates\board_work\list.html:176
+msgid "Title / in Content"
+msgstr "제목 / 내용"
+
+#: .\Manage\templates\board\list.html:168
+#: .\Manage\templates\board_work\list.html:196
+msgid "Written by"
+msgstr "작성자"
+
+#: .\Manage\templates\board_work\create_edit.html:13
+msgid "Board Write"
+msgstr "보드 작성"
+
+#: .\Manage\templates\board_work\create_edit.html:41
+msgid "Requested Depart 1"
+msgstr "요청 부서 1"
+
+#: .\Manage\templates\board_work\create_edit.html:50
+msgid "Requested Depart 2"
+msgstr "요청 부서 2"
+
+#: .\Manage\templates\board_work\create_edit.html:59
+msgid "Requested Depart 3"
+msgstr "요청 부서 3"
+
+#: .\Manage\templates\board_work\create_edit.html:68
+msgid "Requested Depart 4"
+msgstr "요청 부서 4"
+
+#: .\Manage\templates\board_work\list.html:113
+#: .\Manage\templates\board_work\list.html:200
+msgid "Due Date"
+msgstr "마감일"
+
+#: .\Manage\templates\board_work\list.html:159
+msgid "View Count"
+msgstr "조회수"
+
+#: .\Manage\templates\board_work\list.html:161
+#: .\Manage\templates\board_work\list.html:162
+#: .\Manage\templates\board_work\list.html:163
+#: .\Manage\templates\board_work\list.html:164
+msgid "per page"
+msgstr "페이지 당"
+
+#: .\Manage\templates\board_work\list.html:197
+msgid "Requestd Date"
+msgstr "요청 날짜"
+
+#: .\Manage\templates\board_work\list.html:198
+msgid "Requested"
+msgstr "요청 받은"
+
+#: .\Manage\templates\statistics\statistics_customer_info.html:9
+#: .\app\templates\app\layout.html:127
+msgid "Customer Info Statistics"
+msgstr "고객 정보 통계"
+
+#: .\Manage\templates\statistics\statistics_customer_info.html:39
+#: .\Manage\templates\statistics\statistics_customer_info.html:53
+#: .\Manage\templates\statistics\statistics_customer_info.html:67
+#: .\Manage\templates\statistics\statistics_customer_info.html:81
+#: .\Manage\templates\statistics\statistics_depart.html:39
+#: .\Manage\templates\statistics\statistics_procedure.html:43
+#: .\Manage\templates\statistics\statistics_test.html:42
+#: .\Manage\templates\statistics\statistics_ymw.html:40
+#: .\Manage\templates\statistics\statistics_ymw.html:52
+#: .\Manage\templates\statistics\statistics_ymw.html:66
+#: .\Manage\templates\statistics\statistics_ymw.html:78
+msgid "Revenue"
+msgstr "수익"
+
+#: .\Manage\templates\statistics\statistics_customer_info.html:47
+#: .\Manage\templates\statistics\statistics_customer_info.html:51
+#: .\Receptionist\templates\Receptionist\index.html:24
+msgid "Nationality"
+msgstr "국적"
+
+#: .\Manage\templates\statistics\statistics_customer_info.html:75
+#: .\Manage\templates\statistics\statistics_customer_info.html:79
+msgid "Age"
+msgstr "나이"
+
+#: .\Manage\templates\statistics\statistics_customer_info.html:90
+msgid "Top 20"
+msgstr "상위 20"
+
+#: .\Manage\templates\statistics\statistics_customer_info.html:99
+msgid "Lastest Visit"
+msgstr "최근 방문"
+
+#: .\Manage\templates\statistics\statistics_customer_info.html:100
+msgid "Total Amount"
+msgstr "총액"
+
+#: .\Manage\templates\statistics\statistics_daily.html:18
+#: .\app\templates\app\layout.html:128
+msgid "Daily Statistics"
+msgstr "일별 통계"
+
+#: .\Manage\templates\statistics\statistics_depart.html:9
+msgid "Department Statistics"
+msgstr "과별 통계"
+
+#: .\Manage\templates\statistics\statistics_depart.html:37
+msgid "Dpartment Nmae"
+msgstr "과 이름"
+
+#: .\Manage\templates\statistics\statistics_depart.html:38
+msgid "Patients Visits"
+msgstr "환자 방문"
+
+#: .\Manage\templates\statistics\statistics_medicine.html:9
+msgid "Medicine Statistics"
+msgstr "약 통계"
+
+#: .\Manage\templates\statistics\statistics_medicine.html:32
+#: .\Manage\templates\statistics\statistics_medicine.html:34
+#: .\Manage\templates\statistics\statistics_medicine.html:55
+#: .\Manage\templates\statistics\statistics_medicine.html:98
+#: .\Manage\templates\statistics\statistics_medicine.html:100
+#: .\Manage\templates\statistics\statistics_procedure.html:32
+#: .\Manage\templates\statistics\statistics_procedure.html:56
+#: .\Manage\templates\statistics\statistics_test.html:31
+#: .\Manage\templates\statistics\statistics_test.html:55
+msgid "Total Revenue"
+msgstr "총 수익"
+
+#: .\Manage\templates\statistics\statistics_medicine.html:44
+msgid "Medicine Name"
+msgstr "약 이름"
+
+#: .\Manage\templates\statistics\statistics_medicine.html:46
+msgid "Lastest Inventory"
+msgstr "최근 인벤토리"
+
+#: .\Manage\templates\statistics\statistics_medicine.html:47
+msgid "Lastest Price"
+msgstr "최근 금액"
+
+#: .\Manage\templates\statistics\statistics_medicine.html:48
+msgid "Lastest Total Amount"
+msgstr "최근 총액"
+
+#: .\Manage\templates\statistics\statistics_medicine.html:49
+msgid "Input Amount"
+msgstr "입고 량"
+
+#: .\Manage\templates\statistics\statistics_medicine.html:50
+msgid "Average Price"
+msgstr "평균가"
+
+#: .\Manage\templates\statistics\statistics_medicine.html:51
+msgid "Total INPUT Amount"
+msgstr "총 입고 금액"
+
+#: .\Manage\templates\statistics\statistics_medicine.html:52
+msgid "Total Cunsuming Amount"
+msgstr "총 소비량"
+
+#: .\Manage\templates\statistics\statistics_medicine.html:53
+msgid "Total Consuming Fee"
+msgstr "총 소비 수수류"
+
+#: .\Manage\templates\statistics\statistics_medicine.html:54
+msgid "Sold Price"
+msgstr "판매액"
+
+#: .\Manage\templates\statistics\statistics_medicine.html:56
+#: .\obj\Release\Package\PackageTmp\Manage\templates\Manage\manage.html:226
+msgid "Profit"
+msgstr "수익"
+
+#: .\Manage\templates\statistics\statistics_procedure.html:9
+msgid "Procedure Statistics"
+msgstr "처치별 통계"
+
+#: .\Manage\templates\statistics\statistics_procedure.html:41
+#: .\Manage\templates\statistics\statistics_test.html:40
+msgid "Nmae"
+msgstr "이름"
+
+#: .\Manage\templates\statistics\statistics_test.html:9
+msgid "Test Statistics"
+msgstr "검사별 통계"
+
+#: .\Manage\templates\statistics\statistics_ymw.html:9
+#: .\app\templates\app\layout.html:129
+msgid "Yearly, Monthly, Weekly Statistics"
+msgstr "년별, 월별, 주별 통계"
+
+#: .\Manage\templates\statistics\statistics_ymw.html:46
+msgid "Monthly"
+msgstr "월별"
+
+#: .\Manage\templates\statistics\statistics_ymw.html:60
+#: .\Manage\templates\statistics\statistics_ymw.html:64
+msgid "Days of the Week"
+msgstr "요일별"
+
+#: .\Manage\templates\statistics\statistics_ymw.html:72
+msgid "Hourly"
+msgstr "시간대별"
+
+#: .\Manage\templates\statistics\statistics_ymw.html:76
+msgid "Hours"
+msgstr "시"
+
+#: .\Pharmacy\templates\Pharmacy\index.html:40
+msgid "Order Date"
+msgstr "오더 날짜"
+
+#: .\Pharmacy\templates\Pharmacy\index.html:41
+msgid "Completed Date"
+msgstr "결과예정일"
+
+#: .\Pharmacy\templates\Pharmacy\index.html:144
+msgid "Ordered Medicine"
+msgstr "약처방"
+
+#: .\Pharmacy\templates\Pharmacy\inventory.html:9
+msgid "Medicine List"
+msgstr "약 목록"
+
+#: .\Pharmacy\templates\Pharmacy\inventory.html:36
+#: .\obj\Release\Package\PackageTmp\Pharmacy\templates\Pharmacy\index.html:56
+msgid "Generic Name"
+msgstr "성분명"
+
+#: .\Radiation\templates\Radiation\index.html:92
+#: .\obj\Release\Package\PackageTmp\Radiation\templates\Radiation\index.html:66
+msgid "Image"
+msgstr "이미지"
+
+#: .\Radiation\templates\Radiation\index.html:94
+msgid "Viewer"
+msgstr "뷰어"
+
+#: .\Receptionist\templates\Receptionist\Documents.html:11
+msgid "Document List"
+msgstr "문서 목록"
+
+#: .\Receptionist\templates\Receptionist\Documents.html:14
+#: .\Receptionist\templates\Receptionist\index.html:217
+#: .\obj\Release\Package\PackageTmp\Receptionist\templates\Receptionist\index.html:175
+msgid "Date:"
+msgstr "날짜:"
+
+#: .\Receptionist\templates\Receptionist\Documents.html:42
+#: .\Receptionist\templates\Receptionist\index.html:242
+#: .\Receptionist\templates\Receptionist\index.html:285
+msgid "Date Time"
+msgstr "날짜 씨간"
+
+#: .\Receptionist\templates\Receptionist\Documents.html:43
+msgid "Medical Recepit"
+msgstr "처치 영수증"
+
+#: .\Receptionist\templates\Receptionist\Documents.html:44
+msgid "Medicine Receipt"
+msgstr "약 영수증"
+
+#: .\Receptionist\templates\Receptionist\Documents.html:45
+msgid "Subclinical"
+msgstr "임상"
+
+#: .\Receptionist\templates\Receptionist\Documents.html:47
+msgid "Prescription Letter"
+msgstr "처방전"
+
+#: .\Receptionist\templates\Receptionist\Documents.html:48
+msgid "Lab Result"
+msgstr "검사 결과"
+
+#: .\Receptionist\templates\Receptionist\index.html:11
+msgid "New Patient"
+msgstr "신규 환자"
+
+#: .\Receptionist\templates\Receptionist\index.html:27
+msgid "Korea"
+msgstr "한국"
+
+#: .\Receptionist\templates\Receptionist\index.html:28
+msgid "Vietnam"
+msgstr "베트남"
+
+#: .\Receptionist\templates\Receptionist\index.html:29
+msgid "Other"
+msgstr "그 외"
+
+#: .\Receptionist\templates\Receptionist\index.html:45
+msgid "Name Kor"
+msgstr "한글 이름"
+
+#: .\Receptionist\templates\Receptionist\index.html:51
+msgid "Name Eng"
+msgstr "영문 이름"
+
+#: .\Receptionist\templates\Receptionist\index.html:102
+#: .\Receptionist\templates\Receptionist\index.html:743
+msgid "C / C"
+msgstr "주호소"
+
+#: .\Receptionist\templates\Receptionist\index.html:125
+msgid "Vital Sign"
+msgstr "활력징후"
+
+#: .\Receptionist\templates\Receptionist\index.html:127
+#: .\Receptionist\templates\Receptionist\index.html:754
+msgid "Ht"
+msgstr ""
+
+#: .\Receptionist\templates\Receptionist\index.html:128
+#: .\Receptionist\templates\Receptionist\index.html:756
+msgid "Wt"
+msgstr ""
+
+#: .\Receptionist\templates\Receptionist\index.html:129
+#: .\Receptionist\templates\Receptionist\index.html:758
+msgid "BP"
+msgstr ""
+
+#: .\Receptionist\templates\Receptionist\index.html:130
+#: .\Receptionist\templates\Receptionist\index.html:760
+msgid "BT"
+msgstr ""
+
+#: .\Receptionist\templates\Receptionist\index.html:150
+#: .\obj\Release\Package\PackageTmp\Receptionist\templates\Receptionist\index.html:114
+msgid "Family History"
+msgstr "가족력"
+
+#: .\Receptionist\templates\Receptionist\index.html:158
+#: .\Receptionist\templates\Receptionist\index.html:610
+#: .\Receptionist\templates\Receptionist\storage_page.html:152
+msgid "Inform Tax Invoice"
+msgstr "세금계산서 정보"
+
+#: .\Receptionist\templates\Receptionist\index.html:204
+msgid "Last Visit"
+msgstr "최근 방문"
+
+#: .\Receptionist\templates\Receptionist\index.html:243
+#: .\obj\Release\Package\PackageTmp\Receptionist\templates\Receptionist\index.html:197
+msgid "New / Repeat"
+msgstr "신환 / 재진"
+
+#: .\Receptionist\templates\Receptionist\index.html:256
+#: .\obj\Release\Package\PackageTmp\Receptionist\templates\Receptionist\index.html:208
+msgid "Reservation Status"
+msgstr "예약현황"
+
+#: .\Receptionist\templates\Receptionist\index.html:282
+#: .\obj\Release\Package\PackageTmp\Receptionist\templates\Receptionist\index.html:229
+msgid "PhoneNumber"
+msgstr "전화번호"
+
+#: .\Receptionist\templates\Receptionist\index.html:641
+msgid "Tax Invoice Information"
+msgstr "세금계산서 정보"
+
+#: .\Receptionist\templates\Receptionist\index.html:646
+#: .\Receptionist\templates\Receptionist\storage_page.html:159
+#: .\obj\Release\Package\PackageTmp\Receptionist\templates\Receptionist\index.html:124
+#: .\obj\Release\Package\PackageTmp\Receptionist\templates\Receptionist\storage_page.html:139
+msgid "Number"
+msgstr "번호"
+
+#: .\Receptionist\templates\Receptionist\index.html:686
+msgid "Edit Reception"
+msgstr "접수"
+
+#: .\Receptionist\templates\Receptionist\index.html:716
+msgid "Reception Information"
+msgstr "접수"
+
+#: .\Receptionist\templates\Receptionist\index.html:795
+msgid "Package Manage"
+msgstr "패키지 관리"
+
+#: .\Receptionist\templates\Receptionist\index.html:825
+msgid "Package List"
+msgstr "환자목록"
+
+#: .\Receptionist\templates\Receptionist\index.html:835
+msgid "Package Name"
+msgstr "환자 이름"
+
+#: .\Receptionist\templates\Receptionist\index.html:866
+msgid "Package Register"
+msgstr "사용자 등록"
+
+#: .\Receptionist\templates\Receptionist\index.html:868
+msgid "*Select Depart and Doctor first. then Package Item"
+msgstr "*과와 의사를 먼저 선택하세요. 그리고 패키지 아이템을 선택하세요."
+
+#: .\Receptionist\templates\Receptionist\index.html:930
+msgid "Package Reception"
+msgstr "접수"
+
+#: .\Receptionist\templates\Receptionist\reservation.html:45
+#: .\obj\Release\Package\PackageTmp\Receptionist\templates\Receptionist\reservation.html:64
+msgid "Reservation Date"
+msgstr "예약일"
+
+#: .\Receptionist\templates\Receptionist\reservation.html:183
+msgid "New Reservation"
+msgstr "신규 예약"
+
+#: .\Receptionist\templates\Receptionist\reservation.html:499
+msgid "No Patient"
+msgstr "환자 없음"
+
+#: .\Receptionist\templates\Receptionist\reservation.html:578
+msgid "selecte Reservation Date ! "
+msgstr "예약일을 선택하세요"
+
+#: .\Receptionist\templates\Receptionist\reservation.html:582
+msgid "Name is necessary! "
+msgstr "이름은 필수 입니다!"
+
+#: .\Receptionist\templates\Receptionist\reservation.html:587
+msgid "Depart is necessary! ! "
+msgstr "과는 필수 입니다!"
+
+#: .\Receptionist\templates\Receptionist\reservation.html:592
+msgid "Doctor is necessary! ! "
+msgstr "의사는 필수 입니다!"
+
+#: .\Receptionist\templates\Receptionist\reservation.html:597
+msgid "Memo is necessary! ! "
+msgstr "메모는 필수 입니다!"
+
+#: .\Receptionist\templates\Receptionist\reservation.html:612
+msgid "Date of birth should be 0000(year)-00(month)-00(day)"
+msgstr "생년월일은 0000(년)-00(월)-00(일) 으로 되어야 합니다."
+
+#: .\Receptionist\templates\Receptionist\reservation.html:638
+msgid "saved"
+msgstr "저장"
+
+#: .\Receptionist\templates\Receptionist\reservation.html:657
+msgid "Add Reservation"
+msgstr "예약 추가"
+
+#: .\Receptionist\templates\Receptionist\reservation.html:669
+msgid "Edit Reservation"
+msgstr "예약 수정"
+
+#: .\Receptionist\templates\Receptionist\reservation.html:713
+msgid "Do you want to delete?"
+msgstr "삭제 하시겠습니까?"
+
+#: .\Receptionist\templates\Receptionist\reservation.html:723
+msgid "Deleted"
+msgstr "삭제"
+
+#: .\Receptionist\templates\Receptionist\storage_page.html:14
+msgid "Payment Waiting List"
+msgstr "수납 대기 목록"
+
+#: .\Receptionist\templates\Receptionist\storage_page.html:46
+msgid "Reciept"
+msgstr "영수증"
+
+#: .\Receptionist\templates\Receptionist\storage_page.html:86
+#: .\obj\Release\Package\PackageTmp\Receptionist\templates\Receptionist\storage_page.html:76
+msgid "Itemcode / Description"
+msgstr ""
+
+#: .\Receptionist\templates\Receptionist\storage_page.html:87
+#: .\obj\Release\Package\PackageTmp\Receptionist\templates\Receptionist\storage_page.html:77
+msgid "Consult"
+msgstr ""
+
+#: .\Receptionist\templates\Receptionist\storage_page.html:88
+#: .\obj\Release\Package\PackageTmp\Receptionist\templates\Receptionist\storage_page.html:78
+msgid "Unit price"
+msgstr "단가"
+
+#: .\Receptionist\templates\Receptionist\storage_page.html:90
+#: .\obj\Release\Package\PackageTmp\Receptionist\templates\Receptionist\storage_page.html:80
+msgid "Amount(VND)"
+msgstr "금액(VND)"
+
+#: .\Receptionist\templates\Receptionist\storage_page.html:101
+#: .\obj\Release\Package\PackageTmp\Receptionist\templates\Receptionist\storage_page.html:91
+msgid "Medicine in detail"
+msgstr "약 상세 확인"
+
+#: .\Receptionist\templates\Receptionist\storage_page.html:113
+msgid "Remit"
+msgstr "송금"
+
+#: .\Receptionist\templates\Receptionist\storage_page.html:114
+msgid "Card"
+msgstr "카드"
+
+#: .\Receptionist\templates\Receptionist\storage_page.html:115
+msgid "Cash"
+msgstr "현금"
+
+#: .\Receptionist\templates\Receptionist\storage_page.html:122
+msgid "Show Past"
+msgstr "이력 보기"
+
+#: .\Receptionist\templates\Receptionist\storage_page.html:126
+msgid "Print Medical Report"
+msgstr "소견서 출력"
+
+#: .\Receptionist\templates\Receptionist\storage_page.html:127
+msgid "Print Reciept"
+msgstr "영수증 출력"
+
+#: .\Receptionist\templates\Receptionist\storage_page.html:138
+#: .\obj\Release\Package\PackageTmp\Receptionist\templates\Receptionist\storage_page.html:119
+msgid "Next Visiting Date"
+msgstr "다음 예약 일"
+
+#: .\Receptionist\templates\Receptionist\storage_page.html:188
+#: .\obj\Release\Package\PackageTmp\Receptionist\templates\Receptionist\storage_page.html:170
+msgid "Paid List"
+msgstr "수납 목록"
+
+#: .\Receptionist\templates\Receptionist\storage_page.html:222
+msgid "Balance"
+msgstr "잔금"
+
+#: .\Receptionist\templates\Receptionist\storage_page.html:231
+msgid "Today Report"
+msgstr "소견서"
+
+#: .\Receptionist\templates\Receptionist\storage_page.html:447
+msgid "의사소견"
+msgstr ""
+
+#: .\Receptionist\templates\Receptionist\storage_page.html:485
+msgid "Payment Record"
+msgstr "수납"
+
+#: .\Receptionist\templates\Receptionist\storage_page.html:492
+msgid "Date Paid"
+msgstr "날짜"
+
+#: .\Receptionist\templates\Receptionist\storage_page.html:533
+msgid "Date of Hospitalization"
+msgstr "검사 날짜"
+
+#: .\app\templates\Admin\login_admin.html:28
+msgid "Admin Page"
+msgstr "관리자"
+
+#: .\app\templates\Admin\login_admin.html:29
+msgid "I-MEDICARE"
+msgstr "I-MEDICARE"
+
+#: .\app\templates\Admin\login_admin.html:35
+msgid "KBL"
+msgstr "KBL"
+
+#: .\app\templates\Admin\login_admin.html:53 .\app\templates\app\login.html:24
+#: .\app\templates\app\login.html:60 .\app\templates\app\login_KBL.html:24
+#: .\app\templates\app\login_KBL.html:60
+#: .\obj\Release\Package\PackageTmp\app\templates\app\login.html:24
+#: .\obj\Release\Package\PackageTmp\app\templates\app\login.html:62
+msgid "User name"
+msgstr "사용자 이름"
+
+#: .\app\templates\Admin\login_admin.html:68 .\app\templates\app\login.html:39
+#: .\app\templates\app\login_KBL.html:39
+#: .\app\templates\app\loginpartial.html:17
+#: .\obj\Release\Package\PackageTmp\app\templates\app\login.html:38
+#: .\obj\Release\Package\PackageTmp\app\templates\app\loginpartial.html:17
+msgid "Log in"
+msgstr "로그인"
+
+#: .\app\templates\app\layout.html:91
+#: .\obj\Release\Package\PackageTmp\app\templates\app\layout.html:83
+msgid "Payment"
+msgstr "수납"
+
+#: .\app\templates\app\layout.html:92 .\app\templates\app\layout.html:102
+#: .\obj\Release\Package\PackageTmp\app\templates\app\layout.html:84
+#: .\obj\Release\Package\PackageTmp\app\templates\app\layout.html:93
+msgid "Reservation"
+msgstr "예약"
+
+#: .\app\templates\app\layout.html:93 .\app\templates\app\layout.html:107
+#: .\app\templates\app\layout.html:142
+msgid "Documents"
+msgstr "문서"
+
+#: .\app\templates\app\layout.html:94 .\app\templates\app\layout.html:108
+#: .\app\templates\app\layout.html:110
+#: .\obj\Release\Package\PackageTmp\app\templates\app\layout.html:96
+msgid "Pharmacy"
+msgstr "약국"
+
+#: .\app\templates\app\layout.html:99 .\app\templates\app\layout.html:113
+#: .\obj\Release\Package\PackageTmp\app\templates\app\layout.html:90
+#: .\obj\Release\Package\PackageTmp\app\templates\app\layout.html:98
+msgid "Laboratory"
+msgstr "검사실"
+
+#: .\app\templates\app\layout.html:100 .\app\templates\app\layout.html:116
+#: .\obj\Release\Package\PackageTmp\app\templates\app\layout.html:91
+#: .\obj\Release\Package\PackageTmp\app\templates\app\layout.html:100
+msgid "Radiology"
+msgstr "방사선과"
+
+#: .\app\templates\app\layout.html:103 .\app\templates\app\layout_KBL.html:95
+msgid "CRM"
+msgstr ""
+
+#: .\app\templates\app\layout.html:105 .\app\templates\app\layout_KBL.html:111
+#: .\obj\Release\Package\PackageTmp\app\templates\app\layout.html:94
+msgid "Audit"
+msgstr "회계"
+
+#: .\app\templates\app\layout.html:111
+msgid "Inventory"
+msgstr "인벤토리"
+
+#: .\app\templates\app\layout.html:114
+msgid "Lab Inventory"
+msgstr "검사 인벤토리"
+
+#: .\app\templates\app\layout.html:118
+msgid "Consumable Management"
+msgstr "직원 관리"
+
+#: .\app\templates\app\layout.html:120 .\app\templates\app\layout_KBL.html:117
+#: .\app\templates\app\layout_KBL.html:119
+msgid "Statistics"
+msgstr "정적 파일"
+
+#: .\app\templates\app\layout.html:122
+msgid "Revenue Status"
+msgstr "접수상태"
+
+#: .\app\templates\app\layout.html:123
+msgid "Tests Statistics"
+msgstr "검사별 통계"
+
+#: .\app\templates\app\layout.html:124
+msgid "Procedures Statistics"
+msgstr "처치별 통계"
+
+#: .\app\templates\app\layout.html:125
+msgid "Medicines Statistics"
+msgstr "약별 통계"
+
+#: .\app\templates\app\layout.html:126
+msgid "Depart Statistics"
+msgstr "과별 통계"
+
+#: .\app\templates\app\layout.html:132
+msgid "Service & Inventory"
+msgstr "서비스 & 인벤토리"
+
+#: .\app\templates\app\layout.html:134
+msgid "Tests"
+msgstr "검사"
+
+#: .\app\templates\app\layout.html:135
+msgid "Procedures"
+msgstr "처치"
+
+#: .\app\templates\app\layout.html:136
+msgid "Medicines"
+msgstr "약"
+
+#: .\app\templates\app\layout.html:137
+msgid "Expendables"
+msgstr "소모품"
+
+#: .\app\templates\app\layout.html:146
+msgid "Employee Mgt"
+msgstr "직원 관리"
+
+#: .\app\templates\app\layout.html:148
+msgid "Customer Mgt"
+msgstr "고객 관리"
+
+#: .\app\templates\app\layout.html:156
+msgid "Physical Therapist"
+msgstr ""
+
+#: .\app\templates\app\layout.html:162 .\app\templates\app\layout_KBL.html:109
+msgid "Drafts"
+msgstr "기안서"
+
+#: .\app\templates\app\layout.html:163 .\app\templates\app\layout_KBL.html:126
+msgid "Board"
+msgstr "게시판"
+
+#: .\app\templates\app\layout_KBL.html:101
+msgid "Work Management"
+msgstr "직원 관리"
+
+#: .\app\templates\app\layout_KBL.html:104
+msgid "Work Scheduler"
+msgstr "업무 스케쥴러"
+
+#: .\app\templates\app\layout_KBL.html:106
+msgid "VISA List"
+msgstr "비자 목록"
+
+#: .\app\templates\app\layout_KBL.html:114
+msgid "Invoice History"
+msgstr "인벤토리 이력"
+
+#: .\app\templates\app\layout_KBL.html:120
+msgid "..."
+msgstr "..."
+
+#: .\app\templates\app\layout_KBL.html:133
+msgid "Setting"
+msgstr "설정"
+
+#: .\app\templates\app\layout_KBL.html:136
+msgid "Code Setting"
+msgstr "코드 설정"
+
+#: .\app\templates\app\loginpartial.html:10
+#: .\obj\Release\Package\PackageTmp\app\templates\app\loginpartial.html:10
+msgid "Log out"
+msgstr "로그아웃"
+
+#: .\app\templates\app\notice.html:15
+msgid "Writer"
+msgstr ""
+
+#: .\env_local\Lib\site-packages\bootstrap4\templates\bootstrap4\form_errors.html:3
+#: .\env_local\Lib\site-packages\bootstrap4\templates\bootstrap4\messages.html:4
+msgid "close"
+msgstr "닫기"
+
+#: .\env_local\Lib\site-packages\django\views\templates\default_urlconf.html:6
+msgid "Django: the Web framework for perfectionists with deadlines."
+msgstr ""
+
+#: .\env_local\Lib\site-packages\django\views\templates\default_urlconf.html:345
+#, python-format
+msgid ""
+"View <a href=\"https://docs.djangoproject.com/en/%(version)s/releases/\" "
+"target=\"_blank\" rel=\"noopener\">release notes</a> for Django %(version)s"
+msgstr ""
+
+#: .\env_local\Lib\site-packages\django\views\templates\default_urlconf.html:367
+msgid "The install worked successfully! Congratulations!"
+msgstr ""
+
+#: .\env_local\Lib\site-packages\django\views\templates\default_urlconf.html:368
+#, python-format
+msgid ""
+"You are seeing this page because <a href=\"https://docs.djangoproject.com/en/"
+"%(version)s/ref/settings/#debug\" target=\"_blank\" rel=\"noopener"
+"\">DEBUG=True</a> is in your settings file and you have not configured any "
+"URLs."
+msgstr ""
+
+#: .\env_local\Lib\site-packages\django\views\templates\default_urlconf.html:383
+msgid "Django Documentation"
+msgstr ""
+
+#: .\env_local\Lib\site-packages\django\views\templates\default_urlconf.html:384
+msgid "Topics, references, &amp; how-to's"
+msgstr ""
+
+#: .\env_local\Lib\site-packages\django\views\templates\default_urlconf.html:395
+msgid "Tutorial: A Polling App"
+msgstr ""
+
+#: .\env_local\Lib\site-packages\django\views\templates\default_urlconf.html:396
+msgid "Get started with Django"
+msgstr ""
+
+#: .\env_local\Lib\site-packages\django\views\templates\default_urlconf.html:407
+msgid "Django Community"
+msgstr ""
+
+#: .\env_local\Lib\site-packages\django\views\templates\default_urlconf.html:408
+msgid "Connect, get help, or contribute"
+msgstr ""
+
+#: .\obj\Release\Package\PackageTmp\Doctor\templates\Doctor\index.html:190
+msgid "용법"
+msgstr ""
+
+#: .\obj\Release\Package\PackageTmp\Laboratory\templates\Laboratory\index.html:26
+#: .\obj\Release\Package\PackageTmp\Laboratory\templates\Laboratory\index.html:72
+msgid "Lab Name"
+msgstr ""
+
+#: .\obj\Release\Package\PackageTmp\Laboratory\templates\Laboratory\index.html:27
+#: .\obj\Release\Package\PackageTmp\Laboratory\templates\Laboratory\index.html:80
+msgid "Date Ordered"
+msgstr "검사일"
+
+#: .\obj\Release\Package\PackageTmp\Laboratory\templates\Laboratory\index.html:28
+#: .\obj\Release\Package\PackageTmp\Laboratory\templates\Laboratory\index.html:88
+msgid "Date of Examination"
+msgstr "검사 날짜"
+
+#: .\obj\Release\Package\PackageTmp\Laboratory\templates\Laboratory\index.html:29
+#: .\obj\Release\Package\PackageTmp\Laboratory\templates\Laboratory\index.html:96
+msgid "Date Expected"
+msgstr "결과예정일"
+
+#: .\obj\Release\Package\PackageTmp\Manage\templates\Manage\manage.html:98
+msgid "General"
+msgstr "일반"
+
+#: .\obj\Release\Package\PackageTmp\Manage\templates\Manage\manage.html:101
+msgid "Scaling"
+msgstr ""
+
+#: .\obj\Release\Package\PackageTmp\Manage\templates\Manage\manage.html:102
+msgid "Panorama"
+msgstr ""
+
+#: .\obj\Release\Package\PackageTmp\Manage\templates\Manage\manage.html:231
+msgid "Profit Total"
+msgstr ""
+
+#: .\obj\Release\Package\PackageTmp\Pharmacy\templates\Pharmacy\index.html:20
+msgid "Today "
+msgstr ""
+
+#: .\obj\Release\Package\PackageTmp\Radiation\templates\Radiation\index.html:29
+msgid "R Name"
+msgstr ""
+
+#: .\obj\Release\Package\PackageTmp\Receptionist\templates\Receptionist\index.html:28
+msgid "Name_Kor"
+msgstr ""
+
+#: .\obj\Release\Package\PackageTmp\Receptionist\templates\Receptionist\index.html:34
+msgid "Name_Eng"
+msgstr ""
+
+#: .\obj\Release\Package\PackageTmp\Receptionist\templates\Receptionist\index.html:96
+msgid "Chief Complaint"
+msgstr "주호소"
+
+#: .\obj\Release\Package\PackageTmp\Receptionist\templates\Receptionist\storage_page.html:130
+msgid "Pay"
+msgstr ""
+
+#: .\obj\Release\Package\PackageTmp\Receptionist\templates\Receptionist\storage_page.html:189
+msgid "Valance"
+msgstr "잔금"
+
+#: .\obj\Release\Package\PackageTmp\app\templates\app\layout.html:86
+msgid "Doctor's Clinic"
+msgstr ""
+
+#: .\physical_therapist\templates\physical_therapist\index.html:165
+msgid "Time(s)"
+msgstr "시간"
+
+#~ msgid "user_id"
+#~ msgstr "사용자 이름"
+
+#~ msgid "depart"
+#~ msgstr "부서"
+
+#~ msgid "password"
+#~ msgstr "비밀번호"
+
+#~ msgid "Permissions"
+#~ msgstr "권한"
+
+#~ msgid "fields"
+#~ msgstr "필드"
+
+#~ msgid "password1"
+#~ msgstr "비밀번호1"
+
+#~ msgid "password2"
+#~ msgstr "비밀번호2"
+
+#~ msgid "Password confirmation"
+#~ msgstr "비밀번호 확인"
+
+#~ msgid "DOCTOR"
+#~ msgstr "의사"
+
+#~ msgid "Receptionist for Dental"
+#~ msgstr "접수"
+
+#~ msgid "Korean"
+#~ msgstr "한글"
+
+#~ msgid "Vietnamese"
+#~ msgstr "베트남어"
+
+#~ msgid "English"
+#~ msgstr "영어"
+
+#~ msgid "Filter"
+#~ msgstr "필터"
+
+#~ msgid "Input"
+#~ msgstr "입력"
+
+#~ msgid "new"
+#~ msgstr "신규"
+
+#~ msgid "hold"
+#~ msgstr "홀드"
+
+#~ msgid "done"
+#~ msgstr "완료"
+
+#~ msgid "name"
+#~ msgstr "이름"
+
+#~ msgid "add"
+#~ msgstr "추가"
+
+#~ msgid "decrese"
+#~ msgstr "감소"
+
+#~ msgid "deleted"
+#~ msgstr "삭제"
+
+#~ msgid "Saved"
+#~ msgstr "저장"
+
+#~ msgid "all"
+#~ msgstr "총"
+
+#~ msgid "paid"
+#~ msgstr "수납"
+
+#~ msgid "unpaid"
+#~ msgstr "미수"
+
+#~ msgid "visited"
+#~ msgstr "방문"
+
+#~ msgid "unvisited"
+#~ msgstr "예약취소"
+
+#~ msgid "CASH"
+#~ msgstr "현금"
+
+#~ msgid "CARD"
+#~ msgstr "카드"
+
+#~ msgid "Cannot edit past payment"
+#~ msgstr "이전 수납은 수정 할 수 없습니다"
+
+#~ msgid "Cannot edit payment after 7 PM."
+#~ msgstr "7 PM 이후 수납 수정은 불가능 합니다."
+
+#~ msgid "Messages"
+#~ msgstr "메세지"
+
+#~ msgid "Site Maps"
+#~ msgstr "사이트 맵"
+
+#~ msgid "That page number is not an integer"
+#~ msgstr "페이지 번호가 정수가 아닙니다."
+
+#~ msgid "That page number is less than 1"
+#~ msgstr "페이지 번호가 1보다 적습니다."
+
+#~ msgid "Enter a number."
+#~ msgstr "숫자를 입력하세요"
+
+#~ msgid "and"
+#~ msgstr "그리고"
+
+#~ msgid "Decimal number"
+#~ msgstr "심진수"
+
+#~ msgid "Duration"
+#~ msgstr "지속"
+
+#~ msgid "Email address"
+#~ msgstr "이메일 주소"
+
+#~ msgid "IPv4 address"
+#~ msgstr "IPv4 주소"
+
+#~ msgid "IP address"
+#~ msgstr "IP 주소"
+
+#~ msgid "Order"
+#~ msgstr "오더내역"
+
+#~ msgid "March"
+#~ msgstr "검색"
+
+#~ msgid "November"
+#~ msgstr "번호"
+
+#~ msgid "mar"
+#~ msgstr "진단"
+
+#~ msgid "may"
+#~ msgstr "제약회사"
+
+#~ msgid "sep"
+#~ msgstr "용법"
+
+#~ msgid "oct"
+#~ msgstr "의사"
+
+#~ msgctxt "abbrev. month"
+#~ msgid "March"
+#~ msgstr "검색"
+
+#~ msgctxt "alt. month"
+#~ msgid "March"
+#~ msgstr "검색"
+
+#~ msgctxt "alt. month"
+#~ msgid "November"
+#~ msgstr "번호"
+
+#~ msgid "Date out of range"
+#~ msgstr "생년월일"
+
+#~ msgid "user_role"
+#~ msgstr "권한"
+
+#~ msgid "Nickname"
+#~ msgstr "이름"
+
+#~ msgid "user"
+#~ msgstr "권한"
+
+#~ msgid "name_kor"
+#~ msgstr "이름"
+
+#~ msgid "name_eng"
+#~ msgstr "이름"
+
+#~ msgid "price"
+#~ msgstr "금액"
+
+#~ msgid "Date Examination"
+#~ msgstr "검사 날짜"
+
+#~ msgid "Phone Numer"
+#~ msgstr "전화번호"
+
+#~ msgid "Adress"
+#~ msgstr "주소"
+
+#~ msgid "Cheif Complaint"
+#~ msgstr "주호소"
+
+#~ msgid "Doctor Report"
+#~ msgstr "의사"
+
+#~ msgid "Days left"
+#~ msgstr "남은 일"
+
+#~ msgid "Prodecdures"
+#~ msgstr "처치"
+
+#~ msgid "Name in Vietnamese"
+#~ msgstr "베트남 이름"
+
+#~ msgid "Ingredient in Vietnamese"
+#~ msgstr "베트남어 성분"
+
+#~ msgid "Country in Vietnamese"
+#~ msgstr "베트남어 국가"
+
+#~ msgid "Name of Medicine"
+#~ msgstr "한글 이름"
+
+#~ msgid "Laboratory checklist"
+#~ msgstr "검사실"
+
+#~ msgid "Date of Birth is necessary! ! "
+#~ msgstr "과는 필수 입니다!"
+
+#~ msgid "Medical Exam"
+#~ msgstr "소견서"
+
+#~ msgid "nonVAT"
+#~ msgstr "부가세 미포함"
+
+#~ msgid "Please contact us to receive invoice during the day"
+#~ msgstr "세금계산서 해당날에 발급 가능합니다"

@@ -1,0 +1,512 @@
+
+
+.form-control {
+    font-size: 12px;
+    padding: 3px 12px;
+    height: 30px;
+}
+
+.storage_grid {
+    margin: 0 auto;
+    height: 100%;
+    width: 100%;
+    display: grid;
+    grid-template-columns: 25% 35%;
+}
+
+
+.partition {
+    padding: 5px;
+    padding-left: 15px;
+    padding-right: 15px;
+    background: rgba(180, 180, 180, 0.15);
+    border: 3.7px solid white;
+    overflow: auto;
+}
+
+.storage_list {
+    grid-column-start: 1;
+    grid-column-end: 2;
+    overflow: auto;
+}
+
+.storage_contents {
+    grid-column-start: 2;
+    grid-column-end: 3;
+    overflow: auto;
+}
+.storage_paid_list {
+    grid-column-start: 3;
+    grid-column-end: 4;
+    overflow: auto;
+}
+
+.storage_item_table {
+    height: 360px;
+    overflow: auto;
+    margin-bottom: 10px;
+}
+
+.storage_list_title {
+    width: 100%;
+    display: inline;
+}
+
+    .storage_list_title > span {
+        text-align: left;
+        background: #d2322d;
+        font-size: 16px;
+    }
+
+    .status_table_filter{
+    display:inline;
+    float:right;
+}
+
+.storage_contents_table_title {
+    width: 115px;
+    text-align: left;
+    font-weight: bold;
+}
+
+.storage_item_table_control{
+    width:100%;
+}
+
+    .storage_item_table_control tr, .storage_item_table_control td {
+        vertical-align: middle;
+    }
+
+
+    .storage_pay {
+        display: inline-block;
+    }
+
+.need_something_check {
+    font-weight: 300;
+}
+
+.need_something_check input {
+    vertical-align: middle;
+    margin-top: -1px;
+}
+
+.storage_list_calendar {
+    display: inline;
+    padding: 5px;
+    width: 75px;
+}
+#reception_waiting_depart{
+    width:85px;
+}
+.storage_search_select {
+    width: 85px;
+    display: inline;
+    padding: 5px;
+}
+.reception_table_title {
+    padding:5px;
+}
+
+.storage_search_input {
+    width: 110px;
+    display: inline;
+}
+
+#payment_record_table {
+}
+
+    #payment_record_table thead tr th {
+        vertical-align: middle;
+        text-align: center;
+    }
+
+    #payment_record_table tbody tr {
+        height: 50px;
+    }
+
+        #payment_record_table tbody tr td {
+            vertical-align: middle;
+            text-align: center;
+        }
+
+#show_medication_contents {
+    vertical-align: middle;
+    margin-top: -2px;
+    margin-right: 2px;
+}
+.check_discount_label{
+    font-size:13px;
+    font-weight:400;
+    letter-spacing:-1px;
+}
+
+    .check_discount_label input[type=checkbox] {
+        vertical-align: middle;
+        margin-top: -2px;
+        margin-right:5px;
+    }
+
+#patient_tax_invoice .input-group{
+    width:100%;
+}
+
+#patient_tax_invoice_click {
+    margin-bottom: 5px;
+}
+
+.page_bill {
+    display: none;
+}
+
+
+
+.page_report {
+    display: none;
+}
+
+.table-hover tbody tr:hover td, .table-hover tbody tr:hover th {
+    background-color: #ccc;
+}
+
+#id_payment_info {
+    width: 80px;
+}
+
+.storage_list_table_wrap {
+    margin-top: 30px;
+    height: 575px;
+    overflow-y: auto;
+}
+
+#storage_list_table tr th {
+    vertical-align: middle;
+    text-align: center;
+    width: 76.8px;
+}
+
+    #storage_list_table tr th:nth-child(1) {
+        width: 15px;
+    }
+    #storage_list_table tr th:nth-child(2) {
+        width: 70px;
+    }
+
+#storage_list_table tr td {
+    vertical-align: middle;
+    text-align: center;
+    
+}
+
+    #storage_list_table tr td:nth-child(6),
+    #storage_list_table tr td:nth-child(7) {
+        text-align: right;
+    }
+
+#storage_list_total tr th{
+    vertical-align:middle;
+}
+
+    #storage_list_total tr th:nth-child(1) {
+        width: 1px;
+        font-size: 12px;
+        text-align: left;
+    }
+        #storage_list_total tr th:nth-child(1) a {
+            font-size: 11.2px;
+        }
+    #storage_list_total tr th:nth-child(2) {
+        width: 270px;
+        text-align: right;
+    }
+    #storage_list_total tr th:nth-child(3) {
+        text-align:right;
+        width: 76.8px;
+    }
+    #storage_list_total tr th:nth-child(4) {
+        text-align: right;
+        width: 76.8px;
+    }
+    #storage_list_total tr th:nth-child(5) {
+        text-align: right;
+        width: 13px;
+    }
+.waiting_list_doctor_select {
+    display: inline;
+    width: 100px;
+}
+
+.storage_today_table_wrap{
+    height:650px;
+    width: 100%;
+    overflow-y:auto;
+}
+
+
+@media ( min-width: 1900px ) {
+    .storage_item_table {
+        height: 400px;
+        overflow: auto;
+        margin-bottom: 20px;
+    }
+
+    .paid_by {
+        width: 160px
+    }
+
+
+
+    #id_payment_info {
+        width: 100%;
+    }
+
+    .storage_contents_table_title {
+        width: 120px;
+    }
+    .storage_list_table_wrap {
+        margin-top:0px;
+        height: 740px;
+    }
+
+    .storage_today_table_wrap {
+        height: 800px;
+    }
+}
+
+#dynamic_div {
+    display: none;
+}
+
+@page {
+    size: A4;
+    margin: 0;
+}
+
+@media  print{
+    html, body {
+        min-width: 210mm;
+        max-width: 210mm;
+        /*max-height: 297mm;
+        min-height: 297mm;*/
+    }
+
+    #dynamic_div {
+        display: block;
+    }
+
+    .page_bill {
+        min-height:1000px;
+        margin: 0 auto;
+        margin-top: 1.5cm;
+        text-align: center;
+        display: block;
+        background-repeat: no-repeat !important;
+        background-position: bottom !important;
+    }
+
+        .page_bill .title {
+            width: 100%;
+            text-align: center;
+            margin-top: 40px;
+            margin-bottom: 65px;
+            font-size: 18px;
+            font-weight: 700;
+        }
+
+        .page_bill .chart {
+            text-align: center;
+        }
+
+        .page_bill .chart_table {
+            margin: 0 auto;
+            word-break:break-word;
+            table-layout:fixed;
+            
+        }
+
+            .chart_table tbody tr td {
+                vertical-align: middle;
+                text-align: center;
+                font-size: 11px;
+            }
+    .chart_table tbody tr td:nth-child(3){
+        text-align:center;
+    }
+
+    .payment_record tr{
+       vertical-align:middle;
+    }
+
+    .middle table {
+    }
+
+    .page_bill .chart_table_contents_title tr:first-child td {
+        vertical-align: middle;
+        text-align:left;
+    }
+    .chart_table_contents_title tr td {
+        /*border: 1px solid black;*/
+        padding: 3px;
+    }
+    #chart_table_contents_items tr td, #additional_items tr td{
+        /*border: 1px solid black;*/
+        padding: 3px;
+    }
+
+    .page_bill .chart_table_info {
+        font-size:16px;
+        font-weight:700;
+        
+    }
+
+    .page_bill .chart table tbody tr td:nth-child(2) {
+        text-align: left;
+    }
+
+    .page_bill .chart table tbody tr td:nth-child(4) {
+        text-align: right;
+    }
+
+    .page_bill .chart table tbody tr td:nth-child(5) {
+        text-align: right;
+    }
+
+    .page_bill .chart table tbody tr td:nth-child(6) {
+        text-align: right;
+    }
+
+    .page_bill .chart table tbody tr td:nth-child(8) {
+        text-align: right;
+    }
+
+    .page_bill .chart_table_total {
+        /*border-top: 1px solid black;*/
+        /*border: 1px solid black;*/
+    }
+    .chart_table_total tr td{
+        padding:3px;
+        font-weight:700;
+    }
+
+
+    .page_bill .tr_small {
+        height: 8mm;
+    }
+
+    .page_bill .last {
+        height: 79.5mm;
+        vertical-align: baseline;
+        text-align: left;
+        padding: 10px;
+    }
+
+    .page_bill .last_contents {
+        margin-left: 20px;
+        margin-bottom: 10px;
+    }
+
+
+
+    .page_bill table {
+        border-collapse: collapse;
+        font-size: 12px;
+        vertical-align: middle;
+        display: inline-block;
+        border: none;
+    }
+
+    .page_bill tbody tr td:first-child {
+        margin: 0 auto;
+        text-align: left;
+    }
+
+    .page_bill tr {
+        margin: 0 auto;
+        padding: 0;
+    }
+
+    .page_bill td {
+        padding-left: 5px;
+    }
+
+    .page_bill .bottom{
+        font-size:11px;
+    }
+
+    .page_report {
+        width: 169mm;
+        height: 253mm;
+        display: block;
+        margin: 0 auto;
+    }
+
+        .page_report .title {
+            width: 100%;
+            text-align: center;
+            margin-top: 50px;
+            margin-bottom: 10px;
+            font-size: 30px;
+            font-weight: 500;
+            top: 0px;
+        }
+
+        .page_report .chart {
+            margin-bottom: 2.5mm;
+            height: 22mm;
+        }
+
+        .page_report .tr_small {
+            height: 10mm;
+        }
+
+        .page_report th, .page_report td {
+            font-size: 14px;
+        }
+
+        .page_report .middle {
+            height: 216mm;
+        }
+
+        .page_report .last {
+            height: 79.5mm;
+            vertical-align: baseline;
+            text-align: left;
+            padding: 10px;
+        }
+
+        .page_report .last_contents {
+            margin-left: 20px;
+            margin-bottom: 10px;
+        }
+
+        .page_report table {
+            border-collapse: collapse;
+            font-size: 15px;
+            vertical-align: middle;
+            display: inline-block;
+
+        }
+
+        .page_report tbody tr td:first-child {
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .page_report tr {
+            margin: 0 auto;
+            padding: 0;
+        }
+
+        .page_report td {
+            border: 1px solid black;
+            padding-left: 5px;
+        }
+
+    .contents_name {
+        width: 100%;
+        text-align: justify;
+    }
+
+
+}
+

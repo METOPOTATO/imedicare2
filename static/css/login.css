@@ -1,0 +1,60 @@
+body {
+    height: auto;
+    min-width: 1500px;
+    max-width: 1980px;
+    min-height: 750px;
+    max-height: 1080px;
+}
+    body:before {
+        overflow-x: hidden;
+        overflow-y: auto;
+        height: auto;
+        display: block;
+        padding-top: 100%;
+    }
+
+
+.login_wrap {
+    display: table;
+    width:100%;
+}
+
+.login_contents {
+    display: table-cell;
+    text-align: center;
+    width: 30vw;
+    height: 30vh;
+}
+
+.login_wrap input {
+    width:290px;
+}
+
+.doctor_depart_select{
+
+}
+
+.register_doctor{
+
+}
+
+.checkbox_login{
+
+}
+
+/*********°ü¸®ÀÚ ***********/
+
+#login_select_div{
+    width: 290px;
+}
+
+.login_wrap select {
+    width: 49%;
+    display:inline;
+    margin:0px;
+}
+
+#login_select{
+    margin:0;
+    padding:0;
+}
