@@ -425,6 +425,10 @@ class MedicineManager(models.Model):
         )
 
 
+def time_zero():
+    datetime_str = '01/01/20 00:00:00'
+    return datetime.datetime.strptime(datetime_str, '%m/%d/%y %H:%M:%S')
+
 class Payment(models.Model):
 
     progress_choice = (
@@ -471,6 +475,8 @@ class Payment(models.Model):
     additional = models.IntegerField(
         default=0,
         )
+
+    pay_time = models.DateTimeField(default=time_zero)
 
 
 

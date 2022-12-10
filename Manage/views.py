@@ -1672,7 +1672,10 @@ def rec_report_excel(request):
     response['Content-Disposition'] = 'attachment; filename="RECEPTION REPORT ' + date_start +'.xlsx"'
 
     #엑셀 파일 불러오기
-    wb = load_workbook('/home/imedicare/Cofee/static/excel_form/reception_report.xlsx') #Workbook()
+    try:
+        wb = load_workbook('/home/imedicare/Cofee/static/excel_form/reception_report.xlsx') #Workbook()
+    except:
+        wb = load_workbook('E:\\Data\\Imedicare3\\static\\excel_form\\reception_report.xlsx') #Workbook()
     ws = wb.active# grab the active worksheet
 
     border_thin = Border(top=Side(border_style="thin", color="000000") ,
@@ -1861,6 +1864,13 @@ def rec_report_excel(request):
             for record_data in paymentrecords.order_by("-date"):
                 str_record += record_data.memo + "\n"
             ws['AC' + str(current_row)] = str_record
+        pay_time = reception.payment.pay_time
+
+        datetime_str = '01/01/20 00:00:00'
+        if pay_time == datetime.datetime.strptime(datetime_str, '%m/%d/%y %H:%M:%S'):
+            ws['AD' + str(current_row)] = ''
+        else:
+            ws['AD' + str(current_row)] = reception.payment.pay_time
 
         data_num += 1 
         current_row += 1

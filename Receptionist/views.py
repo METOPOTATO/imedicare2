@@ -1579,6 +1579,9 @@ def storage_page_save(request):
     payment.additional = additional
     payment.total = total
     payment.memo = memo
+    print('****')
+    print(payment.pay_time)
+    payment.pay_time = datetime.datetime.now()
 
     reception = Reception.objects.get(pk = reception_id)
     patient = Patient.objects.get(pk = reception.patient.id)
@@ -1643,6 +1646,8 @@ def storage_page_save(request):
 
 
     context = {'result':'done'}
+    print('=============')
+    print(payment.pay_time)
     return JsonResponse(context)
 
 
@@ -1788,7 +1793,11 @@ def reservation_events(request):
                 'backgroundColor':'rgb(254,154,202)',
                 'borderColor':'rgb(254,154,202)',
                 })
-
+        elif reservation.depart.id == 10: 
+            data.update({
+                'backgroundColor':'rgb(255,251,0)',
+                'borderColor':'rgb(255,251,0)',
+                })
         name = ''
         depart = ''
         memo = ''
@@ -4131,7 +4140,7 @@ def document_medical_receipt_old(request,reception_id,):
     test_set = TestManager.objects.filter(diagnosis_id = reception.diagnosis.id)
     precedure_set = PrecedureManager.objects.filter(diagnosis_id = reception.diagnosis.id)
     medicine_set = MedicineManager.objects.filter(diagnosis_id = reception.diagnosis.id)
-
+    print(medicine_set)
     exams = []
     no = 1
     
@@ -4199,6 +4208,7 @@ def document_medical_receipt_old(request,reception_id,):
         total_medicine_fee = 0
         medicines= []
         for data in medicine_set:
+            print(data)
             medicine = {}
             medicine.update({
                 'no':no,
@@ -4264,6 +4274,7 @@ def document_medical_receipt_old(request,reception_id,):
         total_medicine_fee = 0
         medicines= []
         for data in medicine_set:
+            print(data)
             medicine = {}
             medicine.update({
                 'no':no,
@@ -4290,13 +4301,13 @@ def document_medical_receipt_old(request,reception_id,):
         paymentrecord_query = PaymentRecord.objects.filter(payment_id = payment_query.pk,status='paid').aggregate(total_price=Sum('paid'))
     
         paid_total = paymentrecord_query['total_price']
-        remain_amount = total - paid_total
+        print(paid_total)
+        remain_amount = int(total) - int(paid_total)
 
     
     is_medicine_show = request.GET.get('is_medicine_show')
     if is_medicine_show== 'false':
         no = medicine_show_no +1
-
 
     return render(request,
     'Receptionist/form_medical_receipt_old.html',
@@ -4332,7 +4343,7 @@ def document_medical_receipt_old(request,reception_id,):
                 'precedures':precedures,
                 'medicines':medicines,
 
-                'is_medicine_show':is_medicine_show,
+                'is_medicine_show':'true',
                 'medicine_show_no':medicine_show_no,
                 'total_medicine_fee':f"{total_medicine_fee:,}",
                 }

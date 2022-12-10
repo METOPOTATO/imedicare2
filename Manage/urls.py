@@ -239,5 +239,6 @@ urlpatterns = [
     #알람
     path('get_alert/',views.get_alert),
 
-
+    # delete customer - Linh
+    # path('customer_history/<int:patient_id>', views.customer_history, name='customer_history'),
 ]
