@@ -1,0 +1,167 @@
+
+.inventory_menu_grid {
+    margin: 0 auto;
+    height: 100%;
+    width: 100%;
+    display: grid;
+    grid-template-columns: 400px;
+    /*grid-template-rows: 50%;*/
+}
+
+
+.partition {
+    padding: 5px;
+    padding-left: 20px;
+    padding-right: 20px;
+    background: rgba(180, 180, 180, 0.15);
+    border: 3.7px solid white;
+    overflow: hidden;
+}
+
+.inventory_depart_database {
+    grid-column-start: 1;
+    grid-column-end: 2;
+    overflow-y: hidden;
+}
+
+.inventory_class_database {
+    grid-column-start: 2;
+    grid-column-end: 3;
+    overflow-y: hidden;
+}
+
+
+.inventory_table_title_span {
+    text-align: left;
+    font-size: 16px;
+    height: 26.5px;
+    padding-top: 1px;
+    margin-bottom: 5px;
+    background: rgb(90,64,129);
+    border-color: rgb(90,64,129);
+}
+
+    .inventory_table_title_span:hover {
+        background: rgb(90,64,129);
+        border-color: rgb(90,64,129);
+    }
+
+#inventory_database_table {
+    table-layout: fixed;
+}
+
+    #inventory_database_table th, #inventory_database_table td {
+        text-align: center;
+        vertical-align: middle;
+    }
+
+    #inventory_database_table th:nth-child(1){width:50px;}
+    #inventory_database_table th:nth-child(2){}
+
+
+.menu_item_content {
+    display: inline-table;
+    width: 350px;
+    margin-bottom: 5px;
+    letter-spacing: -1px;
+    text-indent: -10px;
+    vertical-align:middle;
+}
+
+
+#search_depart_div {
+    display: inline-table;
+    width: 200px;
+}
+
+#search_depart {
+    display: table-cell;
+}
+
+
+#add_edit_database .input-group {
+    width: 100%;
+}
+
+#add_edit_database .input-group-addon:first-child {
+    width: 150px;
+    font-weight: 700;
+}
+
+#add_edit_database_code_check_string {
+    display: table;
+    height: 30px;
+}
+
+    #add_edit_database_code_check_string div {
+        display: table-cell;
+        vertical-align: middle;
+    }
+
+#add_edit_database_table {
+    table-layout: fixed;
+}
+
+.database_btn_edit {
+    width: 45px;
+}
+
+.database_btn_delete {
+    margin-left: 10px;
+}
+
+.input_span {
+}
+
+
+.inventory_search_select {
+    width: 170px;
+    display: inline-block;
+}
+
+.precedure_database_table {
+    height: 700px;
+    overflow: auto;
+}
+
+.class_database_list {
+    height: 645px;
+    overflow: auto;
+}
+
+
+.menu_item_wrap {
+    height: 615px;
+}
+
+    .menu_item_wrap > .menu_sub_title {
+        margin-top: 20px;
+        font-size: 16px;
+        font-weight: 600;
+    }
+
+.menu_item_wrap > .menu_item_middle_div {
+    font-size: 14px;
+    font-weight: 600;
+    padding-left: 15px;
+}
+    .menu_item_wrap > .menu_item_div {
+        padding-left: 30px;
+    }
+.menu_item_div label {
+    margin-right: 40px;
+    font-weight: 400;
+}
+
+.menu_item_div input {
+    vertical-align: middle;
+    margin-top: -1px;
+    margin-right: 5px;
+}
+
+@media ( min-height: 1900px ) {
+    .inventory_precedure_grid {
+        width: 1920px;
+        height: 800px;
+    }
+}

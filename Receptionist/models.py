@@ -3,6 +3,7 @@ from django.db.models import Q, Count, F, Min,Sum, Case,When ,Value,CharField,Av
 from django.utils.translation import gettext as _
 
 from Patient.models import *
+from Account.models import User
 from Doctor.models import Depart,Doctor,Disease_Code,ExamFee,Test,Precedure,Medicine
 # Create your models here.
 
@@ -934,3 +935,21 @@ class Sign_Manage(models.Model):
         max_length = 20,
         default='0000-00-00 00:00:00'
         )
+
+
+
+class DetailMemo(models.Model):
+    creator = models.ForeignKey(
+        to = User,
+        on_delete = models.DO_NOTHING,
+        null = True,
+        )
+
+    patient = models.ForeignKey(
+        to = Patient,
+        on_delete = models.DO_NOTHING,
+        null= True,
+        )
+
+    created_at = models.DateTimeField(null=True)
+    memo = models.TextField()

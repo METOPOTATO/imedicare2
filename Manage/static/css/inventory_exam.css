@@ -1,0 +1,364 @@
+
+.inventory_precedure_grid {
+    margin: 0 auto;
+    height: 100%;
+    width: 100%;
+    display: grid;
+    /*grid-template-columns: 70%;
+    grid-template-rows: 50%;*/
+}
+
+
+.partition {
+    padding: 5px;
+    padding-left: 20px;
+    padding-right: 20px;
+    background: rgba(180, 180, 180, 0.15);
+    border: 3.7px solid white;
+    overflow: hidden;
+}
+
+.inventory_precedure_database {
+    grid-column-start: 1;
+    grid-column-end: 2;
+    grid-row-start: 1;
+    grid-row-end: 3;
+    overflow-y: hidden;
+}
+
+
+.inventory_table_title_span {
+    text-align: left;
+    font-size: 16px;
+    height: 26.5px;
+    padding-top: 1px;
+    margin-bottom: 5px;
+    background: rgb(90,64,129);
+    border-color: rgb(90,64,129);
+}
+
+    .inventory_table_title_span:hover {
+        background: rgb(90,64,129);
+        border-color: rgb(90,64,129);
+    }
+
+#search_doctor_div {
+    display: inline-table;
+    width:200px;
+}
+
+#search_depart{
+    display:table-cell;
+}
+
+
+#inventory_database_table {
+    height: 650px;
+    table-layout: fixed;
+}
+
+    #inventory_database_table thead tr th {
+        font-weight: 700;
+        text-align: center;
+        vertical-align:middle;
+    }
+        #inventory_database_table thead tr th:nth-child(1) {
+            width: 100px;
+        }
+        #inventory_database_table thead tr th:nth-child(2) {
+            width: 200px;
+        }
+        #inventory_database_table thead tr th:nth-child(3) {
+        }
+        #inventory_database_table thead tr th:nth-child(4) {
+            width: 250px;
+        }
+        #inventory_database_table thead tr th:nth-child(5) {
+            width: 200px;
+        }
+        #inventory_database_table thead tr th:nth-child(6) {
+            widtH: 100px;
+        }
+
+
+    #inventory_database_table tbody tr {
+        height: 30px;
+    }
+        #inventory_database_table tbody tr td {
+            text-align: center;
+            vertical-align: middle;
+            text-overflow: ellipsis;
+            overflow: hidden;
+            white-space: nowrap;
+            padding-left: 15px;
+            padding-right: 15px;
+        }
+            #inventory_database_table tbody tr td:nth-child(3) {
+            text-align: left;
+        }
+
+
+        #inventory_database_table tbody tr td:nth-child(6) {
+            text-align: right;
+        }
+
+        #inventory_database_table tbody tr td:nth-child(7) {
+            text-align: center;
+        }
+
+
+
+#add_edit_database .input-group {
+    width: 100%;
+}
+
+#add_edit_database .input-group-addon:first-child {
+    width: 150px;
+    font-weight: 700;
+}
+
+#add_edit_database_code_check_string {
+    display: table;
+    height: 30px;
+}
+
+    #add_edit_database_code_check_string div {
+        display: table-cell;
+        vertical-align: middle;
+    }
+
+#add_edit_database_table {
+    table-layout: fixed;
+}
+
+.database_btn_edit {
+    width: 45px;
+}
+
+.database_btn_delete {
+    margin-left: 10px;
+}
+
+.input_span {
+}
+
+
+.inventory_search_select {
+    width: 170px;
+    display: inline-block;
+}
+
+.precedure_database_table {
+    height: 600px;
+    overflow: auto;
+}
+
+.inventory_history_part1 {
+    grid-column-start: 2;
+    grid-column-end: 3;
+    grid-row-start: 1;
+    grid-row-end: 2;
+    overflow-y: hidden;
+}
+
+#inventory_history_date {
+    width: 100px;
+    display: inline;
+}
+
+#inventory_history_table {
+    table-layout: fixed;
+}
+
+#inventory_history_total {
+    float: right;
+}
+
+#inventory_history_table thead tr th:nth-child(1) {
+    width: 50px;
+}
+
+#inventory_history_table thead tr th:nth-child(2) {
+    width: 140px;
+}
+
+#inventory_history_table thead tr th:nth-child(3) {
+    width: 65px;
+}
+
+#inventory_history_table thead tr th:nth-child(4) {
+    width: 50px;
+}
+
+#inventory_history_table thead tr th:nth-child(5) {
+}
+
+#add_medicine_table .input-group-addon:first-child {
+    width: 150px;
+}
+
+#inventory_history_div {
+    height: 280px;
+    overflow-y: auto;
+}
+
+#inventory_add {
+    float: right;
+}
+
+.inventory_history_part2 {
+    grid-column-start: 2;
+    grid-column-end: 3;
+    grid-row-start: 2;
+    grid-row-end: 3;
+    overflow-y: hidden;
+}
+
+
+#inventory_expiry_div {
+    height: 325px;
+    overflow-y: auto;
+}
+
+#inventory_expiry_table {
+    table-layout: fixed;
+}
+
+    #inventory_expiry_table thead tr th {
+        vertical-align: middle;
+        text-align: center;
+    }
+
+        #inventory_expiry_table thead tr th:nth-child(1) {
+            width: 50px;
+        }
+
+        #inventory_expiry_table thead tr th:nth-child(3) {
+            width: 110px;
+        }
+
+        #inventory_expiry_table thead tr th:nth-child(6) {
+            width: 80px;
+        }
+
+#inventory_expiry_tbody tr td {
+    text-align: center;
+    vertical-align: middle;
+}
+
+.add_medicine_database_h4 {
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+}
+
+
+.test_result_div {
+    height: 200px;
+    border: 1px solid #ccc;
+    overflow-y: scroll;
+}
+
+#test_result_table{
+    table-layout:fixed;
+}
+
+#test_result_table thead tr th{
+    vertical-align:middle;
+    text-align:center;
+}
+
+    #test_result_table thead tr th:nth-child(1) {
+        width:60px;
+    }
+    #test_result_table thead tr th:nth-child(2) {
+        width: 60px;
+    }
+    #test_result_table thead tr th:nth-child(3) {
+        width: 40px;
+    }
+    #test_result_table thead tr th:nth-child(4) {
+        width: 40px;
+    }
+    #test_result_table thead tr th:nth-child(5) {
+        width: 60px;
+    }
+    #test_result_table thead tr th:nth-child(6) {
+        width: 60px;
+    }
+    #test_result_table thead tr th:nth-child(7) {
+        width: 22px;
+    }
+
+
+#test_result_tbody tr td {
+    vertical-align: middle;
+    text-align: center;
+    padding:0px;
+}
+#test_result_tbody tr td:nth-child(7) {
+    padding:5px;
+}
+.test_result_input{
+    padding:0px;
+    padding-left:5px;
+    width:100%;
+    height:30px;
+    border:none;
+    background:none;
+}
+
+
+
+
+    #test_interval_table {
+        table-layout: fixed;
+        letter-spacing: -1px;
+    }
+    #test_interval_table th, #test_interval_table td {
+        vertical-align: middle;
+        text-align: center;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        overflow: hidden;
+    }
+
+    #test_interval_table th:nth-child(1){}
+    #test_interval_table th:nth-child(2){width:100px;}
+    #test_interval_table th:nth-child(3){width:60px;}
+    #test_interval_table th:nth-child(4){width:100px;}
+    #test_interval_table th:nth-child(5){width:90px;}
+    #test_interval_table th:nth-child(6){width:100px;}
+
+    #test_interval_table a:last-child{
+        margin-right:0px;
+    }
+
+#add_edit_interval .input-group-addon {
+    width: 135px;
+}
+
+
+#class_menu_table th, #class_menu_table td{
+    vertical-align:middle;
+    text-align:center;
+}
+
+#class_menu_table th:nth-child(1){width:50px;}
+#class_menu_table th:nth-child(2){width:300px;}
+#class_menu_table th:nth-child(3){width:300px;}
+#class_menu_table th:nth-child(4){}
+
+#class_table .input-group {
+    width: 100%;
+}
+#class_table .input-group-addon {
+    width: 120px;
+}
+
+@media ( min-height: 1900px ) {
+    .inventory_precedure_grid {
+        width: 1920px;
+        height: 800px;
+    }
+}

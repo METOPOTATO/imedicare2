@@ -4969,3 +4969,51 @@ def delete_agreement(request):
     return JsonResponse({
         'result':True,
         })
+
+
+def get_memo_detail(request):
+
+    patient_id = request.POST.get('patient_id')
+
+    data = []
+    try:
+        patient = Patient.objects.filter(pk=patient_id).first()
+        memo_detail = DetailMemo.objects.filter(patient=patient)
+        for val in memo_detail:
+            data.append({
+                'creator': val.creator.name_en,
+                'depart': val.creator.depart,
+                'memo': val.memo
+            })
+    except:
+        print('====')
+    return JsonResponse({
+        'result':True,
+        'datas': data
+    })
+
+    
+def create_memo_detail(request):
+    user = request.user
+
+    patient_id = request.POST.get('patient_id')
+    memo = request.POST.get('memo')
+    data = []
+    if request.user.is_authenticated:
+        try:
+            patient = Patient.objects.filter(pk=patient_id).first()
+            DetailMemo.objects.create(creator=user, patient=patient, memo=memo)
+            memo_details = DetailMemo.objects.filter(patient=patient)
+            for val in memo_details:
+                data.append({
+                    'creator': val.creator.name_en,
+                    'depart': val.creator.depart,
+                    'memo': val.memo
+                })
+        except Exception as e:
+            print(e)
+
+    return JsonResponse({
+        'result':True,
+        'datas': data
+    }) 

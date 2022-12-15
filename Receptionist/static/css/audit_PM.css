@@ -1,0 +1,132 @@
+body {
+}
+
+.contents_wrap {
+    padding: 5px;
+    padding-left: 20px;
+    padding-right: 20px;
+    background: rgba(180, 180, 180, 0.15);
+    border: 3.7px solid white;
+    overflow: hidden;
+}
+
+.contents_Title_wrap {
+    display: inline;
+}
+
+.contents_Title {
+    background: rgb(237,237,237);
+    text-align: left;
+    font-size: 16px;
+    height: 26.5px;
+    padding-top: 1px;
+    margin-bottom: 5px;
+    background: rgb(90,64,129);
+    border-color: rgb(90,64,129);
+}
+    .contents_Title:hover {
+        background: rgb(90,64,129);
+        border-color: rgb(90,64,129);
+    }
+
+    .contents_filter_top {
+    display: inline;
+    text-align: right;
+    float: right;
+}
+
+
+.doctor_search_table_filter {
+    text-align: right;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+    .doctor_search_table_filter select {
+        margin-right: 20px;
+    }
+
+        .doctor_search_table_filter select:last-child {
+            margin-right: 0px;
+        }
+
+.doctor_search_table {
+    width: 100%;
+}
+
+.doctor_search_general, .doctor_search_medicine, .doctor_search_lab, .doctor_search_scaling, .doctor_search_panorama {
+    display: inline;
+    width: 160px;
+}
+
+.doctor_search {
+    display: inline;
+    width: 200px;
+}
+
+
+.doctor_search_date {
+    display: inline;
+    width: 75px;
+}
+
+.doctors_search_depart {
+    width: 85px;
+    display: inline;
+}
+
+.doctors_search_doctor {
+    width: 85px;
+    display: inline;
+}
+
+.form-control {
+    font-size: 12px;
+    padding: 5px;
+}
+
+.doctor_profit_control {
+    display: inline;
+    width: 50px;
+}
+
+.doctors_table_profit tr td {
+    text-align: right;
+}
+
+.payment_table_result > tr {
+    height: 4vh;
+}
+
+.doctors_table_th tr th:nth-child(1){
+    width:50px;
+}
+.doctors_table_th tr th:nth-child(2){
+    width:100px;
+}
+.doctors_table_th tr th:nth-child(3) {
+    width: 150px;
+}
+.doctors_table_th tr th:nth-child(4) {
+    width: 85px;
+}
+.doctors_table_th tr th:nth-child(5) {
+    width: 130px;
+}
+
+.doctors_table_th tr th:nth-child(6) {
+    width: 250px;
+}
+.doctors_table_th tr th:nth-child(7) {
+    width: 320px;
+}
+
+
+.doctors_table_th tr th:nth-child(9), .doctors_table_th tr th:nth-child(10), .doctors_table_th tr th:nth-child(11), .doctors_table_th tr th:nth-child(12) {
+    text-align: right;
+    width: 135px;
+}
+
+.payment_table_result tr td:nth-child(9), .payment_table_result tr td:nth-child(10), .payment_table_result tr td:nth-child(11), .payment_table_result tr td:nth-child(12) {
+    text-align: right;
+}

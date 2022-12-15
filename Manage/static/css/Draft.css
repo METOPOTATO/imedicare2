@@ -1,0 +1,405 @@
+.board_grid {
+    margin: 0 auto;
+    height: 100%;
+    width: 100%;
+    display: grid;
+}
+.pagination{
+    float:left;
+}
+
+.partition {
+    padding: 5px;
+    padding-left: 20px;
+    padding-right: 20px;
+    background: rgba(180, 180, 180, 0.15);
+    border: 3.7px solid white;
+    overflow: hidden;
+}
+
+.inventory_database {
+    grid-column-start: 1;
+    grid-column-end: 2;
+    grid-row-start: 1;
+    grid-row-end: 3;
+    overflow-y: hidden;
+    text-align:center;
+    
+}
+
+.table_title{
+    text-align:left;
+}
+
+.title_span {
+    text-align: left;
+    font-size: 16px;
+    height: 26.5px;
+    padding-top: 1px;
+    margin-bottom: 5px;
+    background: rgb(233, 69, 139);
+    border-color: rgb(233, 69, 139);
+}
+
+    .title_span:hover {
+        background: rgb(233, 69, 139);
+        border-color: rgb(233, 69, 139);
+    }
+
+
+
+.draft_table_wrap {
+    width: 1400px;
+    height: 750px;
+    text-align: center;
+    /*margin: 0 auto;*/
+    margin-left:200px;
+}
+
+.draft_table_div{
+    height:600px
+}
+
+#draft_table{
+    letter-spacing:-1px;
+    table-layout:fixed;
+}
+
+    #draft_table tr th, #draft_table tr td{
+        vertical-align: middle;
+        text-align: center;
+    }
+    #draft_table tr{
+        height:50px;
+    }
+
+    #draft_table tr th:nth-child(1) {
+        width: 50px;
+    }
+        #draft_table tr th:nth-child(2) {
+            width:85px;
+        }
+        #draft_table tr th:nth-child(3) {
+            width: 130px;
+        }
+    
+    
+    #draft_table tr th:nth-child(5){
+        width:125px;
+    }
+        #draft_table tr th:nth-child(6),
+        #draft_table tr th:nth-child(7),
+        #draft_table tr th:nth-child(8),
+        #draft_table tr th:nth-child(9),
+        #draft_table tr th:nth-child(10) {
+            width: 105px;
+        }
+
+        #draft_table tr th:nth-child(11) {
+            width: 40px;
+        }
+
+        #draft_table tr th:nth-child(12) {
+            width: 115px;
+        }
+        #draft_table tr th:nth-child(13) {
+            
+        }
+
+   
+
+
+    #btn_new {
+        float: right;
+    }
+
+.new_edit_title_content_table{
+    font-size:10px !important;
+}
+
+    .new_edit_title_content_table thead tr th {
+        vertical-align: middle;
+        text-align: center;
+        border: 1px solid black !important;
+    }
+
+    .new_edit_title_content_table thead tr th:nth-child(1) {
+        width:50px;
+    }
+    .new_edit_title_content_table thead tr th:nth-child(2) {
+    }
+    .new_edit_title_content_table thead tr th:nth-child(3) {
+        width: 100px;
+    }
+        .new_edit_title_content_table thead tr th:nth-child(4) {
+            width: 200px;
+        }
+    .new_edit_title_content_table thead tr th:nth-child(5) {
+        width: 150px;
+    }
+
+
+#consultation_depart_1, #consultation_depart_2 {
+    width: 20.5%;
+    padding-right:0px;
+}
+
+
+#consultation_incharge1, #consultation_incharge2 {
+    width: 21%;
+    padding-right: 0px;
+}
+
+
+#consultation_content1, #consultation_content2 {
+    width: 58.5%;
+}
+
+#payment_form_table th {
+    vertical-align: middle;
+    text-align: center;
+    border: 1px solid black !important;
+}
+#payment_form_table td {
+    border: 1px solid black !important;
+}
+
+#payment_form_table th:nth-child(1) {
+    width: 50px;
+}
+
+    #payment_form_table th:nth-child(2) {
+    }
+
+    #payment_form_table th:nth-child(3) {
+        width: 200px;
+    }
+
+    #payment_form_table th:nth-child(4) {
+        width: 300px;
+    }
+
+.new_edit_title_content_table tbody tr td {
+    vertical-align: middle;
+    text-align: center;
+    border: 1px solid black !important;
+}
+
+        .new_edit_title_content_table tbody tr td:nth-child(3),
+        .new_edit_title_content_table tbody tr td:nth-child(4) {
+            /*text-align:right;*/
+        }
+
+
+#new_edit_title_payment_method_table{
+    border:none;
+}
+    #new_edit_title_payment_method_table tr {
+        border: none;
+    }
+    #new_edit_title_payment_method_table tr td {
+        border: none;
+    }
+    #new_edit_title_payment_method_table tr td:nth-child(1){
+        width:450px;
+    }
+    #new_edit_title_payment_method_table tr td:nth-child(2) {
+        width: 350px;
+    }
+
+
+
+
+.new_edit_title_content_table_demand {
+}
+
+    .new_edit_title_content_table_demand thead tr th {
+        vertical-align: middle;
+        text-align: center;
+        border-bottom-width: 3px;
+        border: 1px solid black !important;
+        line-height: 10px;
+    }
+
+        .new_edit_title_content_table_demand thead tr th:nth-child(1) {
+            width: 30px;
+        }
+
+        .new_edit_title_content_table_demand thead tr th:nth-child(2) {
+            width:200px;
+        }
+
+        .new_edit_title_content_table_demand thead tr th:nth-child(3),
+        .new_edit_title_content_table_demand thead tr th:nth-child(4) {
+            width: 100px;
+        }
+        .new_edit_title_content_table_demand thead tr th:nth-child(5) {
+            width: 125px;
+        }
+        .new_edit_title_content_table_demand thead tr th:nth-child(6) {
+            width: 40px;
+        }
+        .new_edit_title_content_table_demand thead tr th:nth-child(7),
+        .new_edit_title_content_table_demand thead tr th:nth-child(9) {
+            width: 100px;
+        }
+        .new_edit_title_content_table_demand thead tr th:nth-child(8) {
+            width: 130px;
+        }
+        .new_edit_title_content_table_demand tbody tr td {
+            vertical-align: middle;
+            text-align: center;
+            border: 1px solid black !important;
+            height:20px;
+        }
+
+
+#payment_method_table{
+}
+    #payment_method_table tr td{
+        vertical-align:middle;
+        text-align:center;
+        font-size:10px;
+        border:1px solid black !important;
+    }
+
+        #payment_method_table tr td:nth-child(1) {
+            width: 50px;
+        }
+
+        #payment_method_table tr td:nth-child(2) {
+            width: 70px;
+        }
+        #payment_method_table tr td:nth-child(3) {
+            width: 80px;
+        }
+        #payment_method_table tr td:nth-child(4) {
+            width: 56px;
+        }
+
+    .input-group {
+        width: 100%;
+        margin-bottom: 10px;
+    }
+.input-group-addon{
+    width:120px;
+}
+
+.input-group-left{
+    width:49%;
+    float:left;
+    margin-right:1px;
+}
+
+.input-group-right {
+    width: 49%;
+    float: right;
+    margin-right: 1px;
+}
+
+.search{
+    display:inline-table;
+    width:250px;
+}
+
+    .search .input-group-addon {
+        width:120px;
+    }
+
+#search_requester_div {
+    width: 320px;
+}
+
+.search_date {
+    display: inline;
+    width: 90px;
+}
+
+.search_title {
+    display: inline;
+    width: 140px;
+}
+
+.label{
+    display:inline-block;
+    width:50px;
+}
+
+#file_table{
+    table-layout:fixed;
+}
+    #file_table thead tr th, #file_table tbody tr td{
+        vertical-align:middle;
+        text-align:center;
+    }
+
+        #file_table thead tr th:nth-child(1),
+        #file_table thead tr th:nth-child(6) {
+            width: 50px;
+        }
+        #file_table thead tr th:nth-child(2),
+        #file_table thead tr th:nth-child(5) {
+            width: 150px;
+            text-align:left;
+        }
+        #file_table thead tr th:nth-child(3) {
+            width: 80px;
+        }
+        #file_table thead tr th:nth-child(4) {
+            width: 100px;
+        }
+
+        #file_table tbody tr td:nth-child(2),
+        #file_table tbody tr td:nth-child(5) {
+            text-align: left;
+        }
+    #id_file {
+        display: none;
+    }
+
+#btn_file{
+    height:30px;
+    border-radius: 0px 4px 4px 0px;
+    border-left:none;
+}
+
+
+.note-editable label{
+    font-size:10px;
+}
+
+
+#dynamic_div {
+    display: none;
+}
+
+.fl{
+    width:49%;
+    float:left;
+}
+
+.fr {
+    width: 49%;
+    float: right;
+}
+
+.text_gray{
+    color:#bbb;
+}
+
+.text_black{
+    color:#000;
+}
+
+@media print {
+    html, body {
+        min-width: 210mm;
+        max-width: 210mm;
+        /*max-height: 297mm;
+        min-height: 297mm;*/
+    }
+
+    #dynamic_div {
+        display: block;
+    }
+}

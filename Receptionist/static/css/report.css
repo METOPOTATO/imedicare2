@@ -1,0 +1,364 @@
+body {
+    height: auto;
+    min-width: 1500px;
+    max-width: 1980px;
+    min-height: 750px;
+    max-height: 1080px;
+    overflow:hidden;
+    overflow-x:auto;
+}
+
+    body:before {
+        overflow: hidden;
+        height: auto;
+        display: block;
+        padding-top: 100%;
+    }
+
+.report_grid {
+    margin: 0 auto;
+    height: 100%;
+    width: 100%;
+    display: grid;
+    grid-template-columns: 500px 520px;
+}
+
+.partition {
+    padding: 5px;
+    padding-left: 20px;
+    padding-right: 20px;
+    background: rgba(180, 180, 180, 0.15);
+    border: 3.7px solid white;
+    overflow: auto;
+}
+
+.search_part{
+    grid-column-start: 1;
+    grid-column-end: 2;
+}
+
+.input_part {
+    grid-column-start: 2;
+    grid-column-end: 3;
+}
+
+.print_preview_part {
+    grid-column-start: 3;
+    grid-column-end: 4;
+}
+
+.input_part_contorl{
+    margin-top:7.5px;
+}
+
+    .input_part_contorl > div {
+        padding-bottom: 8px;
+        width: 100%;
+    }
+
+        .input_part_contorl > div > span {
+            width: 100px;
+        }
+
+
+
+.search_select {
+    display: inline-table;
+    width: 75px;
+}
+
+.search_input {
+    display: inline-block;
+    width: 75px;
+}
+
+.search_table_contents tr td{
+    height: 30px
+}
+
+.search_wrap {
+    text-align: center;
+    margin-top: 35px;
+    height: 550px;
+    overflow: auto;
+}
+
+
+.report_view_wrap {
+    height: 635px;
+    width: 500px;
+}
+
+.report_view {
+    height: 100%;
+    padding-top: 20px;
+    background: white;
+    border: 2px solid black;
+    margin: 0 auto;
+}
+
+#report_search_table thead tr th{
+    vertical-align:middle;
+    text-align:center;
+}
+
+#report_search_table tbody tr td{
+    vertical-align:middle;
+    text-align:center;
+}
+
+.status_table_title span {
+    text-align: left;
+    font-size: 16px;
+    height: 26.5px;
+    padding-top: 1px;
+    margin-bottom: 5px;
+    color: white;
+    background: rgb(20,135,130);
+    border-color: rgb(20,135,130);
+}
+status_table_title span:hover {
+    background: rgb(20,135,130);
+    border-color: rgb(20,135,130);
+    color: white;
+}
+
+
+
+
+.report_search_date {
+    display:inline;
+    width:75px;
+    padding:5px;
+}
+
+.contents_name {
+    width: 100%;
+    text-align: justify;
+}
+
+.patient_searach_wrap {
+    height: 250px;
+}
+
+
+.patient_search{
+    text-align:right;
+    padding-right:20px;
+}
+
+.patient_search_select {
+    display: inline;
+    width: 100px;
+}
+.patient_search_input {
+    display: inline;
+    width: 200px;
+}
+.patient_search_btn {
+}
+.page {
+    width: 85%;
+    height: 100%;
+    margin: 0 auto;
+}
+
+.page #wrap {
+    margin: 0px;
+    font-size: 10px;
+    font-family: "Times New Roman", Times, serif;
+}
+
+    .page table {
+        height: 100%;
+    }
+
+        .page table tr td {
+            font-size: 10px;
+        }
+
+    .page #logo {
+        width: 100%;
+    }
+    .page .top tr:first-child td:nth-child(2) {
+        font-weight: 700;
+    }
+
+    .page .patient_info {
+        width: 100%;
+        margin-top: 10px;
+        border-collapse: separate;
+        border-spacing: 0px 2px;
+    }
+
+        .page .patient_info tr td {
+            width: 50%;
+        }
+
+
+    .page .title {
+        width: 100%;
+        text-align: center;
+        font-size: 14px;
+        font-weight: 700;
+        margin-top: 15px;
+    }
+
+    .page .contents {
+        margin-top: 15px;
+        width: 100%;
+        border-collapse: collapse;
+    }
+
+        .page .contents tr td, .contents tr th {
+        }
+
+        .page .contents thead tr:first-child td {
+            text-align: center;
+            vertical-align: middle;
+        }
+
+    .page #contents tr, #contents td {
+        padding: 2px;
+    }
+
+.page #contents_datas tr td {
+}
+
+.page .footer {
+    margin-top: 45px;
+    width: 100%;
+}
+
+.page .footer tr td:first-child {
+    text-align:center;
+}
+
+.page .footer tr td:nth-child(2) {
+}
+
+
+.page_print{
+    display:none;
+}
+
+.chart_table tbody tr td:first-child {
+    width: 70px;
+}
+.chart_table tbody tr td:nth-child(2) {
+    width: 77px;
+}
+
+.middle table tbody tr td:first-child{
+    width:90px;
+}
+
+.middle table tbody tr td:nth-child(2) {
+    width: 153px;
+}
+
+.middle table tbody tr td:nth-child(3) {
+    text-align: center;
+    width: 61.5px;
+}
+.middle table tbody tr td:nth-child(4) {
+   
+    width: 46px;
+}
+.middle table tbody tr td:nth-child(5) {
+    text-align: center;
+    width: 61.5px;
+}
+.middle table tbody tr td:nth-child(6) {
+    text-align: center;
+    width: 46px;
+}
+
+#dynamic_div {
+    display: none;
+}
+
+
+@media ( min-width: 1900px ) {
+    .report_grid {
+        grid-template-columns: 650px 600px;
+    }
+
+    .search_wrap {
+        height: 680px;
+        margin-top:0px;
+    }
+
+    .search_input {
+        width:170px;
+    }
+
+    .input_part_contorl > div > span {
+        width: 120px;
+    }
+
+    .report_view_wrap{
+        height:95%;
+    }
+    .report_view_wrap {
+        height: 800px;
+        width: 620px;
+    }
+
+   
+
+    .chart_table tbody tr td:first-child {
+        width: 90px;
+    }
+
+    .chart_table tbody tr td:nth-child(2) {
+        width: 120px;
+    }
+
+    .middle table tbody tr td:first-child {
+        width: 90px;
+    }
+
+    .middle table tbody tr td:nth-child(2) {
+        width: 153px;
+    }
+
+    .middle table tbody tr td:nth-child(3) {
+        text-align: center;
+        width: 61.5px;
+    }
+
+    .middle table tbody tr td:nth-child(4) {
+        text-align: center;
+        width: 65px;
+    }
+
+    .middle table tbody tr td:nth-child(5) {
+        text-align: center;
+        width: 61.5px;
+    }
+
+    .middle table tbody tr td:nth-child(6) {
+        text-align: center;
+        width: 65px;
+    }
+}
+
+    @page {
+        size: A4;
+        margin: 0 auto;
+    }
+
+@media print {
+    html, body {
+        min-width: 210mm;
+        max-width: 210mm;
+        /*max-height: 297mm;
+        min-height: 297mm;*/
+    }
+    
+    #dynamic_div {
+        display: block;
+    }
+}
+

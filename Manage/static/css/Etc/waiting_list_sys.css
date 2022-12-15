@@ -1,0 +1,432 @@
+
+
+html, body {
+    font-size: 2em;
+    color:white;
+    background:black;
+}
+
+*{
+    margin:0px;
+    
+}
+
+div {
+    /*border: 1px solid white;*/
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+}
+
+span {
+    width:100%;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+}
+
+.depart_bg_im{background:linear-gradient( to bottom right, rgb(143 189 74), rgb(118 147 63) );}
+.depart_bg_ent{background:linear-gradient( to bottom right, rgb(255,177,93), rgb(199 127 54) );}
+.depart_bg_derm{background:linear-gradient( to bottom right, rgb(156 121 158), rgb(133 74 135) );}
+.depart_bg_pm{background:linear-gradient( to bottom right, rgb(127 191 216), rgb(70 135 160) );}
+.depart_bg_dental{background:linear-gradient( to bottom right, rgb(82 133 205), rgb(53 98 162) );}
+
+.container-fluid > .row:first-child > div {
+    height: 165px;
+    text-align:center;
+}
+
+.letter-small {
+    letter-spacing: -5px;
+    font-size: 1.6rem !important ;
+}
+
+.top_depart{
+    /*background:rgb(136,182,67);*/
+}
+
+.top_depart span{
+    font-weight:700;
+}
+    .top_depart > div > div:first-child {
+        line-height:140px;
+        overflow:unset;
+    }
+        .top_depart > div > div > img{
+        padding:0px;
+        margin: 0 auto;
+        vertical-align:middle;
+    }
+
+    .top_depart > div > div:nth-child(2) > div {
+        height: 90px;
+    }
+
+    .top_depart > div > div:nth-child(2) > div:nth-child(2) {
+        font-size:1.5rem;
+        letter-spacing:-1px;
+        font-weight:500 !important;
+    }
+
+.top_time {
+    background: rgb(34,34,55);
+    background: linear-gradient( to bottom right, rgb(43,37,139), rgb(23,18,48) );
+    line-height: 155px;
+}
+
+    .top_time span {
+    }
+
+.top_title {
+    background: rgb(43,37,139);
+    background: linear-gradient( to bottom right, rgb(43,37,139), rgb(23,18,48) );
+    line-height: 130px;
+}
+    .top_title img {
+        vertical-align: middle;
+    }
+
+.information {
+    background: rgb(98,87,160);
+}
+
+
+    .information > div {
+        overflow:hidden;
+        text-overflow:unset;
+        line-height:0;
+        height:90px;
+    }
+        .information > div > span {
+            font-size: 2rem;
+            display: inline-block;
+            height: 80px;
+            line-height: 80px;
+            width: 40px;
+        }
+
+        .information > div > div {
+            display: inline-block;
+            height: 80px;
+            overflow: hidden;
+            margin:0
+        }
+
+            .information > div > div > ul {
+                margin: 0 0 0 0;
+                padding: 0;
+                margin: 0;
+                list-style: none;
+                font-size: 1.7rem;
+
+            }
+                .information > div > div > ul li {
+                    margin: 0;
+                    padding: 0;
+                    list-style: none;
+                    height:100px;
+
+                }
+
+                    .information > div > div > ul li a {
+                        display: block;
+                        height: 100px;
+                        line-height: 86px;
+                        color: #555;
+                        text-decoration: none;
+                    }
+
+    .content_row > div {
+        height: 137px;
+        /*border: 3px solid white;*/
+        border-right: none;
+        border-bottom: none;
+    }
+
+    .content_row > div:last-child {
+        /*border-bottom: 3px solid white;*/
+    }
+
+    .content_row > div:first-child {
+        
+    }
+
+
+        .content_row > div:first-child > div {
+            height:100%;
+            text-align: center;
+            background: linear-gradient( to bottom right, rgb(49,38,108), rgb(23,18,48) );
+        }
+        .content_row > div:first-child > div > span {
+            display: inline-block;
+            height: 130px;
+            line-height: 130px;
+            text-align: center;
+            font-weight:700;
+            font-size:2.6rem;
+        }
+
+            
+                /*.content_row .row:nth-child(2n+1):not(:first-child) {
+    background: rgb(38,38,50);
+    background: rgb(58,58,70);
+    background: linear-gradient( to bottom right, rgb(76,76,92), rgb(56,56,72) );
+}
+.content_row .row:nth-child(2n):not(:first-child) {
+    background: rgb(56,56,72);
+    background: rgb(76,76,92);
+    background: linear-gradient( to bottom right, rgb(76,76,92), rgb(56,56,72) );
+}
+*/
+                .content_row .row:not(:first-child) {
+    background: rgb(56,56,72);
+    background: rgb(76,76,92);
+    background: linear-gradient( to bottom right, rgb(76,76,92), rgb(56,56,72) );
+    font-size:2.3rem;
+}
+
+
+.middle_content > div:first-child {
+    
+}
+    .middle_content > div:first-child > div:nth-child(2) > span {
+        color: rgb(44,212,70);
+    }
+.middle_content > div:first-child > div {
+    background: linear-gradient( to bottom right, rgb(64,58,166), rgb(29,25,94));
+}
+
+.middle_content > div:not(:first-child) > div:nth-child(2) > div:first-child > span {
+    display: block;
+    height: 78px;
+    line-height: 78px;
+    font-size: 1.8rem;
+}
+.middle_content > div:not(:first-child) > div:nth-child(2) > div:nth-child(2) > span {
+    display: block;
+    height: 55px;
+    line-height: 45px;
+}
+/*.middle_content .row:nth-child(2n+1):not(:first-child) {
+    background: rgb(56,56,72);
+    background: rgb(76,76,92);
+    background: linear-gradient( to bottom right, rgb(76,76,92), rgb(56,56,72) );
+}
+.middle_content .row:nth-child(2n):not(:first-child) {
+    background: rgb(38,38,50);
+    background: rgb(58,58,70);
+    background: linear-gradient( to bottom right, rgb(76,76,92), rgb(56,56,72) );
+}
+    */
+#waiting_list_title_kor, #on_treatement_title_kor, #waiting_pay_title_kor {
+    display: block;
+    font-size: 1.8rem;
+    height: 70px;
+    line-height: 80px;
+}
+
+#waiting_list_title_vie, #on_treatement_title_vie, #waiting_pay_title_vie {
+    display: block;
+    font-size: 1.5rem;
+    height: 65px;
+    line-height: 55px;
+}
+
+
+
+.content_row_middle {
+    height: 148px;
+    border: 5px solid white;
+    border-bottom: none;
+}
+
+
+.patient_time {
+    font-size: 0.6em;
+}
+
+.number_wrap {
+    height: 148px;
+    vertical-align: middle;
+    line-height: 160px;
+    overflow:visible;
+    text-overflow:unset;
+}
+
+.number {
+    display: inline-block;
+    border: 10px solid rgb(116,114,183);
+    width: 90px;
+    height: 90px;
+    line-height: 65px;
+    border-radius: 30px;
+    background-color: rgb(171,170,212);
+    text-align: center;
+    font-size: 2rem;
+}
+
+.patient_warp {
+    height:100%;
+}
+
+    .patient_warp span {
+        display: inline-block;
+        height: 130px;
+        line-height: 130px;
+        text-align: center;
+    }
+
+
+    /*.patient_warp > div:first-child{
+        height:100%;
+    }
+    .patient_warp > div:nth-child(2) {
+        margin-top:-45px;
+    }*/
+    /*// Large devices (desktops, less than 1200px)*/
+    @media (max-width: 1200px) {
+        html {
+        font-size: 1.5em;
+    }
+    .letter-small {
+        letter-spacing: 0px;
+        font-size: 0.8em;
+    }
+        .container-fluid > .row:first-child > div {
+            height: 120px;
+        }
+        .top_title {
+            line-height: 100px;
+        }
+        .top_title img {
+            width: 100%;
+        }
+        .top_depart > div > div:first-child {
+            line-height: 110px;
+        }
+        #depart_img {
+            width: 70px;
+        }
+        .top_depart > div > div:nth-child(2) > div {
+            height: 70px;
+        }
+            .top_depart > div > div:nth-child(2) > div:nth-child(2) {
+                font-size: 1.2rem;
+                font-weight: 300 !important;
+            }
+
+        .top_time {
+            line-height: 120px;
+            font-size: 1.7rem;
+        }
+        .number {
+            width: 80px;
+            height: 80px;
+            line-height: 57px;
+        }
+        .middle_content > div:not(:first-child) > div:nth-child(2) > div:first-child > span {
+            font-size: 2rem;
+            letter-spacing: -1px;
+        }
+        .letter-small {
+            font-size: 1.3rem !important;
+        }
+}
+
+/*// Medium devices (tablets, less than 992px)*/
+@media (max-width: 992px) {
+    html {
+        font-size: 2rem;
+    }
+    .letter-small {
+        letter-spacing: 0px;
+        font-size: 1.8rem !important;
+    }
+    .top_title img{
+        width:auto;
+    }
+    .top_depart > div > div:first-child {
+        line-height: 100px;
+    }
+    #depart_img{
+        width:auto;
+    }
+    .top_depart > div > div:nth-child(2) > div{
+        font-size:1.7rem;
+        height:100%;
+        display:inline;
+    }
+        .top_depart > div > div:nth-child(2) > div:nth-child(2) {
+            font-size: 1.5rem;
+            height: 100%;
+            display: inline;
+            letter-spacing:-1px;
+        }
+
+}
+
+/*// Small devices (landscape phones, less than 768px)*/
+@media (max-width: 768px) {
+    html {
+        font-size: 1.5rem;
+    }
+    .top_depart > div > div:nth-child(2) {
+        line-height: 115px;
+    }
+    .top_time {
+        line-height: 115px;
+        font-size: 2.4rem;
+    }
+    .letter-small{
+        font-size:2.3rem !important;
+    }
+    .content_row .row:not(:first-child){
+        font-size:2.8rem;
+    }
+    .middle_content .row:not(:first-child) {
+        font-size: 2.3rem;
+    }
+    .middle_content > div:not(:first-child) > div:nth-child(2) > div:first-child > span {
+        font-size: 2.3rem;
+    }
+    .middle_content > div:not(:first-child) > div:nth-child(2) > div:nth-child(2) > span{
+        font-size:2rem;
+    }
+}
+
+/*// Extra small devices (portrait phones, less than 576px)*/
+@media (max-width: 576px) {
+    html {
+        font-size: 1em;
+    }
+    .top_depart > div > div:first-child{
+        line-height:110px;
+    }
+    .top_depart > div > div:nth-child(2) > div {
+        font-size: 2rem;
+    }
+        .top_depart > div > div:nth-child(2) > div:nth-child(2) {
+            font-size: 1.7rem;
+        }
+    .top_time{
+        font-size:3rem;
+    }
+    #waiting_list_title_kor, #on_treatement_title_kor, #waiting_pay_title_kor {
+        font-size: 3.3rem;
+    }
+    #waiting_list_title_vie, #on_treatement_title_vie, #waiting_pay_title_vie {
+        font-size: 2.5rem;
+    }
+    .content_row > div:first-child > div > span {
+        font-size: 4rem;
+    }
+    .letter-small {
+        font-size: 2.3rem !important;
+    }
+    .middle_content > div:not(:first-child) > div:nth-child(2) > div:first-child > span {
+        font-size: 2.3rem !important;
+    }
+    .content_row .row:not(:first-child){
+        font-size:4rem;
+    }
+}

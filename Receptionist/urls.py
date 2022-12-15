@@ -114,4 +114,9 @@ urlpatterns = [
     path('save_agreement/',views.save_agreement),
     path('get_agreement/',views.get_agreement),
     path('delete_agreement/',views.delete_agreement),
+
+
+    # Linh
+    path('get_memo_detail/', views.get_memo_detail),
+    path('create_memo_detail/', views.create_memo_detail),
 ]

@@ -156,13 +156,16 @@
                         <div class="input-group"> 
                             <span class="input-group-addon patient_table_title" id="basic-addon1">{{ _('Memo') }}</span>
                             <input type="text" id="memo" class="form-control" aria-describedby="basic-addon1" autocomplete="off">
-                            <div class="input-group-btn patient_mark_div">
-                                <select class="form-control" id="patient_mark">
+
+                            <!-- <div><button>Input</button></div> -->
+                            <div class="input-group-btn">
+                                <input id="show_memo_detail" type="button" value="{{_('Detail Memo') }}" class="btn btn-primary save_cancel_btn" style="width:100px;" onclick="show_memo_detail()"/>
+                                <!-- <select class="form-control" id="patient_mark">
                                     <option value="" selected>--</option>
                                     {% for data in patient_mark %}
                                         <option value="{{ data.commcode }}">{{data.se1}}</option>
                                     {% endfor%}
-                                </select>
+                                </select> -->
                             </div>
                         </div>
                     </td>
@@ -1057,6 +1060,44 @@
 
 </div>
 
+
+<div id="memo_detail_modal" class="modal fade">
+    <div class="modal-dialog" style="width:1000px;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span> <span class="sr-only">close</span></button>
+                <h4>{{ _('Memo Detail') }}</h4>
+               
+                <div id="modalBody" class="modal-body" >
+                    
+                    <table class="table table-bordered table-hover table-striped" id="table_memo_detail">
+                        <thead>
+                            <tr>
+                                <th>{{ _('No') }}</th>
+                                <th>{{ _('Depart') }}</th>
+                                <th>{{ _('Creator') }}</th>
+                                <th>{{ _('Memo') }}</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+
+                        </tbody>
+                    </table>
+
+                    <br><br>
+                    <div class="input-group edit_reception_title">
+                        <span class="input-group-addon Edit_Reception_input-group-addon" id="basic-addon1">{{ _('Memo') }}</span>
+                        <input type="text" class="form-control" id="new_memo_detail"/>
+                        
+                    </div>
+                    <input type="button" value="{{_('Create Memo') }}" class="btn btn-primary save_cancel_btn" style="width:100px;" onclick="create_memo_detail()"/>
+                </div>
+               
+            </div>
+        </div>
+    </div>
+
+</div>
 
 {% endblock %}
 

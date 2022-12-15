@@ -1,0 +1,428 @@
+
+.background_grid {
+    margin: 0 auto;
+    width: 100%;
+    display: grid;
+    /* grid-template-columns: 70%; */
+    
+    padding: 5px;
+    padding-left: 20px;
+    padding-right: 20px;    
+}
+.background_grid > div{
+    margin-bottom:20px;
+}
+.partition {
+    padding: 5px;
+    padding-left: 20px;
+    padding-right: 20px;
+    background: rgba(180, 180, 180, 0.15);
+    border: 3.7px solid white;
+    overflow: hidden;
+}
+
+
+.title_span {
+    text-align: left;
+    font-size: 16px;
+    height: 26.5px;
+    padding-top: 1px;
+    margin-bottom: 5px;
+    background: rgb(90,64,129);
+    border-color: rgb(90,64,129);
+}
+
+    .title_span:hover {
+        background: rgb(90,64,129);
+        border-color: rgb(90,64,129);
+    }
+.search_table_Date {
+    width: 5vw;
+}
+.customer_list {
+    grid-column-start: 1;
+    grid-column-end: 2;
+}
+
+.customer_info {
+    grid-column-start: 2;
+    grid-column-end: 3;
+}
+
+
+.patient_list_table_wrap{
+    margin-top: 20px;
+    width: 100%;
+    table-layout: fixed;
+    letter-spacing: -1px;
+}
+
+
+.depart_select {
+    width: 115px;
+    display: inline-table;
+}
+
+    .depart_select span, .depart_select select {
+        padding: 5px;
+    }
+
+
+#patient_search {
+    width: 110px;
+    display: inline;
+}
+
+.radiation_waiting_control {
+    text-align: right;
+    float:right;
+}
+
+#patient_list_table {
+    table-layout: fixed;
+}
+
+    #patient_list_table thead tr th{
+        vertical-align: middle;
+        text-align: center;
+    }
+    #patient_list_table tbody tr td {
+        vertical-align: middle;
+        text-align: center;
+        height: 47px;
+    }
+#patient_list_table thead tr th:nth-child(1){
+    width:30px;
+}
+#patient_list_table thead tr th:nth-child(2) {
+    width: 100px;
+}
+#patient_list_table thead tr th:nth-child(3) {
+    width: 60px;
+}
+#patient_list_table thead tr th:nth-child(4) {
+    width: 60px;
+}
+#patient_list_table thead tr th:nth-child(5) {
+    width: 100px;
+}
+#patient_list_table thead tr th:nth-child(6) {
+    width: 55px;
+}
+
+#patient_list_table thead tr th:nth-child(7) {
+    width: 100px;
+}
+#patient_list_table thead tr th:nth-child(8) {
+            width: 40px;
+        }
+#patient_list_table thead tr th:nth-child(9) {
+        width: 100px;
+    }
+#patient_list_table thead tr th:nth-child(10) {
+        width: 60px;
+    }
+#patient_list_table thead tr th:nth-child(11) {
+    width: 60px;
+}    
+#patient_list_table thead tr th:nth-child(12) {
+        width: 90px;
+    }
+#patient_list_table thead tr th:nth-child(13) {
+    width: 60px;
+}    
+#patient_list_table thead tr th:nth-child(14) {
+    width: 50px;
+}
+#patient_list_table thead tr th:nth-child(15) {
+    width: 60px;
+}
+#patient_list_table thead tr th:nth-child(16) {
+    width: 90px;
+}    
+#patient_list_table thead tr th:nth-child(17) {
+    width: 60px;
+}  
+#patient_list_table thead tr th:nth-child(18) {
+    width: 50px;
+}  
+#patient_list_table thead tr th:nth-child(19) {
+    width: 50px;
+}  
+#patient_list_table thead tr th:nth-child(20) {
+    width: 50px;
+}  
+#patient_list_table thead tr th:nth-child(21) {
+    width: 50px;
+}  
+
+#document_control_depart_div{
+    display:inline-table;
+    width:150px;
+}
+.btn-primary {
+    background-color: #428bca !important;
+}
+
+.button {
+    border-radius: 4px;
+    background-color: #f4511e;
+    border: none;
+    color: #ffffff;
+    text-align: center;
+    font-size: 14px;
+    padding: 0px;
+    width: 50px;
+    transition: all 0.5s;
+    cursor: pointer;
+    margin: 5px;
+  }
+  
+  .button span {
+    cursor: pointer;
+    display: inline-block;
+    position: relative;
+    transition: 0.5s;
+  }
+  
+  .button:hover span {
+    padding-right: 10px;
+  }
+  
+  .button:hover span:after {
+    opacity: 1;
+    right: 0;
+  }
+
+.fl{
+    float:left;
+    width:49% !important;
+    margin-right:2%;
+}
+
+.fr {
+    float: left;
+    width: 49% !important;
+}
+
+.patient_funnels_div{
+    width:30%;
+}
+
+.patient_mark_div{
+    width: 80px;
+}
+
+#modalBody .input-group {
+    width: 100%;
+    margin-bottom: 20px;
+}
+
+#modalBody .input-group:last-child {
+    margin-bottom: 0;
+}
+
+
+#modalBody .input-group-addon {
+    width: 100px;
+}
+
+#modalBody textarea {
+    resize:none;
+    height:200px;
+}
+
+@keyframes sp-anime {
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+.is-hide {
+    display: none;
+}
+
+.btn-default {
+    color: #333 !important ;
+    background-color: #fff !important ;
+    border-color: #ccc !important;
+}
+
+.btn-danger {
+    color: #fff !important;
+    background-color: #d9534f !important;
+    border-color: #d43f3a !important;
+}
+
+.date_input_div {
+    display: inline;
+    margin-right: 20px;
+}
+
+.date_input {
+    display: inline;
+    width: 90px;
+}
+
+#status_drop_down_warp {
+    float: left;
+    margin-right: 5px;
+}
+
+#status_drop_down {
+    height: 26px;
+    width: 130px;
+}
+
+    #status_drop_down > span, #dropdown_vaccine > span{
+        font-size: 12px;
+        height: auto;
+        background: none;
+        border-left-color: rgba(0,0,0,0);
+        border-right-color: rgba(0,0,0,0);
+        border-bottom-color: rgba(0,0,0,0);
+    }
+
+#status_drop_down_warp .caret {
+    float: right;
+    margin-top: 6px;
+}
+
+.dropdown-menu li{
+    cursor:pointer;
+}
+patient_table{
+    height:300px;
+    margin:0px;
+}
+#patient_vital_first{
+    
+}
+.input-group-addon {
+    padding: 5px;
+}
+
+#patient_table_vital_ht, #patient_table_vital_wt, #patient_table_vital_bmi, #patient_table_vital_bp, #patient_table_vital_bt, #patient_table_vital_pr, #patient_table_vital_breath {
+    width: 60px;
+    display: inline;
+    height: 20px;
+    padding: 5px;
+}
+#patient_table_vital_ht, #patient_table_vital_wt, #patient_table_vital_bmi, #patient_table_vital_bp, #patient_table_vital_bt, #patient_table_vital_pr {
+    margin-right: -5px;
+}
+
+.patient_table_title {
+    width: 85px;
+    font-weight: bold;
+    text-align: left;
+}
+
+.custom-select{
+    width:200px;
+    text-align:center;
+}
+
+.history-control{
+    width:100%;
+}
+
+.edit_reception_vital_table tbody tr td{
+    vertical-align:middle;
+}
+
+#edit_reception_vital_ht, #edit_reception_vital_wt, #edit_reception_vital_bp, #edit_reception_vital_bt, #edit_reception_vital_pr, #edit_reception_vital_breath {
+    width:55px;
+
+}
+
+.patient_funnels_div{
+    width:180px;
+}
+#patient_funnel {
+    border-radius: 0px;
+    border-right: none;
+}
+.patient_mark_div {
+    width: 50px;
+}
+
+
+#patient_mark {
+    padding: 3px;
+    border-radius: 0px 4px 4px 0px;
+    border-left: none;
+}
+
+
+#dynamic_div {
+    display: none;
+}
+@media ( min-width: 1900px ) {
+    .reception_patient {
+        width: 1920px;
+        height: 800px;
+    }
+
+    .document_contents_div {
+        height: 740px;
+    }
+
+    #document_contents_table thead tr th:nth-child(6), #document_contents_table thead tr th:nth-child(3) {
+        width: 250px;
+    }
+
+}
+
+
+@page {
+    size: A4;
+    margin: 0;
+    page-break-after: always;
+}
+@media print{
+    html, body {
+        min-width: 210mm;
+        max-width: 210mm;
+        /*max-height: 297mm;
+        min-height: 297mm;*/
+    }
+
+    #dynamic_div {
+        display: block;
+    }
+
+}
+.need_medical_report {
+    font-weight:300;
+}
+
+    .need_medical_report input {
+        vertical-align: middle;
+        margin-top: -1px;
+    }
+    .patient_search_select {
+        width: 130px;
+        display: inline-block;
+        border-radius:0px;
+        border-right:none;
+    }
+    .patient_search_input {
+        width: 140px;
+        display: inline-block;
+        border-radius: 0px 4px 4px 0px;
+    }
+    
+    #contents_filter_div_patient_name{
+        /*width:370px;*/
+        width:240px;
+    }
+    .contents_filter_div{
+        display:inline-table;
+    }
+    
+    #contents_filter_div_context_count {
+        float: right;
+        width: 160px;
+    }
+            
