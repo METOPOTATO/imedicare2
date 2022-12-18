@@ -119,4 +119,6 @@ urlpatterns = [
     # Linh
     path('get_memo_detail/', views.get_memo_detail),
     path('create_memo_detail/', views.create_memo_detail),
+    path('delete_memo_detail/', views.delete_memo_detail),
+    # path('update_memo_detail/', views.update_memo_detail),
 ]
