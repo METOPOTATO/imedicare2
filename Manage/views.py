@@ -3536,7 +3536,8 @@ def medicine_inventory_excel(request):
     
 
     #엑셀 파일 불러오기
-    wb = load_workbook('/home/imedicare/Cofee/static/excel_form/Medicine_list.xlsx') #Workbook()
+    wb = load_workbook('/home/imedicare/Cofee/static/excel_form/Medicine_list_2.xlsx') #Workbook()
+    # wb = load_workbook('/Users/light/Desktop/Work/imdc/imedicare2/static/excel_form/Medicine_list_2.xlsx')
     ws = wb.active# grab the active worksheet
 
 
@@ -3570,7 +3571,7 @@ def medicine_inventory_excel(request):
 
         ws['M' + str(current_row)] = data.get_price()
         ws['N' + str(current_row)] = str_type
-
+        ws['O' + str(current_row)] = data.inventory_count
         current_row += 1
 
 
