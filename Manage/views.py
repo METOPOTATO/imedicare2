@@ -1675,7 +1675,7 @@ def rec_report_excel(request):
     try:
         wb = load_workbook('/home/imedicare/Cofee/static/excel_form/reception_report.xlsx') #Workbook()
     except:
-        wb = load_workbook('E:\\Data\\Imedicare3\\static\\excel_form\\reception_report.xlsx') #Workbook()
+        wb = load_workbook('/Users/light/Desktop/Work/imdc/imedicare2/static/excel_form/reception_report.xlsx') #Workbook()
     ws = wb.active# grab the active worksheet
 
     border_thin = Border(top=Side(border_style="thin", color="000000") ,
@@ -1859,11 +1859,15 @@ def rec_report_excel(request):
         #if paymentrecords:
         #    ws['Y' + str(current_row)] = paymentrecords.memo
 
-        if paymentrecords:
+        if paymentrecords: 
             str_record = ''
             for record_data in paymentrecords.order_by("-date"):
                 str_record += record_data.memo + "\n"
+            else:
+                str_record = reception.payment.memo
             ws['AC' + str(current_row)] = str_record
+        else:
+            ws['AC' + str(current_row)] = reception.payment.memo
         pay_time = reception.payment.pay_time
 
         datetime_str = '01/01/20 00:00:00'
