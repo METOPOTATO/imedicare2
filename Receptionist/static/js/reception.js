@@ -18,6 +18,14 @@ $(document).ready(function() {
             $('#patient_nationality_etc').prop("disabled",false);
         }
     });
+
+    $('#new_memo_detail').on('keydown', function(e){ 
+        if(e.keyCode == 13)
+        {
+            create_memo_detail()
+        }
+    }
+    )
 })
 
 
@@ -2325,6 +2333,7 @@ function create_memo_detail(){
                 console.log(response.datas)
                 $('#memo_detail_modal').modal('show');
                 $('#new_memo_detail').val('')
+                alert(gettext('Created'));
             }
 
         },
@@ -2334,6 +2343,9 @@ function create_memo_detail(){
         },
     })
 }
+
+
+
 
 
 function delete_detail_memo(id){
@@ -2418,3 +2430,10 @@ function update_detail_memo(id){
         },
     })
 }
+
+$('textarea').keyup(function(e){
+    if(e.keyCode == 13)
+    {
+        $(this).trigger("enterKey");
+    }
+});

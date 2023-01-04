@@ -38,7 +38,7 @@
                         <input type="text" class="form-control" id="new_memo_detail"/>
                         
                     </div>
-                    <input type="button" value="{{_('Create Memo') }}" class="btn btn-primary save_cancel_btn" style="width:100px;" onclick="create_memo_detail()"/>
+                    <input id="create_memo_detail" type="button" value="{{_('Create Memo') }}" class="btn btn-primary save_cancel_btn" style="width:100px;" onclick="create_memo_detail()"/>
                 </div>
                
             </div>
@@ -896,6 +896,14 @@
             },
         })
     }
+
+    $('#new_memo_detail').on('keydown', function(e){ 
+            if(e.keyCode == 13)
+            {
+                create_memo_detail()
+            }
+        }
+    )
 </script>
 
 {% endblock %}
