@@ -28,6 +28,7 @@
                                     <th>{{ _('Depart') }}</th>
                                     <th>{{ _('Creator') }}</th>
                                     <th>{{ _('Memo') }}</th>
+                                    <th></th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -838,11 +839,16 @@
                     for (var i = 0; i < response.datas.length; i++) {
                             var str = "<tr>"
         
-                            str += " <td>" + (i + 1) + "</td>" +
+                            str += 
+                                "<td hidden>" + response.datas[i]['detail_memo_id'] + "</td>" + 
+                                "<td>" + (i + 1) + "</td>" +
                                 "<td>" + response.datas[i]['depart'] + "</td>" +
                                 "<td>" + response.datas[i]['creator'] + "</td>" +
                                 "<td>" + response.datas[i]['memo'] + "</td>" +
-                                "</tr>";
+                                "<td>" + 
+                                // "<a class='btn btn-default btn-xs' style='margin-right:10px;' href='javascript: void (0);' onclick='update_detail_memo(" + response.datas[i]['detail_memo_id'] + ")' ><i class='fa fa-lg fa-pencil'></i></a>" +
+                                "<a class='btn btn-danger btn-xs' href='javascript: void (0);' onclick='delete_detail_memo(" + response.datas[i]['detail_memo_id'] + ")' ><i class='fa fa-lg fa-trash'></i></a>" +
+                                "</td></tr>";
         
                         $('#table_memo_detail > tbody').append(str);
         
@@ -881,11 +887,17 @@
                     for (var i = 0; i < response.datas.length; i++) {
                             var str = "<tr>"
         
-                            str += " <td>" + (i + 1) + "</td>" +
+                            str += 
+                                "<td hidden>" + response.datas[i]['detail_memo_id'] + "</td>" + 
+                                "<td>" + (i + 1) + "</td>" +
                                 "<td>" + response.datas[i]['depart'] + "</td>" +
                                 "<td>" + response.datas[i]['creator'] + "</td>" +
                                 "<td>" + response.datas[i]['memo'] + "</td>" +
-                                "</tr>";
+                                "<td>" + 
+                                // "<a class='btn btn-default btn-xs' style='margin-right:10px;' href='javascript: void (0);' onclick='update_detail_memo(" + response.datas[i]['detail_memo_id'] + ")' ><i class='fa fa-lg fa-pencil'></i></a>" +
+                                "<a class='btn btn-danger btn-xs' href='javascript: void (0);' onclick='delete_detail_memo(" + response.datas[i]['detail_memo_id'] + ")' ><i class='fa fa-lg fa-trash'></i></a> " +
+    
+                                "</td></tr>";
         
                         $('#table_memo_detail > tbody').append(str);
         
@@ -894,6 +906,7 @@
                     console.log(response.datas)
                     $('#memo_detail_modal').modal('show');
                     $('#new_memo_detail').val('')
+                    alert(gettext('Created'));
                 }
     
             },
@@ -903,14 +916,100 @@
             },
         })
     }
-
-    $('#new_memo_detail').on('keydown', function(e){ 
+    
+    
+    
+    
+    
+    function delete_detail_memo(id){
+        var patient_id = $("#patient_id").val();
+        $.ajax({
+            type: 'POST',
+            url: '/receptionist/delete_memo_detail/',
+            data: {
+                'csrfmiddlewaretoken': $('#csrf').val(),
+                'memo_id': id,
+                'patient_id': patient_id
+            },
+            dataType: 'Json',
+            success: function (response) {
+                if (response.result) {
+                    $('#table_memo_detail > tbody ').empty();
+                    for (var i = 0; i < response.datas.length; i++) {
+                            var str = "<tr>"
+        
+                            str += 
+                                "<td hidden>" + response.datas[i]['detail_memo_id'] + "</td>" + 
+                                "<td>" + (i + 1) + "</td>" +
+                                "<td>" + response.datas[i]['depart'] + "</td>" +
+                                "<td>" + response.datas[i]['creator'] + "</td>" +
+                                "<td>" + response.datas[i]['memo'] + "</td>" +
+                                "<td>" + 
+                                // "<a class='btn btn-default btn-xs' style='margin-right:10px;' href='javascript: void (0);' onclick='update_detail_memo(" + response.datas[i]['detail_memo_id'] + ")' ><i class='fa fa-lg fa-pencil'></i></a>" +
+                                "<a class='btn btn-danger btn-xs' href='javascript: void (0);' onclick='delete_detail_memo(" + response.datas[i]['detail_memo_id'] + ")' ><i class='fa fa-lg fa-trash'></i></a>" +
+                                "</td></tr>";
+        
+                        $('#table_memo_detail > tbody').append(str);
+        
+                    }
+                }
+            },
+            error: function (request, status, error) {
+                console.log("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
+    
+            },
+        })
+    }
+    
+    function update_detail_memo(id){
+        var patient_id = $("#patient_id").val();
+        var memo = $('#new_memo_detail').val();
+    
+        $.ajax({
+            type: 'POST',
+            url: '/receptionist/update_memo_detail/',
+            data: {
+                'csrfmiddlewaretoken': $('#csrf').val(),
+                'memo_id': id,
+                'patient_id': patient_id,
+                'memo': memo,
+            },
+            dataType: 'Json',
+            success: function (response) {
+                if (response.result) {
+                    $('#table_memo_detail > tbody ').empty();
+                    for (var i = 0; i < response.datas.length; i++) {
+                            var str = "<tr>"
+        
+                            str += 
+                                "<td hidden>" + response.datas[i]['detail_memo_id'] + "</td>" + 
+                                "<td>" + (i + 1) + "</td>" +
+                                "<td>" + response.datas[i]['depart'] + "</td>" +
+                                "<td>" + response.datas[i]['creator'] + "</td>" +
+                                "<td>" + response.datas[i]['memo'] + "</td>" +
+                                "<td>" + 
+                                // "<a class='btn btn-default btn-xs' style='margin-right:10px;' href='javascript: void (0);' onclick='update_detail_memo(" + response.datas[i]['detail_memo_id'] + ")' ><i class='fa fa-lg fa-pencil'></i></a>" +
+                                "<a class='btn btn-danger btn-xs' href='javascript: void (0);' onclick='delete_detail_memo(" + response.datas[i]['detail_memo_id'] + ")' ><i class='fa fa-lg fa-trash'></i></a></td> " +
+                                "</tr>";
+        
+                        $('#table_memo_detail > tbody').append(str);
+        
+                    }
+                }
+            },
+            error: function (request, status, error) {
+                console.log("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
+    
+            },
+        })
+    }
+    
+    $('textarea').keyup(function(e){
         if(e.keyCode == 13)
         {
-            create_memo_detail()
+            $(this).trigger("enterKey");
         }
-    }
-)
+    });
 </script>
 
 {% endblock %}

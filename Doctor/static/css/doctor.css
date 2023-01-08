@@ -20,7 +20,7 @@
 .doctor_patient_info {
     grid-row-start: 1;
     grid-row-end: 3;
-    overflow: hidden;
+    overflow: scroll;
 }
 .doctor_vital {
     grid-row-start: 3;
