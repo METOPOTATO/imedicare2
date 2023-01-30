@@ -106,6 +106,13 @@ def set_menu(request):
         menu_code_seq2[data['commcode']] = data['se3']
         menu_code_name[data['commcode']] = data['name']
 
+    #     # if data['name'] == 'Code Setting':
+    # test = COMMCODE.objects.filter(upper_commcode = '000012',commcode_grp = 'MENU_LIST_IMDI').annotate(name = f_name ).filter(name='Code Setting').first()
+    # if test:
+    #     test.commcode_name_ko = 'Setting'
+    #     test.commcode_name_vi = 'Setting'
+    #     test.commcode_name_en = 'Setting'
+    #     test.save()
 
     upmenu_code = {}
     upmenu_commcode = COMMCODE.objects.filter(upper_commcode = '000012',commcode_grp = 'MENU_UPLIST_IMDI').annotate(name = f_name ).values('commcode','name')

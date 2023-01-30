@@ -2074,7 +2074,7 @@ def reception(request,patient_num=None):
 
 def get_depart_doctor(request):
     depart_id = request.POST.get('depart')
-
+    
     try:
         doctor = Doctor.objects.filter(depart_id = depart_id,user__depart='DOCTOR', user__is_active = True)
     except Exception as ex: # 에러 종류
@@ -2082,7 +2082,10 @@ def get_depart_doctor(request):
     
     datas={}
     for data in doctor:
-        datas.update({data.get_name():data.id})
+        if depart_id == '8' and data.id in [27, 48, 54]:
+            pass
+        else:
+            datas.update({data.get_name():data.id})
     
     context = {'datas':datas}
     return JsonResponse(context)

@@ -342,16 +342,20 @@ def index(request):
         precedures = Precedure.objects.filter(precedure_class = precedure_class, use_yn='Y').order_by('code')
         temp = []
         for precedure in precedures:
-            temp.append({
-                'id':precedure.id,
-                'name':precedure.get_name_lang(request.session[translation.LANGUAGE_SESSION_KEY]),
-                'name_vie':precedure.name_vie,
-                'code':precedure.code,
-                'price':format(precedure.get_price(), ',') + ' VND',
-                'upper':precedure_class.name_vie if request.session[translation.LANGUAGE_SESSION_KEY] == 'vi' else precedure_class.name,
-                'is_pkg':'PKG' if precedure.type=='PKG' else '',
+            try:
+                temp.append({
+                    'id':precedure.id,
+                    'name':precedure.get_name_lang(request.session[translation.LANGUAGE_SESSION_KEY]),
+                    'name_vie':precedure.name_vie,
+                    'code':precedure.code,
+                    'price':format(precedure.get_price(), ',') + ' VND',
+                    'upper':precedure_class.name_vie if request.session[translation.LANGUAGE_SESSION_KEY] == 'vi' else precedure_class.name,
+                    'is_pkg':'PKG' if precedure.type=='PKG' else '',
 
-                    })
+                        })
+                print(precedure.code)
+            except:
+                pass
         if request.session[translation.LANGUAGE_SESSION_KEY] == 'vi':
             precedure_data.update({ precedure_class.name_vie : temp})
         else:
