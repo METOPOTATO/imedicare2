@@ -153,6 +153,21 @@ def set_menu(request):
                 'lower_menu':grp_list,
                 'code':data.menu
                 })
+    list_1 = []
+    list_2 = []
+    for menu in menu_list:
+        if menu['name'] == 'Registration':
+            list_1.append(menu)
+        elif menu['name'] == 'Reservation':
+            list_1.append(menu)
+        elif menu['name'] == 'Payment':
+            list_1.append(menu)
+        elif menu['name'] == 'Pick Up':
+            pass
+        else:
+            list_2.append(menu)
+    menu_list = list_1 + list_2
+
 
     request.session['MENU'] = menu_list
     request.session['DOCTOR_MENU'] = '' 
