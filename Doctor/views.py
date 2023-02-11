@@ -106,7 +106,7 @@ def index(request):
 
 
         precedure_data = []
-        precedures = Precedure.objects.filter( code__icontains='PM' ,use_yn='Y').order_by('code')
+        precedures = Precedure.objects.filter( Q(code__icontains='PM') | Q(code__contains='U') ,use_yn='Y').exclude(name__contains='LAT').order_by('code')
         for precedure in precedures:
             precedure_data.append({
                         'id':precedure.id,
@@ -117,7 +117,7 @@ def index(request):
                     })
 
         radiography_data = []
-        radiography_s = Precedure.objects.filter( code__icontains='R',precedure_class_id = 10, use_yn='Y').order_by('id')
+        radiography_s = Precedure.objects.filter( Q(code__icontains='R') | Q(code__contains='PM', name__contains='LAT'),precedure_class_id = 10, use_yn='Y').order_by('id')
         for radiography in radiography_s:
             radiography_data.append({
                         'id':radiography.id,
@@ -353,7 +353,6 @@ def index(request):
                     'is_pkg':'PKG' if precedure.type=='PKG' else '',
 
                         })
-                print(precedure.code)
             except:
                 pass
         if request.session[translation.LANGUAGE_SESSION_KEY] == 'vi':
@@ -2111,7 +2110,7 @@ def audit(request):
         for exam_fee in exam_fees:
             list_exam_fee.append({'code':exam_fee.code,'value':exam_fee.name})
 
-        precedures = Precedure.objects.filter(code__contains='PM')
+        precedures = Precedure.objects.filter(Q(code__contains='PM'), Q(code__contain='U'))
         for precedure in precedures:
             list_precedures.append({'code':precedure.code,'value':precedure.name})
 

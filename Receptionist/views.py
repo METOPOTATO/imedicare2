@@ -5050,31 +5050,32 @@ def delete_memo_detail(request):
     }) 
 
 
-# def update_memo_detail(request):
-#     try:
-#         memo_id = request.POST.get('memo_id')
-#         patient = request.POST.get('patient_id')
-#         memo = request.POST.get('memo')
-#         memo_detail = DetailMemo.objects.filter(pk=memo_id).first()
-#         memo_detail.memo = memo
-#         memo_detail.save()
+def update_memo_detail(request):
+    try:
+        memo_id = request.POST.get('memo_id')
+        patient = request.POST.get('patient_id')
+        memo = request.POST.get('memo')
+        print(memo)
+        memo_detail = DetailMemo.objects.filter(pk=memo_id).first()
+        memo_detail.memo = memo
+        memo_detail.save()
 
-#         memo_detail = DetailMemo.objects.filter(patient=patient)
-#         data = []
-#         for val in memo_detail:
-#             data.append({
-#                 'detail_memo_id': val.pk,
-#                 'creator': val.creator.name_en,
-#                 'depart': val.creator.depart,
-#                 'memo': val.memo
-#             })
-#     except Exception as e:
-#         print(e)
-#         return JsonResponse({
-#         'result': False
-#     }) 
+        memo_detail = DetailMemo.objects.filter(patient=patient)
+        data = []
+        for val in memo_detail:
+            data.append({
+                'detail_memo_id': val.pk,
+                'creator': val.creator.name_en,
+                'depart': val.creator.depart,
+                'memo': val.memo
+            })
+    except Exception as e:
+        print(e)
+        return JsonResponse({
+        'result': False
+    }) 
     
-#     return JsonResponse({
-#         'result':True,
-#         'datas': data
-#     }) 
+    return JsonResponse({
+        'result':True,
+        'datas': data
+    }) 

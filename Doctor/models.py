@@ -424,6 +424,16 @@ class Precedure(models.Model):
             return check.price
         except Pricechange.DoesNotExist:
             return self.price
+        except Exception as e:
+            check = Pricechange.objects.filter(
+                type = 'Precedure',
+                code = self.code, 
+                date_start__lte = date,
+                date_end__gte = date,
+                country='VI',
+                ).first()
+            return check.price
+
 
     def get_price_dollar(self,get_date = None):
         date = datetime.datetime.now().strftime("%Y%m%d%H%M%S") if get_date is None else get_date.strftime("%Y%m%d%H%M%S")

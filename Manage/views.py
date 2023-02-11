@@ -1461,6 +1461,7 @@ def audit_excel(request):
 
     #엑셀 파일 불러오기
     wb = load_workbook('/home/imedicare/Cofee/static/excel_form/audit_report.xlsx') #Workbook()
+    # wb = load_workbook('/Users/light/Desktop/Work/imdc/imedicare2/static/excel_form/audit_report.xlsx')
     ws = wb.active# grab the active worksheet
 
     #선택한 날짜
@@ -1501,11 +1502,14 @@ def audit_excel(request):
             count = 1
             tmp_exam_set = receptions[i].diagnosis.exammanager_set.all()
             for tmp_exam in tmp_exam_set:
-                ws['G' + str(temp_row)] = tmp_exam.exam.name
-                ws['H' + str(temp_row)] = "-"
+                ws['G' + str(temp_row)] = tmp_exam.exam.code
+                ws['H' + str(temp_row)] = tmp_exam.exam.name
                 ws['I' + str(temp_row)] = "-"
-                ws['J' + str(temp_row)] = tmp_exam.exam.get_price(recorded_date)
-                ws['K' + str(temp_row)] = "Exam fee"
+                ws['J' + str(temp_row)] = tmp_exam.exam.price
+                ws['K' + str(temp_row)] = "-"
+                ws['L' + str(temp_row)] = "-"
+                ws['M' + str(temp_row)] = tmp_exam.exam.get_price(recorded_date)
+                ws['N' + str(temp_row)] = "Exam fee"
                 temp_row += 1
                 count += 1
     
@@ -1515,11 +1519,21 @@ def audit_excel(request):
             ##약
             tmp_medicine_set = receptions[i].diagnosis.medicinemanager_set.all()
             for tmp_medicine in tmp_medicine_set:
-                ws['G' + str(temp_row)] = tmp_medicine.medicine.name
-                ws['H' + str(temp_row)] = tmp_medicine.amount
-                ws['I' + str(temp_row)] = tmp_medicine.medicine.unit_vie + '/' + tmp_medicine.medicine.unit
-                ws['J' + str(temp_row)] = tmp_medicine.amount * tmp_medicine.days * tmp_medicine.medicine.get_price(recorded_date)
-                ws['K' + str(temp_row)] = "Medicine"
+                quantity = int(tmp_medicine.days) * int(tmp_medicine.amount)
+                unit = tmp_medicine.medicine.get_price()
+                price = quantity * unit
+
+                print(quantity)
+                print(unit)
+                print(price)
+                ws['G' + str(temp_row)] = tmp_medicine.medicine.code
+                ws['H' + str(temp_row)] = tmp_medicine.medicine.name
+                ws['I' + str(temp_row)] = tmp_medicine.amount
+                ws['J' + str(temp_row)] = tmp_medicine.medicine.price
+                ws['K' + str(temp_row)] = tmp_medicine.amount
+                ws['L' + str(temp_row)] = tmp_medicine.medicine.unit_vie + '/' + tmp_medicine.medicine.unit
+                ws['M' + str(temp_row)] = tmp_medicine.amount * tmp_medicine.days * tmp_medicine.medicine.get_price(recorded_date)
+                ws['N' + str(temp_row)] = "Medicine"
                 temp_row += 1
                 count += 1
 
@@ -1530,11 +1544,14 @@ def audit_excel(request):
             ##검사
             tmp_test_set = receptions[i].diagnosis.testmanager_set.all()
             for tmp_test in tmp_test_set:
-                ws['G' + str(temp_row)] = tmp_test.test.name
-                ws['H' + str(temp_row)] = "-"
-                ws['I' + str(temp_row)] = "-"
-                ws['J' + str(temp_row)] = tmp_test.test.get_price(recorded_date)
-                ws['K' + str(temp_row)] = "Lab"
+                ws['G' + str(temp_row)] = tmp_test.test.code
+                ws['H' + str(temp_row)] = tmp_test.test.name
+                ws['I' + str(temp_row)] = ""
+                ws['J' + str(temp_row)] = tmp_test.test.price
+                ws['K' + str(temp_row)] = "-"
+                ws['L' + str(temp_row)] = "-"
+                ws['M' + str(temp_row)] = tmp_test.test.get_price(recorded_date)
+                ws['N' + str(temp_row)] = "Lab"
                 temp_row += 1
                 count += 1
             
@@ -1545,20 +1562,26 @@ def audit_excel(request):
             tmp_precedure_set = receptions[i].diagnosis.preceduremanager_set.all()
             for tmp_precedure in tmp_precedure_set:
                 if 'R' in tmp_precedure.precedure.code:
-                    ws['G' + str(temp_row)] = tmp_precedure.precedure.name
-                    ws['H' + str(temp_row)] = tmp_precedure.amount
-                    ws['I' + str(temp_row)] = "-"
-                    ws['J' + str(temp_row)] = tmp_precedure.precedure.get_price(recorded_date)
-                    ws['K' + str(temp_row)] = "Radiation"
+                    ws['G' + str(temp_row)] = tmp_precedure.precedure.code
+                    ws['H' + str(temp_row)] = tmp_precedure.precedure.name
+                    ws['I' + str(temp_row)] = tmp_precedure.amount
+                    ws['J' + str(temp_row)] = tmp_precedure.precedure.price
+                    ws['K' + str(temp_row)] = tmp_precedure.amount
+                    ws['L' + str(temp_row)] = "-"
+                    ws['M' + str(temp_row)] = tmp_precedure.precedure.get_price(recorded_date)
+                    ws['N' + str(temp_row)] = "Radiation"
                     temp_row += 1
                     count += 1
             
                 else:
-                    ws['G' + str(temp_row)] = tmp_precedure.precedure.name
-                    ws['H' + str(temp_row)] = tmp_precedure.amount
-                    ws['I' + str(temp_row)] = "-"
-                    ws['J' + str(temp_row)] = tmp_precedure.precedure.get_price(recorded_date)
-                    ws['K' + str(temp_row)] = "Procedure"
+                    ws['G' + str(temp_row)] = tmp_precedure.precedure.code
+                    ws['H' + str(temp_row)] = tmp_precedure.precedure.name
+                    ws['I' + str(temp_row)] = tmp_precedure.amount
+                    ws['J' + str(temp_row)] = tmp_precedure.precedure.price
+                    ws['K' + str(temp_row)] = tmp_precedure.amount
+                    ws['L' + str(temp_row)] = "-"
+                    ws['M' + str(temp_row)] = tmp_precedure.precedure.get_price(recorded_date)
+                    ws['N' + str(temp_row)] = "Procedure"
                     temp_row += 1
                     count += 1
             
@@ -1582,28 +1605,28 @@ def audit_excel(request):
             if paid_sum is None:
                 paid_sum = 0             
 
-            ws['L' + str(current_row)] = receptions[i].payment.sub_total
+            ws['O' + str(current_row)] = receptions[i].payment.sub_total
             if receptions[i].payment.discounted != 0:
-                ws['M' + str(current_row)] = receptions[i].payment.sub_total / 100 * receptions[i].payment.discounted
+                ws['P' + str(current_row)] = receptions[i].payment.sub_total / 100 * receptions[i].payment.discounted
             else:
-                ws['M' + str(current_row)] = receptions[i].payment.discounted_amount
-            ws['N' + str(current_row)] = receptions[i].payment.additional
-            ws['O' + str(current_row)] = receptions[i].payment.total
-            ws['P' + str(current_row)] = receptions[i].payment.total - paid_sum
-            ws['Q' + str(current_row)] = paid_sum
+                ws['P' + str(current_row)] = receptions[i].payment.discounted_amount
+            ws['Q' + str(current_row)] = receptions[i].payment.additional
+            ws['R' + str(current_row)] = receptions[i].payment.total
+            ws['S' + str(current_row)] = receptions[i].payment.total - paid_sum
+            ws['T' + str(current_row)] = paid_sum
 
             payment_record = receptions[i].payment.paymentrecord_set.filter(status = 'paid')
 
             if payment_record:
-                ws['R' + str(current_row)] = receptions[i].payment.paymentrecord_set.first().method
+                ws['U' + str(current_row)] = receptions[i].payment.paymentrecord_set.first().method
             else:
-                ws['R' + str(current_row)] = '-'
+                ws['U' + str(current_row)] = '-'
                 
             if payment_record:
                 str_record = ''
                 for record_data in payment_record:
                     str_record += record_data.memo + "\n"
-                ws['S' + str(current_row)] = str_record
+                ws['V' + str(current_row)] = str_record
 
 
             if count != 0:
@@ -1613,15 +1636,17 @@ def audit_excel(request):
                 ws.merge_cells('D' + str(current_row) + ':D' + str(current_row + count-1))
                 ws.merge_cells('E' + str(current_row) + ':E' + str(current_row + count-1))
                 ws.merge_cells('F' + str(current_row) + ':F' + str(current_row + count-1))
-                ws.merge_cells('L' + str(current_row) + ':L' + str(current_row + count-1))
-                ws.merge_cells('M' + str(current_row) + ':M' + str(current_row + count-1))
-                ws.merge_cells('N' + str(current_row) + ':N' + str(current_row + count-1))
+                # ws.merge_cells('L' + str(current_row) + ':L' + str(current_row + count-1))
+                # ws.merge_cells('M' + str(current_row) + ':M' + str(current_row + count-1))
+                # ws.merge_cells('N' + str(current_row) + ':N' + str(current_row + count-1))
                 ws.merge_cells('O' + str(current_row) + ':O' + str(current_row + count-1))
                 ws.merge_cells('P' + str(current_row) + ':P' + str(current_row + count-1))
                 ws.merge_cells('Q' + str(current_row) + ':Q' + str(current_row + count-1))
                 ws.merge_cells('R' + str(current_row) + ':R' + str(current_row + count-1))
                 ws.merge_cells('S' + str(current_row) + ':S' + str(current_row + count-1))
-
+                ws.merge_cells('T' + str(current_row) + ':T' + str(current_row + count-1))
+                ws.merge_cells('U' + str(current_row) + ':U' + str(current_row + count-1))
+                ws.merge_cells('Q' + str(current_row) + ':Q' + str(current_row + count-1))
             current_row += count 
             data_num +=1
 
@@ -1630,7 +1655,7 @@ def audit_excel(request):
                        right=Side(border_style="thin", color="000000") ,
                       bottom=Side(border_style="thin", color="000000") )
 
-    rows = ws['A7:S' + str(current_row)]
+    rows = ws['A7:V' + str(current_row)]
     for row in rows:
         for cell in row:
             cell.border = border_thin
@@ -1768,27 +1793,35 @@ def rec_report_excel(request):
 
             total = paymentrecords.filter(method = 'cash').annotate(sum = Coalesce(Sum('paid'),0))
             if len(total)!=0:
-                ws['T' + str(current_row)] = total[0].sum
+                ws['V' + str(current_row)] = total[0].sum
 
             total = paymentrecords.filter(method = 'BIDV_CARD').annotate(sum = Coalesce(Sum('paid'),0))
             if len(total)!=0:
-                ws['U' + str(current_row)] = total[0].sum
+                ws['W' + str(current_row)] = total[0].sum
 
             total = paymentrecords.filter(method = 'BIDV_TRANS').annotate(sum = Coalesce(Sum('paid'),0))
             if len(total)!=0:
-                ws['V' + str(current_row)] = total[0].sum
+                ws['X' + str(current_row)] = total[0].sum
 
             total = paymentrecords.filter(method = 'VP_CARD').annotate(sum = Coalesce(Sum('paid'),0))
             if len(total)!=0:
-                ws['W' + str(current_row)] = total[0].sum
+                ws['Y' + str(current_row)] = total[0].sum
 
             total = paymentrecords.filter(method = 'VP_TRANS').annotate(sum = Coalesce(Sum('paid'),0))
             if len(total)!=0:
-                ws['X' + str(current_row)] = total[0].sum            
+                ws['Z' + str(current_row)] = total[0].sum            
+
+            total = paymentrecords.filter(method = 'TP_CARD').annotate(sum = Coalesce(Sum('paid'),0))
+            if len(total)!=0:
+                ws['AA' + str(current_row)] = total[0].sum
+
+            total = paymentrecords.filter(method = 'TP_TRANS').annotate(sum = Coalesce(Sum('paid'),0))
+            if len(total)!=0:
+                ws['AB' + str(current_row)] = total[0].sum
 
             total = paymentrecords.filter(method = 'SHINHAN_TRANS').annotate(sum = Coalesce(Sum('paid'),0))
             if len(total)!=0:
-                ws['Y' + str(current_row)] = total[0].sum                         
+                ws['AC' + str(current_row)] = total[0].sum                         
 
         else:#당일 방문
             ws['G' + str(current_row)] = reception.payment.sub_total
@@ -1822,18 +1855,26 @@ def rec_report_excel(request):
                 total = paymentrecords.filter(method = 'VP_CARD').annotate(sum = Coalesce(Sum('paid'),0))
                 if len(total)!=0:
                     ws['N' + str(current_row)] = total[0].sum
-
-                total = paymentrecords.filter(method = 'BIDV_TRANS').annotate(sum = Coalesce(Sum('paid'),0))
+                
+                total = paymentrecords.filter(method = 'TP_CARD').annotate(sum = Coalesce(Sum('paid'),0))
                 if len(total)!=0:
                     ws['O' + str(current_row)] = total[0].sum
 
-                total = paymentrecords.filter(method = 'VP_TRANS').annotate(sum = Coalesce(Sum('paid'),0))
+                total = paymentrecords.filter(method = 'BIDV_TRANS').annotate(sum = Coalesce(Sum('paid'),0))
                 if len(total)!=0:
                     ws['P' + str(current_row)] = total[0].sum
+
+                total = paymentrecords.filter(method = 'VP_TRANS').annotate(sum = Coalesce(Sum('paid'),0))
+                if len(total)!=0:
+                    ws['Q' + str(current_row)] = total[0].sum
+                
+                total = paymentrecords.filter(method = 'TP_TRANS').annotate(sum = Coalesce(Sum('paid'),0))
+                if len(total)!=0:
+                    ws['Q' + str(current_row)] = total[0].sum
                 
                 total = paymentrecords.filter(method = 'SHINHAN_TRANS').annotate(sum = Coalesce(Sum('paid'),0))
                 if len(total)!=0:
-                    ws['Q' + str(current_row)] = total[0].sum
+                    ws['S' + str(current_row)] = total[0].sum
 
         #ws['Q' + str(current_row)] = '=SUM(L' + str(current_row) + ':P' + str(current_row) + ')'
         #ws['R' + str(current_row)] = '=+J' + str(current_row) + '-Q' + str(current_row) + ')'
@@ -1854,8 +1895,8 @@ def rec_report_excel(request):
        
 
         
-        ws['AA' + str(current_row)] = reception.payment.progress
-        ws['AB' + str(current_row)] = reception.doctor.name_eng
+        ws['AE' + str(current_row)] = reception.payment.progress
+        ws['AF' + str(current_row)] = reception.doctor.name_eng
         #if paymentrecords:
         #    ws['Y' + str(current_row)] = paymentrecords.memo
 
@@ -1865,16 +1906,16 @@ def rec_report_excel(request):
                 str_record += record_data.memo + "\n"
             else:
                 str_record = reception.payment.memo
-            ws['AC' + str(current_row)] = str_record
+            ws['AG' + str(current_row)] = str_record
         else:
-            ws['AC' + str(current_row)] = reception.payment.memo
+            ws['AG' + str(current_row)] = reception.payment.memo
         pay_time = reception.payment.pay_time
 
         datetime_str = '01/01/20 00:00:00'
         if pay_time == datetime.datetime.strptime(datetime_str, '%m/%d/%y %H:%M:%S'):
-            ws['AD' + str(current_row)] = ''
+            ws['AH' + str(current_row)] = ''
         else:
-            ws['AD' + str(current_row)] = reception.payment.pay_time
+            ws['AH' + str(current_row)] = reception.payment.pay_time
 
         data_num += 1 
         current_row += 1
@@ -2556,7 +2597,7 @@ def procedure_statistics_excel(request):
     response['Content-Disposition'] = 'attachment; filename="procedure_statistics_' + start_date + '_' + end_date +'.xlsx"'
     
     wb = load_workbook('/home/imedicare/Cofee/static/excel_form/Proc_statistics.xlsx') #Workbook()
-
+    # wb = load_workbook('/Users/light/Desktop/Work/imdc/imedicare2/static/excel_form/Proc_statistics.xlsx')
     ws = wb.get_sheet_by_name('Theo so luong')# grab the active worksheet
 
     ws['E2'] = 'Ngày : ' + start_date 
@@ -2615,7 +2656,11 @@ def procedure_statistics_excel(request):
             ws['E' + str(current_row)] = procedure.name
             ws['F' + str(current_row)] = procedure.name_vie
             ws['G' + str(current_row)] = sub_query_depart.count()
-            ws['H' + str(current_row)] = procedure.get_price()
+            try:
+                ws['H' + str(current_row)] = procedure.get_price()
+            except Exception as e:
+                print(procedure.code)
+                print(e)
             ws['I' + str(current_row)] = '=+G' + str(current_row) + '*H' + str(current_row)
             ws['H' + str(current_row)].number_format = '_-* #,##0 _₫_-;-* #,##0 _₫_-;_-* "-"?? _₫_-;_-@_-'
             ws['I' + str(current_row)].number_format = '_-* #,##0 _₫_-;-* #,##0 _₫_-;_-* "-"?? _₫_-;_-@_-'
@@ -2680,7 +2725,7 @@ def procedure_statistics_excel(request):
             continue
 
         for precedure_record in preceduremanager_set:
-            procedures = Precedure.objects.get(id = precedure_record. precedure_id)
+            procedures = Precedure.objects.get(id = precedure_record.precedure_id)
             ws['A' + str(current_row)] = writing_number
             ws['B' + str(current_row)] = data.id
             ws['C' + str(current_row)] = data.recorded_date.strftime('%Y-%m-%d')

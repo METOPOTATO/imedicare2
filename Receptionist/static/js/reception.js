@@ -21,10 +21,10 @@ $(document).ready(function() {
 
     $('#new_memo_detail').on('keydown', function(e){ 
         if(e.keyCode == 13)
-        {
-            create_memo_detail()
+            {
+                create_memo_detail()
+            }
         }
-    }
     )
 })
 
@@ -2271,9 +2271,10 @@ function show_memo_detail(){
                             "<td>" + (i + 1) + "</td>" +
                             "<td>" + response.datas[i]['depart'] + "</td>" +
                             "<td>" + response.datas[i]['creator'] + "</td>" +
-                            "<td>" + response.datas[i]['memo'] + "</td>" +
+                            "<td><input type='text' class='form-control' value='" + response.datas[i]['memo'] + "'></input></td>" +
                             "<td>" + 
                             // "<a class='btn btn-default btn-xs' style='margin-right:10px;' href='javascript: void (0);' onclick='update_detail_memo(" + response.datas[i]['detail_memo_id'] + ")' ><i class='fa fa-lg fa-pencil'></i></a>" +
+                            "<a class='btn btn-danger btn-xs' href='javascript: void (0);' onclick='update_detail_memo(" + response.datas[i]['detail_memo_id'] + ")' ><i class='fa fa-lg fa-pencil'></i></a> " +
                             "<a class='btn btn-danger btn-xs' href='javascript: void (0);' onclick='delete_detail_memo(" + response.datas[i]['detail_memo_id'] + ")' ><i class='fa fa-lg fa-trash'></i></a>" +
                             "</td></tr>";
     
@@ -2319,9 +2320,10 @@ function create_memo_detail(){
                             "<td>" + (i + 1) + "</td>" +
                             "<td>" + response.datas[i]['depart'] + "</td>" +
                             "<td>" + response.datas[i]['creator'] + "</td>" +
-                            "<td>" + response.datas[i]['memo'] + "</td>" +
+                            "<td><input type='text' class='form-control' value='" + response.datas[i]['memo'] + "'></input></td>" +
                             "<td>" + 
                             // "<a class='btn btn-default btn-xs' style='margin-right:10px;' href='javascript: void (0);' onclick='update_detail_memo(" + response.datas[i]['detail_memo_id'] + ")' ><i class='fa fa-lg fa-pencil'></i></a>" +
+                            "<a class='btn btn-danger btn-xs' href='javascript: void (0);' onclick='update_detail_memo(" + response.datas[i]['detail_memo_id'] + ")' ><i class='fa fa-lg fa-pencil'></i></a> " +
                             "<a class='btn btn-danger btn-xs' href='javascript: void (0);' onclick='delete_detail_memo(" + response.datas[i]['detail_memo_id'] + ")' ><i class='fa fa-lg fa-trash'></i></a> " +
 
                             "</td></tr>";
@@ -2370,9 +2372,10 @@ function delete_detail_memo(id){
                             "<td>" + (i + 1) + "</td>" +
                             "<td>" + response.datas[i]['depart'] + "</td>" +
                             "<td>" + response.datas[i]['creator'] + "</td>" +
-                            "<td>" + response.datas[i]['memo'] + "</td>" +
+                            "<td><input type='text' class='form-control' value='" + response.datas[i]['memo'] + "'></input></td>" +
                             "<td>" + 
                             // "<a class='btn btn-default btn-xs' style='margin-right:10px;' href='javascript: void (0);' onclick='update_detail_memo(" + response.datas[i]['detail_memo_id'] + ")' ><i class='fa fa-lg fa-pencil'></i></a>" +
+                            "<a class='btn btn-danger btn-xs' href='javascript: void (0);' onclick='update_detail_memo(" + response.datas[i]['detail_memo_id'] + ")' ><i class='fa fa-lg fa-pencil'></i></a> " +
                             "<a class='btn btn-danger btn-xs' href='javascript: void (0);' onclick='delete_detail_memo(" + response.datas[i]['detail_memo_id'] + ")' ><i class='fa fa-lg fa-trash'></i></a>" +
                             "</td></tr>";
     
@@ -2390,7 +2393,7 @@ function delete_detail_memo(id){
 
 function update_detail_memo(id){
     var patient_id = $("#patient_id").val();
-    var memo = $('#new_memo_detail').val();
+    var memo = $(`#table_memo_detail > tbody > tr:contains("${id}")`).find('td:eq(4)').find('input').val()
 
     $.ajax({
         type: 'POST',
@@ -2413,15 +2416,17 @@ function update_detail_memo(id){
                             "<td>" + (i + 1) + "</td>" +
                             "<td>" + response.datas[i]['depart'] + "</td>" +
                             "<td>" + response.datas[i]['creator'] + "</td>" +
-                            "<td>" + response.datas[i]['memo'] + "</td>" +
+                            "<td><input type='text' class='form-control' value='" + response.datas[i]['memo'] + "'></input></td>" +
                             "<td>" + 
                             // "<a class='btn btn-default btn-xs' style='margin-right:10px;' href='javascript: void (0);' onclick='update_detail_memo(" + response.datas[i]['detail_memo_id'] + ")' ><i class='fa fa-lg fa-pencil'></i></a>" +
+                            "<a class='btn btn-danger btn-xs' href='javascript: void (0);' onclick='update_detail_memo(" + response.datas[i]['detail_memo_id'] + ")' ><i class='fa fa-lg fa-pencil'></i></a> " +
                             "<a class='btn btn-danger btn-xs' href='javascript: void (0);' onclick='delete_detail_memo(" + response.datas[i]['detail_memo_id'] + ")' ><i class='fa fa-lg fa-trash'></i></a></td> " +
                             "</tr>";
     
                     $('#table_memo_detail > tbody').append(str);
     
                 }
+                alert(gettext('Updated'));
             }
         },
         error: function (request, status, error) {
