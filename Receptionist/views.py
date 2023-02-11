@@ -3496,7 +3496,9 @@ def document_excel(request, reception_id):
         ws['A11'] = '5. Địa chỉ/ Address : ' + reception.patient.address 
         ws['A12'] = '7. Số điện thoại/Phone number : ' + reception.patient.phone
         ws['A13'] = '8. Chẩn đoán/ Diagnostic : ' + reception.diagnosis.diagnosis 
-        ws['A14'] = '9. Khoa Khám bệnh/ Department : ' + reception.depart.full_name_vie + '/' + reception.depart.full_name
+        vie_name = reception.depart.full_name_vie if reception.depart.full_name_vie else ''
+        full_name = reception.depart.full_name if reception.depart.full_name else ''
+        ws['A14'] = '9. Khoa Khám bệnh/ Department : ' + vie_name + '/' + full_name
         ws['C9'] = '2. Quốc tịch/ Nationality : ' + reception.patient.nationality 
         ws['C10'] = '4. Giới tính/ Gender : ' + reception.patient.get_gender_simple()                
         ws['C11'] = '6. Ngày sinh/ D.O.B : ' + reception.patient.date_of_birth.strftime('%d/%m/%Y')           
@@ -3657,7 +3659,9 @@ def document_excel(request, reception_id):
         ws['A10'] = '3. Họ và tên/ Fullname :  ' + reception.patient.get_name_kor_eng()
         ws['A11'] = '5. Địa chỉ/ Address : ' + reception.patient.address 
         ws['A12'] = '7. Số điện thoại/Phone number : ' + reception.patient.phone
-        ws['A14'] = '9. Khoa Khám bệnh/ Department : ' + reception.depart.full_name_vie + '/' + reception.depart.full_name
+        vie_name = reception.depart.full_name_vie if reception.depart.full_name_vie else ''
+        full_name = reception.depart.full_name if reception.depart.full_name else ''
+        ws['A14'] = '9. Khoa Khám bệnh/ Department : ' + vie_name + '/' + full_name
         ws['E9'] = '2. Quốc tịch/ Nationality : ' + reception.patient.nationality 
         ws['E10'] = '4. Giới tính/ Gender : ' + reception.patient.get_gender_simple()                
         ws['E11'] = '6. Ngày sinh/ D.O.B : ' + reception.patient.date_of_birth.strftime('%d/%m/%Y')          
@@ -3715,7 +3719,9 @@ def document_excel(request, reception_id):
         ws['A11'] = '5. Địa chỉ/ Address : ' + reception.patient.address 
         ws['A12'] = '7. Số điện thoại/Phone number : ' + reception.patient.phone
         ws['A13'] = '8. Chẩn đoán/ Diagnostic : ' + reception.diagnosis.diagnosis 
-        ws['A14'] = '9. Khoa Khám bệnh/ Department : ' + reception.depart.full_name_vie + '/' + reception.depart.full_name
+        vie_name = reception.depart.full_name_vie if reception.depart.full_name_vie else ''
+        full_name = reception.depart.full_name if reception.depart.full_name else ''
+        ws['A14'] = '9. Khoa Khám bệnh/ Department : ' + vie_name + '/' + full_name
         ws['D9'] = '2. Quốc tịch/ Nationality : ' + reception.patient.nationality 
         ws['D10'] = '4. Giới tính/ Gender : ' + reception.patient.get_gender_simple()                
         ws['D11'] = '6. Ngày sinh/ D.O.B : ' + reception.patient.date_of_birth.strftime('%d/%m/%Y')          
@@ -3774,7 +3780,9 @@ def document_excel(request, reception_id):
         ws['A11'] = '5. Địa chỉ/ Address : ' + reception.patient.address 
         ws['A12'] = '7. Số điện thoại/Phone number : ' + reception.patient.phone
         ws['A13'] = '8. Chẩn đoán/ Diagnostic : ' + reception.diagnosis.diagnosis 
-        ws['A14'] = '9. Khoa Khám bệnh/ Department : ' + reception.depart.full_name_vie + '/' + reception.depart.full_name
+        vie_name = reception.depart.full_name_vie if reception.depart.full_name_vie else ''
+        full_name = reception.depart.full_name if reception.depart.full_name else ''
+        ws['A14'] = '9. Khoa Khám bệnh/ Department : ' + vie_name + '/' + full_name
         ws['B9'] = '2. Quốc tịch/ Nationality : ' + reception.patient.nationality 
         ws['B10'] = '4. Giới tính/ Gender : ' + reception.patient.get_gender_simple()                
         ws['B11'] = '6. Ngày sinh/ D.O.B : ' + reception.patient.date_of_birth.strftime('%d/%m/%Y')          
@@ -3825,7 +3833,9 @@ def document_excel(request, reception_id):
         ws['A11'] = '5. Địa chỉ/ Address : ' + reception.patient.address 
         ws['A12'] = '7. Số điện thoại/Phone number : ' + reception.patient.phone
         ws['A13'] = '8. Chẩn đoán/ Diagnostic : ' + reception.diagnosis.diagnosis  
-        ws['A14'] = '9. Khoa Khám bệnh/ Department : ' + reception.depart.full_name_vie + '/' + reception.depart.full_name
+        vie_name = reception.depart.full_name_vie if reception.depart.full_name_vie else ''
+        full_name = reception.depart.full_name if reception.depart.full_name else ''
+        ws['A14'] = '9. Khoa Khám bệnh/ Department : ' + vie_name + '/' + full_name
         ws['E9'] = '2. Quốc tịch/ Nationality : ' + reception.patient.nationality 
         ws['E10'] = '4. Giới tính/ Gender : ' + reception.patient.get_gender_simple()                
         ws['E11'] = '6. Ngày sinh/ D.O.B : ' + reception.patient.date_of_birth.strftime('%d/%m/%Y')           
@@ -3866,7 +3876,9 @@ def document_excel(request, reception_id):
         ws['A11'] = '5. Địa chỉ/ Address : ' + reception.patient.address 
         ws['A12'] = '7. Số điện thoại/Phone number : ' + reception.patient.phone
         ws['A13'] = '8. Chẩn đoán/ Diagnostic : ' + reception.diagnosis.diagnosis   
-        ws['A14'] = '9. Khoa Khám bệnh/ Department : ' + reception.depart.full_name_vie + '/' + reception.depart.full_name
+        vie_name = reception.depart.full_name_vie if reception.depart.full_name_vie else ''
+        full_name = reception.depart.full_name if reception.depart.full_name else ''
+        ws['A14'] = '9. Khoa Khám bệnh/ Department : ' + vie_name + '/' + full_name
         ws['E9'] = '2. Quốc tịch/ Nationality : ' + reception.patient.nationality 
         ws['E10'] = '4. Giới tính/ Gender : ' + reception.patient.get_gender_simple()                
         ws['E11'] = '6. Ngày sinh/ D.O.B : ' + reception.patient.date_of_birth.strftime('%d/%m/%Y')         
