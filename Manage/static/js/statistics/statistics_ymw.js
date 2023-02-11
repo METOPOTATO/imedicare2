@@ -102,6 +102,20 @@ function database_search(page = null) {
                     $('#statistics_table_body_hour').append(str);
                 }
             }
+            console.log('*****')
+            if (response.old_new) {
+                console.log('=====')
+                $('#old_new_people_table_body').empty();
+                for (var i = 0; i < response.old_new.length; i++) {
+                    var str = "";
+                    if (response.old_new[i]) {
+                        str = "<tr><td>" + response.old_new[i]['old'] + "</td>" +
+        
+                            "<td>" + response.old_new[i]['new'] + "</td></tr>";
+                    }
+                    $('#old_new_people_table_body').append(str);
+                }
+            }
 
 
         },

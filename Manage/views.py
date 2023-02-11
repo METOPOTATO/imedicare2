@@ -11224,6 +11224,10 @@ def search_ymw(request):
         {'name':'18:00 ~ 18:29','hour':18,'min_min':00,'min_max':29},
         {'name':'18:30 ~ 18:59','hour':18,'min_min':30,'min_max':59},
         {'name':'19:00 ~ 19:29','hour':19,'min_min':00,'min_max':29},
+        {'name':'19:30 ~ 19:59','hour':19,'min_min':30,'min_max':59},
+
+        {'name':'20:00 ~ 20:29','hour':20,'min_min':00,'min_max':29},
+        {'name':'20:30 ~ 20:59','hour':20,'min_min':30,'min_max':59},
         #{'name':'19:30 ~ 19:59','hour':19,'min_min':30,'min_max':59},        
     ]
 
@@ -11242,8 +11246,34 @@ def search_ymw(request):
                 'count':hour_query['count'],
                 'price_sum':0 if hour_query['total_price'] is None else hour_query['total_price'],
             })
+    new = datetime.datetime.now()
+    current_month = new.month
+    current_year = new.year
 
+    date_start = datetime.datetime(year=int(current_year) , month=current_month, day=1) 
+    date_end = datetime.datetime(year=int(current_year) , month=current_month + 1, day=1 )- datetime.timedelta(seconds = 1)
+    olds = Reception.objects.filter(
+            **kwargs ,
+            recorded_date__range = (date_start, date_end), 
+            payment__paymentrecord__status='paid',
+        ).exclude(
+            progress='deleted'
+        ).values_list('patient').distinct()
 
+    news = Reception.objects.filter(
+            **kwargs ,
+            recorded_date__range = (date_start, date_end), 
+            payment__paymentrecord__status='paid',
+            patient__date_registered__gte = date_start
+        ).exclude(
+            progress='deleted'
+        ).values_list('patient').distinct()
+
+    list_patient = []
+    list_patient.append({
+        'old': olds.count(),
+        'new': news.count()
+    })
 
     return JsonResponse({
         'result':True,
@@ -11251,7 +11281,7 @@ def search_ymw(request):
         'datas_monthly':data_list_monthly,
         'datas_week':data_list_week,
         'datas_hour':data_list_hour,
-
+        'old_new': list_patient
         })
 
 
