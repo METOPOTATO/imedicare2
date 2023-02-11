@@ -2,7 +2,7 @@
 .statistics_grid {
     margin: 0 auto;
     width: 1920px;
-    height: 800px;
+    height: 1200px;
     display: grid;
     /*grid-template-columns: 70%;
     grid-template-rows: 50%;*/
@@ -38,11 +38,11 @@
 
 .statistics_table_grid {
     margin: 0 auto;
-    height: 600px;
+    height: 900px;
     width: 100%;
     display: grid;
     grid-template-columns: 600px 1200px;
-    grid-template-rows: 150px 130px 125px 150px;
+    grid-template-rows: 200px 300px 200px 200px;
 }
 .sub_label{
     margin-bottom:10px;
@@ -55,15 +55,15 @@
 #statistics_div_gender {
     grid-column-start: 1;
     grid-column-end: 2;
-    grid-row-start: 2;
-    grid-row-end: 3;
+    grid-row-start: 1;
+    grid-row-end: 2;
 }
 
 #statistics_div_nation{
     grid-column-start: 1;
     grid-column-end: 2;
-    grid-row-start: 1;
-    grid-row-end: 2;
+    grid-row-start: 2;
+    grid-row-end: 3;
 }
 
 #statistics_div_payment_method{
@@ -173,7 +173,7 @@
 #statistics_table_nation {
     border-spacing:0px;
     padding:0px;
-    
+    height: 250px;
 }
     #statistics_table_nation th, #statistics_table_gender th, #statistics_table_payment_method th, #statistics_table_age th {
         border-spacing: 0px;
