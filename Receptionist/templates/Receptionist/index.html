@@ -1062,12 +1062,22 @@
 
 
 <div id="memo_detail_modal" class="modal fade">
+
     <div class="modal-dialog" style="width:1000px;">
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span> <span class="sr-only">close</span></button>
                 <h4>{{ _('Memo Detail') }}</h4>
-               
+                <div  class="input-group input-group-btn">
+                    <label for="patient_mark">Patient Mark</label>
+                    <select class="form-control" id="patient_mark">
+                        <option value="" selected>--</option>
+                        {% for data in patient_mark %}
+                            <option value="{{ data.commcode }}">{{data.se1}}</option>
+                        {% endfor%}
+                    </select>
+                </div>
+
                 <div id="modalBody" class="modal-body" >
                     
                     <table class="table table-bordered table-hover table-striped" id="table_memo_detail">
