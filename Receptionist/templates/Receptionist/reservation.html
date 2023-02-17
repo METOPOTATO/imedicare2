@@ -84,7 +84,7 @@
                         </tr>
                         <tr>
                             <td>
-                                <div class="input-group" style="width:100%" >
+                                <div id="reservation_patient_label" class="input-group" style="width:100%" >
                                     <span class="input-group-addon" style="width:42%" id="basic-addon1">{{ _('Name Kor') }}</span>
                                     <input type="text" id="reservation_patient" class="form-control" aria-describedby="basic-addon1" autocomplete="off"/>
                                 </div>
@@ -768,6 +768,70 @@
                     },
                 });
             }
+
+        });
+
+        $('#reservation_patient_label').dblclick(function (e) {  
+                var string = $('#reservation_patient').val();
+
+                $.ajax({
+                    type: 'POST',
+                    url: '/receptionist/patient_search/',
+                    data: {
+                        'csrfmiddlewaretoken': $('#csrf').val(),
+                        'date_start':event.start,
+                        'category': 'name',
+                        'string':string,
+                    },
+                    dataType: 'Json',
+                    success: function (response) {
+
+                        if (response.datas.length == 0) {
+                            alert( "{{ _('No Patient') }}" );
+                        }
+                        // else if (response.datas.length == 1) {
+                        //     $('#reservation_chart').val(response.datas[0].id);
+                        //     $('#reservation_chart_number').val(response.datas[0].chart);
+                        //     $('#reservation_patient').val(response.datas[0].name_kor);
+                        //     $('#reservation_patient_eng').val( response.datas[0].name_eng);
+                        //     $('#reservation_date_of_birth').val(response.datas[0].date_of_birth);
+                        //     $('#reservation_phone').val(response.datas[0].phonenumber);
+                        // }
+                        else {
+                            $('#patient_list_contents').empty();
+
+                            $('#patient_list').modal({backdrop: 'static', keyboard: false});
+                            $('#patient_list').modal('show');
+
+                            var str = '';
+                            for (var i = 0; i < response.datas.length; i++) {
+                                str += '<tr style="cursor:pointer;" onclick="select_patient(this)"><td>' + response.datas[i].id + '</td>' +
+                                    '<td>' + response.datas[i].chart + '</td>' +
+                                    '<td>' + response.datas[i].name_kor + '</td>' +
+                                    '<td>' + response.datas[i].name_eng  + '</td>' +
+                                    '<td>' + response.datas[i].date_of_birth + '</td>' +
+                                    '<td>' + response.datas[i].depart + '</td>' +
+                                    '<td>' + response.datas[i].phonenumber + '</td>'+
+                                    '<td>' + response.datas[i].nationality + '</td>' +
+                                    '<td>' + response.datas[i].passport + '</td>' +
+                                    '<td>' + response.datas[i].email + '</td>' +
+                                    '<td style="display: none">' + response.datas[i].category + '</td>' +
+                                    '<td style="display: none;">' + response.datas[i].address + '</td>' +
+                                    '<td style="display: nonen;">' + response.datas[i].gender + '</td>' +
+                                    '</tr>' ;
+                            }
+                            $('#patient_list_contents').append(str);
+
+
+                        }
+                        
+
+                    },
+                    error: function (request, status, error) {
+                        console.log("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
+                    },
+                });
+            
 
         });
 
