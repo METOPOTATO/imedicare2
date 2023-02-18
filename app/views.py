@@ -155,6 +155,53 @@ def set_menu(request):
                 })
     list_1 = []
     list_2 = []
+    list_3 = {
+        "name": "Settings",
+        "lower_menu": [],
+        "code": "code"
+    }
+
+    setting_list = []
+    document_list = [
+        {
+            "name": "Documents",
+            "lower_menu": [
+                {
+                    "name": "Issue Documents",
+                    "url": "/receptionist/Documents/",
+                    "code": "rec_doc"
+                },
+                {
+                    "name": "Send Documents",
+                    "url": "/manage/statistics/profile_status/",
+                    "code": "sta_pro"
+                }
+
+            ],
+            "code": "code"
+        }
+    ]
+    org_list = [
+        {
+            "name": "Organization",
+            "lower_menu": [
+                {
+                    "name": "Information Coworker",
+                    "url": "/manage/manage_employee/",
+                    "code": "emp_mgt"
+                },
+                {
+                    "name": "So Do",
+                    "url": "",
+                    "code": "so_do"
+                }
+
+            ],
+            "code": "org"
+        }
+    ]
+
+    allow_setting = False
     for menu in menu_list:
         if menu['name'] == 'Registration':
             list_1.append(menu)
@@ -164,9 +211,33 @@ def set_menu(request):
             list_1.append(menu)
         elif menu['name'] == 'Pick Up':
             pass
+        elif menu['name'] == 'Drafts':
+            pass
+        elif menu['name'] == 'Drafts':
+            pass
+        elif menu['name'] == 'Setting':
+            setting_list.append(    {
+                "name": "Code Setting",
+                "url": "/manage/code_setting/",
+                "code": "code"
+            })
+            allow_setting = True
+        elif menu['name'] == 'Service & Inventory':
+            for item in menu['lower_menu']:
+                setting_list.append(item)
+        elif menu['name'] == 'Documents':
+            list_2.extend(document_list)
+        elif menu['name'] == 'Organization':
+            pass
         else:
+            if menu['name'] == 'Statistics':
+                menu['lower_menu'] = menu['lower_menu'][:-1]
             list_2.append(menu)
-    menu_list = list_1 + list_2
+    list_3['lower_menu'] = setting_list
+
+    menu_list = list_1 + list_2  + org_list
+    if allow_setting:
+        menu_list += [list_3]
 
 
     request.session['MENU'] = menu_list

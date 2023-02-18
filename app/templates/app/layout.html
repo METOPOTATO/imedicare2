@@ -66,6 +66,10 @@
             })
 
         }
+
+        function show_so_do(){
+            window.open('/static/img/so_do.png', 'Vaccine Kor', 'height = ' + screen.height + ', width = ' + screen.width + 'fullscreen = yes');
+        }
     </script>
 </head>
 
@@ -105,7 +109,13 @@
                                 <a href="" data-toggle="dropdown" >{{ data.name }}<span class="caret"></span></a>
                                 <ul class="dropdown-menu">
                                 {% for sub in data.lower_menu %}
-                                    <li><a href="{{ sub.url }}">{{ sub.name }}<span id="badge_{{sub.code}}" class="badge" style="display:none;">N</span></a></li>
+                                    {% if sub.code == "so_do" %}
+                                        <!-- <li><img src="{% static 'img/so_do.png' %}"></li> -->
+                                        <li><a href="#" onclick="show_so_do()">So Do</a></li>
+                                    {% else %}
+                                        <li><a href="{{ sub.url }}">{{ sub.name }}<span id="badge_{{sub.code}}" class="badge" style="display:none;">N</span></a></li>
+                                    {% endif %}
+                                    
                                 {% endfor %}
                                 </ul>
                             </li>
