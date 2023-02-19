@@ -590,6 +590,9 @@ def save_reception(request):
 def patient_search(request):
     category = request.POST.get('category')
     string = request.POST.get('string')
+    memo = request.POST.get('memo_string')
+    print(string)
+    print(memo)
     # print(string)
     # print(category)
     argument_list = [] 
@@ -607,41 +610,106 @@ def patient_search(request):
     elif category=='date_of_birth':
         argument_list.append( Q(**{'patient__date_of_birth__icontains':string} ) ) 
     elif category=='phone':
-        argument_list.append( Q(**{'patient__phone__icontains':string} ) ) 
+        argument_list.append( Q(**{'patient__phone__icontains':string} ) )
+
+     
 
     # patient = Patient.objects.filter(name_kor=string).first()
     # print(patient)
-
-    receptions = Reception.objects.select_related('patient').values('patient_id','depart_id').filter( functools.reduce(operator.or_, argument_list) ).exclude(progress='deleted').annotate(c_pt=Count('patient_id'),c_dp=Count('depart_id'))
-    # print(receptions)
     datas=[]
-    for reception in receptions:
-        reception_last = Reception.objects.filter(patient = reception['patient_id'], depart = reception['depart_id']).last()
+    if string and string != '':
+        receptions = Reception.objects.select_related('patient').values('patient_id','depart_id').filter( functools.reduce(operator.or_, argument_list) ).exclude(progress='deleted').annotate(c_pt=Count('patient_id'),c_dp=Count('depart_id'))
+        # print(receptions)
+        patient_memo = []
+        if memo:
+            patient_memo = DetailMemo.objects.filter(memo__icontains=memo).values_list('patient_id', flat=True);
+            patient_memo = list(patient_memo)
+        for reception in receptions:
+            if memo and memo != '':
+                if reception['patient_id'] in patient_memo:
+                    reception_last = Reception.objects.filter(patient = reception['patient_id'], depart = reception['depart_id']).last()
+                    if reception_last:
+                        data = {}
+                        data.update({
+                            'id':reception_last.patient.id,
+                            'chart':reception_last.patient.get_chart_no(),
+                            'name_kor':reception_last.patient.name_kor,
+                            'name_eng':reception_last.patient.name_eng,
+                            'gender':reception_last.patient.gender,
+                            'date_of_birth':reception_last.patient.date_of_birth.strftime('%Y-%m-%d'),
+                            'phonenumber':reception_last.patient.phone,
+                            'age' : reception_last.patient.get_age(),
+                            'address':reception_last.patient.address,
+                            'has_unpaid':reception_last.patient.has_unpaid(),
+                            'depart':reception_last.depart.name,
+                            'last_visit':reception_last.recorded_date.strftime('%Y-%m-%d'),
+                            
+                            'nationality':reception_last.patient.nationality,
+                            'passport':reception_last.patient.passport,
+                            'email':reception_last.patient.email,
+                            'category':reception_last.patient.category
 
-        data = {}
-        data.update({
-            'id':reception_last.patient.id,
-            'chart':reception_last.patient.get_chart_no(),
-            'name_kor':reception_last.patient.name_kor,
-            'name_eng':reception_last.patient.name_eng,
-            'gender':reception_last.patient.gender,
-            'date_of_birth':reception_last.patient.date_of_birth.strftime('%Y-%m-%d'),
-            'phonenumber':reception_last.patient.phone,
-            'age' : reception_last.patient.get_age(),
-            'address':reception_last.patient.address,
-            'has_unpaid':reception_last.patient.has_unpaid(),
-            'depart':reception_last.depart.name,
-            'last_visit':reception_last.recorded_date.strftime('%Y-%m-%d'),
-            
-            'nationality':reception_last.patient.nationality,
-            'passport':reception_last.patient.passport,
-            'email':reception_last.patient.email,
-            'category':reception_last.patient.category
+
+                            })
+                        datas.append(data)
+                print(1)
+            else:
+                print(2)
+                reception_last = Reception.objects.filter(patient = reception['patient_id'], depart = reception['depart_id']).last()
+                data = {}
+                data.update({
+                    'id':reception_last.patient.id,
+                    'chart':reception_last.patient.get_chart_no(),
+                    'name_kor':reception_last.patient.name_kor,
+                    'name_eng':reception_last.patient.name_eng,
+                    'gender':reception_last.patient.gender,
+                    'date_of_birth':reception_last.patient.date_of_birth.strftime('%Y-%m-%d'),
+                    'phonenumber':reception_last.patient.phone,
+                    'age' : reception_last.patient.get_age(),
+                    'address':reception_last.patient.address,
+                    'has_unpaid':reception_last.patient.has_unpaid(),
+                    'depart':reception_last.depart.name,
+                    'last_visit':reception_last.recorded_date.strftime('%Y-%m-%d'),
+                    
+                    'nationality':reception_last.patient.nationality,
+                    'passport':reception_last.patient.passport,
+                    'email':reception_last.patient.email,
+                    'category':reception_last.patient.category
 
 
-            })
-        datas.append(data)
+                    })
+                datas.append(data)
+    else:
+        print(3)
+        if memo:
+            patient_memo = DetailMemo.objects.filter(memo__icontains=memo).values_list('patient_id', flat=True);
+            patient_memo = list(patient_memo)
+            receptions = Reception.objects.select_related('patient').values('patient_id','depart_id').filter( patient__in=patient_memo ).exclude(progress='deleted').annotate(c_pt=Count('patient_id'),c_dp=Count('depart_id'))
+            for reception in receptions:
+                reception_last = Reception.objects.filter(patient = reception['patient_id'], depart = reception['depart_id']).last()
+                data = {}
+                data.update({
+                    'id':reception_last.patient.id,
+                    'chart':reception_last.patient.get_chart_no(),
+                    'name_kor':reception_last.patient.name_kor,
+                    'name_eng':reception_last.patient.name_eng,
+                    'gender':reception_last.patient.gender,
+                    'date_of_birth':reception_last.patient.date_of_birth.strftime('%Y-%m-%d'),
+                    'phonenumber':reception_last.patient.phone,
+                    'age' : reception_last.patient.get_age(),
+                    'address':reception_last.patient.address,
+                    'has_unpaid':reception_last.patient.has_unpaid(),
+                    'depart':reception_last.depart.name,
+                    'last_visit':reception_last.recorded_date.strftime('%Y-%m-%d'),
+                    
+                    'nationality':reception_last.patient.nationality,
+                    'passport':reception_last.patient.passport,
+                    'email':reception_last.patient.email,
+                    'category':reception_last.patient.category
 
+
+                    })
+                datas.append(data)
     # print(datas)
     context = {'datas':datas}
     return JsonResponse(context)
@@ -3480,6 +3548,7 @@ def document_excel(request, reception_id):
             pass
 
         wb = load_workbook('/home/imedicare/Cofee/static/excel_form/Document_report.xlsx') #Workbook()
+        # wb = load_workbook('/Users/light/Desktop/work/imdc/imedicare2/static/excel_form/Document_report.xlsx')
         border_thin = Border(top=Side(border_style="thin", color="000000") ,
                             left=Side(border_style="thin", color="000000") ,
                         right=Side(border_style="thin", color="000000") ,
@@ -3734,10 +3803,13 @@ def document_excel(request, reception_id):
             writing_number = 1      
 
             no = 1
-            current_row = 35
+            current_row = 41
             for test in test_set:
                 ws['A' + str(current_row)] = no
-                ws['B' + str(current_row)] = test.test.name
+                try:
+                    ws['B' + str(current_row)] = test.test.name
+                except:
+                    pass
                 ws['D' + str(current_row)] = 1
                 ws['E' + str(current_row)] = ''
                 current_row +=1
@@ -3745,7 +3817,7 @@ def document_excel(request, reception_id):
 
             no = 1
             no_other = 1
-            current_row = 51
+            current_row = 63
             for precedure in precedure_set:
                 if precedure.precedure.precedure_class_id == 8:
                     ws['A' + str(current_row)] = no_other

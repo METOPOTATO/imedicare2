@@ -39,6 +39,12 @@ $(function () {
             patient_search();
         }
     })
+
+    $('#patient_search_input2').keydown(function (key) {
+        if (key.keyCode == 13) {
+            patient_search();
+        }
+    })
     $('#re_patient_search_input').keydown(function (key) {
         if (key.keyCode == 13) {
             reservation_search();
@@ -1416,12 +1422,12 @@ function patient_search(data) {
 
     var category = $('#patient_search_select option:selected').val();
     var string = $('#patient_search_input').val();
-
-    if (string == null || string == '') {
-        alert(gettext('Input search string.'));
-        return;
-    }
-
+    var string2 = $('#patient_search_input2').val();
+    // if (string == null || string == '') {
+    //     alert(gettext('Input search string.'));
+    //     return;
+    // }
+    console.log(string2)
     $.ajax({
         type: 'POST',
         url: '/receptionist/patient_search/',
@@ -1429,6 +1435,7 @@ function patient_search(data) {
             'csrfmiddlewaretoken': $('#csrf').val(),
             'category': category,
             'string': string,
+            'memo_string': string2,
         },
         dataType: 'Json',
         success: function (response) {

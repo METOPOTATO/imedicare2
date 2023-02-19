@@ -229,6 +229,8 @@
             <div class="status_table_title">
             <span class="btn btn-danger" >{{ _('Patient List') }}</span>
                 <div class="status_table_filter">
+                    <label for="patient_search_input2">{{ _('Memo') }}</label>
+                    <input type="text" name="search_input" id="patient_search_input2" class="form-control patient_search_input" aria-describedby="basic-addon1" required="">    
                     <select name="filter" id="patient_search_select" class="form-control costom-select patient_search_select" aria-describedby="basic-addon1">
                         <option value="">{{_('All') }}</option>
                         <option value="name">{{_('Name') }}</option>

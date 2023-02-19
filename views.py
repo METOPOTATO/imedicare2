@@ -3396,7 +3396,10 @@ def document_excel(request, reception_id):
             current_row = 35
             for test in test_set:
                 ws['A' + str(current_row)] = no
-                ws['B' + str(current_row)] = test.test.name
+                try:
+                    ws['B' + str(current_row)] = test.test.name
+                except:
+                    pass
                 ws['D' + str(current_row)] = 1
                 ws['E' + str(current_row)] = ''
                 current_row +=1

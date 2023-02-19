@@ -231,13 +231,12 @@ def set_menu(request):
             pass
         else:
             if menu['name'] == 'Statistics':
-                menu['lower_menu'] = menu['lower_menu'][:-1]
+                menu['lower_menu'] = menu['lower_menu']
             list_2.append(menu)
     list_3['lower_menu'] = setting_list
 
     menu_list = list_1 + list_2  + org_list
-    if allow_setting:
-        menu_list += [list_3]
+    menu_list += [list_3]
 
 
     request.session['MENU'] = menu_list
