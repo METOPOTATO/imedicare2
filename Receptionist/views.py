@@ -602,6 +602,7 @@ def patient_search(request):
         argument_list.append( Q(**{'patient__id__icontains':string} ) ) 
         argument_list.append( Q(**{'patient__phone__icontains':string} ) ) 
         argument_list.append( Q(**{'patient__date_of_birth__icontains':string} ) ) 
+        argument_list.append( Q(**{'patient__memo__icontains':string} ) ) 
     elif category=='name':
         argument_list.append( Q(**{'patient__name_kor__icontains':string} ) )
         argument_list.append( Q(**{'patient__name_eng__icontains':string} ) )
@@ -611,7 +612,8 @@ def patient_search(request):
         argument_list.append( Q(**{'patient__date_of_birth__icontains':string} ) ) 
     elif category=='phone':
         argument_list.append( Q(**{'patient__phone__icontains':string} ) )
-
+    elif category=='memo':
+        argument_list.append( Q(**{'patient__memo__icontains':string} ) )
      
 
     # patient = Patient.objects.filter(name_kor=string).first()
