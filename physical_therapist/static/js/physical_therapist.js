@@ -69,6 +69,17 @@ $(function () {
 
     //select and set methods
     $('.contents_items tr').click(function (event) {
+        var isValidCount = true;
+        if (event.target.parentElement.parentElement.parentElement.parentElement.id == 'diagnosis_select_medicine_contents') {
+            var count = $(event.target.parentElement).find('td:nth-child(4)').html();
+            count = parseInt(count);
+            if (count <= 0){
+                isValidCount = false;
+                console.log('Not valid count')
+                alert('This medicine is not available!(Loáº¡i thuá»‘c nÃ y khÃ´ng cÃ²n trong kho)')
+            }
+        }
+        if (isValidCount){
         if (event.target.nodeName.toLowerCase() == 'td') {
             //diagnosis_select_test_contents
             $(event.target.parentElement.parentElement.parentElement.parentElement).attr('id');
@@ -129,18 +140,19 @@ $(function () {
 
             show_total_price();
         }
+    }
     });
 
     if ($("#patient_date_of_birth").length > 0) {
         $("#patient_date_of_birth").datepicker({
             changeMonth: true,
             changeYear: true,
-            nextText: '´ÙÀ½ ´Þ',
-            prevText: 'ÀÌÀü ´Þ',
-            currentText: '¿À´Ã',
-            closeText: '´Ý±â',
+            nextText: 'ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½',
+            prevText: 'ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½',
+            currentText: 'ï¿½ï¿½ï¿½ï¿½',
+            closeText: 'ï¿½Ý±ï¿½',
             monthNamesShort: ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12'],
-            monthNames: ['1¿ù', '2¿ù', '3¿ù', '4¿ù', '5¿ù', '6¿ù', '7¿ù', '8¿ù', '9¿ù', '10¿ù', '11¿ù', '12¿ù'],
+            monthNames: ['1ï¿½ï¿½', '2ï¿½ï¿½', '3ï¿½ï¿½', '4ï¿½ï¿½', '5ï¿½ï¿½', '6ï¿½ï¿½', '7ï¿½ï¿½', '8ï¿½ï¿½', '9ï¿½ï¿½', '10ï¿½ï¿½', '11ï¿½ï¿½', '12ï¿½ï¿½'],
             dateFormat: "yy-mm-dd",
             yearRange: '1900:2100',
         });
@@ -258,7 +270,7 @@ $(function () {
         }
     })
 
-    //¹®2 ¼±ÅÃ
+    //ï¿½ï¿½2 ï¿½ï¿½ï¿½ï¿½
     $(".q2_item_select ").change(function () {
         var data_code = $(this).attr('data_code');
 
@@ -282,7 +294,7 @@ $(function () {
 
         $('#q2_items_' + str).show();
     })
-    //¹®2 ÇØÁ¦
+    //ï¿½ï¿½2 ï¿½ï¿½ï¿½ï¿½
     $('.pain_location_text').change(function () {
         if ($(this).is(':checked') != true) {
             var data_code = $(this).attr('data_code');
@@ -301,7 +313,7 @@ $(function () {
 
 
 
-    //¹®Áø 
+    //ï¿½ï¿½ï¿½ï¿½ 
     $(".js-range-slider").ionRangeSlider({
         min: 0,
         max: 10,
@@ -330,7 +342,7 @@ $(function () {
             },
             dataType: 'Json',
             success: function (response) {
-                //¹®Áø 
+                //ï¿½ï¿½ï¿½ï¿½ 
 
 
                 //init
@@ -860,7 +872,7 @@ function get_diagnosis(reception_no) {
 
 
 function reception_waiting(Today = false) {
-    //ÀÓ½Ã
+    //ï¿½Ó½ï¿½
     return;
     var date;
 
