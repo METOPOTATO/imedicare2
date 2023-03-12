@@ -5,6 +5,23 @@ var timer_count = 0;
 function numberWithCommas(x) {
     return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 }
+$(document).ready(
+    $(document).on('change', '.diagnosis_selected_input_number', function (event) {
+        console.log('abc')
+        var amount = event.target.value;
+        var code = $(event.target.parentElement.parentElement).find('td:nth-child(1)').text();
+        console.log(code)
+        var sourceRow = $(`#diagnosis_select_medicine_contents .contents_items > tr > td:contains("${code}")`).parent();
+        var amountData = $(sourceRow).find('td:nth-child(4)').html();
+        console.log(amount)
+        console.log(amountData)
+        if ( parseInt(amount) > parseInt(amountData) ){
+            alert('Cannot add more medicine');
+            $(this).val(parseInt(amountData))
+        }
+        show_total_price()
+    })
+)
 $(function () {
     var _oldShow = $.fn.show;
     var _oldHide = $.fn.hide;
