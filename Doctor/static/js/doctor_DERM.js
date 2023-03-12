@@ -10,6 +10,24 @@ var signaturePad = null;
 function numberWithCommas(x) {
     return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 }
+
+$(document).ready(
+    $(document).on('change', '.diagnosis_selected_input_number', function (event) {
+        console.log('abc')
+        var amount = event.target.value;
+        var code = $(event.target.parentElement.parentElement).find('td:nth-child(1)').text();
+        console.log(code)
+        var sourceRow = $(`#diagnosis_select_medicine_contents .contents_items > tr > td:contains("${code}")`).parent();
+        var amountData = $(sourceRow).find('td:nth-child(4)').html();
+        console.log(amount)
+        console.log(amountData)
+        if ( parseInt(amount) > parseInt(amountData) ){
+            alert('Cannot add more medicine');
+            $(this).val(parseInt(amountData))
+        }
+        show_total_price()
+    })
+)
 $(function () {
     var _oldShow = $.fn.show;
     var _oldHide = $.fn.hide;
@@ -80,10 +98,36 @@ $(function () {
             $('#diagnosis_select_package_contents').show();
         }
     });
-
+    
+    // $('#diagnosis_selected_medicine').click(function (event){
+    //     $('.diagnosis_selected_input_number').change(function(event){
+    //         var amount = event.target.value;
+    //         var code = $(event.target.parentElement.parentElement).find('td:nth-child(1)').text();
+    //         console.log(code)
+    //         var sourceRow = $(`#diagnosis_select_medicine_contents .contents_items > tr > td:contains("${code}")`).parent();
+    //         var amountData = $(sourceRow).find('td:nth-child(4)').html();
+    //         console.log(amount)
+    //         console.log(amountData)
+    //         if ( parseInt(amount) > parseInt(amountData) ){
+    //             alert('Cannot add more medicine');
+    //             $(this).text(parseInt(amountData))
+    //         }
+    //     })
+    // })
 
     //select and set methods
     $('.contents_items tr').click(function (event) {
+        var isValidCount = true;
+        if (event.target.parentElement.parentElement.parentElement.parentElement.id == 'diagnosis_select_medicine_contents') {
+            var count = $(event.target.parentElement).find('td:nth-child(4)').html();
+            count = parseInt(count);
+            if (count <= 0){
+                isValidCount = false;
+                console.log('Not valid count')
+                alert('This medicine is not available!(Loại thuốc này không còn trong kho)')
+            }
+        }
+        if (isValidCount){
         if (event.target.nodeName.toLowerCase() == 'td') {
             //diagnosis_select_test_contents
             $(event.target.parentElement.parentElement.parentElement.parentElement).attr('id');
@@ -193,6 +237,7 @@ $(function () {
 
             show_total_price();
         }
+    }
     });
 
     if ($("#patient_date_of_birth").length > 0) {
@@ -1203,6 +1248,7 @@ function diagnosis_save(set) {
             }
         } else {
             temp_data['amount'] = $tds.eq(3).children('input').val();
+            // console.log(temp_data['amount'] = $tds.eq(3).children('input').val())
             if (temp_data['amount'] == '') {
                 alert(gettext('amount is empty.'));
                 is_valid = false;
