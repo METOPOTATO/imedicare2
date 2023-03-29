@@ -573,8 +573,8 @@ def index(request):
 
             if "VC" in medicine.code:
                 tmp_name = medicine.name_display + "( " + medicine.vaccine_code + "/" + medicine.name + " ) " + medicine.vaccine_recommend_time
-
-            temp.append({
+            if medicine.code != 'M0008':
+                temp.append({
                         'id':medicine.id,
                         'name_display':tmp_name,
                         'name':medicine.name,
@@ -1536,7 +1536,7 @@ def diagnosis_past(request):
 
 
 def get_diagnosis(request):
-    
+    print('=========')
     reception_no = request.POST.get('reception_no')
     datas={}
     try:
@@ -1593,6 +1593,7 @@ def get_diagnosis(request):
         medicines = []
         for data in medicine_set:
             medicine = {}
+
             medicine.update({
                 'id':data.id,
                 'code':data.medicine.code,
@@ -1603,6 +1604,8 @@ def get_diagnosis(request):
                 'unit':'' if data.medicine.unit is None else data.medicine.unit,
                 'price':data.medicine.get_price(diagnosis.recorded_date),
                 })
+            print(data)
+            print(medicine['name'])
             medicines.append(medicine)
 
 

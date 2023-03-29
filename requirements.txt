@@ -4,7 +4,7 @@ azure-storage-blob==2.1.0
 azure-storage-common==2.1.0
 beautifulsoup4==4.8.1
 certifi==2019.11.28
-cffi==1.13.2
+cffi
 chardet==3.0.4
 cryptography
 Django==2.1.15
@@ -14,7 +14,7 @@ django-storages==1.8
 idna==2.8
 Pillow
 pycparser==2.19
-pyodbc==4.0.27
+pyodbc
 python-dateutil==2.8.1
 pytz==2019.3
 requests==2.22.0
