@@ -209,6 +209,11 @@ def set_menu(request):
             list_1.append(menu)
         elif menu['name'] == 'Payment':
             list_1.append(menu)
+        elif menu['name'] == 'Pharmacy':
+            menu['name'] = 'Medicine'
+            list_2.append(menu)
+        # elif menu['name'] == 'Medicine':
+        #     list_1.append(menu)
         elif menu['name'] == 'Pick Up':
             pass
         elif menu['name'] == 'Drafts':
