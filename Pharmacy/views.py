@@ -424,7 +424,7 @@ def inventory(request):
     else:
         medicine_class = MedicineClass.objects.filter(use_yn='Y').annotate(name_display = F('name')).values('id','name_display')
 
-    type = ["Medicine","Injection","Vaccine"]
+    type = ["Medicine","Injection","Vaccine", "Equipment"]
     
     return render(request,
     'Pharmacy/inventory.html',
