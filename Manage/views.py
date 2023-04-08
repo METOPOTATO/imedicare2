@@ -10350,6 +10350,11 @@ def payment_debit(request):
             })
     #의사 정보 ? 
     doctor = Doctor.objects.values('name_short','id')
+    doctors = []
+    for d in doctor:
+        print(d['name_short'], d['id'])
+        if d['id'] not in [19, 20, 24 , 25, 26, 27, 29 , 31, 33, 35, 38, 41,47,48,50 ,52,54]:
+            doctors.append(d)
 
     #결제 방법
     payment_method = COMMCODE.objects.filter(use_yn = 'Y', commcode_grp='PAYMENT_METHOD',upper_commcode ='000014' ).annotate(code = F('commcode'),name = f_name ).values('code','name')
@@ -10361,7 +10366,7 @@ def payment_debit(request):
         'Manage/Manage_debit.html',
             {
                 'depart_medical':depart_medical,
-                'doctor' : doctor,
+                'doctor' : doctors,
                 'payment_method':payment_method,
                 'payment_status':payment_status,
             }

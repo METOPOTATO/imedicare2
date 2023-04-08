@@ -2151,8 +2151,14 @@ def get_depart_doctor(request):
         print('에러가 발생 했습니다', ex) 
     
     datas={}
+    print('depart id', depart_id)
     for data in doctor:
+        print('id',data.id)
+        print('name',data.get_name())
+        print(type(data.id))
         if depart_id == '8' and data.id in [27, 48, 54]:
+            pass
+        elif data.id in [30, 38, 50, 52, 41 ,43]:
             pass
         else:
             datas.update({data.get_name():data.id})

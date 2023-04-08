@@ -272,7 +272,7 @@ function waiting_selected(diagnosis_id) {
             $("#patient_dob").val(response.Date_of_Birth);
             $("#patient_depart").val(response.Depart);
             $("#patient_phone").val(response.phone);
-
+            $("#diagnosis").val(response.diagnosis);
         },
         error: function (request, status, error) {
             console.log("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);

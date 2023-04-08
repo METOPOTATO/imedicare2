@@ -38,6 +38,7 @@ def index(request):
         )
 
 def waiting_selected(request):
+    #check
     diagnosis_id = request.POST.get('diagnosis_id')
 
     diagnosis = Diagnosis.objects.get(pk = diagnosis_id)
@@ -85,7 +86,7 @@ def waiting_selected(request):
         'Date_of_Birth': diagnosis.reception.patient.date_of_birth.strftime('%Y-%m-%d'),
         'gender': diagnosis.reception.patient.gender,
         'phone': diagnosis.reception.patient.phone,
-
+        'diagnosis': diagnosis.diagnosis
 
                }
     return JsonResponse(context)
