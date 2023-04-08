@@ -533,7 +533,15 @@ def medicine_add_edit_set(request):
                 temp_code = 'VC0000'.split('VC')
             else:
                 temp_code = last_code.code.split('VC')
-            code = 'VC' + str('%04d' % (int(temp_code[1]) + 1)) 
+            code = 'VC' + str('%04d' % (int(temp_code[1]) + 1))
+
+        elif type in "Equipment":
+            last_code = Medicine.objects.filter(code__icontains="E",type='PHARM').last()
+            if last_code == None:
+                temp_code = 'E0000'.split('E')
+            else:
+                temp_code = last_code.code.split('E')
+            code = 'E' + str('%04d' % (int(temp_code[1]) + 1))
 
 
 
