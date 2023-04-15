@@ -58,17 +58,17 @@ $(function () {
 
     //select and set methods
     $('.contents_items tr').click(function (event) {
-        var isValidCount = true;
-        if (event.target.parentElement.parentElement.parentElement.parentElement.id == 'diagnosis_select_medicine_contents') {
-            var count = $(event.target.parentElement).find('td:nth-child(4)').html();
-            count = parseInt(count);
-            if (count <= 0){
-                isValidCount = false;
-                console.log('Not valid count')
-                alert('This medicine is not available!(Loại thuốc này không còn trong kho)')
-            }
-        }
-        if (isValidCount){
+        // var isValidCount = true;
+        // if (event.target.parentElement.parentElement.parentElement.parentElement.id == 'diagnosis_select_medicine_contents') {
+        //     var count = $(event.target.parentElement).find('td:nth-child(4)').html();
+        //     count = parseInt(count);
+        //     if (count <= 0){
+        //         isValidCount = false;
+        //         console.log('Not valid count')
+        //         alert('This medicine is not available!(Loại thuốc này không còn trong kho)')
+        //     }
+        // }
+        // if (isValidCount){
         if (event.target.nodeName.toLowerCase() == 'td') {
             //diagnosis_select_test_contents
             $(event.target.parentElement.parentElement.parentElement.parentElement).attr('id');
@@ -97,7 +97,7 @@ $(function () {
             else if (what_class == 'diagnosis_select_medicine_contents')
                $('#diagnosis_selected_medicine').append(str);
         }
-    }
+    // }
     });
 
     if ($("#patient_date_of_birth").length > 0) {
