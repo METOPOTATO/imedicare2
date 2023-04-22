@@ -17,7 +17,8 @@ from django.db.models import Q, Count, F, Min,Sum
 from django.db.models.query import QuerySet
 import operator
 import functools
-
+import shutil
+from openpyxl import Workbook,load_workbook
 
 @login_required
 def index(request):
@@ -892,3 +893,37 @@ def save_database_disposal_medicine(request):
 
 
     return JsonResponse({'result':True,})
+    
+@login_required
+def upload_file(request):
+
+    # instance = Patient.objects.filter(pk=patient_id).first()
+    file_path = 'static/pharm_data.xlsx'
+    try:
+        file = request.FILES.getlist('file')[0]
+        
+        if request.method == 'POST':
+            with open(file_path, 'wb+') as destination:
+                for chunk in file.chunks():
+                    destination.write(chunk)
+            wb = load_workbook('static/pharm_data.xlsx') #Workbook()
+            ws = wb.active# grab the active worksheet
+            for i in range(6,2000):
+                code = ws[f'B{i}']
+                if code.value != '' and code.value != None:
+
+                    medicine = Medicine.objects.filter(code = code.value).first()
+                    if code.value == 'M0235':
+                        print(code.value)
+                        print(medicine)
+                        print(int(ws[f'K{i}'].value))
+                    if medicine:
+                        
+                        medicine.inventory_count = int(ws[f'K{i}'].value)
+                        medicine.save()
+                    
+    except Exception as e:
+        print(e)
+        return JsonResponse({'url':'error'})
+        
+    return JsonResponse({'url':'ok'})

@@ -13,6 +13,8 @@
                 <option value="name">name</option>
             </select>
             -->
+            <input class="btn-default" type="file" id="uploadFile" style="display: inline-block;" />
+            <button class="btn btn-default" onclick="upload_file(event)" style="margin-right: 30px;">Import Data</button>
             <a class="btn btn-default" onclick="excel_download()"><i class="fa fa-file-excel-o"></i>{{ _('Download') }}</a>
             <div class="input-group" id="search_depart_div">
                 <span class="input-group-addon" id="basic-addon1">{{ _('Class') }}</span>
@@ -487,6 +489,34 @@
         {% if request.user.is_hidden == 'Y' %} 
         $("#is_red_invoice").prop("checked", true);
         {% endif %}
+    }
+
+    function upload_file(event){
+    // console.log('asdasd')
+        event.preventDefault();
+        // var data = new FormData($('image_form').get(0));
+        var data = $('#uploadFile').prop("files")[0];
+
+        var form_data = new FormData();
+        // console.log(data)
+        form_data.append('file', data)
+        $.ajax({
+            type: 'POST',
+            headers:{'X-CSRFToken':$('#csrf').val()},
+            url: '/pharmacy/upload_file/',
+            data: form_data,
+            cache: false,
+            processData: false,
+            contentType: false,
+            // dataType: 'Json',
+            success: function(response) {
+                alert('success');
+            },
+            error: function (request, status, error) {
+                console.log("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error)
+            },
+        });
+        return false;
     }
 </script>
 

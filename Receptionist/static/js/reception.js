@@ -1087,7 +1087,7 @@ function save_patient() {
     var tax_invoice_number = $('#tax_invoice_number').val();
     var tax_invoice_company_name = $('#tax_invoice_company_name').val();
     var tax_invoice_address = $('#tax_invoice_address').val();
-
+// 77777
     var patient_table_vital_ht = $('#patient_table_vital_ht').val();
     var patient_table_vital_wt = $('#patient_table_vital_wt').val();
     var patient_table_vital_bmi = $('#patient_table_vital_bmi').val();
@@ -1794,6 +1794,15 @@ function edit_reception_save() {
     chief_complaint = $('#edit_reception_chief_complaint').val();
     medical_report = $('#reception_edit_need_medical_report').is(':checked');
 
+    let patient_table_vital_ht = $('#edit_reception_vital_ht').val();
+    let patient_table_vital_wt = $('#edit_reception_vital_wt').val();
+    let patient_table_vital_bp = $('#edit_reception_vital_bp').val();
+    let patient_table_vital_bt = $('#edit_reception_vital_bt').val();
+    let patient_table_vital_pr = $('#edit_reception_vital_pr').val();
+    let patient_table_vital_breath = $('#edit_reception_vital_breath').val();
+
+    console.log("patient_table_vital_bt", patient_table_vital_bt)
+    // #66666
     if (depart == '') {
         alert(gettext('Select Depart.'));
         return;
@@ -1813,6 +1822,15 @@ function edit_reception_save() {
             'doctor': doctor,
             'chief_complaint': chief_complaint,
             'medical_report': medical_report,
+
+            
+            'patient_table_vital_ht': patient_table_vital_ht,
+            'patient_table_vital_wt': patient_table_vital_wt,
+    
+            'patient_table_vital_bp': patient_table_vital_bp,
+            'patient_table_vital_bt': patient_table_vital_bt,
+            'patient_table_vital_pr': patient_table_vital_pr,
+            'patient_table_vital_breath': patient_table_vital_breath,
         },
         dataType: 'Json',
         success: function (response) {

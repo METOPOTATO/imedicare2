@@ -548,7 +548,7 @@ def save_reception(request):
         taxinvoice.address = '' if tax_invoice_number == '' else tax_invoice_address
         taxinvoice.save()
 
-
+    #33333
     vital_ht = request.POST.get('patient_table_vital_ht',None)
     vital_wt = request.POST.get('patient_table_vital_wt',None)
     vital_bp = request.POST.get('patient_table_vital_bp',None)
@@ -2993,7 +2993,7 @@ def Edit_Reception_get(request):
 
     return JsonResponse(context)
 
-
+# 5555
 @login_required
 def Edit_Reception_save(request):
     reception_id = request.POST.get('reception_id')
@@ -3008,6 +3008,36 @@ def Edit_Reception_save(request):
     rec.chief_complaint = chief_complaint
     rec.need_medical_report = 1 if medical_report =='true' else 0
     rec.save()
+    
+    vital_ht = request.POST.get('patient_table_vital_ht',None)
+    vital_wt = request.POST.get('patient_table_vital_wt',None)
+    vital_bp = request.POST.get('patient_table_vital_bp',None)
+    vital_bt = request.POST.get('patient_table_vital_bt',None)
+    vital_pr = request.POST.get('patient_table_vital_pr',None)
+    vital_breath = request.POST.get('patient_table_vital_breath',None)
+
+    print(vital_ht)
+    print(vital_wt)
+    print(vital_bp)
+    print(vital_bt)
+    print(vital_pr)
+    print(vital_breath)
+
+    if vital_ht is '' and vital_wt is '' and vital_bp is '' and vital_bt is '' and vital_pr is '' and vital_breath is '':
+        pass
+    else:
+        vital = Vital.objects.filter(patient = rec.patient).first()
+        print('****')
+        print(vital.weight)
+        print(vital_wt)
+        print(rec.patient)
+        vital.weight = vital_wt
+        vital.height = vital_ht
+        vital.blood_pressure = vital_bp
+        vital.blood_temperature = vital_bt
+        vital.breath = vital_breath
+        vital.pulse_rate = vital_pr
+        vital.save()
 
 
 

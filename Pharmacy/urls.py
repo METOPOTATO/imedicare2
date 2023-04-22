@@ -35,7 +35,7 @@ urlpatterns = [
     path('get_edit_database_add_medicine/',views.get_edit_database_add_medicine,name='get_edit_database_add_medicine'),
     path('save_database_disposal_medicine/',views.save_database_disposal_medicine,name='save_database_disposal_medicine'),
     
-    
+    path('upload_file/', views.upload_file, name ='upload file'), 
 
 
 ]
