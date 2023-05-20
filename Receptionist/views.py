@@ -1868,6 +1868,11 @@ def reservation_events(request):
                 'backgroundColor':'rgb(255,251,0)',
                 'borderColor':'rgb(255,251,0)',
                 })
+        elif reservation.depart.id == 11:  #9	SUGERY
+            data.update({
+                'backgroundColor':'rgb(70, 209, 61)',
+                'borderColor':'rgb(70, 209, 61)',
+                })
         name = ''
         depart = ''
         memo = ''
@@ -3881,7 +3886,7 @@ def document_excel(request, reception_id):
                         ws['E' + str(current_row)] = ''
                         current_row +=1
                         no += 1           
-            ws['D' + str(67)] = 'Ngày/Date: ' + reception.recorded_date.strftime('%d/%m/%Y') 
+            ws['D' + str(78)] = 'Ngày/Date: ' + reception.recorded_date.strftime('%d/%m/%Y') 
             # ws['D' + str(67)].font = Font(bold = True)  
 
         ws = wb.get_sheet_by_name('Medical_Report')# grab the active worksheet
