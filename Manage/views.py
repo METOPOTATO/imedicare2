@@ -2937,6 +2937,8 @@ def medicine_statistics_excel(request):
             ws['M' + str(current_row)] = medicine.get_price(data.recorded_date) * (medicine_log.amount * medicine_log.days)
             ws['M' + str(current_row)].number_format = '_-* #,##0 _₫_-;-* #,##0 _₫_-;_-* "-"?? _₫_-;_-@_-'
 
+            ws['N' + str(current_row)] = data.patient.phone
+            ws['O' + str(current_row)] = data.diagnosis.diagnosis
             writing_number +=1 
             current_row +=1      
 
