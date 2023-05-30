@@ -3590,7 +3590,21 @@ def document_excel(request, reception_id):
         except:
             pass
 
-        wb = load_workbook('/home/imedicare/Cofee/static/excel_form/Document_report.xlsx') #Workbook()
+        name = reception.depart.name
+        if name == 'IM':
+            wb = load_workbook('/home/imedicare/Cofee/static/excel_form/document_report_im.xlsx') #Workbook()
+        elif name == 'DENTAL':
+            wb = load_workbook('/home/imedicare/Cofee/static/excel_form/document_report_dental.xlsx') #Workbook()
+        elif name == 'DERM':
+            wb = load_workbook('/home/imedicare/Cofee/static/excel_form/document_report_derm.xlsx') #Workbook()
+        elif name == 'ENT':
+            wb = load_workbook('/home/imedicare/Cofee/static/excel_form/document_report_ent.xlsx') #Workbook()
+        elif name == 'OBGYN':
+            wb = load_workbook('/home/imedicare/Cofee/static/excel_form/document_report_obgyn.xlsx') #Workbook()
+        elif name == 'PM':
+            wb = load_workbook('/home/imedicare/Cofee/static/excel_form/document_report_pm.xlsx') #Workbook()  
+        else:
+            wb = load_workbook('/home/imedicare/Cofee/static/excel_form/Document_report.xlsx') #Workbook()
         # wb = load_workbook('/Users/light/Desktop/work/imdc/imedicare2/static/excel_form/Document_report.xlsx')
         border_thin = Border(top=Side(border_style="thin", color="000000") ,
                             left=Side(border_style="thin", color="000000") ,
@@ -3886,7 +3900,7 @@ def document_excel(request, reception_id):
                         ws['E' + str(current_row)] = ''
                         current_row +=1
                         no += 1           
-            ws['D' + str(78)] = 'Ngày/Date: ' + reception.recorded_date.strftime('%d/%m/%Y') 
+            ws['D78'] = 'Ngàyyyy/Date: ' + reception.recorded_date.strftime('%d/%m/%Y') 
             # ws['D' + str(67)].font = Font(bold = True)  
 
         ws = wb.get_sheet_by_name('Medical_Report')# grab the active worksheet
