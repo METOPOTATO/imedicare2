@@ -5120,6 +5120,8 @@ def get_memo_detail(request):
     patient_id = request.POST.get('patient_id')
 
     data = []
+    data_note = {}
+    data_relative = {}
     try:
         patient = Patient.objects.filter(pk=patient_id).first()
         memo_detail = DetailMemo.objects.filter(patient=patient)
@@ -5130,6 +5132,8 @@ def get_memo_detail(request):
                 'depart': val.creator.depart,
                 'memo': val.memo
             })
+
+        
     except:
         print('====')
     return JsonResponse({
@@ -5220,3 +5224,50 @@ def update_memo_detail(request):
         'result':True,
         'datas': data
     }) 
+
+def update_patient_notes(request):
+    try:
+        patient_id = request.POST.get('patient_id')
+        memo_detail_company = request.POST.get('memo_detail_company')
+        memo_detail_order = request.POST.get('memo_detail_order')
+        memo_detail_insurance = request.POST.get('memo_detail_insurance')
+        memo_detail_diseases = request.POST.get('memo_detail_diseases')
+     
+
+        patient_note = PatientNotes.objects.get_or_create(patient_id=patient_id)
+        patient_note.company_name = memo_detail_company
+        patient_note.order = memo_detail_order
+        patient_note.insurance = memo_detail_insurance
+        patient_note.disease = memo_detail_diseases
+        patient_note.save()
+
+        data = {
+            'memo_detail_company', memo_detail_company,
+            'memo_detail_order', memo_detail_order,
+            'memo_detail_insurance', memo_detail_insurance,
+            'memo_detail_diseases', memo_detail_diseases,
+        }
+    except Exception as e:
+        print(e)
+        return JsonResponse({
+        'result': False
+    }) 
+    
+    return JsonResponse({
+        'result':True,
+        'datas': data
+    }) 
+
+# def get_patient_note(request):
+#     patient_id = request.POST.get('patient_id')
+#     patient_note = PatientNotes.objects.filter(patient_id=patient_id).first()
+#     data = {
+#         'memo_detail_company', patient_note.company_name,
+#         'memo_detail_order',  patient_note.order,
+#         'memo_detail_insurance',  patient_note.insurance,
+#         'memo_detail_diseases', patient_note.disease,
+#     }
+#     return JsonResponse({
+#         'result':True,
+#         'datas': data
+#     }) 

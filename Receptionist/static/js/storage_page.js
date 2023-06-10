@@ -548,7 +548,7 @@ function waiting_selected(paymentrecord_id) {
             $('#patient_date_of_birth').val(response.datas['date_of_birth']);
             $('#patient_phone').val(response.datas['phone']);
             $('#patient_address').val(response.datas['address']);
-            $('#patient_doctor').val(response.datas['doctor_kor'] + ' / ' + response.datas['doctor_eng']);
+            $('#patient_doctor').val(response.datas['date']);
             if ($("#language").val() == 'vi') {
                 if (response.datas['reservation'] == '' || response.datas['reservation'] == undefined)
                     $('#id_follow_update').val('');
@@ -1042,7 +1042,7 @@ function get_today_selected(reception_id) {
             $('#patient_date_of_birth').val(response.datas['date_of_birth']);
             $('#patient_phone').val(response.datas['phone']);
             $('#patient_address').val(response.datas['address']);
-            $('#patient_doctor').val(response.datas['doctor_kor'] + ' / ' + response.datas['doctor_eng'])
+            $('#patient_doctor').val(response.datas['date'] )
             if ($("#language").val() == 'vi') {
                 if (response.datas['reservation'] == '' || response.datas['reservation'] == undefined)
                     $('#id_follow_update').val('');

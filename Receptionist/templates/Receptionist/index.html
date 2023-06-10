@@ -29,8 +29,10 @@
                             <span class="input-group-addon patient_table_title" id="basic-addon1">{{ _('Chart No') }}</span>
                             <input type="hidden" id="patient_id" />
                             {{patient.id}}
+                            <div class="input-group-btn">
+                                <input id="show_memo_detail" type="button" value="{{_('Detail Memo') }}" class="btn btn-primary save_cancel_btn" style="width:100px;" onmouseover="show_memo_detail()"/>
+                            </div>
                         </div>
-
                     </td>
                     <td >
                         <div class="input-group" >
@@ -158,15 +160,6 @@
                             <input type="text" id="memo" class="form-control" aria-describedby="basic-addon1" autocomplete="off">
 
                             <!-- <div><button>Input</button></div> -->
-                            <div class="input-group-btn">
-                                <input id="show_memo_detail" type="button" value="{{_('Detail Memo') }}" class="btn btn-primary save_cancel_btn" style="width:100px;" onmouseover="show_memo_detail()"/>
-                                <!-- <select class="form-control" id="patient_mark">
-                                    <option value="" selected>--</option>
-                                    {% for data in patient_mark %}
-                                        <option value="{{ data.commcode }}">{{data.se1}}</option>
-                                    {% endfor%}
-                                </select> -->
-                            </div>
                         </div>
                     </td>
                 </tr>
@@ -1066,12 +1059,12 @@
 
 <div id="memo_detail_modal" class="modal fade">
 
-    <div class="modal-dialog" style="width:1000px;">
+    <div class="modal-dialog" style="width:1600px;">
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span> <span class="sr-only">close</span></button>
                 <h4>{{ _('Memo Detail') }}</h4>
-                <div  class="input-group input-group-btn">
+                <!-- <div  class="input-group input-group-btn">
                     <label for="patient_mark">Patient Mark</label>
                     <select class="form-control" id="patient_mark">
                         <option value="" selected>--</option>
@@ -1079,19 +1072,144 @@
                             <option value="{{ data.commcode }}">{{data.se1}}</option>
                         {% endfor%}
                     </select>
-                </div>
+                </div> -->
 
+                <table class="table table-bordered table-hover table-striped">
+                    <tr>
+                        <td style="width:800px">
+                            <table class="table table-bordered table-hover table-striped">
+                                <tr>
+                                    <td>
+                                        <div class="input-group">
+                                            <span class="input-group-addon patient_table_title" id="basic-addon1">{{ _('Patient Mark') }}</span>
+                                            <select class="form-control" id="patient_mark">
+                                                <option value="" selected>--</option>
+                                                {% for data in patient_mark %}
+                                                    <option value="{{ data.commcode }}">{{data.se1}}</option>
+                                                {% endfor%}
+                                            </select>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <div class="input-group">
+                                            <span class="input-group-addon patient_table_title" id="basic-addon1">{{ _('Company Name') }}</span>
+                                            <input type="text" class="form-control" id="memo_detail_company"/>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <div class="input-group">
+                                            <span class="input-group-addon patient_table_title" id="basic-addon1">{{ _('Order') }}</span>
+                                            <input type="text" class="form-control" id="memo_detail_order"/>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <div class="input-group">
+                                            <span class="input-group-addon patient_table_title" id="basic-addon1">{{ _('Insurance') }}</span>
+                                            <input type="text" class="form-control" id="memo_detail_insurance"/>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <div class="input-group">
+                                            <span class="input-group-addon patient_table_title" id="basic-addon1">{{ _('Diseases') }}</span>
+                                            <input type="text" class="form-control" id="memo_detail_disease"/>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </table> 
+                            <input id="patient_notes" type="button" value="{{_('Update') }}" class="btn btn-primary save_cancel_btn" style="width:100px;" onclick="update_patient_notes()"/>
+                        </td>
+                        <td>
+                            <div style="height: 300px;overflow: scroll;">
+                                <table class="table table-bordered table-hover table-striped">
+                                    <thead>
+                                        <tr>
+                                            <th style="width: 300px;">
+                                                Quan hệ với bệnh nhân
+                                            </th>
+                                            <th>
+                                                Tên
+                                            </th>
+                                            <th></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>Dad</td>
+                                            <td>Tom</td>
+                                            <td></td>
+                                        </tr>
+                                        <tr>
+                                            <td>Mom</td>
+                                            <td>Jerry</td>
+                                            <td></td>
+                                        </tr>
+                                        <tr>
+                                            <td>son 1</td>
+                                            <td>Jack</td>
+                                            <td></td>
+                                        </tr>
+                                        <tr>
+                                            <td>son 2</td>
+                                            <td>Kim</td>
+                                            <td></td>
+                                        </tr>
+                                        <tr>
+                                            <td>son 3</td>
+                                            <td>Bu</td>
+                                            <td></td>
+                                        </tr>
+                                        <tr>
+                                            <td>son 4</td>
+                                            <td>B</td>
+                                            <td></td>
+                                        </tr>
+                                        <tr>
+                                            <td>brother 1</td>
+                                            <td>C</td>
+                                            <td></td>
+                                        </tr>
+                                        <tr>
+                                            <td>uncle</td>
+                                            <td>abc</td>
+                                            <td></td>
+                                        </tr>
+                                        <tr>
+                                            <td>grandma</td>
+                                            <td>a</td>
+                                            <td></td>
+                                        </tr>
+                                        <tr>
+                                            <td>grandpa</td>
+                                            <td>b</td>
+                                            <td></td>
+                                        </tr>
+                                    </tbody>
+                                </table> 
+                            </div>
+                            
+                            <input id="patient_notes" type="button" value="{{_('Update') }}" class="btn btn-primary save_cancel_btn" style="width:100px;" onclick="update_patient_notes()"/>
+                        </td>
+                    </tr>
+                    <tr></tr>
+                </table>
                 <div id="modalBody" class="modal-body" >
-                    
                     <table class="table table-bordered table-hover table-striped" id="table_memo_detail">
                         <thead>
                             <tr>
                                 <th>{{ _('No') }}</th>
-                                <th>{{ _('Depart') }}</th>
+                                <th>{{ _('Depart Creator') }}</th>
                                 <th>{{ _('Creator') }}</th>
                                 <th>{{ _('Memo') }}</th>
+                                <th>{{ _('Depart Memo') }}</th>
                                 <th></th>
-
                             </tr>
                         </thead>
                         <tbody>

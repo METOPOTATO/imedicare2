@@ -121,4 +121,6 @@ urlpatterns = [
     path('create_memo_detail/', views.create_memo_detail),
     path('delete_memo_detail/', views.delete_memo_detail),
     path('update_memo_detail/', views.update_memo_detail),
+
+    path('update_patient_notes/', views.update_patient_notes),
 ]

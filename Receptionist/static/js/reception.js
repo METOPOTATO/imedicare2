@@ -2461,6 +2461,33 @@ function update_detail_memo(id){
     })
 }
 
+function update_patient_notes(){
+    var patient_id = $("#patient_id").val();
+    var memo_detail_company = $("#memo_detail_company").val();
+    var memo_detail_order = $("#memo_detail_order").val();
+    var memo_detail_insurance = $("#memo_detail_insurance").val();
+    var memo_detail_diseases = $("#memo_detail_diseases").val();
+    $.ajax({
+        type: 'POST',
+        url: '/receptionist/update_patient_notes/',
+        data: {
+            'csrfmiddlewaretoken': $('#csrf').val(),
+            'patient_id': patient_id,
+            'memo_detail_company': memo_detail_company,
+            'memo_detail_order': memo_detail_order,
+            'memo_detail_insurance': memo_detail_insurance,
+            'memo_detail_diseases': memo_detail_diseases,
+        },
+        dataType: 'Json',
+        success: function (response) {
+
+    },
+    error: function (request, status, error) {
+        console.log("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
+
+    }
+})
+}
 $('textarea').keyup(function(e){
     if(e.keyCode == 13)
     {

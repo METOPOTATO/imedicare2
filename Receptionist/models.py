@@ -953,3 +953,24 @@ class DetailMemo(models.Model):
 
     created_at = models.DateTimeField(null=True)
     memo = models.TextField()
+    memo_depart = models.TextField()
+
+class PatientRelative(models.Model):
+    patient = models.ForeignKey(
+        to = Patient,
+        on_delete=models.SET_NULL,
+        null=True
+    )
+    name = models.TextField()
+    relative = models.TextField()
+
+class PatientNotes(models.Model):
+    patient = models.ForeignKey(
+        to = Patient,
+        on_delete=models.SET_NULL,
+        null = True
+    )
+    company_name = models.TextField(max_length=256)
+    order = models.TextField()
+    insurance = models.TextField()
+    disease = models.TextField()
