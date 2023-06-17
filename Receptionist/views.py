@@ -3850,59 +3850,111 @@ def document_excel(request, reception_id):
         ws['A14'] = '9. Khoa Khám bệnh/ Department : ' + vie_name + '/' + full_name
         ws['D9'] = '2. Quốc tịch/ Nationality : ' + reception.patient.nationality 
         ws['D10'] = '4. Giới tính/ Gender : ' + reception.patient.get_gender_simple()                
-        ws['D11'] = '6. Ngày sinh/ D.O.B : ' + reception.patient.date_of_birth.strftime('%d/%m/%Y')          
-        if subclinical == True:            
+        ws['D11'] = '6. Ngày sinh/ D.O.B : ' + reception.patient.date_of_birth.strftime('%d/%m/%Y') 
+        if name == 'IM':
+            if subclinical == True:            
 
-            test_set = TestManager.objects.filter(diagnosis_id = reception.diagnosis.id)
-            precedure_set = PrecedureManager.objects.filter(diagnosis_id = reception.diagnosis.id)
-            
-            current_row = 19
-            writing_number = 1      
+                test_set = TestManager.objects.filter(diagnosis_id = reception.diagnosis.id)
+                precedure_set = PrecedureManager.objects.filter(diagnosis_id = reception.diagnosis.id)
+                
+                current_row = 19
+                writing_number = 1      
 
-            no = 1
-            current_row = 41
-            for test in test_set:
-                ws['A' + str(current_row)] = no
-                try:
-                    ws['B' + str(current_row)] = test.test.name
-                except:
-                    pass
-                ws['D' + str(current_row)] = 1
-                ws['E' + str(current_row)] = ''
-                current_row +=1
-                no += 1         
-
-            no = 1
-            no_other = 1
-            current_row = 63
-            for precedure in precedure_set:
-                if precedure.precedure.precedure_class_id == 8:
-                    ws['A' + str(current_row)] = no_other
-                    ws['B' + str(current_row)] = precedure.precedure.name
-                    ws['D' + str(current_row)] = precedure.amount
-                    ws['E' + str(current_row)] = ''
-                    current_row +=1
-                    no_other += 1
-            current_row = 19
-            for precedure_other in precedure_set:
-                if precedure_other.precedure.precedure_class_id == 2 or precedure_other.precedure.precedure_class_id == 4 or precedure_other.precedure.precedure_class_id == 5 or precedure_other.precedure.precedure_class_id == 6 or precedure_other.precedure.precedure_class_id == 8:
+                no = 1
+                current_row = 47
+                for test in test_set:
                     ws['A' + str(current_row)] = no
-                    ws['B' + str(current_row)] = precedure.precedure.name
-                    ws['D' + str(current_row)] = precedure.amount
+                    try:
+                        ws['B' + str(current_row)] = test.test.name
+                    except:
+                        pass
+                    ws['D' + str(current_row)] = 1
                     ws['E' + str(current_row)] = ''
                     current_row +=1
-                    no += 1
-                elif precedure_other.precedure.precedure_class_id == 10:
-                    if 'R' in precedure.precedure.code:
+                    no += 1         
+
+                no = 1
+                no_other = 1
+                current_row = 74
+                for precedure in precedure_set:
+                    if precedure.precedure.precedure_class_id == 8:
+                        ws['A' + str(current_row)] = no_other
+                        ws['B' + str(current_row)] = precedure.precedure.name
+                        ws['D' + str(current_row)] = precedure.amount
+                        ws['E' + str(current_row)] = ''
+                        current_row +=1
+                        no_other += 1
+                current_row = 19
+                for precedure_other in precedure_set:
+                    if precedure_other.precedure.precedure_class_id == 2 or precedure_other.precedure.precedure_class_id == 4 or precedure_other.precedure.precedure_class_id == 5 or precedure_other.precedure.precedure_class_id == 6 or precedure_other.precedure.precedure_class_id == 8:
                         ws['A' + str(current_row)] = no
                         ws['B' + str(current_row)] = precedure.precedure.name
                         ws['D' + str(current_row)] = precedure.amount
                         ws['E' + str(current_row)] = ''
                         current_row +=1
-                        no += 1           
-            ws['D78'] = 'Ngàyyyy/Date: ' + reception.recorded_date.strftime('%d/%m/%Y') 
-            # ws['D' + str(67)].font = Font(bold = True)  
+                        no += 1
+                    elif precedure_other.precedure.precedure_class_id == 10:
+                        if 'R' in precedure.precedure.code:
+                            ws['A' + str(current_row)] = no
+                            ws['B' + str(current_row)] = precedure.precedure.name
+                            ws['D' + str(current_row)] = precedure.amount
+                            ws['E' + str(current_row)] = ''
+                            current_row +=1
+                            no += 1           
+                ws['D78'] = 'Ngàyyyy/Date: ' + reception.recorded_date.strftime('%d/%m/%Y') 
+                # ws['D' + str(67)].font = Font(bold = True)  
+        else:
+            if subclinical == True:            
 
+                test_set = TestManager.objects.filter(diagnosis_id = reception.diagnosis.id)
+                precedure_set = PrecedureManager.objects.filter(diagnosis_id = reception.diagnosis.id)
+                
+                current_row = 19
+                writing_number = 1      
+
+                no = 1
+                current_row = 41
+                for test in test_set:
+                    ws['A' + str(current_row)] = no
+                    try:
+                        ws['B' + str(current_row)] = test.test.name
+                    except:
+                        pass
+                    ws['D' + str(current_row)] = 1
+                    ws['E' + str(current_row)] = ''
+                    current_row +=1
+                    no += 1         
+
+                no = 1
+                no_other = 1
+                current_row = 63
+                for precedure in precedure_set:
+                    if precedure.precedure.precedure_class_id == 8:
+                        ws['A' + str(current_row)] = no_other
+                        ws['B' + str(current_row)] = precedure.precedure.name
+                        ws['D' + str(current_row)] = precedure.amount
+                        ws['E' + str(current_row)] = ''
+                        current_row +=1
+                        no_other += 1
+                current_row = 19
+                for precedure_other in precedure_set:
+                    if precedure_other.precedure.precedure_class_id == 2 or precedure_other.precedure.precedure_class_id == 4 or precedure_other.precedure.precedure_class_id == 5 or precedure_other.precedure.precedure_class_id == 6 or precedure_other.precedure.precedure_class_id == 8:
+                        ws['A' + str(current_row)] = no
+                        ws['B' + str(current_row)] = precedure.precedure.name
+                        ws['D' + str(current_row)] = precedure.amount
+                        ws['E' + str(current_row)] = ''
+                        current_row +=1
+                        no += 1
+                    elif precedure_other.precedure.precedure_class_id == 10:
+                        if 'R' in precedure.precedure.code:
+                            ws['A' + str(current_row)] = no
+                            ws['B' + str(current_row)] = precedure.precedure.name
+                            ws['D' + str(current_row)] = precedure.amount
+                            ws['E' + str(current_row)] = ''
+                            current_row +=1
+                            no += 1           
+                ws['D78'] = 'Ngàyyyy/Date: ' + reception.recorded_date.strftime('%d/%m/%Y') 
+                # ws['D' + str(67)].font = Font(bold = True)
         ws = wb.get_sheet_by_name('Medical_Report')# grab the active worksheet
         ws['A9'] = '1. Số hồ sơ/ PID : ' + reception.patient.get_chart_no() 
         ws['A10'] = '3. Họ và tên/ Fullname :  ' + reception.patient.get_name_kor_eng()
