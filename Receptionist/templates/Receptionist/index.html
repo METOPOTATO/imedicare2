@@ -1128,74 +1128,35 @@
                         </td>
                         <td>
                             <div style="height: 300px;overflow: scroll;">
-                                <table class="table table-bordered table-hover table-striped">
+                                <table id="table_relative_memo" class="table table-bordered table-hover table-striped">
                                     <thead>
                                         <tr>
-                                            <th style="width: 300px;">
-                                                Quan hệ với bệnh nhân
-                                            </th>
+                                            <th>No.</th>
                                             <th>
                                                 Tên
+                                            </th>
+                                            <th style="width: 300px;">
+                                                Quan hệ với bệnh nhân
                                             </th>
                                             <th></th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <tr>
-                                            <td>Dad</td>
-                                            <td>Tom</td>
-                                            <td></td>
-                                        </tr>
-                                        <tr>
-                                            <td>Mom</td>
-                                            <td>Jerry</td>
-                                            <td></td>
-                                        </tr>
-                                        <tr>
-                                            <td>son 1</td>
-                                            <td>Jack</td>
-                                            <td></td>
-                                        </tr>
-                                        <tr>
-                                            <td>son 2</td>
-                                            <td>Kim</td>
-                                            <td></td>
-                                        </tr>
-                                        <tr>
-                                            <td>son 3</td>
-                                            <td>Bu</td>
-                                            <td></td>
-                                        </tr>
-                                        <tr>
-                                            <td>son 4</td>
-                                            <td>B</td>
-                                            <td></td>
-                                        </tr>
-                                        <tr>
-                                            <td>brother 1</td>
-                                            <td>C</td>
-                                            <td></td>
-                                        </tr>
-                                        <tr>
-                                            <td>uncle</td>
-                                            <td>abc</td>
-                                            <td></td>
-                                        </tr>
-                                        <tr>
-                                            <td>grandma</td>
-                                            <td>a</td>
-                                            <td></td>
-                                        </tr>
-                                        <tr>
-                                            <td>grandpa</td>
-                                            <td>b</td>
-                                            <td></td>
-                                        </tr>
+                                        
                                     </tbody>
                                 </table> 
                             </div>
-                            
-                            <input id="patient_notes" type="button" value="{{_('Update') }}" class="btn btn-primary save_cancel_btn" style="width:100px;" onclick="update_patient_notes()"/>
+                            <div style="display: flex; justify-content: space-between; margin-top: 20px; margin-bottom: 10px;">
+                                <div class="input-group">
+                                    <span class="input-group-addon patient_table_title" id="basic-addon1">{{ _('Person Name') }}</span>
+                                    <input type="text" class="form-control" id="person_name"/>
+                                </div>
+                                <div class="input-group">
+                                    <span class="input-group-addon patient_table_title" id="basic-addon1">{{ _('Relation') }}</span>
+                                    <input type="text" class="form-control" id="patient_relative_name"/>
+                                </div>
+                            </div>
+                            <input id="patient_notes" type="button" value="{{_('Create') }}" class="btn btn-primary save_cancel_btn" style="width:100px;" onclick="create_patient_relation()"/>
                         </td>
                     </tr>
                     <tr></tr>
@@ -1218,10 +1179,26 @@
                     </table>
 
                     <br><br>
-                    <div class="input-group edit_reception_title">
+                    <div class="input-group">
                         <span class="input-group-addon Edit_Reception_input-group-addon" id="basic-addon1">{{ _('Memo') }}</span>
                         <input type="text" class="form-control" id="new_memo_detail"/>
-                        
+                    </div>
+                    <div class="input-group">
+                        <span class="input-group-addon Edit_Reception_input-group-addon">{{ _('Depart') }}</span>
+                        <select id="memo_depart" class="form-control" aria-describedby="basic-addon1">
+                            <option value selected>---------</option>
+                            <option value="PED">PED</option>
+                            <option value="IM">IM</option>
+                            <option value="LAB">LAB</option>
+                            <option value="PS">PS</option>
+                            <option value="ENT">ENT</option>
+                            <option value="DERM">DERM</option>
+                            <option value="PM">PM</option>
+                            <option value="DENTAL">DENTAL</option>
+                            <option value="OBGYN">OBGYN</option>
+                            <option value="VACCINE">VACCINE</option>
+                            <option value="SURGERY">SURGERY</option>
+                        </select>
                     </div>
                     <input id="create_memo_detail" type="button" value="{{_('Create Memo') }}" class="btn btn-primary save_cancel_btn" style="width:100px;" onclick="create_memo_detail()"/>
                 </div>

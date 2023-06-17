@@ -953,7 +953,7 @@ class DetailMemo(models.Model):
 
     created_at = models.DateTimeField(null=True)
     memo = models.TextField()
-    memo_depart = models.TextField()
+    memo_depart = models.TextField(default='', null=True)
 
 class PatientRelative(models.Model):
     patient = models.ForeignKey(
@@ -961,8 +961,8 @@ class PatientRelative(models.Model):
         on_delete=models.SET_NULL,
         null=True
     )
-    name = models.TextField()
-    relative = models.TextField()
+    name = models.TextField(default='',null=True)
+    relative = models.TextField(default='',null=True)
 
 class PatientNotes(models.Model):
     patient = models.ForeignKey(
@@ -971,6 +971,6 @@ class PatientNotes(models.Model):
         null = True
     )
     company_name = models.TextField(max_length=256)
-    order = models.TextField()
-    insurance = models.TextField()
-    disease = models.TextField()
+    order = models.TextField(default='',null=True)
+    insurance = models.TextField(default='',null=True)
+    disease = models.TextField(default='',null=True)

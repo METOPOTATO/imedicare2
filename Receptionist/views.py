@@ -5172,25 +5172,49 @@ def get_memo_detail(request):
     patient_id = request.POST.get('patient_id')
 
     data = []
-    data_note = {}
-    data_relative = {}
+    data_note = {
+            'memo_detail_company': '',
+            'memo_detail_order': '',
+            'memo_detail_insurance': '',
+            'memo_detail_disease': '',
+    }
+    data_relative = []
     try:
         patient = Patient.objects.filter(pk=patient_id).first()
         memo_detail = DetailMemo.objects.filter(patient=patient)
+
         for val in memo_detail:
             data.append({
                 'detail_memo_id': val.pk,
                 'creator': val.creator.name_en,
                 'depart': val.creator.depart,
-                'memo': val.memo
+                'memo': val.memo,
+                'memo_depart': val.memo_depart
             })
 
+        patient_note = PatientNotes.objects.filter(patient_id=patient_id).first()
+        data_note = {
+            'memo_detail_company': patient_note.company_name,
+            'memo_detail_order': patient_note.order,
+            'memo_detail_insurance': patient_note.insurance,
+            'memo_detail_disease': patient_note.disease,
+        }
+
+        list_relative = PatientRelative.objects.filter(patient_id=patient_id)
+        for relative in list_relative:
+            data_relative.append({
+                'relative_id': relative.id,
+                'person_name': relative.name,
+                'relative_name': relative.relative
+            })
         
     except:
         print('====')
     return JsonResponse({
         'result':True,
-        'datas': data
+        'datas': data,
+        'data_note': data_note,
+        'data_relative': data_relative
     })
 
     
@@ -5198,19 +5222,22 @@ def create_memo_detail(request):
     user = request.user
 
     patient_id = request.POST.get('patient_id')
+    memo_depart = request.POST.get('memo_depart')
     memo = request.POST.get('memo')
+
     data = []
     if request.user.is_authenticated:
         try:
             patient = Patient.objects.filter(pk=patient_id).first()
-            DetailMemo.objects.create(creator=user, patient=patient, memo=memo)
+            DetailMemo.objects.create(creator=user, patient=patient, memo=memo, memo_depart=memo_depart)
             memo_detail = DetailMemo.objects.filter(patient=patient)
             for val in memo_detail:
                 data.append({
                     'detail_memo_id': val.pk,
                     'creator': val.creator.name_en,
                     'depart': val.creator.depart,
-                    'memo': val.memo
+                    'memo': val.memo,
+                    'memo_depart': val.memo_depart
                 })
         except Exception as e:
             print(e)
@@ -5227,13 +5254,15 @@ def delete_memo_detail(request):
         patient = request.POST.get('patient_id')
         DetailMemo.objects.filter(pk=memo_id).first().delete()
         memo_detail = DetailMemo.objects.filter(patient=patient)
+
         data = []
         for val in memo_detail:
             data.append({
                 'detail_memo_id': val.pk,
                 'creator': val.creator.name_en,
                 'depart': val.creator.depart,
-                'memo': val.memo
+                'memo': val.memo,
+                'memo_depart': val.memo_depart
             })
     except Exception as e:
         print(e)
@@ -5252,7 +5281,7 @@ def update_memo_detail(request):
         memo_id = request.POST.get('memo_id')
         patient = request.POST.get('patient_id')
         memo = request.POST.get('memo')
-        print(memo)
+        
         memo_detail = DetailMemo.objects.filter(pk=memo_id).first()
         memo_detail.memo = memo
         memo_detail.save()
@@ -5264,7 +5293,8 @@ def update_memo_detail(request):
                 'detail_memo_id': val.pk,
                 'creator': val.creator.name_en,
                 'depart': val.creator.depart,
-                'memo': val.memo
+                'memo': val.memo,
+                'memo_depart': val.memo_depart
             })
     except Exception as e:
         print(e)
@@ -5277,27 +5307,29 @@ def update_memo_detail(request):
         'datas': data
     }) 
 
+
 def update_patient_notes(request):
+    data = {}
     try:
         patient_id = request.POST.get('patient_id')
         memo_detail_company = request.POST.get('memo_detail_company')
         memo_detail_order = request.POST.get('memo_detail_order')
         memo_detail_insurance = request.POST.get('memo_detail_insurance')
-        memo_detail_diseases = request.POST.get('memo_detail_diseases')
-     
+        memo_detail_disease = request.POST.get('memo_detail_disease')
 
-        patient_note = PatientNotes.objects.get_or_create(patient_id=patient_id)
+        patient_note = PatientNotes.objects.filter(patient_id=patient_id).first()
+        if not patient_note:
+            patient_note = PatientNotes(patient_id=patient_id)
         patient_note.company_name = memo_detail_company
         patient_note.order = memo_detail_order
         patient_note.insurance = memo_detail_insurance
-        patient_note.disease = memo_detail_diseases
+        patient_note.disease = memo_detail_disease
         patient_note.save()
-
         data = {
-            'memo_detail_company', memo_detail_company,
-            'memo_detail_order', memo_detail_order,
-            'memo_detail_insurance', memo_detail_insurance,
-            'memo_detail_diseases', memo_detail_diseases,
+            'memo_detail_company': memo_detail_company,
+            'memo_detail_order': memo_detail_order,
+            'memo_detail_insurance': memo_detail_insurance,
+            'memo_detail_disease': memo_detail_disease,
         }
     except Exception as e:
         print(e)
@@ -5310,16 +5342,61 @@ def update_patient_notes(request):
         'datas': data
     }) 
 
-# def get_patient_note(request):
-#     patient_id = request.POST.get('patient_id')
-#     patient_note = PatientNotes.objects.filter(patient_id=patient_id).first()
-#     data = {
-#         'memo_detail_company', patient_note.company_name,
-#         'memo_detail_order',  patient_note.order,
-#         'memo_detail_insurance',  patient_note.insurance,
-#         'memo_detail_diseases', patient_note.disease,
-#     }
-#     return JsonResponse({
-#         'result':True,
-#         'datas': data
-#     }) 
+
+def create_patient_relative(request):
+    data = []
+    try:
+        patient_id = request.POST.get('patient_id')
+        person_name = request.POST.get('person_name')
+        relative_name = request.POST.get('relative_name')
+
+        PatientRelative.objects.create(
+            patient_id=patient_id,
+            name=person_name,
+            relative=relative_name
+        )
+
+        list_relative = PatientRelative.objects.filter(patient_id=patient_id)
+        for relative in list_relative:
+            data.append({
+                'relative_id': relative.id,
+                'person_name': relative.name,
+                'relative_name': relative.relative
+            })
+    except Exception as e:
+        print(e)
+        return JsonResponse({
+        'result': False
+    }) 
+    
+    return JsonResponse({
+        'result':True,
+        'datas': data
+    }) 
+
+
+def delete_patient_relative(request):
+    data = []
+    try:
+        relative_id = request.POST.get('relative_id')
+        patient_id = request.POST.get('patient_id')
+
+        PatientRelative.objects.get(id=relative_id).delete()
+
+        list_relative = PatientRelative.objects.filter(patient_id=patient_id)
+        for relative in list_relative:
+            data.append({
+                'relative_id': relative.id,
+                'person_name': relative.name,
+                'relative_name': relative.relative
+            })
+    except Exception as e:
+        print(e)
+        return JsonResponse({
+        'result': False
+    }) 
+    
+    return JsonResponse({
+        'result':True,
+        'datas': data
+    }) 
