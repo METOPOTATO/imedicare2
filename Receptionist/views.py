@@ -5320,6 +5320,7 @@ def update_patient_notes(request):
         patient_note = PatientNotes.objects.filter(patient_id=patient_id).first()
         if not patient_note:
             patient_note = PatientNotes(patient_id=patient_id)
+            
         patient_note.company_name = memo_detail_company
         patient_note.order = memo_detail_order
         patient_note.insurance = memo_detail_insurance
