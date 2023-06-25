@@ -255,7 +255,7 @@
     }
     .patient_search_table_wrap {
         overflow: auto;
-        height: 200px;
+        height: 400px;
     }
 .patient_search_table {
     table-layout: fixed;

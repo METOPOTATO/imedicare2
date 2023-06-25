@@ -1480,6 +1480,74 @@ function patient_search(data) {
 
 }
 
+function patient_search2(data) {
+    //window.location.href = 'reception/' + data;
+
+
+    var memo = $('#memo_id').val();
+    var name = $('#name_id').val();
+    var chart = $('#chart_id').val();
+    var email = $('#email_id').val();
+    var phone = $('#phone_id').val();
+    var dob = $('#dob_id').val();
+    var memo_detail = $('#memo_detail_id').val();
+
+    $.ajax({
+        type: 'POST',
+        url: '/receptionist/patient_search2/',
+        data: {
+            'csrfmiddlewaretoken': $('#csrf').val(),
+            'memo': memo,
+            'name': name,
+            'chart': chart,
+            'email': email,
+            'phone': phone,
+            'dob': dob,
+            'memo_detail':memo_detail
+        },
+        dataType: 'Json',
+        success: function (response) {
+            $('#Patient_Search > tbody ').empty();
+            if (response.datas.length == 0) {
+                $('#Patient_Search').append("<tr><td colspan='8'>" + gettext('No Result !!') + "</td></tr>");
+            } else {
+                for (var i in response.datas) {
+                    var str = "<tr style='cursor:pointer;' onclick='set_patient_data(" +
+                        parseInt(response.datas[i]['id']) +
+                    ")'><td>" + (parseInt(i) + 1) + "</td>";
+
+                    if (response.datas[i]['has_unpaid']) {
+                        str += "<td style=color:rgb(228,97,131);>";
+                    } else {
+                        str += "<td>";
+                    }
+
+                    str += response.datas[i]['chart'] + "</td>" +
+                        "<td>" + response.datas[i]['name_kor'] + '<br />' + response.datas[i]['name_eng'] + "</td>" +
+                        "<td>";
+                    if ($("#language").val() == 'vi') {
+                        str += moment(response.datas[i]['date_of_birth'], 'YYYY-MM-DD').format('DD/MM/YYYY');
+                    } else {
+                        str += response.datas[i]['date_of_birth'];
+                    }
+                     str += ' (' + response.datas[i]['gender'] + '/' + response.datas[i]['age'] + ")</td>" +
+                        "<td>" + response.datas[i]['phonenumber'] + "</td>" +
+                        "<td>" + response.datas[i]['depart'] + "</td>" +
+                        "<td>" + response.datas[i]['last_visit'] + "</td></tr>";
+                        //"<td><a class='btn btn-default btn-xs' href='javascript: void (0);' onclick='delete_database_precedure(" + response.datas[i]['id'] + ")' ><i class='fa fa-lg fa-history'></i></a></td></tr>";
+
+                    $('#Patient_Search').append(str);
+                }
+            }
+        },
+        error: function (request, status, error) {
+            console.log("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
+
+        },
+    })
+
+}
+
 function reception_edit(id = null) {
 
     $('#selected_reception_id').val();

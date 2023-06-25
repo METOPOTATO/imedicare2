@@ -5400,3 +5400,134 @@ def delete_patient_relative(request):
         'result':True,
         'datas': data
     }) 
+
+
+def patient_search2(request):
+    print("=======")
+    memo = request.POST.get('memo')
+    name = request.POST.get('name')
+    chart = request.POST.get('chart')
+    print(chart)
+    email = request.POST.get('email')
+    phone = request.POST.get('phone')
+    dob = request.POST.get('dob')
+    memo_detail = request.POST.get('memo_detail')
+    argument_list = [] 
+    if memo and memo != '':
+        argument_list.append( Q(**{'patient__memo__icontains':memo} ) )
+    
+    if name and name != '':
+        argument_list.append( Q(**{'patient__name_kor__icontains':name}) | Q(**{'patient__name_eng__icontains':name}) )
+    
+    if chart and chart != '':
+        argument_list.append( Q(**{'patient__id__icontains':chart} ) ) 
+    
+    if email and email != '':
+        argument_list.append( Q(**{'patient__email__icontains':email} ) )
+    
+    if phone and phone != '':
+        argument_list.append( Q(**{'patient__phone__icontains':phone} ) )
+
+    if dob and dob != '':
+        argument_list.append( Q(**{'patient__date_of_birth__icontains':dob} ) )
+
+    # patient = Patient.objects.filter(name_kor=string).first()
+    # print(patient)
+    datas=[]
+    if (memo and memo != '') or (name and name != '') or (chart and chart != '') or (email and email != '') or (phone and phone != '') or (dob and dob != ''):
+        receptions = Reception.objects.select_related('patient').values('patient_id','depart_id').filter( functools.reduce(operator.and_, argument_list) ).exclude(progress='deleted').annotate(c_pt=Count('patient_id'),c_dp=Count('depart_id'))
+        # print(receptions)
+        patient_memo = []
+        if memo_detail:
+            patient_memo = DetailMemo.objects.filter(memo__icontains=memo_detail).values_list('patient_id', flat=True);
+            patient_memo = list(patient_memo)
+        for reception in receptions:
+            if memo_detail and memo_detail != '':
+                if reception['patient_id'] in patient_memo:
+                    reception_last = Reception.objects.filter(patient = reception['patient_id'], depart = reception['depart_id']).last()
+                    if reception_last:
+                        data = {}
+                        data.update({
+                            'id':reception_last.patient.id,
+                            'chart':reception_last.patient.get_chart_no(),
+                            'name_kor':reception_last.patient.name_kor,
+                            'name_eng':reception_last.patient.name_eng,
+                            'gender':reception_last.patient.gender,
+                            'date_of_birth':reception_last.patient.date_of_birth.strftime('%Y-%m-%d'),
+                            'phonenumber':reception_last.patient.phone,
+                            'age' : reception_last.patient.get_age(),
+                            'address':reception_last.patient.address,
+                            'has_unpaid':reception_last.patient.has_unpaid(),
+                            'depart':reception_last.depart.name,
+                            'last_visit':reception_last.recorded_date.strftime('%Y-%m-%d'),
+                            
+                            'nationality':reception_last.patient.nationality,
+                            'passport':reception_last.patient.passport,
+                            'email':reception_last.patient.email,
+                            'category':reception_last.patient.category
+
+
+                            })
+                        datas.append(data)
+                print(1)
+            else:
+                print(2)
+                reception_last = Reception.objects.filter(patient = reception['patient_id'], depart = reception['depart_id']).last()
+                data = {}
+                data.update({
+                    'id':reception_last.patient.id,
+                    'chart':reception_last.patient.get_chart_no(),
+                    'name_kor':reception_last.patient.name_kor,
+                    'name_eng':reception_last.patient.name_eng,
+                    'gender':reception_last.patient.gender,
+                    'date_of_birth':reception_last.patient.date_of_birth.strftime('%Y-%m-%d'),
+                    'phonenumber':reception_last.patient.phone,
+                    'age' : reception_last.patient.get_age(),
+                    'address':reception_last.patient.address,
+                    'has_unpaid':reception_last.patient.has_unpaid(),
+                    'depart':reception_last.depart.name,
+                    'last_visit':reception_last.recorded_date.strftime('%Y-%m-%d'),
+                    
+                    'nationality':reception_last.patient.nationality,
+                    'passport':reception_last.patient.passport,
+                    'email':reception_last.patient.email,
+                    'category':reception_last.patient.category
+
+
+                    })
+                datas.append(data)
+    else:
+        print(3)
+        if memo_detail:
+            patient_memo = DetailMemo.objects.filter(memo__icontains=memo_detail).values_list('patient_id', flat=True);
+            patient_memo = list(patient_memo)
+            receptions = Reception.objects.select_related('patient').values('patient_id','depart_id').filter( patient__in=patient_memo ).exclude(progress='deleted').annotate(c_pt=Count('patient_id'),c_dp=Count('depart_id'))
+            for reception in receptions:
+                reception_last = Reception.objects.filter(patient = reception['patient_id'], depart = reception['depart_id']).last()
+                data = {}
+                data.update({
+                    'id':reception_last.patient.id,
+                    'chart':reception_last.patient.get_chart_no(),
+                    'name_kor':reception_last.patient.name_kor,
+                    'name_eng':reception_last.patient.name_eng,
+                    'gender':reception_last.patient.gender,
+                    'date_of_birth':reception_last.patient.date_of_birth.strftime('%Y-%m-%d'),
+                    'phonenumber':reception_last.patient.phone,
+                    'age' : reception_last.patient.get_age(),
+                    'address':reception_last.patient.address,
+                    'has_unpaid':reception_last.patient.has_unpaid(),
+                    'depart':reception_last.depart.name,
+                    'last_visit':reception_last.recorded_date.strftime('%Y-%m-%d'),
+                    
+                    'nationality':reception_last.patient.nationality,
+                    'passport':reception_last.patient.passport,
+                    'email':reception_last.patient.email,
+                    'category':reception_last.patient.category
+
+
+                    })
+                datas.append(data)
+    # print(datas)
+    context = {'datas':datas}
+    return JsonResponse(context)
+
