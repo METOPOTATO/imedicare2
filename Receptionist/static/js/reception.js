@@ -34,15 +34,47 @@ $(function () {
 
 
     //Patient 
-    $('#patient_search_input').keydown(function (key) {
+    $('#memo_id').keydown(function (key) {
         if (key.keyCode == 13) {
-            patient_search();
+            patient_search2();
+        }
+    })    
+    $('#name_id').keydown(function (key) {
+        if (key.keyCode == 13) {
+            patient_search2();
+        }
+    })
+    $('#chart_id').keydown(function (key) {
+        if (key.keyCode == 13) {
+            patient_search2();
+        }
+    })
+    $('#dob_id').keydown(function (key) {
+        if (key.keyCode == 13) {
+            patient_search2();
+        }
+    })
+    $('#email_id').keydown(function (key) {
+        if (key.keyCode == 13) {
+            patient_search2();
+        }
+    })
+    $('#phone_id').keydown(function (key) {
+        if (key.keyCode == 13) {
+            patient_search2();
         }
     })
 
-    $('#patient_search_input2').keydown(function (key) {
+
+    $('#patient_search_input').keydown(function (key) {
         if (key.keyCode == 13) {
-            patient_search();
+            patient_search2();
+        }
+    })
+
+    $('#memo_detail_id').keydown(function (key) {
+        if (key.keyCode == 13) {
+            patient_search2();
         }
     })
     $('#re_patient_search_input').keydown(function (key) {

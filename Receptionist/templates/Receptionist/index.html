@@ -221,27 +221,35 @@
         <div class="reception_search_patient partition">
             <div class="status_table_title">
             <span class="btn btn-danger" >{{ _('Patient List') }}</span>
-                <div class="status_table_filter" style="overflow: scroll; height: 60px; width: 800px;">
-                    <label for="memo">{{ _('Memo') }}</label>
-                    <input style="width: 100px;" type="text" name="search_input" id="memo_id" class="form-control patient_search_input" aria-describedby="basic-addon1" required=""> 
-                  
-                    <label for="name">{{ _('Name') }}</label>
-                    <input style="width: 100px;" type="text" name="search_input" id="name_id" class="form-control patient_search_input" aria-describedby="basic-addon1" required=""> 
+                <div class="status_table_filter" style="overflow: scroll; height: 8s0px; width: 800px;">
+                    <div>
 
-                    <label for="chart">{{ _('Chart No') }}</label>
-                    <input style="width: 100px;" type="text" name="search_input" id="chart_id" class="form-control patient_search_input" aria-describedby="basic-addon1" required=""> 
+                        <label for="name">{{ _('Name') }}</label>
+                        <input style="width: 180px;" type="text" name="search_input" id="name_id" class="form-control patient_search_input" aria-describedby="basic-addon1" required=""> 
+    
 
-                    <label for="dob">{{ _('Date of birth') }}</label>
-                    <input style="width: 100px;" type="text" name="search_input" id="dob_id" class="form-control patient_search_input" aria-describedby="basic-addon1" required=""> 
-
-                    <label for="email">{{ _('Email') }}</label>
-                    <input style="width: 100px;" type="text" name="search_input" id="email_id" class="form-control patient_search_input" aria-describedby="basic-addon1" required=""> 
-
-                    <label for="phone">{{ _('Phone') }}</label>
-                    <input style="width: 100px;" type="text" name="search_input" id="phone_id" class="form-control patient_search_input" aria-describedby="basic-addon1" required=""> 
-
-                    <label for="memo_d">{{ _('Memo Detail') }}</label>
-                    <input style="width: 100px;" type="text" name="memo_d" id="memo_detail_id" class="form-control patient_search_input" aria-describedby="basic-addon1" required=""> 
+                        <label for="phone">{{ _('Phone') }}</label>
+                        <input style="width: 160px;" type="text" name="search_input" id="phone_id" class="form-control patient_search_input" aria-describedby="basic-addon1" required=""> 
+    
+                        <label for="dob">{{ _('Date of birth') }}</label>
+                        <input style="width: 120px;" type="text" name="search_input" id="dob_id" class="form-control patient_search_input" aria-describedby="basic-addon1" required=""> 
+    
+                    </div>
+                    <div>
+                        <label for="email">{{ _('Email') }}</label>
+                        <input style="width: 110px;" type="text" name="search_input" id="email_id" class="form-control patient_search_input" aria-describedby="basic-addon1" required=""> 
+                        
+                        <label for="chart">{{ _('Chart No') }}</label>
+                        <input style="width: 80px;" type="text" name="search_input" id="chart_id" class="form-control patient_search_input" aria-describedby="basic-addon1" required=""> 
+                        
+                        <label for="memo">{{ _('Memo') }}</label>
+                        <input style="width: 110px;" type="text" name="search_input" id="memo_id" class="form-control patient_search_input" aria-describedby="basic-addon1" required=""> 
+                      
+                        <label for="memo_d">{{ _('Memo.D') }}</label>
+                        <input style="width: 110px;" type="text" name="memo_d" id="memo_detail_id" class="form-control patient_search_input" aria-describedby="basic-addon1" required=""> 
+                        
+                        <input type="button"  style="width: 120px;  background-color: #5bc0de; color: white;"  value="{{ _('Search') }}" class="btn btn-default" onclick="patient_search2()"/>
+                    </div>
 
                     <!-- <select name="filter" id="patient_search_select" class="form-control costom-select patient_search_select" aria-describedby="basic-addon1">
                         <option value="">{{_('All') }}</option>
@@ -253,7 +261,7 @@
                         <option value="memo">{{_('Memo') }}</option>
                     </select> -->
                     <!-- <input type="text" name="search_input" id="patient_search_input" class="form-control patient_search_input" aria-describedby="basic-addon1" required=""> -->
-                    <input type="button" value="{{ _('Search') }}" class="btn btn-default" onclick="patient_search2()"/>
+                    
                 </div>
                 <!-- <div style="float:right;">
                     
