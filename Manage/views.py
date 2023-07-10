@@ -1697,10 +1697,11 @@ def rec_report_excel(request):
     response['Content-Disposition'] = 'attachment; filename="RECEPTION REPORT ' + date_start +'.xlsx"'
 
     #엑셀 파일 불러오기
-    try:
-        wb = load_workbook('/home/imedicare/Cofee/static/excel_form/reception_report.xlsx') #Workbook()
-    except:
-        wb = load_workbook('/Users/light/Desktop/Work/imdc/imedicare2/static/excel_form/reception_report.xlsx') #Workbook()
+    # try:
+    #     wb = load_workbook('/home/imedicare/Cofee/static/excel_form/reception_report.xlsx') #Workbook()
+    # except:
+    #     wb = load_workbook('/Users/light/Desktop/Work/imdc/imedicare2/static/excel_form/reception_report.xlsx') #Workbook()
+    wb = load_workbook('/home/light/Desktop/Projects/imedicare2/static/excel_form/reception_report.xlsx') #Workbook()
     ws = wb.active# grab the active worksheet
 
     border_thin = Border(top=Side(border_style="thin", color="000000") ,
@@ -1793,35 +1794,35 @@ def rec_report_excel(request):
 
             total = paymentrecords.filter(method = 'cash').annotate(sum = Coalesce(Sum('paid'),0))
             if len(total)!=0:
-                ws['V' + str(current_row)] = total[0].sum
+                ws['W' + str(current_row)] = total[0].sum
 
             total = paymentrecords.filter(method = 'BIDV_CARD').annotate(sum = Coalesce(Sum('paid'),0))
             if len(total)!=0:
-                ws['W' + str(current_row)] = total[0].sum
+                ws['X' + str(current_row)] = total[0].sum
 
             total = paymentrecords.filter(method = 'BIDV_TRANS').annotate(sum = Coalesce(Sum('paid'),0))
             if len(total)!=0:
-                ws['X' + str(current_row)] = total[0].sum
+                ws['Y' + str(current_row)] = total[0].sum
 
             total = paymentrecords.filter(method = 'VP_CARD').annotate(sum = Coalesce(Sum('paid'),0))
             if len(total)!=0:
-                ws['Y' + str(current_row)] = total[0].sum
+                ws['Z' + str(current_row)] = total[0].sum
 
             total = paymentrecords.filter(method = 'VP_TRANS').annotate(sum = Coalesce(Sum('paid'),0))
             if len(total)!=0:
-                ws['Z' + str(current_row)] = total[0].sum            
+                ws['AA' + str(current_row)] = total[0].sum            
 
             total = paymentrecords.filter(method = 'TP_CARD').annotate(sum = Coalesce(Sum('paid'),0))
             if len(total)!=0:
-                ws['AA' + str(current_row)] = total[0].sum
+                ws['AB' + str(current_row)] = total[0].sum
 
             total = paymentrecords.filter(method = 'TP_TRANS').annotate(sum = Coalesce(Sum('paid'),0))
             if len(total)!=0:
-                ws['AB' + str(current_row)] = total[0].sum
+                ws['AC' + str(current_row)] = total[0].sum
 
             total = paymentrecords.filter(method = 'SHINHAN_TRANS').annotate(sum = Coalesce(Sum('paid'),0))
             if len(total)!=0:
-                ws['AC' + str(current_row)] = total[0].sum                         
+                ws['AD' + str(current_row)] = total[0].sum                         
 
         else:#당일 방문
             ws['G' + str(current_row)] = reception.payment.sub_total
@@ -1876,6 +1877,10 @@ def rec_report_excel(request):
                 if len(total)!=0:
                     ws['S' + str(current_row)] = total[0].sum
 
+                total = paymentrecords.filter(method = 'KOOKMIN').annotate(sum = Coalesce(Sum('paid'),0))
+                if len(total)!=0:
+                    ws['T' + str(current_row)] = total[0].sum
+
         #ws['Q' + str(current_row)] = '=SUM(L' + str(current_row) + ':P' + str(current_row) + ')'
         #ws['R' + str(current_row)] = '=+J' + str(current_row) + '-Q' + str(current_row) + ')'
         #ws['V' + str(current_row)] = '=SUM(S' + str(current_row) + ':U' + str(current_row) + ')'
@@ -1895,8 +1900,8 @@ def rec_report_excel(request):
        
 
         
-        ws['AE' + str(current_row)] = reception.payment.progress
-        ws['AF' + str(current_row)] = reception.doctor.name_eng
+        ws['AF' + str(current_row)] = reception.payment.progress
+        ws['AG' + str(current_row)] = reception.doctor.name_eng
         #if paymentrecords:
         #    ws['Y' + str(current_row)] = paymentrecords.memo
 
@@ -1906,16 +1911,16 @@ def rec_report_excel(request):
                 str_record += record_data.memo + "\n"
             else:
                 str_record = reception.payment.memo
-            ws['AG' + str(current_row)] = str_record
+            ws['AH' + str(current_row)] = str_record
         else:
-            ws['AG' + str(current_row)] = reception.payment.memo
+            ws['AH' + str(current_row)] = reception.payment.memo
         pay_time = reception.payment.pay_time
 
         datetime_str = '01/01/20 00:00:00'
         if pay_time == datetime.datetime.strptime(datetime_str, '%m/%d/%y %H:%M:%S'):
-            ws['AH' + str(current_row)] = ''
+            ws['AI' + str(current_row)] = ''
         else:
-            ws['AH' + str(current_row)] = reception.payment.pay_time
+            ws['AI' + str(current_row)] = reception.payment.pay_time
 
         data_num += 1 
         current_row += 1
