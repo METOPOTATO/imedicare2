@@ -355,6 +355,11 @@ class TestManager(models.Model):
         default = False,
         )
 
+    status = models.IntegerField(
+        default=0, #0: chua tiep nhan, 1: da tiep nhan, 2: huy
+        null=True
+    )
+
 class PrecedureManager(models.Model):
     diagnosis = models.ForeignKey(
         to = Diagnosis,

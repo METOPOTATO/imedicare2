@@ -2,6 +2,8 @@
 Definition of views.
 """
 import math
+from Doctor.models import TestReferenceInterval
+from Doctor.views import diagnosis
 from app.forms import *
 import datetime
 from django.shortcuts import render, redirect
@@ -25,7 +27,7 @@ from Account.forms import *
 from Manage.models import *
 from Receptionist.models import *
 from .models import *
-
+import json
 #@login_required
 def home(request):
     """Renders the home page."""
@@ -888,3 +890,187 @@ def waiting_list_sys_admin_set(request):
         'result':True,
 
         })
+
+
+# get exam info
+def get_order_result(request):
+    try:
+        diagnosis_id  = request.GET.get('orderCode')
+        
+        test_query = TestManager.objects.select_related('testmanage').select_related('diagnosis').filter(diagnosis_id = diagnosis_id)
+        
+        datas=[]
+        for test in test_query:
+            print(type(test))
+            datas.append({
+                    'KetQua':'' if test.testmanage.result is None or '' else test.testmanage.result,
+                    "ListSubTestResult": [],
+                    "MaBenhNhan": "",
+                    'MaDV':test.test.code,
+                    'TenDichVu':test.testmanage.name_service,
+                    "NormalRange": None,
+                    "MaLoaiDV": "XN",
+                    "TenLoaiDV": "Xét nghiệm",
+                    "OrderDetailID": test.testmanage.id
+                })
+        
+        diagnosis = Diagnosis.objects.get(id = diagnosis_id)
+        gender = diagnosis.reception.patient.gender 
+        g = 'M'
+        if gender != 'Male':
+            g = 'F'
+        final_data = {
+            "Address": diagnosis.reception.patient.address,
+            "CapCuu": False,
+            "ChanDoan": None,
+            "DoctorName": diagnosis.reception.doctor.name_eng,
+            "GioChiDinh": diagnosis.reception.recorded_date,
+            "GioiTinh": g,
+            "HoTen": diagnosis.reception.patient.name_kor + ' / ' + diagnosis.reception.patient.name_eng,
+            "LocationName": "Xét nghiệm",
+            "MaBSChiDinh": diagnosis.reception.doctor.id,
+            "MaDoiTuong": "None",
+            "MaKhoaPhong": "XN",
+            "MaYTe": diagnosis_id,
+            "DateOfBirth": diagnosis.reception.patient.date_of_birth.strftime('%Y-%m-%d'),
+            "ObjectName": None,
+            "OrderId": diagnosis_id,
+            "PatientId": diagnosis.reception.patient.id,
+            "SampleId": None,
+            "Sequence": None,
+            "ListTestResult": datas
+        }
+        return JsonResponse({
+            'GetOrderResult':final_data
+        })
+    except Exception as e:
+        return JsonResponse({'result': str(e)}) 
+
+
+def get_order_result_by_patient(request):
+    try:
+        patient_code = request.GET.get('examinationCode')
+        date_request = request.GET.get('dateRequest')
+
+        reception = Reception.objects.filter( patient_id = patient_code, recorded_date__year=date_request[0:4], recorded_date__month=date_request[4:6], recorded_date__day=date_request[6:]).latest('id')
+        if not reception:
+            return JsonResponse({'result': 'no result'}) 
+        
+        diagnosis = Diagnosis.objects.filter(reception_id = reception.id).first()
+        if not diagnosis:
+            return JsonResponse({'result': 'no result'}) 
+        
+        diagnosis_id = diagnosis.id
+
+        test_query = TestManager.objects.select_related('testmanage').select_related('diagnosis').filter(diagnosis_id = diagnosis_id)
+
+        datas=[]
+        for test in test_query:
+            datas.append({
+                'KetQua':'' if test.testmanage.result is None or '' else test.testmanage.result,
+                "ListSubTestResult": [],
+                "MaBenhNhan": "",
+                'MaDV':test.test.code,
+                'TenDichVu':test.testmanage.name_service,
+                "NormalRange": None,
+                "MaLoaiDV": "XN",
+                "TenLoaiDV": "Xét nghiệm",
+                "OrderDetailID": test.testmanage.id
+            })
+        
+        diagnosis = Diagnosis.objects.get(id = diagnosis_id)
+        gender = diagnosis.reception.patient.gender
+        g = 'M'
+        if gender != 'Male':
+            g = 'F'
+        final_data = {
+            "Address": diagnosis.reception.patient.address,
+            "CapCuu": False,
+            "ChanDoan": None,
+            "DoctorName": diagnosis.reception.doctor.name_eng,
+            "GioChiDinh": diagnosis.reception.recorded_date,
+            "GioiTinh": g,
+            "HoTen": diagnosis.reception.patient.name_kor + ' / ' + diagnosis.reception.patient.name_eng,
+            "LocationName": "Xét nghiệm",
+            "MaBSChiDinh": diagnosis.reception.doctor.id,
+            "MaDoiTuong": "None",
+            "MaKhoaPhong": "XN",
+            "MaYTe": diagnosis_id,
+            "DateOfBirth": diagnosis.reception.patient.date_of_birth.strftime('%Y-%m-%d'),
+            "ObjectName": None,
+            "OrderId": diagnosis_id,
+            "PatientId": diagnosis.reception.patient.id,
+            "SampleId": None,
+            "Sequence": None,
+            "ListTestResult": datas
+
+        }
+        return JsonResponse({
+            'GetOrderResult':final_data
+        })
+    except Exception as e:
+        return JsonResponse({'result': str(e)}) 
+
+
+@csrf_exempt
+def update_result(request):
+    try:
+
+        data = json.loads(request.body)
+        data = data['result']
+        # address = data['Address']
+        # diagnosis_result = data['ChanDoan']
+        # doctor_name = data['DoctorName']
+        # time_ = data['GioChiDinh']
+        # gender = data['GioiTinh']
+        # name = data['HoTen']
+        # location_name = data['LocationName']
+        # doctor_id = data['MaBSChiDinh']
+        # dob = data['NgaySinh']
+        # patient_id = data['PatientId']
+        # reception_department = data['ReceptionLocationName']
+        # sid = data['SampleId']
+
+        diagnosis_id = data['OrderId']
+
+        list_test_results = data['ListTestResult']
+
+
+        test_query = TestManager.objects.select_related('testmanage').select_related('diagnosis').filter(diagnosis_id = diagnosis_id)
+        if len(test_query) == 0:
+            return JsonResponse({'result': 'no data'})
+        print('here')
+        for test in list_test_results:
+            for test_q in test_query:
+                print('=====', test_q.testmanage.id, test['OrderDetailID'])
+                if str(test['OrderDetailID']) == str(test_q.testmanage.id):
+                    print('***')
+                    test_q.testmanage.result = test['KetQua']
+                    print('=====', test['KetQua'])
+
+                    test_q.testmanage.save()
+        
+        return JsonResponse({'result': 'ok'})
+    except Exception as e:
+        return JsonResponse({'result': str(e)}) 
+
+
+# update tests status
+@csrf_exempt
+def update_status_order(request):
+
+    try:
+        data = json.loads(request.body)
+        data = data['request']
+        for d in data:
+            order_detail_id = int(d['OrderDetailID'])
+            status = d['StatusTest']
+            test = TestManager.objects.filter(testmanage__id = order_detail_id).first()
+            test.status = status
+            test.save()
+            print(test.status)
+        return JsonResponse({'result': 'ok'})
+    
+    except Exception as e:
+        return JsonResponse({'result': str(e)})
+    

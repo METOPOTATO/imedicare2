@@ -213,6 +213,7 @@ function waiting_list(Today = false, alarm = false) {
                 var str = "<tr  onclick='get_test_list(this," + response.datas[i]['id'] + ")'>" +
                     "<td>" + (parseInt(i) + 1) + "</td>" +
                     "<td>" + response.datas[i]['chart'] + "</td>" +
+                    "<td>" + response.datas[i]['id'] + "</td>" +
                     "<td>" + response.datas[i]['Name'] + "</td>" +
                     "<td>" + response.datas[i]['Date_of_Birth'] + "</td>" +
                     "<td>" + response.datas[i]['Depart'] + "</td></tr>";
