@@ -775,6 +775,7 @@ def reception_search(request):
 
         data.update({
             'id':reception.id,
+            'patient_id': reception.patient.id,
             'chart':reception.patient.get_chart_no(),
             'name_kor':reception.patient.name_kor,
             'name_eng':reception.patient.name_eng,
