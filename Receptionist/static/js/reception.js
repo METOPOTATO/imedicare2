@@ -1676,7 +1676,7 @@ function reception_search() {
                 $('#Rectption_Status').append("<tr><td colspan='9'>" + gettext('No Result !!') + "</td></tr>");
             } else {
                 for (var i in response.datas) {
-                    var str = "<tr><td>" + (parseInt(i) + 1) + "</td>";
+                    var str = "<tr onclick='set_patient_data(" + response.datas[i]['patient_id'] + ")'" + "><td>" + (parseInt(i) + 1) + "</td>";
 
                         if (response.datas[i]['has_unpaid']) {
                             str += "<td style=color:rgb(228,97,131);>";
