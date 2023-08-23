@@ -87,8 +87,8 @@ def waiting_selected(request):
         'Date_of_Birth': diagnosis.reception.patient.date_of_birth.strftime('%Y-%m-%d'),
         'gender': diagnosis.reception.patient.gender,
         'phone': diagnosis.reception.patient.phone,
-        'diagnosis': diagnosis.diagnosis
-
+        'diagnosis': diagnosis.diagnosis,
+        'address': diagnosis.reception.patient.address
                }
     return JsonResponse(context)
 
