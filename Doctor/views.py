@@ -1198,6 +1198,7 @@ def diagnosis_save(request):
             sub_tests = Test.objects.filter(parent_test__id=test.id)
             for sub_test in sub_tests:
                 result = TestManager(diagnosis_id = diagnosis_result.id)
+                result.test_id = sub_test.id
                 result.save()
                 test_manage = TestManage(
                     manager_id = result.id,
