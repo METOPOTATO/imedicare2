@@ -4020,15 +4020,16 @@ def test_search(request):
 
 
     if string == '' :
-        query_datas = Test.objects.filter(**kwargs).select_related('test_class').exclude(use_yn = 'N').order_by("id")
+        query_datas = Test.objects.filter(**kwargs).select_related('test_class').select_related('parent_test').exclude(use_yn = 'N').order_by("id")
     #elif filter == 'name':
     #    query_datas = Test.objects.filter( Q(name__icontains = string) | Q(name_vie__icontains = string)).select_related('test_class').exclude(use_yn = 'N').order_by("name")
     else:
-        query_datas = Test.objects.filter(functools.reduce(operator.or_, argument_list),**kwargs).select_related('test_class').exclude(use_yn = 'N').order_by("id")
+        query_datas = Test.objects.filter(functools.reduce(operator.or_, argument_list),**kwargs).select_related('test_class').select_related('parent_test').exclude(use_yn = 'N').order_by("id")
 
 
     datas=[]
     for query_data in query_datas:
+        print(query_data.__dict__)
         data = {
                 'id' : query_data.id,
                 'code': query_data.code,
@@ -4036,7 +4037,9 @@ def test_search(request):
                 'class':query_data.test_class.name,
                 'price' : query_data.get_price(),
                 'price_dollar' : query_data.get_price_dollar(),
+                'parent_test': query_data.parent_test.code if query_data.parent_test else ''
             }
+        
         datas.append(data)
 
 
@@ -4078,6 +4081,7 @@ def test_add_edit_get(request):
         'price_dollar':test.get_price_dollar(),
         'precedure_class_id':test.test_class_id,
         'result':True,
+        'parent_test': test.parent_test.code
         })
 
 
@@ -4090,6 +4094,9 @@ def test_add_edit_set(request):
     name_vie = request.POST.get('name_vie');
     price = request.POST.get('price');
     price_dollar = request.POST.get('price_dollar');
+
+    parent_test_code = request.POST.get('parent_test');
+    parent_test_obj = Test.objects.filter(code=parent_test_code).first()
 
     if int(id) == 0 :
         data = Test()
@@ -4155,6 +4162,7 @@ def test_add_edit_set(request):
     data.test_class_id = test_class
     data.name = name
     data.name_vie = name_vie
+    data.parent_test = parent_test_obj
     data.save()
 
 
