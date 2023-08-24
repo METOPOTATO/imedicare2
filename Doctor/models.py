@@ -175,6 +175,12 @@ class Test(models.Model):
         default='Y',
         )
 
+    parent_test = models.ForeignKey(
+        'self',
+        null=True,
+        default=True,
+        on_delete=models.DO_NOTHING
+    )
     
 
     def __str__(self):

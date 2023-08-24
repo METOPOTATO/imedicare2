@@ -136,10 +136,9 @@
                     </tr>
                     <tr>
                         <td>
-                            <div style="display:inline;">
-                                &emsp;&emsp;
-                                <label class="need_something_check" style="margin-right:10px;"><input type="checkbox" id="need_invoice" /><text>{{_('Red Invoice') }}</text></label>
-                                <label class="need_something_check"><input type="checkbox" id="need_insurance" /><text> {{_('Insurance') }}</text></label>
+                            <div class="input-group">
+                                <span class="input-group-addon" id="basic-addon1">{{ _('Address') }}</span>
+                                <input type="text" class="form-control" aria-describedby="sizing-addon1" id="patient_address"/>
                             </div>
                         </td>
                         <td>
@@ -147,6 +146,17 @@
                                 <span class="input-group-addon" id="basic-addon1">{{ _('Diagnosis') }}</span>
                                 <input type="text" class="form-control" aria-describedby="sizing-addon1" id="diagnosis"/>
                             </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div style="display:inline;">
+                                &emsp;&emsp;
+                                <label class="need_something_check" style="margin-right:10px;"><input type="checkbox" id="need_invoice" /><text>{{_('Red Invoice') }}</text></label>
+                                <label class="need_something_check"><input type="checkbox" id="need_insurance" /><text> {{_('Insurance') }}</text></label>
+                            </div>
+                        </td>
+                        <td>
                         </td>
                     </tr>
                 </table>
