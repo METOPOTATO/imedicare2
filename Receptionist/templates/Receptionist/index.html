@@ -267,40 +267,23 @@
                     
                 </div> -->
             </div>
-            <div style="display: flex; flex-direction: row; width: 100%;">
-                <div class="patient_search_table_wrap" style="margin-top: 50px; overflow-x: scroll; width: 550px;  margin-right: 10px;"  >
-                    <table class="table patient_search_table" id="Patient_Search">
-                        <thead>
-                            <tr>
-                                <th>{{ _('No')}}</th>
-                                <th>{{ _('Chart No')}}</th>
-                                <th style="width: 150px;">{{ _('Name')}}</th>
-                                <th>{{ _('Date of Birth')}}</th>
-                                <th>{{ _('Phone Number')}}</th>
-                                <th>{{ _('Depart') }}</th>
-                                <th>{{ _('Last Visit') }}</th>
-                                <th></th>
-                            </tr>
-                        </thead>
-                        <tbody></tbody>            
-                    </table>
-                </div>
-                <div class="patient_search_table_wrap" style="margin-top: 50px;overflow-x: scroll; width: 380px; border-left: solid white 3px;"  >
-                    <table class="table patient_search_table" id="table_patient_memo">
-                        <thead>
-                            <tr>
-                                <th>{{ _('No')}}</th>
-                                <th style="width: 200px;">{{ _('Name')}}</th>
-                                <th>{{ _('Relation')}}</th>
-                                <th></th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                        </tbody>            
-                    </table>
-                </div>  
+            <div class="patient_search_table_wrap" style="margin-top: 50px;" >
+                <table class="table patient_search_table" id="Patient_Search">
+                    <thead>
+                        <tr>
+                            <th>{{ _('No')}}</th>
+                            <th>{{ _('Chart No')}}</th>
+                            <th>{{ _('Name')}}</th>
+                            <th>{{ _('Date of Birth')}}</th>
+                            <th>{{ _('Phone Number')}}</th>
+                            <th>{{ _('Depart') }}</th>
+                            <th>{{ _('Last Visit') }}</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>            
+                </table>
             </div>
-
         </div>
         <!--Reception Status-->
         <div class="status_table_wrapper partition" >
@@ -372,7 +355,7 @@
                 </div>
             </div>
 
-            <div class="patient_search_table_wrap"> 
+            <div class="patient_search_table_wrap">
             <table class="table patient_search_table" id="Reservation_Status">
                 <thead>
                     <tr>
@@ -1120,7 +1103,7 @@
 
                 <table class="table table-bordered table-hover table-striped">
                     <tr>
-                        <td style="width:900px">
+                        <td style="width:800px">
                             <table class="table table-bordered table-hover table-striped">
                                 <tr>
                                     <td>
@@ -1201,71 +1184,51 @@
                                 </div>
                             </div>
                             <input id="patient_notes" type="button" value="{{_('Create') }}" class="btn btn-primary save_cancel_btn" style="width:100px;" onclick="create_patient_relation()"/>
-                            <input id="create_memo_detail" type="button" value="{{_('Search') }}" class="btn btn-primary save_cancel_btn" style="width:100px;" onclick=""/>
-                            <input id="create_memo_detail" type="button" value="{{_('Clear') }}" class="btn btn-primary save_cancel_btn" style="width:100px;" onclick=""/>
                         </td>
                     </tr>
                     <tr></tr>
                 </table>
-                <div style="display: flex; flex-direction: row; ">
-                    <div id="modalBody" class="modal-body" style="width: 900px;">
-                        <table class="table table-bordered table-hover table-striped" id="table_memo_detail">
-                            <thead>
-                                <tr>
-                                    <th>{{ _('No') }}</th>
-                                    <th>{{ _('Depart Creator') }}</th>
-                                    <th>{{ _('Creator') }}</th>
-                                    <th>{{ _('Memo') }}</th>
-                                    <th>{{ _('Depart Memo') }}</th>
-                                    <th></th>
-                                </tr>
-                            </thead>
-                            <tbody>
-    
-                            </tbody>
-                        </table>
-    
-                        <br><br>
-                        <div class="input-group">
-                            <span class="input-group-addon Edit_Reception_input-group-addon" id="basic-addon1">{{ _('Memo') }}</span>
-                            <input type="text" class="form-control" id="new_memo_detail"/>
-                        </div>
-                        <div class="input-group">
-                            <span class="input-group-addon Edit_Reception_input-group-addon">{{ _('Depart') }}</span>
-                            <select id="memo_depart" class="form-control" aria-describedby="basic-addon1">
-                                <option value selected>---------</option>
-                                <option value="PED">PED</option>
-                                <option value="IM">IM</option>
-                                <option value="LAB">LAB</option>
-                                <option value="PS">PS</option>
-                                <option value="ENT">ENT</option>
-                                <option value="DERM">DERM</option>
-                                <option value="PM">PM</option>
-                                <option value="DENTAL">DENTAL</option>
-                                <option value="OBGYN">OBGYN</option>
-                                <option value="VACCINE">VACCINE</option>
-                                <option value="SURGERY">SURGERY</option>
-                            </select>
-                        </div>
-                        <input id="create_memo_detail" type="button" value="{{_('Create Memo') }}" class="btn btn-primary save_cancel_btn" style="width:100px;" onclick="create_memo_detail()"/>
-                    </div>
-                    <div id="modalBody" class="modal-body" style="width: 600px;height: 300px;overflow: scroll;">
-                        <table class="table table-bordered table-hover table-striped" id="table_relation_search">
-                            <thead>
-                                <tr>
-                                    <th style="width: 100px;">{{ _('Chart No') }}</th>
-                                    <th style="width: 200px;">{{ _('Name') }}</th>
-                                    <th style="width: 150px;">{{ _('Phone') }}</th>
-                                    <th style="width: 150px;">{{ _('Email') }}</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                            </tbody>
-                        </table>
-                        
-                    </div>
-                </div>
+                <div id="modalBody" class="modal-body" >
+                    <table class="table table-bordered table-hover table-striped" id="table_memo_detail">
+                        <thead>
+                            <tr>
+                                <th>{{ _('No') }}</th>
+                                <th>{{ _('Depart Creator') }}</th>
+                                <th>{{ _('Creator') }}</th>
+                                <th>{{ _('Memo') }}</th>
+                                <th>{{ _('Depart Memo') }}</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
 
+                        </tbody>
+                    </table>
+
+                    <br><br>
+                    <div class="input-group">
+                        <span class="input-group-addon Edit_Reception_input-group-addon" id="basic-addon1">{{ _('Memo') }}</span>
+                        <input type="text" class="form-control" id="new_memo_detail"/>
+                    </div>
+                    <div class="input-group">
+                        <span class="input-group-addon Edit_Reception_input-group-addon">{{ _('Depart') }}</span>
+                        <select id="memo_depart" class="form-control" aria-describedby="basic-addon1">
+                            <option value selected>---------</option>
+                            <option value="PED">PED</option>
+                            <option value="IM">IM</option>
+                            <option value="LAB">LAB</option>
+                            <option value="PS">PS</option>
+                            <option value="ENT">ENT</option>
+                            <option value="DERM">DERM</option>
+                            <option value="PM">PM</option>
+                            <option value="DENTAL">DENTAL</option>
+                            <option value="OBGYN">OBGYN</option>
+                            <option value="VACCINE">VACCINE</option>
+                            <option value="SURGERY">SURGERY</option>
+                        </select>
+                    </div>
+                    <input id="create_memo_detail" type="button" value="{{_('Create Memo') }}" class="btn btn-primary save_cancel_btn" style="width:100px;" onclick="create_memo_detail()"/>
+                </div>
                
             </div>
         </div>
