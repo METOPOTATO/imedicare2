@@ -1,4 +1,5 @@
-﻿from django.shortcuts import render,redirect,HttpResponse
+﻿import json
+from django.shortcuts import render,redirect,HttpResponse
 import datetime
 import calendar
 from django.utils import timezone, translation
@@ -32,6 +33,7 @@ from django.db.models.functions import Lower
 from django.template import RequestContext
 
 from django.views.decorators.csrf import csrf_protect
+import requests
 
 @login_required
 def index(request):
@@ -1438,6 +1440,30 @@ def diagnosis_save(request):
         'result':res,
         'msg':msg,
         }
+    
+    # call api list waiting
+    patient = reception.patient
+    quantity = len(test_set)
+    data = { 
+        "ReceptionCode": str(patient.id),
+        "PatientName": patient.get_name_kor_eng(),
+        "Age": patient.get_age(), 
+        "RequestDate": datetime.date.today().__str__(), 
+        "Sex": "F", 
+        # "SerialNumber": 1, 
+        # "Priority": False, 
+        "Quantity": quantity, 
+        "ReceptionDepartment": reception.depart.name
+        }
+    
+    try:
+        print('data=====', data)
+        headers = {'Content-Type': 'application/json'} 
+        json_data = json.dumps(data)
+        result = requests.post('http://118.70.81.222:7003/api/HISIntergrate/PatientSequence', data = json_data, headers=headers )
+    except Exception as e:
+        print(e)
+    
     return JsonResponse(context)
 
 
