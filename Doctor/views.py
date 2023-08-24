@@ -1192,7 +1192,18 @@ def diagnosis_save(request):
                     date_ordered = datetime.datetime.now(),
                     )
             test_manage.save()
-            
+
+            sub_tests = Test.objects.filter(parent_test__id=test.id)
+            for sub_test in sub_tests:
+                result = TestManager(diagnosis_id = diagnosis_result.id)
+                result.save()
+                test_manage = TestManage(
+                    manager_id = result.id,
+                    name_service = sub_test.name,
+                    date_ordered = datetime.datetime.now(),
+                )
+                print('>>>>>>',sub_test, test_manage)
+                test_manage.save()
             total_amount += result.test.get_price()
 
         elif data['type'] == 'Precedure':

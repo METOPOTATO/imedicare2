@@ -45,7 +45,7 @@ $(function () {
     //ADD , Edit 
 
 
-    ////Level ÀÚµ¿ °è»ê
+    ////Level ï¿½Úµï¿½ ï¿½ï¿½ï¿½
     function set_level_price_multi() {
         var price_input = $("#add_edit_database_price_input").val();
         var level = $('#add_edit_database_multiple_level option:selected').val();
@@ -207,6 +207,7 @@ function test_database_search(page = null) {
                         "<td>" + response.datas[i]['code'] + "</td>" +
                         "<td title='" + response.datas[i]['class'] + "'>" + response.datas[i]['class'] + "</td>" +
                         "<td title='" + response.datas[i]['name'] + "'>" + response.datas[i]['name'] + "</td>" +
+                        "<td>" + response.datas[i]['parent_test'] + "</td>" +
                         "<td>" + /*response.datas[i]['unit'] +*/ "</td>" +
                         "<td>" + numberWithCommas(response.datas[i]['price']) + "</td>" +
                         "<td>" +
@@ -215,13 +216,13 @@ function test_database_search(page = null) {
 
 
                 } else {
-                    var str = "<tr><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>";
+                    var str = "<tr><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>";
                 }
                 $('#inventory_database_table > tbody').append(str);
             }
 
 
-            //ÆäÀÌÂ¡
+            //ï¿½ï¿½ï¿½ï¿½Â¡
             $('#medicine_pagnation').html('');
             str = '';
             if (response.has_previous == true) {
@@ -285,7 +286,7 @@ function edit_database_test(id = null) {
                     $("#add_edit_database_price_output").val(response.price);
                     $("#add_edit_database_price_dollar").val(response.price_dollar);
                     $("#add_edit_database_class").val(response.precedure_class_id);
-
+                    $("#add_edit_database_parent_test").val(response.parent_test);
                     get_test_interval(id)
                 } else {
                     alert(gettext('Please Refresh this page.'));
@@ -473,7 +474,7 @@ function save_database_test(id = null) {
 
     var test_class = $("#add_edit_database_class").val();
     var type = $("#add_edit_database_type").val();
-
+    var parent_test = $("#add_edit_database_parent_test").val();
 
 
     $.ajax({
@@ -488,7 +489,7 @@ function save_database_test(id = null) {
             'name_vie': name_vie,
             'price': price,
             'price_dollar': price_dollar,
-
+            'parent_test': parent_test,
         },
         dataType: 'Json',
         success: function (response) {

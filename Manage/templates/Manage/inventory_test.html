@@ -36,6 +36,7 @@
                             <th>{{ _('Code') }}</th>
                             <th>{{ _('Classification') }}</th>
                             <th>{{ _('Name') }}</th>
+                            <th>{{ _('Parent Test')}}</th>
                             <th>{{ _('unit') }}</th>
                             <th>{{ _('Price') }}</th>
                             <th>{{ _('Edit')}}</th>
@@ -78,7 +79,10 @@
                                 </div>
                             </td>
                             <td>
-
+                                <div class="input-group">
+                                    <span class="input-group-addon" id="basic-addon1">{{ _('Parent Test') }}*</span>
+                                    <input type="text" id="add_edit_database_parent_test" class="form-control medicine_control_input" aria-describedby="basic-addon1">
+                                </div>
                             </td>
                         </tr>
                         <tr>
