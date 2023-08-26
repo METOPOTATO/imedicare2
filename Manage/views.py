@@ -1701,7 +1701,8 @@ def rec_report_excel(request):
     #     wb = load_workbook('/home/imedicare/Cofee/static/excel_form/reception_report.xlsx') #Workbook()
     # except:
     #     wb = load_workbook('/Users/light/Desktop/Work/imdc/imedicare2/static/excel_form/reception_report.xlsx') #Workbook()
-    wb = load_workbook('/home/light/Desktop/Projects/imedicare2/static/excel_form/reception_report.xlsx') #Workbook()
+    # wb = load_workbook('/home/light/Desktop/Projects/imedicare2/static/excel_form/reception_report.xlsx') #Workbook()
+    wb = load_workbook('/home/imedicare/Cofee/static/excel_form/reception_report.xlsx') #Workbook()
     ws = wb.active# grab the active worksheet
 
     border_thin = Border(top=Side(border_style="thin", color="000000") ,
@@ -4081,7 +4082,7 @@ def test_add_edit_get(request):
         'price_dollar':test.get_price_dollar(),
         'precedure_class_id':test.test_class_id,
         'result':True,
-        'parent_test': test.parent_test.code
+        'parent_test': test.parent_test.code if test.parent_test else ''
         })
 
 
