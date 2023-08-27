@@ -1197,22 +1197,15 @@ def diagnosis_save(request):
 
             sub_tests = Test.objects.filter(parent_test__id=test.id)
             for sub_test in sub_tests:
-                result =  TestManager.objects.filter(diagnosis_id = diagnosis_result.id, test_id = sub_test.id).first()
-                if not result:
-                    result = TestManager(diagnosis_id = diagnosis_result.id)
-                    result.test_id = sub_test.id
-                    result.save()
-                try:
-                    test_manage = TestManage.objects.get(manager_id = result.id)
-                except:
-                    test_manage = TestManage(
-                        manager_id = result.id,
-                        name_service = sub_test.name,
-                        date_ordered = datetime.datetime.now(),
-                    )
-                    print('>>>>>>',sub_test, test_manage)
-                    test_manage.save()
-            
+                sub_result = TestManager(diagnosis_id = diagnosis_result.id)
+                sub_result.test_id = sub_test.id
+                sub_result.save()
+                test_manage = TestManage(
+                    manager_id = sub_result.id,
+                    name_service = sub_test.name,
+                    date_ordered = datetime.datetime.now(),
+                )
+                test_manage.save()
             total_amount += result.test.get_price()
 
         elif data['type'] == 'Precedure':
@@ -1496,7 +1489,7 @@ def diagnosis_past(request):
             diagnosis = Diagnosis.objects.get(reception_id = reception.id)
 
             exam_set = ExamManager.objects.filter(diagnosis_id = diagnosis.id)
-            test_set = TestManager.objects.filter(diagnosis_id = diagnosis.id)
+            test_set = TestManager.objects.filter(diagnosis_id = diagnosis.id, test__parent_test=None)
             precedure_set = PrecedureManager.objects.filter(diagnosis_id = diagnosis.id)
             medicine_set = MedicineManager.objects.filter(diagnosis_id = diagnosis.id)
 
@@ -1588,7 +1581,7 @@ def get_diagnosis(request):
         diagnosis = Diagnosis.objects.get(reception_id = reception_no)
 
         exam_set = ExamManager.objects.filter(diagnosis_id = diagnosis.id)
-        test_set = TestManager.objects.filter(diagnosis_id = diagnosis.id)
+        test_set = TestManager.objects.filter(diagnosis_id = diagnosis.id, test__parent_test=None)
         precedure_set = PrecedureManager.objects.filter(diagnosis_id = diagnosis.id)
         medicine_set = MedicineManager.objects.filter(diagnosis_id = diagnosis.id)
 
@@ -2067,7 +2060,7 @@ def get_bundle(request):
         elif item.type == 'Precedure':
             data = Precedure.objects.get(code=item.code)
         elif item.type == 'Test':
-            data = Test.objects.get(code=item.code)
+            data = Test.objects.get(code=item.code, parent_test=None)
 
         res_datas.append({
             'id':data.id,

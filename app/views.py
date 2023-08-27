@@ -962,21 +962,34 @@ def get_order_result_by_patient(request):
         
         diagnosis_id = diagnosis.id
 
-        test_query = TestManager.objects.select_related('testmanage').select_related('diagnosis').filter(diagnosis_id = diagnosis_id)
+        test_query = TestManager.objects.select_related('testmanage').select_related('diagnosis').filter(diagnosis_id = diagnosis_id, test__parent_test=None)
 
         datas=[]
         for test in test_query:
-            datas.append({
-                'KetQua':'' if test.testmanage.result is None or '' else test.testmanage.result,
-                "ListSubTestResult": [],
-                "MaBenhNhan": "",
-                'MaDV':test.test.code,
-                'TenDichVu':test.testmanage.name_service,
-                "NormalRange": None,
-                "MaLoaiDV": "XN",
-                "TenLoaiDV": "Xét nghiệm",
-                "OrderDetailID": test.testmanage.id
-            })
+            if test.status == 0 :
+                sub_tests = Test.objects.filter(parent_test__code = test.test.code)
+                list_subtests = []
+                for sub_test in sub_tests:
+                    list_subtests.append({
+                        "KetQua": None,
+                        "MaDV": sub_test.code,
+                        "MaDVCha": test.test.code,
+                        "MaLoaiDV": 'XN',
+                        "NormalRange": '',
+                        "TenDichVu": sub_test.name,
+                        "TenLoaiDV": "Xét Nghiệm"
+                    })
+                datas.append({
+                    'KetQua':'' if test.testmanage.result is None or '' else test.testmanage.result,
+                    "ListSubTestResult": list_subtests,
+                    "MaBenhNhan": "",
+                    'MaDV':test.test.code,
+                    'TenDichVu':test.testmanage.name_service,
+                    "NormalRange": None,
+                    "MaLoaiDV": "XN",
+                    "TenLoaiDV": "Xét nghiệm",
+                    "OrderDetailID": test.testmanage.id
+                })
         
         diagnosis = Diagnosis.objects.get(id = diagnosis_id)
         gender = diagnosis.reception.patient.gender
@@ -1036,19 +1049,29 @@ def update_result(request):
         list_test_results = data['ListTestResult']
 
 
-        test_query = TestManager.objects.select_related('testmanage').select_related('diagnosis').filter(diagnosis_id = diagnosis_id)
-        if len(test_query) == 0:
-            return JsonResponse({'result': 'no data'})
-        print('here')
+        
+        # if len(test_query) == 0:
+        #     return JsonResponse({'result': 'no data'})
+        test_query = TestManager.objects.select_related('diagnosis').filter(diagnosis_id = diagnosis_id)
         for test in list_test_results:
-            for test_q in test_query:
-                print('=====', test_q.testmanage.id, test['OrderDetailID'])
-                if str(test['OrderDetailID']) == str(test_q.testmanage.id):
-                    print('***')
-                    test_q.testmanage.result = test['KetQua']
-                    print('=====', test['KetQua'])
 
-                    test_q.testmanage.save()
+            
+            parent_test_query = test_query.select_related('testmanage').filter(testmanage__id=test['OrderDetailID']).first()
+            parent_test_query.testmanage.result = test['KetQua']
+            parent_test_query.testmanage.save()
+
+            for sub_test in test['ListSubTestResult']:
+                sub_test_query = test_query.select_related('testmanage').filter(test__code = sub_test['MaDV']).first()
+                sub_test_query.testmanage.result = sub_test['KetQua']
+                sub_test_query.testmanage.save()
+ 
+
+        # for test in list_test_results:
+        #     for test_q in test_query:
+        #         if str(test['OrderDetailID']) == str(test_q.testmanage.id):
+        #             test_q.testmanage.result = test['KetQua']
+
+        #             test_q.testmanage.save()
         
         return JsonResponse({'result': 'ok'})
     except Exception as e:

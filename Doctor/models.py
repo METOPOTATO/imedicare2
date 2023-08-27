@@ -178,7 +178,7 @@ class Test(models.Model):
     parent_test = models.ForeignKey(
         'self',
         null=True,
-        default=True,
+        default=None,
         on_delete=models.DO_NOTHING
     )
     

@@ -1355,7 +1355,7 @@ def get_today_selected(request):
     payment = Payment.objects.get(reception_id = reception_id)
 
     exam_set = ExamManager.objects.filter(diagnosis_id = diagnosis.id)
-    test_set = TestManager.objects.filter(diagnosis_id = diagnosis.id)
+    test_set = TestManager.objects.filter(diagnosis_id = diagnosis.id, test__parent_test = None)
     precedure_set = PrecedureManager.objects.filter(diagnosis_id = diagnosis.id)
     medicine_set = MedicineManager.objects.filter(diagnosis_id = diagnosis.id)
 
