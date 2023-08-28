@@ -2218,6 +2218,7 @@ def cumstomer_management_excel(request):
 
     #엑셀 파일 불러오기
     wb = load_workbook('/home/imedicare/Cofee/static/excel_form/customer_excel_form.xlsx') #Workbook()
+    wb = load_workbook('/home/imedicare/Cofee/static/excel_form/customer_excel_form.xlsx') #Workbook()
     ws = wb.active# grab the active worksheet
 
     date_min = datetime.datetime.combine(datetime.datetime.strptime(date_start,"%Y-%m-%d").date(), datetime.time.min)
@@ -6523,7 +6524,7 @@ def customer_manage_get_patient_visit_history(request):
         diagnosis = Diagnosis.objects.get(reception_id = reception.id)
 
         exam_set = ExamManager.objects.filter(diagnosis_id = diagnosis.id)
-        test_set = TestManager.objects.filter(diagnosis_id = diagnosis.id)
+        test_set = TestManager.objects.filter(diagnosis_id = diagnosis.id, test__parent_test = None)
         precedure_set = PrecedureManager.objects.filter(diagnosis_id = diagnosis.id)
         medicine_set = MedicineManager.objects.filter(diagnosis_id = diagnosis.id)
 

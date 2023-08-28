@@ -28,6 +28,8 @@ from Manage.models import *
 from Receptionist.models import *
 from .models import *
 import json
+
+import csv
 #@login_required
 def home(request):
     """Renders the home page."""
@@ -922,7 +924,7 @@ def get_order_result(request):
         final_data = {
             "Address": diagnosis.reception.patient.address,
             "CapCuu": False,
-            "ChanDoan": None,
+            "ChanDoan": diagnosis.diagnosis,
             "DoctorName": diagnosis.reception.doctor.name_eng,
             "GioChiDinh": diagnosis.reception.recorded_date,
             "GioiTinh": g,
@@ -966,7 +968,7 @@ def get_order_result_by_patient(request):
 
         datas=[]
         for test in test_query:
-            if test.status == 0 :
+            if test.status != 1 :
                 sub_tests = Test.objects.filter(parent_test__code = test.test.code)
                 list_subtests = []
                 for sub_test in sub_tests:
@@ -999,7 +1001,7 @@ def get_order_result_by_patient(request):
         final_data = {
             "Address": diagnosis.reception.patient.address,
             "CapCuu": False,
-            "ChanDoan": None,
+            "ChanDoan": diagnosis.diagnosis,
             "DoctorName": diagnosis.reception.doctor.name_eng,
             "GioChiDinh": diagnosis.reception.recorded_date,
             "GioiTinh": g,
@@ -1097,3 +1099,22 @@ def update_status_order(request):
     except Exception as e:
         return JsonResponse({'result': str(e)})
     
+
+def get_list_test(request):
+    
+    my_test = []
+    tests = Test.objects.all()
+    with open('tests.csv', 'w') as f:
+        writer = csv.writer(f)
+        writer.writerow(['id','name', 'name_vie', 'code', 'parent_test'])
+        for test in tests:
+            obj = {
+                'id': test.id,
+                'name': test.name,
+                'name_vie': test.name_vie,
+                'code': test.code,
+                'parent_test': test.parent_test.code if test.parent_test else None
+            }
+            my_test.append(obj)
+            writer.writerow([test.id, test.name, test.name_vie, test.code, test.parent_test.code if test.parent_test else ''])
+        return JsonResponse({'result': my_test})
