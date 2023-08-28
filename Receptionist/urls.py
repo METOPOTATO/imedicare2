@@ -127,4 +127,5 @@ urlpatterns = [
     path('delete_patient_relative/', views.delete_patient_relative),
 
     path('patient_search2/',views.patient_search2,name='patient_search2'),
+    path('patient_search3/',views.patient_search3,name='patient_search3'),
 ]

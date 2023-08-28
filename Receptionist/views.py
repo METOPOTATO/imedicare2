@@ -5194,23 +5194,26 @@ def get_memo_detail(request):
             })
 
         patient_note = PatientNotes.objects.filter(patient_id=patient_id).first()
-        data_note = {
-            'memo_detail_company': patient_note.company_name,
-            'memo_detail_order': patient_note.order,
-            'memo_detail_insurance': patient_note.insurance,
-            'memo_detail_disease': patient_note.disease,
-        }
+        if patient_note:
+            data_note = {
+                'memo_detail_company': patient_note.company_name,
+                'memo_detail_order': patient_note.order,
+                'memo_detail_insurance': patient_note.insurance,
+                'memo_detail_disease': patient_note.disease,
+            }
 
         list_relative = PatientRelative.objects.filter(patient_id=patient_id)
+        print('=====',list_relative)
         for relative in list_relative:
             data_relative.append({
                 'relative_id': relative.id,
                 'person_name': relative.name,
-                'relative_name': relative.relative
+                'relative_name': relative.relative,
+                'person_id': relative.person_id
             })
         
-    except:
-        print('====')
+    except Exception as e:
+        print('**', e)
     return JsonResponse({
         'result':True,
         'datas': data,
@@ -5348,13 +5351,23 @@ def create_patient_relative(request):
     data = []
     try:
         patient_id = request.POST.get('patient_id')
-        person_name = request.POST.get('person_name')
+        print(patient_id)
+        person_id = int(request.POST.get('person_id'))
+        print(person_id)
         relative_name = request.POST.get('relative_name')
-
+        person = Patient.objects.get(id=person_id)
+        patient = Patient.objects.get(id=patient_id)
         PatientRelative.objects.create(
             patient_id=patient_id,
-            name=person_name,
-            relative=relative_name
+            name=person.name_kor,
+            relative=relative_name,
+            person_id=str(person_id),
+        )
+        PatientRelative.objects.create(
+            patient_id=int(person_id),
+            name=patient.name_kor,
+            relative=relative_name,
+            person_id=str(patient_id),
         )
 
         list_relative = PatientRelative.objects.filter(patient_id=patient_id)
@@ -5362,7 +5375,8 @@ def create_patient_relative(request):
             data.append({
                 'relative_id': relative.id,
                 'person_name': relative.name,
-                'relative_name': relative.relative
+                'relative_name': relative.relative,
+                'person_id': relative.person_id
             })
     except Exception as e:
         print(e)
@@ -5383,13 +5397,14 @@ def delete_patient_relative(request):
         patient_id = request.POST.get('patient_id')
 
         PatientRelative.objects.get(id=relative_id).delete()
-
+        
         list_relative = PatientRelative.objects.filter(patient_id=patient_id)
         for relative in list_relative:
             data.append({
                 'relative_id': relative.id,
                 'person_name': relative.name,
-                'relative_name': relative.relative
+                'relative_name': relative.relative,
+                'person_id': relative.person_id
             })
     except Exception as e:
         print(e)
@@ -5532,3 +5547,29 @@ def patient_search2(request):
     context = {'datas':datas}
     return JsonResponse(context)
 
+def patient_search3(request):
+    # category = request.POST.get('category')
+    string = request.POST.get('string')
+
+    # kwargs = {
+    #     '{0}__{1}'.format(category, 'icontains'): string,
+    #     }
+    patients = Patient.objects.filter(name_kor__icontains = string).order_by("-id")
+
+    datas=[]
+    for patient in patients:
+        data = {}
+        data.update({
+            'id':patient.id,
+            'chart':patient.get_chart_no(),
+            'name_kor':patient.name_kor,
+            'name_eng':patient.name_eng,
+            'gender':patient.gender,
+            'date_of_birth':patient.date_of_birth,
+            'phonenumber':patient.phone,
+            'email': patient.email
+            })
+        datas.append(data)
+
+    context = {'datas':datas}
+    return JsonResponse(context)

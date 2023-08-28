@@ -1891,6 +1891,7 @@ def patient_search(request):
             'gender':patient.gender,
             'date_of_birth':patient.date_of_birth,
             'phonenumber':patient.phone,
+            'email': patient.email
             })
         datas.append(data)
 
