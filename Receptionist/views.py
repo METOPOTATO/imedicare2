@@ -1494,7 +1494,7 @@ def waiting_selected(request):
     diagnosis = Diagnosis.objects.get(reception_id = reception.id)
 
     exam_set = ExamManager.objects.filter(diagnosis_id = diagnosis.id)
-    test_set = TestManager.objects.filter(diagnosis_id = diagnosis.id)
+    test_set = TestManager.objects.filter(diagnosis_id = diagnosis.id, test__parent_test = None)
     precedure_set = PrecedureManager.objects.filter(diagnosis_id = diagnosis.id)
     medicine_set = MedicineManager.objects.filter(diagnosis_id = diagnosis.id)
 
@@ -1873,6 +1873,11 @@ def reservation_events(request):
             data.update({
                 'backgroundColor':'rgb(70, 209, 61)',
                 'borderColor':'rgb(70, 209, 61)',
+                })
+        elif reservation.depart.id == 12:  #9	EYES
+            data.update({
+                'backgroundColor':'rgb(166, 55, 163)',
+                'borderColor':'rgb(166, 55, 163)',
                 })
         name = ''
         depart = ''
@@ -3634,7 +3639,7 @@ def document_excel(request, reception_id):
             
 
             exam_set = ExamManager.objects.filter(diagnosis_id = reception.diagnosis.id)
-            test_set = TestManager.objects.filter(diagnosis_id = reception.diagnosis.id)
+            test_set = TestManager.objects.filter(diagnosis_id = reception.diagnosis.id, test__parent_test = None)
             precedure_set = PrecedureManager.objects.filter(diagnosis_id = reception.diagnosis.id)
             medicine_set = MedicineManager.objects.filter(diagnosis_id = reception.diagnosis.id)
 
@@ -3855,7 +3860,7 @@ def document_excel(request, reception_id):
         if name == 'IM':
             if subclinical == True:            
 
-                test_set = TestManager.objects.filter(diagnosis_id = reception.diagnosis.id)
+                test_set = TestManager.objects.filter(diagnosis_id = reception.diagnosis.id, test__parent_test = None)
                 precedure_set = PrecedureManager.objects.filter(diagnosis_id = reception.diagnosis.id)
                 
                 current_row = 19
@@ -3907,7 +3912,7 @@ def document_excel(request, reception_id):
         else:
             if subclinical == True:            
 
-                test_set = TestManager.objects.filter(diagnosis_id = reception.diagnosis.id)
+                test_set = TestManager.objects.filter(diagnosis_id = reception.diagnosis.id, test__parent_test = None)
                 precedure_set = PrecedureManager.objects.filter(diagnosis_id = reception.diagnosis.id)
                 
                 current_row = 19
@@ -4067,7 +4072,7 @@ def document_excel(request, reception_id):
         if lab_report == True:            
 
             reception = Reception.objects.get(id = reception_id)
-            manager_set = reception.diagnosis.testmanager_set.all()
+            manager_set = reception.diagnosis.testmanager_set.filter(test__parent_test = None)
             diagnostic = reception.diagnosis.diagnosis
             
             no = 0
@@ -4174,7 +4179,7 @@ def document_medical_receipt(request,reception_id):
     reception = Reception.objects.get(id = reception_id)
 
     exam_set = ExamManager.objects.filter(diagnosis_id = reception.diagnosis.id)
-    test_set = TestManager.objects.filter(diagnosis_id = reception.diagnosis.id)
+    test_set = TestManager.objects.filter(diagnosis_id = reception.diagnosis.id, test__parent_test = None)
     precedure_set = PrecedureManager.objects.filter(diagnosis_id = reception.diagnosis.id)
     medicine_set = MedicineManager.objects.filter(diagnosis_id = reception.diagnosis.id)
 
@@ -4334,7 +4339,7 @@ def document_medical_receipt_old(request,reception_id,):
     reception = Reception.objects.get(id = reception_id)
 
     exam_set = ExamManager.objects.filter(diagnosis_id = reception.diagnosis.id)
-    test_set = TestManager.objects.filter(diagnosis_id = reception.diagnosis.id)
+    test_set = TestManager.objects.filter(diagnosis_id = reception.diagnosis.id, test__parent_test = None)
     precedure_set = PrecedureManager.objects.filter(diagnosis_id = reception.diagnosis.id)
     medicine_set = MedicineManager.objects.filter(diagnosis_id = reception.diagnosis.id)
     print(medicine_set)
@@ -4616,7 +4621,8 @@ def document_medicine_receipt(request,reception_id):
 def document_subclinical(request,reception_id):
     reception = Reception.objects.get(id = reception_id)
 
-    test_set = TestManager.objects.filter(diagnosis_id = reception.diagnosis.id)
+    # test_set = TestManager.objects.filter(diagnosis_id = reception.diagnosis.id)
+    test_set = TestManager.objects.filter(diagnosis_id = reception.diagnosis.id, test__parent_test = None)
     precedure_set = PrecedureManager.objects.filter(diagnosis_id = reception.diagnosis.id)
 
     

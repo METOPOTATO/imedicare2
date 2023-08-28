@@ -252,6 +252,7 @@ function get_test_list(obj,diagnosis_id) {
                 var str = "<tr  onclick='get_test_manage(" + response.datas[i]['id'] + ")'>" +
                     "<td>" + (parseInt(i) + 1) + "</td>" +
                     "<td>" + response.datas[i]['name_service'] + "</td>" +
+                    "<td>" + response.datas[i]['code'] + "</td>" +
                     "<td>" + response.datas[i]['date_ordered'] + "</td>";
 
                 str += "<td>";
@@ -271,7 +272,9 @@ function get_test_list(obj,diagnosis_id) {
                 }
                 str += "</td>";
                 str += "<td>" + response.datas[i]['result'] + "</td>" +
-                    "<td>" + response.datas[i]['date_expected'] + "</td></tr>";
+                    "<td>" + response.datas[i]['date_expected'] + "</td>" +
+                    "<td>" + response.datas[i]['parent_test'] + "</td>" +
+                    "</tr>";
 
                 
                 $('#laboratory_test_list_table').append(str);

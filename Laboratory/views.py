@@ -206,6 +206,8 @@ def get_test_list(request):
                 'progress':test.testmanage.progress,
                 'test_manage_id':test.testmanage.id,   
                 'list_interval':list_interval,
+                'parent_test': test.test.parent_test.code if test.test.parent_test else '',
+                'code': test.test.code
             })
 
     diagnosis = Diagnosis.objects.get(id = diagnosis_id)
