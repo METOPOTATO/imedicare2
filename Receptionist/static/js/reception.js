@@ -2370,7 +2370,7 @@ function show_memo_detail(){
     var patient_id = $("#patient_id").val();
     var depart_id = $("#depart_filter_reg").val();
     var doctor_id = $("#doctor_filter_reg").val();
-
+    $('#memo_patient_search > tbody ').empty();
     $.ajax({
         type: 'POST',
         url: '/receptionist/get_memo_detail/',
@@ -2416,7 +2416,7 @@ function show_memo_detail(){
                 // relation
                 $('#table_relative_memo > tbody ').empty();
                 for (var i = 0; i < response.data_relative.length; i++) {
-                        var str = "<tr>"
+                    var str = "<tr onclick='set_patient_data2(" + response.data_relative[i]['person_id'] + ")'>"
     
                         str += 
                             "<td hidden>" + response.data_relative[i]['relative_id'] + "</td>" + 
@@ -2624,7 +2624,7 @@ function update_patient_notes(){
 
 function create_patient_relation(){
     var patient_id = $("#patient_id").val();
-    var person_name = $("#person_name").val();
+    var person_name = $("#person_memo_id").val();
     var relative_name = $("#patient_relative_name").val();
 
     $.ajax({
@@ -2633,7 +2633,7 @@ function create_patient_relation(){
         data: {
             'csrfmiddlewaretoken': $('#csrf').val(),
             'patient_id': patient_id,
-            'person_name': person_name,
+            'person_id': person_name,
             'relative_name': relative_name,
         },
         dataType: 'Json',
@@ -2641,7 +2641,7 @@ function create_patient_relation(){
             if (response.result){
                 $('#table_relative_memo > tbody ').empty();
                 for (var i = 0; i < response.datas.length; i++) {
-                        var str = "<tr>"
+                    var str = "<tr onclick='set_patient_data2(" + response.datas[i]['person_id'] + ")'>"
     
                         str += 
                             "<td hidden>" + response.datas[i]['relative_id'] + "</td>" + 
@@ -2683,19 +2683,19 @@ function delete_patient_relation(id){
             if (response.result){
                 $('#table_relative_memo > tbody ').empty();
                 for (var i = 0; i < response.datas.length; i++) {
-                        var str = "<tr>"
-    
-                        str += 
-                            "<td hidden>" + response.datas[i]['relative_id'] + "</td>" + 
-                            "<td>" + (i + 1) + "</td>" +
-    
-                            "<td>" + response.datas[i]['person_name'] + "</td>" +
-    
-                            "<td>" + response.datas[i]['relative_name'] + "</td>" +
-                            
-                            "<td>" + 
-                            "<a class='btn btn-danger btn-xs' href='javascript: void (0);' onclick='delete_patient_relation(" + response.datas[i]['relative_id'] + ")' ><i class='fa fa-lg fa-trash'></i></a> " +
-                            "</td></tr>";
+                    var str = "<tr onclick='set_patient_data2(" + response.datas[i]['person_id'] + ")'>"
+
+                    str += 
+                        "<td hidden>" + response.datas[i]['relative_id'] + "</td>" + 
+                        "<td>" + (i + 1) + "</td>" +
+
+                        "<td>" + response.datas[i]['person_name'] + "</td>" +
+
+                        "<td>" + response.datas[i]['relative_name'] + "</td>" +
+                        
+                        "<td>" + 
+                        "<a class='btn btn-danger btn-xs' href='javascript: void (0);' onclick='delete_patient_relation(" + response.datas[i]['relative_id'] + ")' ><i class='fa fa-lg fa-trash'></i></a> " +
+                        "</td></tr>";
     
                     $('#table_relative_memo > tbody').append(str);
                 }
@@ -2716,3 +2716,127 @@ $('textarea').keyup(function(e){
         $(this).trigger("enterKey");
     }
 });
+
+
+function patient_search3(data) {
+    //window.location.href = 'reception/' + data;
+
+    var category = 'name';
+    var string = $('#person_name').val();
+ 
+
+    // console.log(string2)
+    $.ajax({
+        type: 'POST',
+        url: '/receptionist/patient_search3/',
+        data: {
+            'csrfmiddlewaretoken': $('#csrf').val(),
+            'category': category,
+            'string': string,
+        },
+        dataType: 'Json',
+        success: function (response) {
+            console.log('heheheheh')
+            $('#memo_patient_search > tbody ').empty();
+            if (response.datas.length == 0) {
+                $('#memo_patient_search').append("<tr><td colspan='8'>" + gettext('No Result !!') + "</td></tr>");
+            } else {
+                console.log('huhuhu')
+                var str = '';
+                for (var i = 0; i < response.datas.length; i++) {
+                    str += "<tr onclick='set_patient_search_relation(" + response.datas[i]['id'] + ")'>"
+                    str += 
+                        "<td>" + response.datas[i]['id'] + "</td>" +
+                        "<td>" + response.datas[i]['name_kor'] + "</td>" +
+                        "<td>" + response.datas[i]['phonenumber'] + "</td>" +
+                        "<td>" + response.datas[i]['email'] + "</td> </tr>" 
+                    
+                }
+                $('#memo_patient_search > tbody').append(str);
+            }
+        },
+        error: function (request, status, error) {
+            console.log("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
+
+        },
+    })
+
+}
+
+
+function set_patient_search_relation(data){
+    console.log('asdasdasd')
+    $('#person_memo_id').val(data)
+}
+
+function set_patient_data2(patient_id) {
+
+    $.ajax({
+        type: 'POST',
+        url: '/receptionist/set_patient_data/',
+        data: {
+            'csrfmiddlewaretoken': $('#csrf').val(),
+            'patient_id': patient_id,
+        },
+        dataType: 'Json',
+        success: function (response) {
+            $('#patient_id').val(response.id);
+            $('#patient_chart').val(response.chart);
+            $('#patient_name_kor').val(response.name_kor);
+            $('#patient_name_eng').val(response.name_eng);
+
+            if ($("#language").val() == 'vi') {
+                $('#patient_date_of_birth').val( moment(response.date_of_birth, 'YYYY-MM-DD').format('DD/MM/YYYY') );
+            } else {
+                $('#patient_date_of_birth').val(response.date_of_birth);
+            }
+            
+            $('#patient_address').val(response.address);
+            $('#patient_passport').val(response.passport);
+            $('#patient_phone').val(response.phone);
+            $("#patient_gender").val(response.gender);
+            
+            if(response.nationality == "Korea" || response.nationality == "Vietnam"){
+                $('#patient_nationality').val(response.nationality);
+               
+            }
+            else{
+                $('#patient_nationality_etc').val(response.nationality);
+                $('#patient_nationality').val(response.nationality);
+            }
+           
+            $('#patient_email').val(response.email);
+            // $('#reception_chief_complaint}').val(response.chief_complaint);
+            $('#memo').val(response.memo);
+            $("#patient_mark").val(response.marking);
+            $("#patient_funnel").val(response.funnel);
+            $("#patient_funnel_etc").val(response.funnel_etc);
+            
+            $('#history_past').val(response.history_past);
+            $('#history_family').val(response.history_family);
+
+            $('input:radio[name=gender]').filter('[value=' + response.gender + ']').prop('checked', true);  
+
+            //tax invoice
+            $('#tax_invoice_number').val(response.tax_invoice_number);
+            $('#tax_invoice_company_name').val(response.tax_invoice_company_name);
+            $('#tax_invoice_address').val(response.tax_invoice_address);
+
+            //prop('checked', false)
+            $('#need_invoice').prop('checked', false)
+            $('#need_insurance').prop('checked', false)
+            if (response.invoice) {
+                $('#need_invoice').prop('checked', true)
+            }
+            if (response.insurance) {
+                $('#need_insurance').prop('checked', true)
+            }
+        },
+        error: function (request, status, error) {
+            console.log("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
+
+        },
+    })
+    $('#memo_detail_modal').modal('hide');
+    new_patient_option(true);
+}

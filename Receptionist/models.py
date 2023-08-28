@@ -968,6 +968,7 @@ class PatientRelative(models.Model):
     )
     name = models.TextField(default='',null=True)
     relative = models.TextField(default='',null=True)
+    person_id = models.TextField(default='', null=True)
 
 class PatientNotes(models.Model):
     patient = models.ForeignKey(
