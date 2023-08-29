@@ -1300,7 +1300,9 @@ def diagnosis_save(request):
     for key in exam_dict:
         ExamManager.objects.get(pk = key).delete()
     for key in test_dict:
-        TestManager.objects.get(pk = key).delete()
+        tm = TestManager.objects.get(pk = key)
+        if tm.status != 1:
+            tm.delete()
     for key in precedure_dict:
         tmp = PrecedureManager.objects.get(pk = key)
         #패키지 삭제 시
