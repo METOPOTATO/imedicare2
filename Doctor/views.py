@@ -1443,26 +1443,34 @@ def diagnosis_save(request):
     
     # call api list waiting
     patient = reception.patient
-    quantity = len(test_set)
-    data = { 
-        "ReceptionCode": str(patient.id),
-        "PatientName": patient.get_name_kor_eng(),
-        "Age": patient.get_age(), 
-        "RequestDate": datetime.date.today().__str__(), 
-        "Sex": "F", 
-        # "SerialNumber": 1, 
-        # "Priority": False, 
-        "Quantity": quantity, 
-        "ReceptionDepartment": reception.depart.name
-        }
-    
-    try:
-        print('data=====', data)
-        headers = {'Content-Type': 'application/json'} 
-        json_data = json.dumps(data)
-        result = requests.post('http://118.70.81.222:7003/api/HISIntergrate/PatientSequence', data = json_data, headers=headers )
-    except Exception as e:
-        print(e)
+    # quantity = len(test_set)
+    # print('====>',test_quality)
+    test_set = TestManager.objects.filter(diagnosis_id = diagnosis_result.id)
+    count = 0
+    for test in test_set:
+        if test.status == 0:
+            count += 1
+    test_quality = len(test_set)
+    if count > 0:
+        data = { 
+            "ReceptionCode": str(patient.id),
+            "PatientName": patient.get_name_kor_eng(),
+            "Age": patient.get_age(), 
+            "RequestDate": datetime.date.today().__str__(), 
+            "Sex": "F", 
+            # "SerialNumber": 1, 
+            # "Priority": False, 
+            "Quantity": test_quality, 
+            "ReceptionDepartment": reception.depart.name
+            }
+        
+        try:
+            print('data=====', data)
+            headers = {'Content-Type': 'application/json'} 
+            json_data = json.dumps(data)
+            result = requests.post('http://123.25.21.22:7001/api/HISIntergrate/PatientSequence', data = json_data, headers=headers )
+        except Exception as e:
+            print(e)
     
     return JsonResponse(context)
 
