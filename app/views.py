@@ -968,17 +968,21 @@ def get_order_result_by_patient(request):
 
         datas=[]
         for test in test_query:
-            if test.status != 1 :
+            if test.status == 0 :
                 sub_tests = Test.objects.filter(parent_test__code = test.test.code)
                 list_subtests = []
                 for sub_test in sub_tests:
+                    # if language == 'ko':
+                    #     name_service = sub_test.name
+                    # else:
+                    #     name_service = sub_test.name_vie
                     list_subtests.append({
                         "KetQua": None,
                         "MaDV": sub_test.code,
                         "MaDVCha": test.test.code,
                         "MaLoaiDV": 'XN',
                         "NormalRange": '',
-                        "TenDichVu": sub_test.name,
+                        "TenDichVu": sub_test.name_vie,
                         "TenLoaiDV": "Xét Nghiệm"
                     })
                 datas.append({
@@ -1047,19 +1051,15 @@ def update_result(request):
         # sid = data['SampleId']
 
         diagnosis_id = data['OrderId']
-
         list_test_results = data['ListTestResult']
-
-
         
         # if len(test_query) == 0:
         #     return JsonResponse({'result': 'no data'})
         test_query = TestManager.objects.select_related('diagnosis').filter(diagnosis_id = diagnosis_id)
         for test in list_test_results:
 
-            
             parent_test_query = test_query.select_related('testmanage').filter(testmanage__id=test['OrderDetailID']).first()
-            parent_test_query.testmanage.result = test['KetQua']
+            parent_test_query.testmanage.result = test['KetQua'] if test['KetQua'] else ''
             parent_test_query.testmanage.save()
 
             for sub_test in test['ListSubTestResult']:
