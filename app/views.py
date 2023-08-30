@@ -1010,13 +1010,13 @@ def get_order_result_by_patient(request):
             "GioChiDinh": diagnosis.reception.recorded_date,
             "GioiTinh": g,
             "HoTen": diagnosis.reception.patient.name_kor + ' / ' + diagnosis.reception.patient.name_eng,
-            "LocationName": "Xét nghiệm",
+            "LocationName": diagnosis.reception.depart,
             "MaBSChiDinh": diagnosis.reception.doctor.id,
-            "MaDoiTuong": "None",
-            "MaKhoaPhong": "XN",
+            "MaDoiTuong": 0,
+            "MaKhoaPhong": diagnosis.reception.depart,
             "MaYTe": diagnosis_id,
             "DateOfBirth": diagnosis.reception.patient.date_of_birth.strftime('%Y-%m-%d'),
-            "ObjectName": None,
+            "ObjectName": 'Normal',
             "OrderId": diagnosis_id,
             "PatientId": diagnosis.reception.patient.id,
             "SampleId": None,
@@ -1105,22 +1105,3 @@ def update_status_order(request):
     except Exception as e:
         return JsonResponse({'result': str(e)})
     
-
-def get_list_test(request):
-    
-    my_test = []
-    tests = Test.objects.all()
-    with open('tests.csv', 'w') as f:
-        writer = csv.writer(f)
-        writer.writerow(['id','name', 'name_vie', 'code', 'parent_test'])
-        for test in tests:
-            obj = {
-                'id': test.id,
-                'name': test.name,
-                'name_vie': test.name_vie,
-                'code': test.code,
-                'parent_test': test.parent_test.code if test.parent_test else None
-            }
-            my_test.append(obj)
-            writer.writerow([test.id, test.name, test.name_vie, test.code, test.parent_test.code if test.parent_test else ''])
-        return JsonResponse({'result': my_test})
