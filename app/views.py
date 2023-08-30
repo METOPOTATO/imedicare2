@@ -1060,19 +1060,19 @@ def update_result(request):
 
             parent_test_query = test_query.select_related('testmanage').filter(testmanage__id=test['OrderDetailID']).first()
             if parent_test_query:
-                parent_test_query.testmanage.result = test['KetQua']
+                parent_test_query.testmanage.result = test['KetQua'] if test['KetQua'] else ''
                 parent_test_query.testmanage.save()
             else:
                 print('*',parent_test_query)
                 print('*',test['OrderDetailID'])
-
-            for sub_test in test['ListSubTestResult']:
-                sub_test_query = test_query.select_related('testmanage').filter(test__code = sub_test['MaDV']).first()
-                if sub_test_query:
-                    sub_test_query.testmanage.result = sub_test['KetQua']
-                    sub_test_query.testmanage.save()
-                else:
-                    print('#',sub_test_query)
+            if test['ListSubTestResult']:
+                for sub_test in test['ListSubTestResult']:
+                    sub_test_query = test_query.select_related('testmanage').filter(test__code = sub_test['MaDV']).first()
+                    if sub_test_query:
+                        sub_test_query.testmanage.result = sub_test['KetQua']
+                        sub_test_query.testmanage.save()
+                    else:
+                        print('#',sub_test_query)
  
         # for test in list_test_results:
         #     for test_q in test_query:
