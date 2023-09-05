@@ -245,11 +245,12 @@ function waiting_selected(diagnosis_id) {
             $('#selected_diagnosis').val(diagnosis_id);
             $('#selected_diagnosis_status').val(response.status);
             $('#pharmacy_contents_table > tbody ').empty();
+            var stt = 1;
             for (var i in response.datas) {
-                var str = "<tr><td>" + response.datas[i]['code'] + "</td>" +
+                var str = "<tr><td>" + stt + "</td>" +
                     "<td>" + response.datas[i]['name'] + "</td>" +
-                    "<td>" + response.datas[i]['depart'] + "</td>" + 
-                    "<td>" + response.datas[i]['doctor'] + "</td>" + 
+                    // "<td>" + response.datas[i]['depart'] + "</td>" + 
+                    // "<td>" + response.datas[i]['doctor'] + "</td>" + 
                     "<td>" + response.datas[i]['unit'] + "</td>" +
                     "<td>" + response.datas[i]['amount'] + "</td>" + 
                     "<td>" + response.datas[i]['days'] + "</td>" + 
@@ -258,6 +259,7 @@ function waiting_selected(diagnosis_id) {
                     "<td>" + "-" + "</td></tr>";
 
                 $('#pharmacy_contents_table').append(str);
+                stt += 1;
             }
             $('#need_invoice').prop('checked', response.need_invoice);
             $('#need_insurance').prop('checked', response.need_insurance);
