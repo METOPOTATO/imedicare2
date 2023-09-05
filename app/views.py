@@ -954,7 +954,7 @@ def get_order_result_by_patient(request):
         patient_code = request.GET.get('examinationCode')
         date_request = request.GET.get('dateRequest')
 
-        reception = Reception.objects.filter( patient_id = patient_code, recorded_date__year=date_request[0:4], recorded_date__month=date_request[4:6], recorded_date__day=date_request[6:]).latest('id')
+        reception = Reception.objects.filter( patient_id = patient_code, recorded_date__year=date_request[0:4], recorded_date__month=date_request[4:6], recorded_date__day=date_request[6:], depart__name='IM')[0]
         if not reception:
             return JsonResponse({'result': 'no result'}) 
         
@@ -1010,10 +1010,10 @@ def get_order_result_by_patient(request):
             "GioChiDinh": diagnosis.reception.recorded_date,
             "GioiTinh": g,
             "HoTen": diagnosis.reception.patient.name_kor + ' / ' + diagnosis.reception.patient.name_eng,
-            "LocationName": diagnosis.reception.depart,
+            "LocationName": diagnosis.reception.depart.name,
             "MaBSChiDinh": diagnosis.reception.doctor.id,
             "MaDoiTuong": 0,
-            "MaKhoaPhong": diagnosis.reception.depart,
+            "MaKhoaPhong": diagnosis.reception.depart.id,
             "MaYTe": diagnosis_id,
             "DateOfBirth": diagnosis.reception.patient.date_of_birth.strftime('%Y-%m-%d'),
             "ObjectName": 'Normal',
@@ -1021,7 +1021,12 @@ def get_order_result_by_patient(request):
             "PatientId": diagnosis.reception.patient.id,
             "SampleId": None,
             "Sequence": None,
-            "ListTestResult": datas
+            "Nationality": diagnosis.reception.patient.nationality,
+            "ListTestResult": datas,
+            "PhoneNumber": diagnosis.reception.patient.phone,
+            "PassPort": diagnosis.reception.patient.passport,
+            "BHYT": None,
+
 
         }
         return JsonResponse({
@@ -1105,3 +1110,32 @@ def update_status_order(request):
     except Exception as e:
         return JsonResponse({'result': str(e)})
     
+
+def get_list_test(request):
+    
+    my_test = []
+    tests = Test.objects.all()
+    doctors = Doctor.objects.all()
+    ds = Depart.objects.all()
+    with open('tests.csv', 'w') as f:
+        writer = csv.writer(f)
+        writer.writerow(['name', 'depart'])
+        for d in ds:
+            obj = {
+
+                'depart_name': d.name,
+                'depart_id': d.id
+            }
+            my_test.append(obj)
+            # writer.writerow([doctor.name_eng + doctor.name_kor, doctor.depart.name])
+        # for test in tests:
+        #     obj = {
+        #         'id': test.id,
+        #         'name': test.name,
+        #         'name_vie': test.name_vie,
+        #         'code': test.code,
+        #         'parent_test': test.parent_test.code if test.parent_test else None
+        #     }
+        #     my_test.append(obj)
+        #     writer.writerow([test.id, test.name, test.name_vie, test.code, test.parent_test.code if test.parent_test else ''])
+        return JsonResponse({'result': my_test})
