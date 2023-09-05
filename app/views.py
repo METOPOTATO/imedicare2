@@ -953,8 +953,12 @@ def get_order_result_by_patient(request):
     try:
         patient_code = request.GET.get('examinationCode')
         date_request = request.GET.get('dateRequest')
+        depart_name = request.GET.get('ReceptionDepartment', '')
 
-        reception = Reception.objects.filter( patient_id = patient_code, recorded_date__year=date_request[0:4], recorded_date__month=date_request[4:6], recorded_date__day=date_request[6:], depart__name='IM')[0]
+        if depart_name != '':
+            reception = Reception.objects.filter( patient_id = patient_code, recorded_date__year=date_request[0:4], recorded_date__month=date_request[4:6], recorded_date__day=date_request[6:], depart__name=depart_name).first()
+        else:
+            reception = Reception.objects.filter( patient_id = patient_code, recorded_date__year=date_request[0:4], recorded_date__month=date_request[4:6], recorded_date__day=date_request[6:]).first()
         if not reception:
             return JsonResponse({'result': 'no result'}) 
         
@@ -1025,7 +1029,7 @@ def get_order_result_by_patient(request):
             "ListTestResult": datas,
             "PhoneNumber": diagnosis.reception.patient.phone,
             "PassPort": diagnosis.reception.patient.passport,
-            "BHYT": None,
+            "BHYT": '',
 
 
         }

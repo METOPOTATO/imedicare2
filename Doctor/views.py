@@ -1177,8 +1177,13 @@ def diagnosis_save(request):
 
         elif data['type'] == 'Test':
             if data['id']=='':
-                result = TestManager(diagnosis_id = diagnosis_result.id)
+                result = test_set.filter(test__code = data['code']).first()
+                if result:
+                    test_dict.pop(result.id)
+                else:
+                    result = TestManager(diagnosis_id = diagnosis_result.id)
             else:
+                print('==== already exist')
                 result = test_set.get(pk = data['id'])
                 test_dict.pop(int(data['id']))
 

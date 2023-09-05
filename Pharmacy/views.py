@@ -19,6 +19,7 @@ import operator
 import functools
 import shutil
 from openpyxl import Workbook,load_workbook
+from django.db.models.functions import Lower
 
 @login_required
 def index(request):
@@ -43,7 +44,7 @@ def waiting_selected(request):
     diagnosis_id = request.POST.get('diagnosis_id')
 
     diagnosis = Diagnosis.objects.get(pk = diagnosis_id)
-    medicine_set = MedicineManager.objects.filter(diagnosis_id = diagnosis_id)
+    medicine_set = MedicineManager.objects.filter(diagnosis_id = diagnosis_id).order_by(Lower('medicine__unit'))
 
     try:
         medicine_manage = MedicineManage.objects.get(diagnosis_id = diagnosis_id)
