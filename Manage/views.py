@@ -2936,7 +2936,7 @@ def medicine_statistics_excel(request):
             ws['F' + str(current_row)] = data.doctor.name_eng + '/' + data.doctor.name_kor
             ws['G' + str(current_row)] = medicine.medicine_class.name
             ws['H' + str(current_row)] = medicine.code
-            ws['I' + str(current_row)] = medicine.name + '/' + medicine.name_vie
+            ws['I' + str(current_row)] = medicine.name 
             ws['J' + str(current_row)] = medicine.unit
             ws['K' + str(current_row)] = medicine_log.amount * medicine_log.days
             ws['L' + str(current_row)] = medicine.get_price(data.recorded_date)
