@@ -58,6 +58,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'storages', # azure storage
+    'qr_code',
     
 
     #'crispy_forms',
