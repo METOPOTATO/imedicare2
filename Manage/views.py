@@ -390,7 +390,7 @@ def search_payment(request):
                     })
 
             ##검사
-            tmp_test_set = reception.diagnosis.testmanager_set.all()
+            tmp_test_set = reception.diagnosis.testmanager_set.filter(test__parent_test = None)
             for tmp_test in tmp_test_set:
                 list_lab.append({
                     'checked':tmp_test.is_checked_discount,

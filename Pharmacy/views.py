@@ -899,7 +899,7 @@ def save_database_disposal_medicine(request):
 def upload_file(request):
 
     # instance = Patient.objects.filter(pk=patient_id).first()
-    file_path = 'static/pharm_data.xlsx'
+    file_path = '/home/imedicare/Cofee/Pharmacy/static/pharm_data1.xlsx'
     try:
         file = request.FILES.getlist('file')[0]
         
@@ -907,24 +907,24 @@ def upload_file(request):
             with open(file_path, 'wb+') as destination:
                 for chunk in file.chunks():
                     destination.write(chunk)
-            wb = load_workbook('static/pharm_data.xlsx') #Workbook()
+            wb = load_workbook(file_path) #Workbook()
             ws = wb.active# grab the active worksheet
             for i in range(6,2000):
                 code = ws[f'B{i}']
                 if code.value != '' and code.value != None:
-
+                    # print('===',code.value)
                     medicine = Medicine.objects.filter(code = code.value).first()
-                    if code.value == 'M0235':
+                    if code.value == 'M0122':
                         print(code.value)
                         print(medicine)
                         print(int(ws[f'K{i}'].value))
                     if medicine:
-                        
+                        # print(medicine.name)
                         medicine.inventory_count = int(ws[f'K{i}'].value)
                         medicine.save()
                     
     except Exception as e:
-        print(e)
-        return JsonResponse({'url':'error'})
+        print('====>>>>',e)
+        return JsonResponse({'url':str(e)})
         
     return JsonResponse({'url':'ok'})

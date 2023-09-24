@@ -3881,7 +3881,7 @@ def document_excel(request, reception_id):
 
                 no = 1
                 no_other = 1
-                current_row = 74
+                current_row = 93
                 for precedure in precedure_set:
                     if precedure.precedure.precedure_class_id == 8:
                         ws['A' + str(current_row)] = no_other
@@ -4107,7 +4107,7 @@ def document_excel(request, reception_id):
                 writing_number +=1 
                 current_row +=1
 
-            ws['F' + str(40)] = 'Ngày/Date: ' + datetime.datetime.now().strftime('%d/%m/%Y')  
+            ws['F' + str(60)] = 'Ngày/Date: ' + datetime.datetime.now().strftime('%d/%m/%Y')  
 
         reception = Reception.objects.get(id = reception_id)
         ws = wb.get_sheet_by_name('Vaccine_Certification')# grab the active worksheet
