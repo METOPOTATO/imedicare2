@@ -28,7 +28,7 @@ SECRET_KEY = '80c83142-b549-418a-8845-4192fbb4e0b2'
 # SECURITY WARNING: don't run with debug turned on in production!
 #DEBUG = True
 DEBUG = True#bool( os.environ.get('DJANGO_DEBUG', True) )
-ALLOWED_HOSTS = ['*', '123.24.143.150']
+ALLOWED_HOSTS = ['*']
 
 # Application references
 # https://docs.djangoproject.com/en/2.1/ref/settings/#std:setting-INSTALLED_APPS
@@ -58,7 +58,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'storages', # azure storage
-    
+    'qr_code'
 
     #'crispy_forms',
     #'ckeditor',

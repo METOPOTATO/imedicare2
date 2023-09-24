@@ -1468,14 +1468,16 @@ def diagnosis_save(request):
             # "SerialNumber": 1, 
             # "Priority": False, 
             "Quantity": test_quality, 
-            "ReceptionDepartment": reception.depart.name
+            "ReceptionDepartment": str(reception.depart.id),
+            "email": patient.email,
             }
         
         try:
             print('data=====', data)
             headers = {'Content-Type': 'application/json'} 
             json_data = json.dumps(data)
-            result = requests.post('http://123.25.21.22:7001/api/HISIntergrate/PatientSequence', data = json_data, headers=headers )
+            result = requests.post('http://192.168.100.246:8983/api/HISIntergrate/PatientSequence', data = json_data, headers=headers )
+            print('result',result)
         except Exception as e:
             print(e)
     
