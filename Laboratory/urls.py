@@ -15,4 +15,5 @@ urlpatterns = [
 
 
     path('checklist',views.checklist,name='checklist'),
+    path('laboratory_save_note/',views.laboratory_save_note,name='checklist'),
 ]

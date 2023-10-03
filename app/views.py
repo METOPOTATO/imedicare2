@@ -1052,24 +1052,10 @@ def update_result(request):
 
         data = json.loads(request.body)
         data = data['result']
-        # address = data['Address']
-        # diagnosis_result = data['ChanDoan']
-        # doctor_name = data['DoctorName']
-        # time_ = data['GioChiDinh']
-        # gender = data['GioiTinh']
-        # name = data['HoTen']
-        # location_name = data['LocationName']
-        # doctor_id = data['MaBSChiDinh']
-        # dob = data['NgaySinh']
-        # patient_id = data['PatientId']
-        # reception_department = data['ReceptionLocationName']
-        # sid = data['SampleId']
 
         diagnosis_id = data['OrderId']
         list_test_results = data['ListTestResult']
         
-        # if len(test_query) == 0:
-        #     return JsonResponse({'result': 'no data'})
         test_query = TestManager.objects.select_related('diagnosis').filter(diagnosis_id = diagnosis_id)
         for test in list_test_results:
 
@@ -1084,7 +1070,7 @@ def update_result(request):
                 for sub_test in test['ListSubTestResult']:
                     sub_test_query = test_query.select_related('testmanage').filter(test__code = sub_test['MaDV']).first()
                     if sub_test_query:
-                        sub_test_query.testmanage.result = sub_test['KetQua']
+                        sub_test_query.testmanage.result = sub_test['KetQua'] if sub_test['KetQua'] else ''
                         sub_test_query.testmanage.save()
                     else:
                         print('#',sub_test_query)
@@ -1122,35 +1108,38 @@ def update_status_order(request):
     
 
 def get_list_test(request):
-    patient_code = request.GET.get('examinationCode')
-    date_request = request.GET.get('dateRequest')
-    depart_id = request.GET.get('ReceptionDepartment', 0)
-    depart_id = int(depart_id)
-    if depart_id != 0:
-        reception = Reception.objects.filter( patient_id = patient_code, recorded_date__year=date_request[0:4], recorded_date__month=date_request[4:6], recorded_date__day=date_request[6:], depart_id=depart_id).first()
-    else:
-        reception = Reception.objects.filter( patient_id = patient_code, recorded_date__year=date_request[0:4], recorded_date__month=date_request[4:6], recorded_date__day=date_request[6:]).first()
-    if not reception:
-        return JsonResponse({'result': 'no result'}) 
+    ds = Depart.objects.all()
+    for d in ds:
+        print(d.id, d.name)
+    # patient_code = request.GET.get('examinationCode')
+    # date_request = request.GET.get('dateRequest')
+    # depart_id = request.GET.get('ReceptionDepartment', 0)
+    # depart_id = int(depart_id)
+    # if depart_id != 0:
+    #     reception = Reception.objects.filter( patient_id = patient_code, recorded_date__year=date_request[0:4], recorded_date__month=date_request[4:6], recorded_date__day=date_request[6:], depart_id=depart_id).first()
+    # else:
+    #     reception = Reception.objects.filter( patient_id = patient_code, recorded_date__year=date_request[0:4], recorded_date__month=date_request[4:6], recorded_date__day=date_request[6:]).first()
+    # if not reception:
+    #     return JsonResponse({'result': 'no result'}) 
     
-    diagnosis = Diagnosis.objects.filter(reception_id = reception.id).first()
+    # diagnosis = Diagnosis.objects.filter(reception_id = reception.id).first()
 
-    test_set = TestManager.objects.filter(diagnosis_id = diagnosis.id)
-    test_quality = len(test_set)
-    data = { 
-    "ReceptionCode": str(diagnosis.reception.patient.id),
-    "PatientName": diagnosis.reception.patient.get_name_kor_eng(),
-    "Age": diagnosis.reception.patient.get_age(), 
-    "RequestDate": datetime.date.today().__str__(), 
-    "Sex": "F", 
-    # "SerialNumber": 1, 
-    # "Priority": False, 
-    "Quantity": test_quality, 
-    "ReceptionDepartment": str(reception.depart.id),
-    "email": diagnosis.reception.patient.email,
-    }
+    # test_set = TestManager.objects.filter(diagnosis_id = diagnosis.id)
+    # test_quality = len(test_set)
+    # data = { 
+    # "ReceptionCode": str(diagnosis.reception.patient.id),
+    # "PatientName": diagnosis.reception.patient.get_name_kor_eng(),
+    # "Age": diagnosis.reception.patient.get_age(), 
+    # "RequestDate": datetime.date.today().__str__(), 
+    # "Sex": "F", 
+    # # "SerialNumber": 1, 
+    # # "Priority": False, 
+    # "Quantity": test_quality, 
+    # "ReceptionDepartment": str(reception.depart.id),
+    # "email": diagnosis.reception.patient.email,
+    # }
 
-    return JsonResponse(data)
+    # return JsonResponse(data)
 
     # my_test = []
     # tests = Test.objects.all()

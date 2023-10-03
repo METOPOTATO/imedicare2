@@ -182,7 +182,7 @@ def get_test_list(request):
     diagnosis_id = request.POST.get('diagnosis_id')
 
 
-    test_query = TestManager.objects.select_related('testmanage').select_related('diagnosis').filter(diagnosis_id = diagnosis_id)
+    test_query = TestManager.objects.select_related('testmanage').select_related('diagnosis').filter(diagnosis_id = diagnosis_id, test__parent_test=None)
     datas=[]
     for test in test_query:
         intervals = TestReferenceInterval.objects.filter(use_yn='Y',test_id = test.test.id).values('minimum','maximum','unit','unit_vie','name','name_vie')
@@ -207,12 +207,40 @@ def get_test_list(request):
                 'test_manage_id':test.testmanage.id,   
                 'list_interval':list_interval,
                 'parent_test': test.test.parent_test.code if test.test.parent_test else '',
-                'code': test.test.code
+                'code': test.test.code,
+                'sub': ''
+            })
+        
+        subtests = TestManager.objects.select_related('testmanage').select_related('diagnosis').filter(diagnosis_id = diagnosis_id, test__parent_test=test.test)
+        
+        for subtest in subtests:
+            sub_intervals = TestReferenceInterval.objects.filter(use_yn='Y',test_id = subtest.test.id).values('minimum','maximum','unit','unit_vie','name','name_vie')
+            list_sub_interval = []
+            for interval in sub_intervals:
+                list_sub_interval.append({
+                    'minimum':interval['minimum'],
+                    'maximum':interval['maximum'],
+                    'unit':interval['unit_vie'] if request.session[translation.LANGUAGE_SESSION_KEY] == 'vi' else interval['unit'],
+                    'name':interval['name_vie'] if request.session[translation.LANGUAGE_SESSION_KEY] == 'vi' else interval['name'],
+                    })
+            datas.append({
+                'id':subtest.testmanage.id,
+                'sub': subtest.testmanage.name_service,
+                'name_service':'',
+                'date_ordered':'' if subtest.testmanage.date_ordered is None else subtest.testmanage.date_ordered.strftime('%Y-%m-%d'),
+                'date_examination':'' if subtest.testmanage.date_examination is None else subtest.testmanage.date_examination.strftime('%Y-%m-%d') ,
+                'date_expected':'' if subtest.testmanage.date_expected is None else subtest.testmanage.date_expected.strftime('%Y-%m-%d') ,
+                'result':'' if subtest.testmanage.result is None or '' else subtest.testmanage.result,
+                'progress':subtest.testmanage.progress,
+                'test_manage_id':subtest.testmanage.id,   
+                'list_interval':list_sub_interval,
+                'parent_test': test.test.code if test.test else '',
+                'code': subtest.test.code
             })
 
     diagnosis = Diagnosis.objects.get(id = diagnosis_id)
      
-      
+    print(diagnosis.reception.patient)
     return JsonResponse({
         'datas':datas,
 
@@ -225,6 +253,9 @@ def get_test_list(request):
 
         'need_invoice':diagnosis.reception.need_invoice,
         'need_insurance':diagnosis.reception.need_insurance,
+
+        'doctor_note': diagnosis.doctor_note,
+        'rec_note': diagnosis.rec_note,
 
         })
 
@@ -239,3 +270,20 @@ def checklist(request):
                 
             },
         )
+
+def laboratory_save_note(request):
+    
+    diagnosis_id = request.POST.get('diagnosis')
+    if diagnosis_id:
+        lab_doctor_note = request.POST.get('lab_doctor_note')
+        lab_rec_note = request.POST.get('lab_rec_note')
+
+        diagnosis = Diagnosis.objects.get(id = diagnosis_id)
+        diagnosis.doctor_note = lab_doctor_note
+        diagnosis.rec_note = lab_rec_note
+        diagnosis.save()
+
+        context = {'result':True}
+    else:
+        context = {'result':False}
+    return JsonResponse(context)

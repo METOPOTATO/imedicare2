@@ -235,6 +235,8 @@ function waiting_list(Today = false, alarm = false) {
 
 function get_test_list(obj,diagnosis_id) {
 
+    $('#current_diagnosis').val(diagnosis_id)
+
     //$("#estimate_list_table tr").removeClass('danger');
     //$(obj).addClass('danger');
 
@@ -252,6 +254,7 @@ function get_test_list(obj,diagnosis_id) {
                 var str = "<tr  onclick='get_test_manage(" + response.datas[i]['id'] + ")'>" +
                     "<td>" + (parseInt(i) + 1) + "</td>" +
                     "<td>" + response.datas[i]['name_service'] + "</td>" +
+                    "<td>" + response.datas[i]['sub'] + "</td>" +
                     "<td>" + response.datas[i]['code'] + "</td>" +
                     "<td>" + response.datas[i]['date_ordered'] + "</td>";
 
@@ -273,7 +276,7 @@ function get_test_list(obj,diagnosis_id) {
                 str += "</td>";
                 str += "<td>" + response.datas[i]['result'] + "</td>" +
                     "<td>" + response.datas[i]['date_expected'] + "</td>" +
-                    "<td>" + response.datas[i]['parent_test'] + "</td>" +
+                    // "<td>" + response.datas[i]['parent_test'] + "</td>" +
                     "</tr>";
 
                 
@@ -290,6 +293,9 @@ function get_test_list(obj,diagnosis_id) {
 
             $('#need_invoice').prop('checked', response.need_invoice);
             $('#need_insurance').prop('checked', response.need_insurance);
+
+            $("#lab_doctor_note").val(response.doctor_note);
+            $("#lab_rec_note").val(response.rec_note);
 
             console.log(response.need_invoice)
             console.log(response.need_insurance)
@@ -328,4 +334,25 @@ function worker_on(is_run) {
             w = undefined;
         }
     }
+}
+
+function laboratory_save_note() {
+
+    $.ajax({
+        type: 'POST',
+        url: '/laboratory/laboratory_save_note/',
+        data: {
+            'csrfmiddlewaretoken': $('#csrf').val(),
+            'diagnosis': $('#current_diagnosis').val(),
+            'lab_doctor_note' : $('#lab_doctor_note').val(),
+            'lab_rec_note' : $('#lab_rec_note').val(),
+        },
+        dataType: 'Json',
+        success: function (response) {
+            alert(gettext("Saved."));
+        },
+        error: function (request, status, error) {
+            console.log("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
+        },
+    })
 }

@@ -301,6 +301,14 @@ class Diagnosis(models.Model):
         default='',
         )
 
+    doctor_note = models.TextField(
+        null=True,
+        default=''
+    )
+    rec_note = models.TextField(
+        null=True,
+        default=''
+    )
 
 
 
