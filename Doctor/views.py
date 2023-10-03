@@ -1110,14 +1110,14 @@ def diagnosis_save(request):
     #payment begin check
     try:
         tmp_payment = PaymentRecord.objects.filter(payment__reception_id=reception_id,status='paid').count()
-        
-        if tmp_payment != 0:
-            res = False
-            context = { 
-                'result':res,
-                'msg':_('Failed \nalready settled or is settled.')
-                }
-            return JsonResponse(context)
+        if reception.depart.id != 12:
+            if tmp_payment != 0:
+                res = False
+                context = { 
+                    'result':res,
+                    'msg':_('Failed \nalready settled or is settled.')
+                    }
+                return JsonResponse(context)
 
     except Payment.DoesNotExist:
         pass

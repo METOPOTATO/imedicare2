@@ -174,12 +174,13 @@
                         <tr>
                             <th>{{ _('No') }}</th>
                             <th>{{ _('Request') }}</th>
+                            <th>{{ _('Sub Test') }}</th>
                             <th>{{ _('Code') }}</th>
                             <th>{{ _('Ordered Date') }}</th>
-                            <th>{{ _('Reference Interval') }}</th>
+                            <th style="width: 170px;">{{ _('Reference Interval') }}</th>
                             <th>{{ _('Result') }}</th>
                             <th>{{ _('Expected Date') }}</th>
-                            <th style="width: 100px;">{{ _('Parent Test') }}</th>
+                            <!-- <th style="width: 100px;">{{ _('Parent Test') }}</th> -->
                         </tr>
                     </thead>
                     <tbody>
@@ -270,6 +271,35 @@
                         
                     </td>
                 </tr>
+                <tr>
+                    <td>
+                        <hr>
+                        <hr>
+                        <span class="btn btn-danger lab_table_title_span" >{{ _('Notes') }}</span>
+                        <input type="hidden" name="" id="current_diagnosis">
+                        <input type="button" class="btn btn-primary" value="{{ _('Save Note') }}" onclick="laboratory_save_note()" style="float:right; margin-right:5px;"/>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        
+                        <div class="input-group lab_control_input-group">
+                            <span class="input-group-addon lab_manage_title" id="basic-addon1">{{ _('Doctor Note') }}<span id=""></span></span>
+                            <textarea rows="7" type="text" class="form-control" aria-describedby="sizing-addon1" id="lab_doctor_note" autocomplete="off"></textarea>
+                        </div>
+                        
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <div class="input-group lab_control_input-group">
+                            <span class="input-group-addon lab_manage_title" id="basic-addon1">{{ _('Rec Note') }}<span id=""></span></span>
+                            <textarea rows="7" type="text" class="form-control" aria-describedby="sizing-addon1" id="lab_rec_note" autocomplete="off"></textarea>
+                        </div>
+                        
+                    </td>
+                </tr>
+      
             </table>
             <div style="width:100%; text-align:left;">
             <!--input type="button" class="btn btn-primary"  id="laboratory_control_cancel" value="{{ _('Cancel') }}"/>-->
