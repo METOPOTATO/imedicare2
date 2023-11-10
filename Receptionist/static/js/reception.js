@@ -2031,6 +2031,8 @@ function set_reservation_data(reservation_id) {
             if (response.need_insurance) {
                 $('#need_insurance').prop('checked', true)
             }
+            $('#depart_select').val(response.reservation_depart);
+            get_doctor($("#depart_select"),null, response.reservation_doctor);
         },
         error: function (request, status, error) {
             console.log("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);

@@ -1452,7 +1452,7 @@ def diagnosis_save(request):
     patient = reception.patient
     # quantity = len(test_set)
     # print('====>',test_quality)
-    test_set = TestManager.objects.filter(diagnosis_id = diagnosis_result.id)
+    test_set = TestManager.objects.filter(diagnosis_id = diagnosis_result.id, test__parent_test=None)
     count = 0
     for test in test_set:
         if test.status == 0:

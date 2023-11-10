@@ -162,7 +162,7 @@ def set_menu(request):
     list_3 = {
         "name": "Settings",
         "lower_menu": [],
-        "code": "code"
+        "code": "rec_res"
     }
 
     setting_list = []
@@ -247,6 +247,11 @@ def set_menu(request):
     menu_list = list_1 + list_2  + org_list
     menu_list += [list_3]
 
+    menu_list.append({
+        "name": "Draft Patients",
+        "url": "/receptionist/pre_regis/",
+        "code": "sss"
+    })
 
     request.session['MENU'] = menu_list
     request.session['DOCTOR_MENU'] = '' 
@@ -957,20 +962,27 @@ def get_order_result_by_patient(request):
         depart_id = request.GET.get('ReceptionDepartment', 0)
         depart_id = int(depart_id)
         if depart_id != 0:
-            reception = Reception.objects.filter( patient_id = patient_code, recorded_date__year=date_request[0:4], recorded_date__month=date_request[4:6], recorded_date__day=date_request[6:], depart_id=depart_id).first()
+            reception = Reception.objects.filter( patient_id = patient_code, recorded_date__year=date_request[0:4], recorded_date__month=date_request[4:6], recorded_date__day=date_request[6:], depart_id=depart_id)
         else:
-            reception = Reception.objects.filter( patient_id = patient_code, recorded_date__year=date_request[0:4], recorded_date__month=date_request[4:6], recorded_date__day=date_request[6:]).first()
+            reception = Reception.objects.filter( patient_id = patient_code, recorded_date__year=date_request[0:4], recorded_date__month=date_request[4:6], recorded_date__day=date_request[6:])
         if not reception:
-            return JsonResponse({'result': 'no result'}) 
+            return JsonResponse({'result': 'no result 1'}) 
         
-        diagnosis = Diagnosis.objects.filter(reception_id = reception.id).first()
+        receptions = Reception.objects.filter( patient_id = patient_code, recorded_date__year=date_request[0:4], recorded_date__month=date_request[4:6], recorded_date__day=date_request[6:], depart_id=depart_id)
+
+        diagnosis = None
+        for r in reception:
+            print(r)
+            diagnosis = Diagnosis.objects.filter(reception_id = r.id).first()
+            if diagnosis:
+                break
         if not diagnosis:
-            return JsonResponse({'result': 'no result'}) 
+            return JsonResponse({'result': 'no result 2'}) 
         
         diagnosis_id = diagnosis.id
 
         test_query = TestManager.objects.select_related('testmanage').select_related('diagnosis').filter(diagnosis_id = diagnosis_id, test__parent_test=None)
-
+        print(test_query)
         datas=[]
         for test in test_query:
             if test.status == 0 :

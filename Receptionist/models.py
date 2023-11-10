@@ -988,3 +988,24 @@ class PatientNotes(models.Model):
     order = models.TextField(default='',null=True)
     insurance = models.TextField(default='',null=True)
     disease = models.TextField(default='',null=True)
+
+
+class DraftPatient(models.Model):
+    eng_name = models.CharField(max_length=255, default='', null=False)
+    kor_name = models.CharField(max_length=255, default='', null=False)
+    dob = models.CharField(max_length=255, default='')
+    gender = models.CharField(max_length=255, default='')
+    phone = models.CharField(max_length=255, default='')
+    email = models.CharField(max_length=255, default='')
+    address = models.CharField(max_length=255, default='')
+    company = models.CharField(max_length=255, default='')
+    note = models.CharField(max_length=255, default='')
+    added_date = models.DateTimeField(auto_now_add=True)
+
+    is_deleted = models.BooleanField(default=False)
+
+    is_registed = models.BooleanField(default=False)
+    
+    founded_phone = models.BooleanField(default=False)
+    founded_eng_name = models.BooleanField(default=False)
+

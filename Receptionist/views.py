@@ -1,3 +1,4 @@
+from ast import Tuple
 import json
 from time import time
 from django.shortcuts import render, redirect
@@ -2382,6 +2383,17 @@ def reservation_save(request):
     funnel = request.POST.get('patient_funnel','')
     funnel_etc = request.POST.get('patient_funnel_etc','')    
     apointment_memo =request.POST.get('apointment_memo')
+
+    tmp_regis_id = request.POST.get('tmp_regis_id', '')
+    print('=====>>>>', tmp_regis_id)
+    if tmp_regis_id:
+        print('heheheh')
+        try:
+            tmp_patient = DraftPatient.objects.get(pk=tmp_regis_id)
+            tmp_patient.is_registed = True
+            tmp_patient.save()
+        except:
+            pass
 
     if reception_id == '' or reception_id is None:
         patient=request.POST.get('reservation_patient')
@@ -5577,5 +5589,169 @@ def patient_search3(request):
             })
         datas.append(data)
 
+    context = {'datas':datas}
+    return JsonResponse(context)
+
+
+def upload_file_patient(request):
+    file_path = '/home/imedicare/Cofee/Receptionist/static/draft_patient.xlsx'
+    try:
+        file = request.FILES.getlist('file')[0]
+        
+        if request.method == 'POST':
+            with open(file_path, 'wb+') as f:
+                for chunk in file.chunks():
+                    f.write(chunk)
+            wb = load_workbook(file_path)
+
+            ws = wb.get_sheet_by_name('Sheet1')
+
+            for i in range(7,200):
+                eng_name = ws[f'D{i}'].value
+                phone = ws[f'G{i}'].value
+
+                founded_phone = False
+                founded_name = False
+                if eng_name:
+                    eng_name = eng_name.upper()
+                    dob = ""
+                    try:
+                        dob = str(ws[f'E{i}'].value.date())
+                    except Exception as e:
+                        
+                        dob = ws[f'E{i}'].value
+                    try:
+                        find_patients = Patient.objects.filter(phone = phone)
+                        if len(find_patients) > 0:
+                            founded_phone = True
+
+                        find_name = Patient.objects.filter(name_eng__icontains = eng_name)
+                        if len(find_name) > 0:
+                            founded_name = True
+
+                        DraftPatient.objects.create(
+                            kor_name = ws[f'C{i}'].value,
+                            eng_name = eng_name,
+                            dob = dob,
+                            gender = ws[f'F{i}'].value,
+                            phone = ws[f'G{i}'].value,
+                            address = ws[f'H{i}'].value,
+                            email = ws[f'I{i}'].value,
+                            founded_phone = founded_phone,
+                            founded_eng_name = founded_name,
+                        )
+                    except:
+                        pass
+                # DraftPatient.objects.all().delete()  
+    except Exception as e:
+        print(e)
+        return JsonResponse({'url':str(e)}, status=400)
+        
+    return JsonResponse({'url':'ok'})
+
+
+def pre_regis(request):
+    f_name = F('commcode_name_en')
+    if request.session[translation.LANGUAGE_SESSION_KEY] == 'ko':
+        f_name = F('commcode_name_ko')
+    elif request.session[translation.LANGUAGE_SESSION_KEY] == 'vi':
+        f_name = F('commcode_name_vi')
+
+    list_depart = Depart.objects.all()
+    reservation_dialog_form = ReservationDialogForm()
+    reservation_search_form = ReservationSearchControl()
+
+    list_funnels = []
+    funnels = COMMCODE.objects.filter(upper_commcode = '000006',commcode_grp = 'PATIENTS_FUNNELS',use_yn="Y").annotate(name = f_name ).values('commcode','name',)
+    for data in funnels:
+        list_funnels.append({
+            'code':data['commcode'],
+            'name':data['name'],
+            })
+        
+        
+    list_reservation_division= []
+    query_reservation_division = COMMCODE.objects.filter(use_yn = 'Y',upper_commcode='000006', commcode_grp='RSRVT_DVSN').annotate(code = F('commcode'),name =f_name ).values('code','name')
+    for data in query_reservation_division:
+        list_reservation_division.append({
+            'code':data['code'],
+            'name':data['name']
+            })
+
+    return render(request,'Receptionist/pre_regis.html' , {
+        'reservation_dialog':reservation_dialog_form,
+        'reservation_search':reservation_search_form,
+        'list_depart':list_depart,
+        'list_funnels': list_funnels,
+        'list_reservation_division':list_reservation_division,
+    })
+
+
+def draft_patient_list(request):
+    string = request.GET.get('string', '')
+    today = datetime.datetime.today().date()
+    if string == '':
+        today_list = DraftPatient.objects.filter(added_date__date = today, is_deleted = False)
+    else:
+        argument_list = []
+        argument_list.append( Q(**{'eng_name__icontains':string } ) ) 
+        argument_list.append( Q(**{'kor__icontains':string } ) ) 
+        today_list = DraftPatient.objects.filter( functools.reduce(operator.or_, argument_list),added_date__date = today, is_deleted = False)
+
+    datas = []
+    number = 1
+    
+    for patient in today_list:
+        datas.append({
+            'no': number,
+            'draft_id': patient.id,
+            'kor_name': patient.kor_name,
+            'eng_name': patient.eng_name,
+            'dob': patient.dob,
+            'gender': patient.gender,
+            'phone': patient.phone,
+            'email': patient.email,
+            'address': patient.address,
+            'company': patient.company,
+            'founded_phone': patient.founded_phone,
+            'founded_eng_name': patient.founded_eng_name,
+            'is_registed': patient.is_registed,
+        })
+
+        number +=1 
+    
+    
+    context = {'datas':datas}
+    return JsonResponse(context)
+
+
+def remove_draft_patient(request):
+    p_id = request.POST.get('id')
+    
+    DraftPatient.objects.get(pk = p_id).delete()
+
+    today = datetime.datetime.today().date()
+    today_list = DraftPatient.objects.filter(added_date__date = today, is_deleted = False)
+    datas = []
+    number = 1
+    for patient in today_list:
+        datas.append({
+            'no': number,
+            'draft_id': patient.id,
+            'kor_name': patient.kor_name,
+            'eng_name': patient.eng_name,
+            'dob': patient.dob,
+            'gender': patient.gender,
+            'phone': patient.phone,
+            'email': patient.email,
+            'address': patient.address,
+            'company': patient.company,
+            'founded_phone': patient.founded_phone,
+            'founded_eng_name': patient.founded_eng_name,
+            'is_registed': patient.is_registed,
+        })
+
+        number +=1 
+    
     context = {'datas':datas}
     return JsonResponse(context)

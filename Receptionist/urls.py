@@ -128,4 +128,9 @@ urlpatterns = [
 
     path('patient_search2/',views.patient_search2,name='patient_search2'),
     path('patient_search3/',views.patient_search3,name='patient_search3'),
+
+    path('pre_regis/',views.pre_regis,name='pre_regis'),
+    path('upload_file_patient/',views.upload_file_patient,name='upload_file_patient'),
+    path('draft_patient_list/',views.draft_patient_list,name='draft_patient_list'),
+    path('remove_draft_patient/',views.remove_draft_patient,name='remove_draft_patient'),
 ]
