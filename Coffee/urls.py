@@ -98,7 +98,7 @@ urlpatterns = [
     path('waiting_list_sys/admin/get/',views.waiting_list_sys_admin_get),
     path('waiting_list_sys/admin/set/',views.waiting_list_sys_admin_set),
 
-    path('HisConnector/web/GetOrder', views.get_order_result),
+    path('get_result', views.get_order_result),
     path('HisConnector/web/UpdateResult', views.update_result),
     path('HisConnector/web/UpdateStatusTestOrder', views.update_status_order),
     path('HisConnector/Webservice.svc/GetExamminationOrder', views.get_order_result_by_patient),

@@ -3117,6 +3117,8 @@ def Tax_Invoice_get(request):
             'number':patient.taxinvoice.number,
             'company_name':patient.taxinvoice.company_name,
             'address':patient.taxinvoice.address,
+            'employee':patient.taxinvoice.employee,
+            'contact':patient.taxinvoice.contact,
             })
     except TaxInvoice.DoesNotExist:
         context.update({
@@ -3135,6 +3137,8 @@ def Tax_Invoice_save(request):
     number = request.POST.get('number')
     company_name = request.POST.get('company_name')
     address = request.POST.get('address')
+    employee = request.POST.get('employee', '')
+    contact = request.POST.get('contact', '')
 
 
     try:
@@ -3146,6 +3150,8 @@ def Tax_Invoice_save(request):
     tax_invoice.number = number
     tax_invoice.company_name = company_name
     tax_invoice.address = address
+    tax_invoice.employee = employee
+    tax_invoice.contact = contact
     tax_invoice.save()
 
     return JsonResponse({'result':True})
@@ -5334,23 +5340,23 @@ def update_patient_notes(request):
     data = {}
     try:
         patient_id = request.POST.get('patient_id')
-        memo_detail_company = request.POST.get('memo_detail_company')
+        # memo_detail_company = request.POST.get('memo_detail_company')
         memo_detail_order = request.POST.get('memo_detail_order')
-        memo_detail_insurance = request.POST.get('memo_detail_insurance')
+        # memo_detail_insurance = request.POST.get('memo_detail_insurance')
         memo_detail_disease = request.POST.get('memo_detail_disease')
 
         patient_note = PatientNotes.objects.filter(patient_id=patient_id).first()
         if not patient_note:
             patient_note = PatientNotes(patient_id=patient_id)
-        patient_note.company_name = memo_detail_company
+        # patient_note.company_name = memo_detail_company
         patient_note.order = memo_detail_order
-        patient_note.insurance = memo_detail_insurance
+        # patient_note.insurance = memo_detail_insurance
         patient_note.disease = memo_detail_disease
         patient_note.save()
         data = {
-            'memo_detail_company': memo_detail_company,
+            # 'memo_detail_company': memo_detail_company,
             'memo_detail_order': memo_detail_order,
-            'memo_detail_insurance': memo_detail_insurance,
+            # 'memo_detail_insurance': memo_detail_insurance,
             'memo_detail_disease': memo_detail_disease,
         }
     except Exception as e:

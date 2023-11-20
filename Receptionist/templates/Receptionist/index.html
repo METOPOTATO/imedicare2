@@ -29,23 +29,10 @@
                             <span class="input-group-addon patient_table_title" id="basic-addon1">{{ _('Chart No') }}</span>
                             <input type="hidden" id="patient_id" />
                             {{patient.id}}
-                            <div class="input-group-btn">
-                                <input id="show_memo_detail" type="button" value="{{_('Detail Memo') }}" class="btn btn-primary save_cancel_btn" style="width:100px;" onmouseover="show_memo_detail()"/>
-                            </div>
+
                         </div>
                     </td>
-                    <td >
-                        <div class="input-group" >
-                            <span class="input-group-addon patient_table_title" id="basic-addon1">{{ _('Gender') }}</span>
-                            <select name="gender" id="patient_gender" class="form-control costom-select" aria-describedby="basic-addon1" required="">
-                                <option value="">---------</option>
-                                <option value="Male">{{ _('Male (Nam)') }}</option>
-                                <option value="Female">{{ _('Female (Nữ)') }}</option>
-                            </select>
-                           
-                        </div>
-                       
-                    </td>
+                    <td></td>
                 </tr>
                 <tr>
                     <td>
@@ -94,10 +81,22 @@
                 </tr>
                 <tr>
                     <td >
-                        <div class="input-group ">
+                        <div class="input-group input-group-half">
                             <span class="input-group-addon patient_table_title" id="basic-addon1">{{ _('Passport No') }}</span>
                             {{patient.passport}}
                         </div>
+                      
+                        <div class="input-group input-group-half" >
+                            <span class="input-group-addon patient_table_title" id="basic-addon1">{{ _('Gender') }}</span>
+                            <select name="gender" id="patient_gender" class="form-control costom-select" aria-describedby="basic-addon1" required="">
+                                <option value="">---------</option>
+                                <option value="Male">{{ _('Male (Nam)') }}</option>
+                                <option value="Female">{{ _('Female (Nữ)') }}</option>
+                            </select>
+                            
+                        </div>
+                           
+                        
                     </td>
                     <td >
                         <div class="input-group">
@@ -131,7 +130,7 @@
                     </td>
                     <td>
                         <div class="input-group"> 
-                            <span class="input-group-addon patient_table_title" id="basic-addon1">{{ _('C / C') }}</span>
+                            <span class="input-group-addon patient_table_title" id="basic-addon1">{{ _('Note (C/C)') }}</span>
                             {{reception.chief_complaint}}
                         </div>
                     </td>
@@ -161,12 +160,16 @@
 
                             <!-- <div><button>Input</button></div> -->
                         </div>
+                        <!-- <div class="input-group-btn">
+                            <input id="show_memo_detail" type="button" value="{{_('Detail Memo') }}" class="btn btn-primary save_cancel_btn" style="width:100px;" onmouseover="show_memo_detail()"/>
+                        </div> -->
                     </td>
                 </tr>
                 <tr>
                     <td colspan="2">
                     <div class="input-group" id="vital_sign">
-                        <span class="input-group-addon patient_table_title" id="basic-addon1" style="border:1px solid #ccc">{{ _('Vital Sign') }}</span>
+                        <!-- <span class="input-group-addon patient_table_title" id="basic-addon1" style="border:1px solid #ccc">{{ _('Vital Sign') }}</span> -->
+                        <input type="button" value="{{ _('Vital Sign') }}" class="btn btn-default" id="vital_sign_click" />
                         <div id="vital_sign_control">
                        <text id="patient_vital_first">{{ _('Ht') }}: </text><input type="text" class="form-control" id="patient_table_vital_ht"/>
                        {{ _('Wt') }}: <input type="text" class="form-control" id="patient_table_vital_wt"/>
@@ -220,35 +223,58 @@
         <!--Patient Search-->
         <div class="reception_search_patient partition">
             <div class="status_table_title">
-            <span class="btn btn-danger" >{{ _('Patient List') }}</span>
-                <div class="status_table_filter">
+                <span class="btn btn-danger" style="display: inline" onclick="patient_search2()">{{ _('Search & Results') }}</span>
+                <div class="search_form" style="display: block;">
+                    <table>
+                        <!-- <thead>
+                            <tr>
+                                <th>1</th>
+                                <th>2</th>
+                                <th>3</th>
+                                <th>4</th>
+                            </tr>
+                        </thead> -->
+                        <tr>
+                            <td>
+                                <label style="width: 40px;" for="name">{{ _('Name') }}</label>
+                                <input style="width: 180px;" type="text" name="search_input" id="name_id" class="form-control patient_search_input" aria-describedby="basic-addon1" required=""> </td>
+                            <td>
+                                <label style="width: 60px;"  for="phone">{{ _('Phone') }}</label>
+                                <input style="width: 180px;" type="text" name="search_input" id="phone_id" class="form-control patient_search_input" aria-describedby="basic-addon1" required=""> 
+                            </td>
+                            <td>
+                                <label style="width: 40px;"  for="dob">{{ _('DoB') }}</label>
+                                <input style="width: 160px;" type="text" name="search_input" id="dob_id" class="form-control patient_search_input" aria-describedby="basic-addon1" required=""> 
+                            </td>
+                            <td>
+                                <label for="" style="width: 60px;"></label>
+                                <input value="Show Memo Detail" style="width: 160px;" type="button" id="show_memo_detail" onclick="show_memo_detail()" class="btn btn-info" >
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <label style="width: 40px;"  for="email">{{ _('Email') }}</label>
+                                <input style="width: 180px;" type="text" name="search_input" id="email_id" class="form-control patient_search_input" aria-describedby="basic-addon1" required=""> 
+                            </td>
+                            <td>
+                                <label style="width: 60px;"  for="chart">{{ _('Chart No') }}</label>
+                                <input style="width: 180px;" type="text" name="search_input" id="chart_id" class="form-control patient_search_input" aria-describedby="basic-addon1" required=""> 
+                            </td>
+                            <td>
+                                <label for="memo">{{ _('Memo') }}</label>
+                                <input style="width: 160px;" type="text" name="search_input" id="memo_id" class="form-control patient_search_input" aria-describedby="basic-addon1" required="">                              
+                            </td>
+                            <td>
+                                <label style="width: 60px;" for="memo_d">{{ _('Memo.D') }}</label>
+                                <input style="width: 160px;" type="text" name="memo_d" id="memo_detail_id" class="form-control patient_search_input" aria-describedby="basic-addon1" required="">   
+                            </td>
+                        </tr>
+                    </table>
                     <div>
 
-                        <label for="name">{{ _('Name') }}</label>
-                        <input style="width: 180px;" type="text" name="search_input" id="name_id" class="form-control patient_search_input" aria-describedby="basic-addon1" required=""> 
-    
-
-                        <label for="phone">{{ _('Phone') }}</label>
-                        <input style="width: 160px;" type="text" name="search_input" id="phone_id" class="form-control patient_search_input" aria-describedby="basic-addon1" required=""> 
-    
-                        <label for="dob">{{ _('Date of birth') }}</label>
-                        <input style="width: 120px;" type="text" name="search_input" id="dob_id" class="form-control patient_search_input" aria-describedby="basic-addon1" required=""> 
-    
                     </div>
                     <div>
-                        <label for="email">{{ _('Email') }}</label>
-                        <input style="width: 110px;" type="text" name="search_input" id="email_id" class="form-control patient_search_input" aria-describedby="basic-addon1" required=""> 
-                        
-                        <label for="chart">{{ _('Chart No') }}</label>
-                        <input style="width: 80px;" type="text" name="search_input" id="chart_id" class="form-control patient_search_input" aria-describedby="basic-addon1" required=""> 
-                        
-                        <label for="memo">{{ _('Memo') }}</label>
-                        <input style="width: 110px;" type="text" name="search_input" id="memo_id" class="form-control patient_search_input" aria-describedby="basic-addon1" required=""> 
-                      
-                        <label for="memo_d">{{ _('Memo.D') }}</label>
-                        <input style="width: 110px;" type="text" name="memo_d" id="memo_detail_id" class="form-control patient_search_input" aria-describedby="basic-addon1" required=""> 
-                        
-                        <input type="button"  style="width: 120px;  background-color: #5bc0de; color: white;"  value="{{ _('Search') }}" class="btn btn-default" onclick="patient_search2()"/>
+                        <!-- <input type="button"  style="width: 120px;  background-color: #5bc0de; color: white;"  value="{{ _('Search') }}" class="btn btn-default" onclick="patient_search2()"/> -->
                     </div>
 
                     <!-- <select name="filter" id="patient_search_select" class="form-control costom-select patient_search_select" aria-describedby="basic-addon1">
@@ -267,7 +293,7 @@
                     
                 </div> -->
             </div>
-            <div class="patient_search_table_wrap" style="margin-top: 50px;" >
+            <div class="patient_search_table_wrap" style="margin-top: 10px;" >
                 <table class="table patient_search_table" id="Patient_Search">
                     <thead>
                         <tr>
@@ -732,8 +758,6 @@
                                         <input type="text" id="tax_invoice_number" class="form-control" aria-describedby="basic-addon1">
                                     </div>
                                 </td>
-                            </tr>
-                            <tr>
                                 <td>
                                     <div class="input-group edit_reception_title">
                                         <span class="input-group-addon Edit_Reception_input-group-addon" id="basic-addon2">{{ _('Company Name') }}</span>
@@ -743,6 +767,20 @@
                             </tr>
                             <tr>
                                 <td>
+                                    <div class="input-group edit_reception_title">
+                                        <span class="input-group-addon Edit_Reception_input-group-addon" id="basic-addon1">{{ _('Employee Position') }}</span>
+                                        <input type="text" id="tax_invoice_employee" class="form-control" aria-describedby="basic-addon1">
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="input-group edit_reception_title">
+                                        <span class="input-group-addon Edit_Reception_input-group-addon" id="basic-addon2">{{ _('Contact') }}</span>
+                                        <input type="text" id="tax_invoice_contact" class="form-control" aria-describedby="basic-addon2">
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="2">
                                     <div class="input-group edit_reception_title">
                                         <span class="input-group-addon Edit_Reception_input-group-addon" id="basic-addon1">{{ _('Address') }}</span>
                                         <input type="text" id="tax_invoice_address" class="form-control" aria-describedby="basic-addon1">
@@ -1086,7 +1124,7 @@
 
 <div id="memo_detail_modal" class="modal fade">
 
-    <div class="modal-dialog" style="width:1600px;">
+    <div class="modal-dialog" style="width:800px;">
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span> <span class="sr-only">close</span></button>
@@ -1101,7 +1139,7 @@
                     </select>
                 </div> -->
 
-                <table class="table table-bordered table-hover table-striped">
+                <!-- <table class="table table-bordered table-hover table-striped">
                     <tr>
                         <td >
                             <div style="width: 600px; margin-right: 0px !important;">
@@ -1128,7 +1166,7 @@
                                 <div style="display: flex; justify-content: space-between; margin-top: 20px; margin-bottom: 10px;">
                                     <div class="input-group">
                                         <span class="input-group-addon patient_table_title" id="basic-addon1">{{ _('Relation') }}</span>
-                                        <!-- <input type="text" class="form-control" id="patient_relative_name"/> -->
+                                        
                                         <select id="patient_relative_name" class="form-control" aria-describedby="basic-addon1">
                                             <option value selected>---------</option>
                                             <option value="PARENT-CHILD">PARENT-CHILD</option>
@@ -1173,12 +1211,12 @@
 
                         </td>
                     </tr>
-                </table>
+                </table> -->
                 <!-- <div id="modalBody" class="modal-body" > -->
                 <table class="table table-bordered table-hover table-striped">
                     <tr>
                         <td >
-                            <div style="width:600px">
+                            <div style="width:400px">
                                 <span class="btn btn-danger">Company Detail</span>
                                 <table class="table table-bordered table-hover table-striped">
                                     <tr>
@@ -1194,14 +1232,14 @@
                                             </div>
                                         </td>
                                     </tr>
-                                    <tr>
+                                    <!-- <tr>
                                         <td>
                                             <div class="input-group">
                                                 <span class="input-group-addon patient_table_title" id="basic-addon1">{{ _('Company Name') }}</span>
                                                 <input type="text" class="form-control" id="memo_detail_company"/>
                                             </div>
                                         </td>
-                                    </tr>
+                                    </tr> -->
                                     <tr>
                                         <td>
                                             <div class="input-group">
@@ -1210,14 +1248,14 @@
                                             </div>
                                         </td>
                                     </tr>
-                                    <tr>
+                                    <!-- <tr>
                                         <td>
                                             <div class="input-group">
                                                 <span class="input-group-addon patient_table_title" id="basic-addon1">{{ _('Insurance') }}</span>
                                                 <input type="text" class="form-control" id="memo_detail_insurance"/>
                                             </div>
                                         </td>
-                                    </tr>
+                                    </tr> -->
                                     <tr>
                                         <td>
                                             <div class="input-group">
@@ -1231,8 +1269,11 @@
                             
                             </div>
                         </td>
+
+                    </tr>
+                    <tr>
                         <td >
-                            <div style=" height: 400px; overflow: scroll;">
+                            <div style=" height: 600px; overflow: scroll;">
                                 <span class="btn btn-danger">Memos</span>
                             <table class="table table-bordered table-hover table-striped" id="table_memo_detail">
                                 <thead>
@@ -1252,11 +1293,28 @@
         
                             <br><br>
                             <div class="input-group">
-                                <span class="input-group-addon Edit_Reception_input-group-addon" id="basic-addon1">{{ _('Memo') }}</span>
+                                <span class="input-group-addon Edit_Reception_input-group-addon" id="basic-addon1" style="width: 120px;">{{ _('Other Memo') }}</span>
                                 <input type="text" class="form-control" id="new_memo_detail"/>
                             </div>
                             <div class="input-group">
-                                <span class="input-group-addon Edit_Reception_input-group-addon">{{ _('Depart') }}</span>
+                                <span class="input-group-addon Edit_Reception_input-group-addon" style="width: 120px;">{{ _('Character Memo') }}</span>
+                                <select id="help_text" class="form-control" aria-describedby="basic-addon1">
+                                    <option value selected>---------</option>
+                                    <option value="1">Tinh cach co tinh bất an nen không tin tưởng vào người khác - 성격이 불안하여 타인 신뢰않함</option>
+                                    <option value="2">Thiếu hiểu biết ( tự ý thức quá mứcnên không tập trung  nghe giải thích)- 이해력 부족(자의식이 너무 과해서 다른 사람 설명에 집중 못함)</option>
+                                    <option value="3">Thiếu kiên nhẫn và dễ cáu kỉnh (không kiểm soát được cảm xúc) - 매우 조급하여 잘 짜증냄 (감정 조절 못함)</option>
+                                    <option value="4">Coi thường quy định của bệnh viện - 병원 규정을 무시한 요구</option>
+                                    <option value="5">Yêu cầu nhiều, khó tính -  어떻게 해달라는 요구 많고 까다로움</option>
+                                    <option value="6">Phản ứng dữ dội một cách thái quá - 엄살이 심하고 과잉반응</option>
+                                    <option value="7">Người rối loạn nhân cách ái kỷ, chỉ quan tâm đến bản thân (phớt lờ người khác, không thừa nhận vấn đề của mình) - 자기만 중요한 나르시시스트 (다른 사람을 무시함,자신의 문제점을 인정 안함)</option>
+                                    <option value="8">Có nhiều bí mật (quá nhạy cảm với việc lộ thông tin) - 비밀이 많음 (정보 노출에 너무 민감함)</option>
+                                    <option value="9">Luôn yêu cầu giảm giá - 항상 가격 깎아 달라고 함</option>
+                                    <option value="10">Mang thuốc về rồi nhưng lại thản nhiên yêu cầu hoàn tiền - 약 처방 받은 후 태연히 환불요청</option>
+                                    <option value="11">Hay đánh giá ác ý về phòng khám trên mạng xã hội - SNS 등에 병원에 악성 리뷰</option>
+                                </select>
+                            </div>
+                            <div class="input-group">
+                                <span class="input-group-addon Edit_Reception_input-group-addon" style="width: 120px;">{{ _('Depart') }}</span>
                                 <select id="memo_depart" class="form-control" aria-describedby="basic-addon1">
                                     <option value selected>---------</option>
                                     <option value="PED">PED</option>
@@ -1287,6 +1345,37 @@
 
 </div>
 
+
+<div id="modal_vital" class="modal fade">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span> <span class="sr-only">close</span></button>
+                <h4>{{ _('Vital Sign') }}</h4>
+                <div id="modalBody" class="modal-body" >
+                    <div id="show_Tax_invoice">
+                        <h5>{{ _('Patient Vital History') }}</h5>
+                        <!-- <input type="hidden" value="" id="selected_tax_invoice_id"/> -->
+                        <table class="table table-bordered edit_reception_table" id="list_vital_sign"> 
+                            <thead>
+                                <tr>
+                                    <th>Date Time</th>
+                                    <th>Ht</th>
+                                    <th>Wt</th>
+                                    <th>BP</th>
+                                    <th>BT</th>
+                                    <th>Pr</th>
+                                    <th>Rr</th>
+                                </tr>
+                            </thead>
+                            <tbody></tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 {% endblock %}
 
 
