@@ -294,6 +294,8 @@ $(function () {
                 $('#tax_invoice_number').val(response['number']);
                 $('#tax_invoice_company_name').val(response['company_name']);
                 $('#tax_invoice_address').val(response['address']);
+                $('#tax_invoice_employee').val(response['employee']);
+                $('#tax_invoice_contact').val(response['contact']);
 
             },
             error: function (request, status, error) {
@@ -320,6 +322,8 @@ $(function () {
                     'number': $('#tax_invoice_number').val(),
                     'company_name': $('#tax_invoice_company_name').val(),
                     'address': $('#tax_invoice_address').val(),
+                    'employee': $('#tax_invoice_employee').val(),
+                    'contact': $('#tax_invoice_contact').val(),
                 },
                 dataType: 'Json',
                 success: function (response) {
@@ -334,6 +338,43 @@ $(function () {
 
         })
 
+    })
+
+    $('#vital_sign_click').click(function () {
+        $.ajax({
+            type: 'POST',
+            url: '/doctor/get_vital/',
+            data: {
+                'csrfmiddlewaretoken': $('#csrf').val(),
+                'patient_id': $('#patient_id').val(),
+            },
+            dataType: 'Json',
+            success: function (response) {
+                $('#list_vital_sign > tbody ').empty();
+                var str = "";
+                for (var i = 0; i < response.datas.length; i++) {
+                        str += 
+                            "<tr>" +
+                            "<td>" + response.datas[i]['fulldate'] + "</td>" + 
+                            "<td>" + response.datas[i]['height'] + "</td>" + 
+                            "<td>" + response.datas[i]['weight'] + "</td>" + 
+                            "<td>" + response.datas[i]['blood_pressure'] + "</td>" + 
+                            "<td>" + response.datas[i]['blood_temperature'] + "</td>" + 
+                            "<td>" + response.datas[i]['pulse_rate'] + "</td>" + 
+                            "<td>" + response.datas[i]['breath'] + "</td>" + 
+                            "</td></tr>";
+    
+                    
+                }
+                $('#list_vital_sign > tbody').append(str);
+                // $('#list_vital_sign').modal('show')
+            },
+            error: function (request, status, error) {
+                console.log("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
+
+            },
+        })
+        $('#modal_vital').modal('show');
     })
 
 
@@ -896,6 +937,7 @@ function get_doctor(part, depart = null, selected = null) {
 function new_patient_option(on_off) {
     if (on_off) {
         $('#patient_tax_invoice_click').attr('disabled', false);
+        $('#vital_sign_click').attr('disabled', false);
         $('#patient_initial_report_click').attr('disabled', false);
         $('#need_medical_report').attr('disabled', false);
         $('#need_invoice').attr('disabled', false);
@@ -903,6 +945,7 @@ function new_patient_option(on_off) {
 
     } else {
         $('#patient_tax_invoice_click').attr('disabled', true);
+        $('#vital_sign_click').attr('disabled', true);
         $('#patient_initial_report_click').attr('disabled', true);
         $('#need_medical_report').attr('disabled', true);
         $('#need_medical_report').prop('checked', false);
@@ -2447,10 +2490,16 @@ function show_memo_detail(){
     // $('#memo_detail_modal').modal('show')
 }
 
-function create_memo_detail(){
+function create_memo_detail(){ 
 
     var patient_id = $("#patient_id").val();
     var memo = $('#new_memo_detail').val();
+    var help_text = $('#help_text').val();
+
+    if (help_text != null && help_text){
+        memo = $('#help_text option:selected').text();
+        console.log($('#help_text option:selected').text())
+    }
     var memo_depart = $('#memo_depart').val();
     $.ajax({
         type: 'POST',
@@ -2490,6 +2539,7 @@ function create_memo_detail(){
                 $('#memo_detail_modal').modal('show');
                 $('#new_memo_detail').val('')
                 $('#depart_memo').val('');
+                $('#help_text').val('');
                 alert(gettext('Created'));
             }
 

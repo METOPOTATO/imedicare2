@@ -253,7 +253,7 @@ function pharmacy_database_search(page = null) {
                         "<td>" + response.datas[i]['code'] + "</td>" +
                         "<td>" + response.datas[i]['name'] + "</td>" +
                         "<td title='" + response.datas[i]['ingredient'] + "'>" + response.datas[i]['ingredient'] + "</td>" +
-                        "<td title='" + response.datas[i]['company'] + "'>" + response.datas[i]['company'] + "</td>" +
+                        // "<td title='" + response.datas[i]['company'] + "'>" + response.datas[i]['company'] + "</td>" +
                         "<td>" + response.datas[i]['country'] + "</td>" +
                         "<td>" + response.datas[i]['unit'] + "</td>" +
                         "<td>" + numberWithCommas(response.datas[i]['price']) + "</td>" +
@@ -269,7 +269,7 @@ function pharmacy_database_search(page = null) {
                         "<a class='btn btn-danger btn-xs' href='javascript: void (0);' onclick='delete_database_medicine(" + response.datas[i]['id'] + ")' ><i class='fa fa-lg fa-trash'></i></a></tr> ";
                         
                 } else {
-                    var str = "<tr><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>";
+                    var str = "<tr><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>";
                 }
                 $('#inventory_database_table > tbody').append(str);
             }

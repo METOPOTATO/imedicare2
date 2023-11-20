@@ -173,6 +173,14 @@ class TaxInvoice(models.Model):
         max_length = 2048,
         default = '',
         )
+    employee = models.CharField(
+        max_length = 2048,
+        default = '',
+        )
+    contact = models.CharField(
+        max_length = 2048,
+        default = '',
+        )
 
 
 
