@@ -262,13 +262,15 @@ function search_payment(page = null) {
                     } else {
                         str += "<td>" + numberWithCommas(paid) + '</td>';
                     }
+
+                    str += '<td>' + response.datas[i]['red_invoice'] + '</td>' ;
                     //str +="<td>-</td><td>-</td><td>-</td><td></td></tr>';"
                     str += "</tr>';"
 
 
                 } else {
                     //str += '<tr><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>'
-                    str += '<tr><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>'
+                    str += '<tr><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>'
 
                 }
             }

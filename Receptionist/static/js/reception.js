@@ -26,6 +26,45 @@ $(document).ready(function() {
             }
         }
     )
+
+    $('#lbl_name_kor').click(function(){
+        var name = $('#patient_name_kor').val()
+        $('#name_id').val(name)
+    })
+    $('#lbl_name_eng').click(function(){
+        var name = $('#patient_name_eng').val()
+        $('#name_id').val(name)
+    })
+    $('#lbl_phone').click(function(){
+        var name = $('#patient_phone').val()
+        $('#phone_id').val(name)
+    })
+    $('#lbl_dob').click(function(){
+        var name = $('#patient_date_of_birth').val()
+        $('#dob_id').val(name)
+    })
+    $('#lbl_email').click(function(){
+        var name = $('#patient_email').val()
+        $('#email_id').val(name)
+    })
+    $('#lbl_chart').click(function(){
+        var name = $('#patient_chart').val()
+        $('#chart_id').val(name)
+    })
+    $('#lbl_memo').click(function(){
+        var name = $('#memo').val()
+        $('#memo_id').val(name)
+    })
+
+    $('#clear_search').click(function(){
+        $('#name_id').val('');
+        $('#phone_id').val('')
+        $('#dob_id').val('')
+        $('#email_id').val('')
+        $('#chart_id').val('')
+        $('#memo_id').val('')
+        $('#memo_detail_id').val('')
+    })
 })
 
 
@@ -1481,6 +1520,7 @@ function set_patient_data(patient_id) {
             if (response.insurance) {
                 $('#need_insurance').prop('checked', true)
             }
+            $('#chief_complaint').val(response.chief_complaint);
         },
         error: function (request, status, error) {
             console.log("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
@@ -1719,7 +1759,19 @@ function reception_search() {
                 $('#Rectption_Status').append("<tr><td colspan='9'>" + gettext('No Result !!') + "</td></tr>");
             } else {
                 for (var i in response.datas) {
-                    var str = "<tr onclick='set_patient_data(" + response.datas[i]['patient_id'] + ")'" + "><td>" + (parseInt(i) + 1) + "</td>";
+                    // $('#status').val(response.datas[i]['status']);
+                    if (response.datas[i]['status'] == 'under_treat')
+                        tr_class = "class ='success'"
+                    else if (response.datas[i]['status'] == 'hold')
+                        tr_class = "class ='warning'"
+                    else if (response.datas[i]['status'] == 'done')
+                        tr_class = "class ='danger'"
+                    else {
+                        tr_class = "class =''"
+                        is_new = true;
+                    }
+
+                    var str = "<tr " + tr_class + " onclick='set_patient_data(" + response.datas[i]['patient_id'] + ")'" + "><td>" + (parseInt(i) + 1) + "</td>";
 
                         if (response.datas[i]['has_unpaid']) {
                             str += "<td style=color:rgb(228,97,131);>";
@@ -2057,7 +2109,7 @@ function set_reservation_data(reservation_id) {
             
             $('#history_past').val(response.history_past);
             $('#history_family').val(response.history_family);
-
+            $('#chief_complaint').val(response.reservation_memo);
             $('input:radio[name=gender]').filter('[value=' + response.gender + ']').prop('checked', true);  
 
             //tax invoice
@@ -2873,6 +2925,7 @@ function set_patient_data2(patient_id) {
             $('#tax_invoice_number').val(response.tax_invoice_number);
             $('#tax_invoice_company_name').val(response.tax_invoice_company_name);
             $('#tax_invoice_address').val(response.tax_invoice_address);
+            $('#chief_complaint').val(response.chief_complaint);
 
             //prop('checked', false)
             $('#need_invoice').prop('checked', false)
@@ -2891,4 +2944,5 @@ function set_patient_data2(patient_id) {
     })
     $('#memo_detail_modal').modal('hide');
     new_patient_option(true);
+
 }

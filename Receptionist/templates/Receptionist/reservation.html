@@ -1110,6 +1110,7 @@ function set_reservation(reservation_id = null) {
 
         $('#tmp_text').val('');
         $('#reservation_nationality_etc').val('');
+        $('#chief_complaint').val('');
 
     } else {
         $('.modal-header h4').html(" {{_('Edit Reservation') }} ");
@@ -1141,7 +1142,7 @@ function set_reservation(reservation_id = null) {
                 $('#reservation_patient').val(response.reservation_patient);
                 $('#reservation_chart').val(response.reservation_patient_id);
                 $('#reservation_chart_number').val(response.reservation_chart);
-               
+                $('#chief_complaint').val(' ')
                 $('#reservation_phone').val(response.reservation_phone);
 
                 $('#reservation_memo').val(response.reservation_memo);

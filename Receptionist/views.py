@@ -144,6 +144,7 @@ def save_patient(request):
     funnel = request.POST.get('funnel','')
     funnel_etc = request.POST.get('funnel_etc','')
 
+    chief_complaint = request.POST.get('chief_complaint','')
     past_history = request.POST.get('past_history','')
     family_history = request.POST.get('family_history','')
     reservation_id = request.POST.get('reservation_id','')
@@ -275,7 +276,7 @@ def set_patient_data(request):
         rec = None
 
 
-    print('patient.memo: ', patient.memo)    
+    print('=====', rec.chief_complaint)    
 
     context.update({
         'id':patient.id,
@@ -300,7 +301,7 @@ def set_patient_data(request):
 
         'invoice':'' if rec is None else rec.need_invoice,
         'insurance':'' if rec is None else rec.need_insurance,
-        'chief_complaint':'' if rec is None else rec.chief_complaint,
+        'chief_complaint':' ',
         })
     return JsonResponse(context)
 
@@ -791,7 +792,7 @@ def reception_search(request):
             'time':reception.recorded_date.strftime('%H:%M'),
 
             'is_vaccine':reception.is_vaccine,
-
+            'status':reception.progress,
             #'package':package,
 
             })
@@ -2709,6 +2710,7 @@ def reservation_info(request):
         'patient_email':'' if reservation.patient is None else reservation.patient.email,      
         'need_invoice':'' if reception_last is None else reception_last.need_invoice,   
         'need_insurance':'' if reception_last is None else reception_last.need_insurance, 
+        'chief_complaint':'' if reception_last is None else reception_last.chief_complaint, 
         'reservation_reception_id':reservation_reception_id, 
         'address': reservation.pick_up_addr,     
         'need_pick_up': reservation.need_pick_up,     
@@ -2718,6 +2720,8 @@ def reservation_info(request):
         'funnel_etc': reservation.funnel_etc if reservation.patient is None else reservation.patient.funnel_etc,  
         'patient_memo':reservation.memo if reservation.patient is None else reservation.patient.memo,
         'reservation_patient_eng': reservation.name if reservation.patient is None else reservation.patient.name_eng,
+
+        'reservation_memo': "" if reservation.memo is None else reservation.memo,
         }
     return JsonResponse(context)
 
@@ -3627,6 +3631,8 @@ def document_excel(request, reception_id):
             wb = load_workbook('/home/imedicare/Cofee/static/excel_form/document_report_obgyn.xlsx') #Workbook()
         elif name == 'PM':
             wb = load_workbook('/home/imedicare/Cofee/static/excel_form/document_report_pm.xlsx') #Workbook()  
+        elif name == 'OPH':
+            wb = load_workbook('/home/imedicare/Cofee/static/excel_form/document_report_oph.xlsx') #Workbook()
         else:
             wb = load_workbook('/home/imedicare/Cofee/static/excel_form/Document_report.xlsx') #Workbook()
         # wb = load_workbook('/Users/light/Desktop/work/imdc/imedicare2/static/excel_form/Document_report.xlsx')
@@ -4377,13 +4383,15 @@ def document_medical_receipt_old(request,reception_id,):
         total_amount= request.GET.get('total_amount',0)
         total_amount = int(total_amount.replace(',', ''))
 
-        if discount_input is not 0 and discount_input is not '':
+        if discount_input is not 0 and discount_input is not '' and discount_input is not '0':
+    
             discount = round( ( int( discount_input) / 100) * total_amount )
         elif discount_amount is not 0 and discount_amount is not '':
+
             discount = int( discount_amount )
         else:
+   
             discount = 0
-
         #temp_today= datetime.datetime.strptime('2020-06-13 10:00',"%Y-%m-%d %H:%M")
 
         additional = additional_amount
@@ -4443,7 +4451,7 @@ def document_medical_receipt_old(request,reception_id,):
 
 
     else:
-        
+        print('h2')
 
         if reception.payment.discounted is not 0 :
             discount = (reception.payment.discounted / 100) * reception.payment.sub_total
@@ -4529,6 +4537,9 @@ def document_medical_receipt_old(request,reception_id,):
     if is_medicine_show== 'false':
         no = medicine_show_no +1
 
+    print('=======')
+    print(discount)
+    print(total)
     return render(request,
     'Receptionist/form_medical_receipt_old.html',
             {

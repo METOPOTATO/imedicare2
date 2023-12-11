@@ -26,7 +26,7 @@
                 <tr>
                     <td >
                         <div class="input-group ">
-                            <span class="input-group-addon patient_table_title" id="basic-addon1">{{ _('Chart No') }}</span>
+                            <span class="input-group-addon patient_table_title" id="lbl_chart">{{ _('Chart No') }}</span>
                             <input type="hidden" id="patient_id" />
                             {{patient.id}}
 
@@ -37,11 +37,11 @@
                 <tr>
                     <td>
                         <div class="input-group input-group-half">
-                            <span class="input-group-addon patient_table_title" id="basic-addon1">{{ _('Name Kr/Vn') }}</span>
+                            <span class="input-group-addon patient_table_title" id="lbl_name_kor">{{ _('Name Kr/Vn') }}</span>
                             {{patient.name_kor}}
                         </div>
                         <div class="input-group input-group-half">
-                            <span class="input-group-addon patient_table_title" id="basic-addon1">{{ _('Name Eng') }}</span>
+                            <span class="input-group-addon patient_table_title" id="lbl_name_eng">{{ _('Name Eng') }}</span>
                             {{patient.name_eng}}
                         </div>
                     </td>
@@ -67,14 +67,14 @@
                             {{patient.address}}
                         </div>
                         <div class="input-group input-group-half">
-                            <span class="input-group-addon patient_table_title" id="basic-addon1">{{ _('Date of Birth') }}</span>
+                            <span class="input-group-addon patient_table_title" id="lbl_dob">{{ _('Date of Birth') }}</span>
                             {{patient.date_of_birth}}
                         </div>
 
                     </td>
                     <td >
                         <div class="input-group">
-                            <span class="input-group-addon patient_table_title" id="basic-addon1">{{ _('Phone') }}</span>
+                            <span class="input-group-addon patient_table_title" id="lbl_phone">{{ _('Phone') }}</span>
                             {{patient.phone}}
                         </div>
                     </td>
@@ -100,7 +100,7 @@
                     </td>
                     <td >
                         <div class="input-group">
-                            <span class="input-group-addon patient_table_title" id="basic-addon1" style="border:1px solid #ccc">{{ _('Email') }}</span>
+                            <span class="input-group-addon patient_table_title" id="lbl_email" style="border:1px solid #ccc">{{ _('Email') }}</span>
                             {{patient.email}}
                         </div>
                     </td>
@@ -155,7 +155,7 @@
                     </td>
                     <td>
                         <div class="input-group"> 
-                            <span class="input-group-addon patient_table_title" id="basic-addon1">{{ _('Memo') }}</span>
+                            <span class="input-group-addon patient_table_title" id="lbl_memo">{{ _('Memo') }}</span>
                             <input type="text" id="memo" class="form-control" aria-describedby="basic-addon1" autocomplete="off">
 
                             <!-- <div><button>Input</button></div> -->
@@ -224,6 +224,8 @@
         <div class="reception_search_patient partition">
             <div class="status_table_title">
                 <span class="btn btn-danger" style="display: inline" onclick="patient_search2()">{{ _('Search & Results') }}</span>
+
+                <div class="btn btn-primary" style="display: inline; margin-left: 40px;" id="clear_search">Clear Search</div>
                 <div class="search_form" style="display: block;">
                     <table>
                         <!-- <thead>
@@ -1124,9 +1126,9 @@
 
 <div id="memo_detail_modal" class="modal fade">
 
-    <div class="modal-dialog" style="width:800px;">
+    <div class="modal-dialog" style="width:500px;">
         <div class="modal-content">
-            <div class="modal-header">
+            <div class="modal-header" style="overflow: scroll;">
                 <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span> <span class="sr-only">close</span></button>
                 <h4>{{ _('Memo Detail') }}</h4>
                 <!-- <div  class="input-group input-group-btn">
@@ -1216,8 +1218,8 @@
                 <table class="table table-bordered table-hover table-striped">
                     <tr>
                         <td >
-                            <div style="width:400px">
-                                <span class="btn btn-danger">Company Detail</span>
+                            <div style="width:500px">
+                                <span class="btn btn-danger">Patient Extra Information</span>
                                 <table class="table table-bordered table-hover table-striped">
                                     <tr>
                                         <td>
@@ -1272,8 +1274,8 @@
 
                     </tr>
                     <tr>
-                        <td >
-                            <div style=" height: 600px; overflow: scroll;">
+                        <td>
+                            <div style=" height: 500px; width: 800px;">
                                 <span class="btn btn-danger">Memos</span>
                             <table class="table table-bordered table-hover table-striped" id="table_memo_detail">
                                 <thead>

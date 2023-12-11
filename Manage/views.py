@@ -368,6 +368,7 @@ def search_payment(request):
                 'Depart':reception.depart.name,
                 'Doctor_kor':reception.doctor.name_kor,
                 'Doctor_eng': reception.doctor.name_eng,
+                'red_invoice': reception.need_invoice,
                 }
 
             list_exam_fee = []
@@ -1461,7 +1462,7 @@ def audit_excel(request):
 
     #엑셀 파일 불러오기
     wb = load_workbook('/home/imedicare/Cofee/static/excel_form/audit_report.xlsx') #Workbook()
-    # wb = load_workbook('/Users/light/Desktop/Work/imdc/imedicare2/static/excel_form/audit_report.xlsx')
+    # wb = load_workbook('/home/light/Desktop/Projects/imedicare2/static/excel_form/audit_report.xlsx')
     ws = wb.active# grab the active worksheet
 
     #선택한 날짜
@@ -1614,6 +1615,7 @@ def audit_excel(request):
             ws['R' + str(current_row)] = receptions[i].payment.total
             ws['S' + str(current_row)] = receptions[i].payment.total - paid_sum
             ws['T' + str(current_row)] = paid_sum
+            ws['W' + str(current_row)] = 'Yes' if receptions[i].need_invoice else 'NO'
 
             payment_record = receptions[i].payment.paymentrecord_set.filter(status = 'paid')
 
@@ -1646,7 +1648,8 @@ def audit_excel(request):
                 ws.merge_cells('S' + str(current_row) + ':S' + str(current_row + count-1))
                 ws.merge_cells('T' + str(current_row) + ':T' + str(current_row + count-1))
                 ws.merge_cells('U' + str(current_row) + ':U' + str(current_row + count-1))
-                ws.merge_cells('Q' + str(current_row) + ':Q' + str(current_row + count-1))
+                ws.merge_cells('V' + str(current_row) + ':V' + str(current_row + count-1))
+                ws.merge_cells('W' + str(current_row) + ':W' + str(current_row + count-1))
             current_row += count 
             data_num +=1
 
@@ -11273,10 +11276,10 @@ def search_ymw(request):
     current_year = new.year
 
     date_start = datetime.datetime(year=int(current_year) , month=current_month, day=1) 
-    date_end = datetime.datetime(year=int(current_year) , month=current_month + 1, day=1 )- datetime.timedelta(seconds = 1)
+    # date_end = datetime.datetime(year=int(current_year) , month=current_month + 1, day=1 )- datetime.timedelta(seconds = 1)
     olds = Reception.objects.filter(
             **kwargs ,
-            recorded_date__range = (date_start, date_end), 
+            recorded_date__range = (date_min, date_max), 
             payment__paymentrecord__status='paid',
         ).exclude(
             progress='deleted'
@@ -11284,7 +11287,7 @@ def search_ymw(request):
 
     news = Reception.objects.filter(
             **kwargs ,
-            recorded_date__range = (date_start, date_end), 
+            recorded_date__range = (date_min, date_max), 
             payment__paymentrecord__status='paid',
             patient__date_registered__gte = date_start
         ).exclude(
