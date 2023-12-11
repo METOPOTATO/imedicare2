@@ -1,3 +1,0 @@
-﻿"""
-Package for Coffee.
-"""
