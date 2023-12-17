@@ -4547,6 +4547,7 @@ def document_medical_receipt_old(request,reception_id,):
                 'name':reception.patient.get_name_kor_eng(),
                 'date_of_birth':reception.patient.date_of_birth.strftime('%d/%m/%Y'),   
                 'age':reception.patient.get_age(),
+                'email': reception.patient.email,
                 'gender':reception.patient.get_gender_simple(),
                 'depart_full':reception.depart.full_name,
                 'depart_full_vie':reception.depart.full_name_vie,
