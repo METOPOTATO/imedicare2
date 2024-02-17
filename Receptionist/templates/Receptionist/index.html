@@ -789,6 +789,14 @@
                                     </div>
                                 </td>
                             </tr>
+                            <tr>
+                                <td colspan="2">
+                                    <div class="input-group edit_reception_title">
+                                        <span class="input-group-addon Edit_Reception_input-group-addon" id="basic-addon1">{{ _('Memo') }}</span>
+                                        <input type="text" id="tax_invoice_memo" class="form-control" aria-describedby="basic-addon1">
+                                    </div>
+                                </td>
+                            </tr>
                         </table>
                         <div style="text-align:right;">
                             <input type="button" class="btn btn-default" value="{{ _('Cancel') }}" data-dismiss="modal"/>
@@ -1221,7 +1229,7 @@
                             <div style="width:500px">
                                 <span class="btn btn-danger">Patient Extra Information</span>
                                 <table class="table table-bordered table-hover table-striped">
-                                    <tr>
+                                    <!-- <tr>
                                         <td>
                                             <div class="input-group">
                                                 <span class="input-group-addon patient_table_title" id="basic-addon1">{{ _('Patient Mark') }}</span>
@@ -1233,7 +1241,7 @@
                                                 </select>
                                             </div>
                                         </td>
-                                    </tr>
+                                    </tr> -->
                                     <!-- <tr>
                                         <td>
                                             <div class="input-group">
@@ -1316,6 +1324,15 @@
                                 </select>
                             </div>
                             <div class="input-group">
+                                <span class="input-group-addon Edit_Reception_input-group-addon"" id="basic-addon1" style="width: 120px;">{{ _('Patient Mark') }}</span>
+                                <select class="form-control" id="patient_mark">
+                                    <option value="" selected>--</option>
+                                    {% for data in patient_mark %}
+                                        <option value="{{ data.commcode }}">{{data.se1}}</option>
+                                    {% endfor%}
+                                </select>
+                            </div>
+                            <div class="input-group">
                                 <span class="input-group-addon Edit_Reception_input-group-addon" style="width: 120px;">{{ _('Depart') }}</span>
                                 <select id="memo_depart" class="form-control" aria-describedby="basic-addon1">
                                     <option value selected>---------</option>
@@ -1332,6 +1349,7 @@
                                     <option value="SURGERY">SURGERY</option>
                                 </select>
                             </div>
+
                             <input id="create_memo_detail" type="button" value="{{_('Create Memo') }}" class="btn btn-primary save_cancel_btn" style="width:100px;" onclick="create_memo_detail()"/>
                             
                             </div>

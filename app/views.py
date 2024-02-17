@@ -1153,10 +1153,15 @@ def get_list_test(request):
 
     # return JsonResponse(data)
 
-    # my_test = []
+    my_test = []
     # tests = Test.objects.all()
-    # doctors = Doctor.objects.all()
-    # ds = Depart.objects.all()
+    doctors = Doctor.objects.all()
+
+    for dts in doctors:
+        print(dts.id, dts.depart, dts.name_eng, sep=',')
+
+
+    ds = Depart.objects.all()
     # with open('tests.csv', 'w') as f:
     #     writer = csv.writer(f)
     #     for doctor in doctors:
@@ -1176,10 +1181,10 @@ def get_list_test(request):
     #     #     }
     #     #     my_test.append(obj)
     #     #     writer.writerow([test.id, test.name, test.name_vie, test.code, test.parent_test.code if test.parent_test else ''])
-    #     for d in ds:
-    #         obj = {
-    #             'depart_name': d.name,
-    #             'depart_id': d.id
-    #         }
-    #         my_test.append(obj)
-        # return JsonResponse({'result': my_test})
+    for d in ds:
+        obj = {
+            'depart_name': d.name,
+            'depart_id': d.id
+        }
+        my_test.append(obj)
+    return JsonResponse({'result': my_test})

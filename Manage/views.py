@@ -3973,7 +3973,8 @@ def exam_add_edit_set(request):
                 new_price.date_start = str_now
                 new_price.date_end = "99999999999999"
                 new_price.save()
-                
+    print(price)
+    data.price = price
 
     data.doctor_id = doctor
     data.name = name
@@ -4513,7 +4514,7 @@ def precedure_add_edit_set(request):
             if last_code == None:
                 data.code = CODE + str('0001')
             else:
-                prefix_code = last_code.code[0:2]
+                prefix_code = last_code.code[0:3]
                 if prefix_code == 'DM':
                     last_code = Precedure.objects.filter(code__istartswith = CODE, code__range = ('D00001','D99999') ).order_by('code').last()
                     temp_code = last_code.code.split(CODE)

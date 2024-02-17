@@ -1418,6 +1418,7 @@ def get_today_selected(request):
     for record in records:
         paid += record.paid
 
+    print(payment.total)
     datas = {
         'chart':reception.patient.get_chart_no(),
         'name_kor':reception.patient.name_kor,
@@ -3123,6 +3124,7 @@ def Tax_Invoice_get(request):
             'address':patient.taxinvoice.address,
             'employee':patient.taxinvoice.employee,
             'contact':patient.taxinvoice.contact,
+            'memo':patient.taxinvoice.memo,
             })
     except TaxInvoice.DoesNotExist:
         context.update({
@@ -3143,6 +3145,7 @@ def Tax_Invoice_save(request):
     address = request.POST.get('address')
     employee = request.POST.get('employee', '')
     contact = request.POST.get('contact', '')
+    memo = request.POST.get('memo', '')
 
 
     try:
@@ -3156,6 +3159,7 @@ def Tax_Invoice_save(request):
     tax_invoice.address = address
     tax_invoice.employee = employee
     tax_invoice.contact = contact
+    tax_invoice.memo = memo
     tax_invoice.save()
 
     return JsonResponse({'result':True})
@@ -3621,6 +3625,7 @@ def document_excel(request, reception_id):
         name = reception.depart.name
         if name == 'IM':
             wb = load_workbook('/home/imedicare/Cofee/static/excel_form/document_report_im.xlsx') #Workbook()
+            # wb = load_workbook('/home/light/Desktop/Projects/imedicare2/static/excel_form/document_report_im.xlsx')
         elif name == 'DENTAL':
             wb = load_workbook('/home/imedicare/Cofee/static/excel_form/document_report_dental.xlsx') #Workbook()
         elif name == 'DERM':
@@ -3633,6 +3638,14 @@ def document_excel(request, reception_id):
             wb = load_workbook('/home/imedicare/Cofee/static/excel_form/document_report_pm.xlsx') #Workbook()  
         elif name == 'OPH':
             wb = load_workbook('/home/imedicare/Cofee/static/excel_form/document_report_oph.xlsx') #Workbook()
+        elif name == 'OBGYN':
+            wb = load_workbook('/home/imedicare/Cofee/static/excel_form/document_report_obgyn.xlsx') #Workbook()
+        elif name == 'PM':
+            wb = load_workbook('/home/imedicare/Cofee/static/excel_form/document_report_pm.xlsx') #Workbook()
+        elif name == 'DENTAL':
+            wb = load_workbook('/home/imedicare/Cofee/static/excel_form/document_report_dental.xlsx') #Workbook()
+        elif name == 'VACCINE':
+            wb = load_workbook('/home/imedicare/Cofee/static/excel_form/document_report_vaccine.xlsx') #Workbook()
         else:
             wb = load_workbook('/home/imedicare/Cofee/static/excel_form/Document_report.xlsx') #Workbook()
         # wb = load_workbook('/Users/light/Desktop/work/imdc/imedicare2/static/excel_form/Document_report.xlsx')
@@ -3808,6 +3821,13 @@ def document_excel(request, reception_id):
             ws['D' + str(current_row)] = total
 
             ws['D' + str(current_row + 3)] = reception.recorded_date.strftime('%d/%m/%Y') 
+            ws['B' + str(current_row + 3)] = 'Ngày/Date:'
+            ws['B' + str(current_row + 4)] = 'Bác sĩ/ Doctor'
+            ws['B' + str(current_row + 5)] = '(Ký và ghi rõ họ tên)/(Sign)'
+
+            ws['B' + str(current_row + 3)].alignment = Alignment(horizontal='right')
+            ws['B' + str(current_row + 4)].alignment = Alignment(horizontal='right')
+            ws['B' + str(current_row + 5)].alignment = Alignment(horizontal='right')
             # ws['C' + str(current_row + 3)].font = Font(bold = True)                   
 
         ws = wb.get_sheet_by_name('Medicine_Receipt')# grab the active worksheet
@@ -3891,7 +3911,7 @@ def document_excel(request, reception_id):
                 writing_number = 1      
 
                 no = 1
-                current_row = 47
+                current_row = 41
                 for test in test_set:
                     ws['A' + str(current_row)] = no
                     try:
@@ -3905,7 +3925,7 @@ def document_excel(request, reception_id):
 
                 no = 1
                 no_other = 1
-                current_row = 93
+                current_row = 67
                 for precedure in precedure_set:
                     if precedure.precedure.precedure_class_id == 8:
                         ws['A' + str(current_row)] = no_other
@@ -5254,7 +5274,8 @@ def get_memo_detail(request):
         'result':True,
         'datas': data,
         'data_note': data_note,
-        'data_relative': data_relative
+        'data_relative': data_relative,
+        'marking': patient.marking
     })
 
     

@@ -181,6 +181,10 @@ class TaxInvoice(models.Model):
         max_length = 2048,
         default = '',
         )
+    memo = models.CharField(
+        max_length = 2048,
+        default = '',
+        )
 
 
 

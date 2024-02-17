@@ -335,6 +335,7 @@ $(function () {
                 $('#tax_invoice_address').val(response['address']);
                 $('#tax_invoice_employee').val(response['employee']);
                 $('#tax_invoice_contact').val(response['contact']);
+                $('#tax_invoice_memo').val(response['memo']);
 
             },
             error: function (request, status, error) {
@@ -363,6 +364,7 @@ $(function () {
                     'address': $('#tax_invoice_address').val(),
                     'employee': $('#tax_invoice_employee').val(),
                     'contact': $('#tax_invoice_contact').val(),
+                    'memo': $('#tax_invoice_memo').val(),
                 },
                 dataType: 'Json',
                 success: function (response) {
@@ -2509,7 +2511,7 @@ function show_memo_detail(){
                 $('#memo_detail_order').val(response.data_note['memo_detail_order'])
                 $('#memo_detail_insurance').val(response.data_note['memo_detail_insurance'])
                 $('#memo_detail_disease').val(response.data_note['memo_detail_disease'])
-
+                $("#patient_mark").val(response.marking);
                 // relation
                 $('#table_relative_memo > tbody ').empty();
                 for (var i = 0; i < response.data_relative.length; i++) {
