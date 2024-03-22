@@ -187,8 +187,18 @@ def set_menu(request):
     ]
     org_list = [
         {
-            "name": "Organization",
+            "name": "Board",
             "lower_menu": [
+                {
+                    "name": "Notice Board",
+                    "url": "/manage/board/",
+                    "code": "board_board"
+                },
+                {
+                    "name": "Co-Work Board",
+                    "url": "/manage/board_work/",
+                    "code": "board_coboard"
+                },
                 {
                     "name": "Information Coworker",
                     "url": "/manage/manage_employee/",
@@ -205,12 +215,54 @@ def set_menu(request):
         }
     ]
 
+    reser_list = [
+        {
+            "name": "Reservation",
+            "lower_menu": [
+                {
+                    "name": "Reservation",
+                    "url": "/receptionist/reservation/",
+                    "code": "rec_res"
+                },
+                {
+                    "name": "Draft Patients",
+                    "url": "/receptionist/pre_regis/",
+                    "code": "sss"
+                }
+
+            ],
+            "code": "rec_res"
+        }
+    ]
+
+    customer_manage_list = [
+                {
+            "name": "Customer Mgt",
+            "lower_menu": [
+                {
+                    "name": "Customer Mgt",
+                    "url": "/manage/customer_manage/",
+                    "code": "cus_mgt"
+                },
+                {
+                    "name": "SMS History",
+                    "url": "/manage/sms/history/",
+                    "code": "sms"
+                }
+
+            ],
+            "code": "rec_res"
+        }
+    ]
+
+    
+
     allow_setting = False
     for menu in menu_list:
         if menu['name'] == 'Registration':
             list_1.append(menu)
         elif menu['name'] == 'Reservation':
-            list_1.append(menu)
+            pass
         elif menu['name'] == 'Payment':
             list_1.append(menu)
         elif menu['name'] == 'Pharmacy':
@@ -220,10 +272,13 @@ def set_menu(request):
         #     list_1.append(menu)
         elif menu['name'] == 'Pick Up':
             pass
-        elif menu['name'] == 'Drafts':
+        elif menu['name'] == 'Customer Mgt':
+            pass
+        elif menu['name'] == 'SMS History':
             pass
         elif menu['name'] == 'Drafts':
             pass
+
         elif menu['name'] == 'Setting':
             setting_list.append(    {
                 "name": "Code Setting",
@@ -231,6 +286,8 @@ def set_menu(request):
                 "code": "code"
             })
             allow_setting = True
+        elif menu['name'] == 'Board':
+            pass
         elif menu['name'] == 'Service & Inventory':
             for item in menu['lower_menu']:
                 setting_list.append(item)
@@ -244,14 +301,10 @@ def set_menu(request):
             list_2.append(menu)
     list_3['lower_menu'] = setting_list
 
-    menu_list = list_1 + list_2  + org_list
+    menu_list = list_1 + reser_list + list_2 + customer_manage_list + org_list
     menu_list += [list_3]
 
-    menu_list.append({
-        "name": "Draft Patients",
-        "url": "/receptionist/pre_regis/",
-        "code": "sss"
-    })
+
 
     request.session['MENU'] = menu_list
     request.session['DOCTOR_MENU'] = '' 

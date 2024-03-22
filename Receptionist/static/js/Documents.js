@@ -99,7 +99,7 @@ function document_search() {
                     str += '</td>';
                     // Passport
                     console.log('======================')
-                    str += '<td>' + response.datas[i].passport + '</td>' 
+                    str += '<td>' + response.datas[i].email + '</td>' 
 
                     if (response.datas[i].medical_receipt== true) {
                         str += '<td>' + "<a class='btn btn-default btn-xs' href='javascript: void (0);' onclick='print_medical_receipt(" + response.datas[i].id + ")' ><i class='fa fa-lg fa-print'></i></a>" + '</td>';

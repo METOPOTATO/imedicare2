@@ -11719,7 +11719,7 @@ def code_save(request):
     if id == '':
         commcode = COMMCODE()
 
-        commcode.registrerer = request.user.id
+        commcode.registrerer = request.user
     else:
         commcode = COMMCODE.objects.get(id = id)
 

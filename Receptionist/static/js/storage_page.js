@@ -129,9 +129,9 @@ $(function () {
     });
 
 
-    $('#patient_tax_invoice_click').click(function () {
+    // $('#patient_tax_invoice_click').click(function () {
         $('#patient_tax_invoice').toggle();
-    })
+    // })
 
     $('#Bill').click(async function () {
         id = $("#selected_reception").val();

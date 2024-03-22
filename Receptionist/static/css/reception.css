@@ -13,7 +13,7 @@
     width: 100%;
     display: grid;
     grid-template-columns: 50%;
-    grid-template-rows: 380px;
+    grid-template-rows: 520px;
 }
 
 .partition {
@@ -242,7 +242,7 @@
     }
 
     .reception_wait_table_wrap {
-        height: 358px;
+        height: 480px;
         ;
         overflow: auto;
     }
@@ -593,7 +593,7 @@
     @media ( min-width: 1900px ) {
         .reception_grid {
         grid-template-columns: 50%;
-        grid-template-rows: 380px;
+        grid-template-rows: 520px;
     }
     #patient_vital_first {
         margin-left: 20px;
@@ -647,7 +647,7 @@
     }
 
     .reception_wait_table_wrap {
-        height: 325px;
+        height: 480;
         
     }
 

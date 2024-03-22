@@ -74,6 +74,9 @@
         #document_contents_table thead tr th:nth-child(8) {
             width: 130px;
         }
+        #document_contents_table thead tr th:nth-child(9) {
+            width: 300px;
+        }
 
 #document_contents tr td
 {

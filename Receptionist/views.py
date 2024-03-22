@@ -156,6 +156,10 @@ def save_patient(request):
     tax_invoice_company_name = request.POST.get('tax_invoice_company_name','')
     tax_invoice_address = request.POST.get('tax_invoice_address','')
 
+    tax_invoice_contact = request.POST.get('tax_invoice_contact','')
+    tax_invoice_employee = request.POST.get('tax_invoice_employee','')
+    tax_invoice_memo = request.POST.get('tax_invoice_memo','')
+
     id = request.POST.get('id')
     if request.POST.get('id') is None or request.POST.get('id') is '':
         patient = Patient()
@@ -212,6 +216,10 @@ def save_patient(request):
         taxinvoice.number = '' if tax_invoice_number == '' else tax_invoice_number
         taxinvoice.company_name = '' if tax_invoice_number == '' else tax_invoice_company_name
         taxinvoice.address = '' if tax_invoice_number == '' else tax_invoice_address
+
+        taxinvoice.contact = '' if tax_invoice_contact == '' else tax_invoice_contact
+        taxinvoice.employee = '' if tax_invoice_employee == '' else tax_invoice_employee
+        taxinvoice.memo = '' if tax_invoice_memo == '' else tax_invoice_memo
         taxinvoice.save()
 
     if reservation_id != '':
@@ -222,7 +230,19 @@ def save_patient(request):
 
         reservation.patient = patient
         reservation.save()
-
+    try:
+        reception_last = Reception.objects.filter(patient = patient).last()
+        if need_invoice == 'true':
+            reception_last.need_invoice = True
+        elif need_invoice == 'false':
+            reception_last.need_invoice = False
+        if need_insurance == 'true':
+            reception_last.need_insurance = True
+        elif need_insurance == 'false':
+            reception_last.need_insurance = False
+        reception_last.save()
+    except:
+        pass
 
     result = True
 
@@ -276,7 +296,7 @@ def set_patient_data(request):
         rec = None
 
 
-    print('=====', rec.chief_complaint)    
+
 
     context.update({
         'id':patient.id,
@@ -298,6 +318,9 @@ def set_patient_data(request):
         'tax_invoice_number':'' if taxinvoice is None else taxinvoice.number,
         'tax_invoice_company_name':'' if taxinvoice is None else taxinvoice.company_name,
         'tax_invoice_address':'' if taxinvoice is None else taxinvoice.address,
+        'tax_invoice_contact':'' if taxinvoice is None else taxinvoice.contact,
+        'tax_invoice_employee':'' if taxinvoice is None else taxinvoice.employee,
+        'tax_invoice_memo':'' if taxinvoice is None else taxinvoice.memo,
 
         'invoice':'' if rec is None else rec.need_invoice,
         'insurance':'' if rec is None else rec.need_insurance,
@@ -464,6 +487,10 @@ def save_reception(request):
     tax_invoice_company_name = request.POST.get('tax_invoice_company_name','')
     tax_invoice_address = request.POST.get('tax_invoice_address','')
 
+    tax_invoice_contact = request.POST.get('tax_invoice_contact','')
+    tax_invoice_employee = request.POST.get('tax_invoice_employee','')
+    tax_invoice_memo = request.POST.get('tax_invoice_memo','')
+
     need_medical_report = request.POST.get('need_medical_report',False)
     need_invoice = request.POST.get('need_invoice',False)
     need_insurance = request.POST.get('need_insurance',False)
@@ -548,6 +575,10 @@ def save_reception(request):
         taxinvoice.number = '' if tax_invoice_number == '' else tax_invoice_number
         taxinvoice.company_name = '' if tax_invoice_number == '' else tax_invoice_company_name
         taxinvoice.address = '' if tax_invoice_number == '' else tax_invoice_address
+
+        taxinvoice.contact = '' if tax_invoice_contact == '' else tax_invoice_contact
+        taxinvoice.employee = '' if tax_invoice_employee == '' else tax_invoice_employee
+        taxinvoice.memo = '' if tax_invoice_memo == '' else tax_invoice_memo
         taxinvoice.save()
 
     #33333
@@ -792,6 +823,7 @@ def reception_search(request):
             'time':reception.recorded_date.strftime('%H:%M'),
 
             'is_vaccine':reception.is_vaccine,
+            'is_ksk': True if reception.depart.name == 'HEALTH CHECKUP' else False,
             'status':reception.progress,
             #'package':package,
 
@@ -1547,6 +1579,10 @@ def waiting_selected(request):
         medicine = {}
         quantity = int(data.days) * int(data.amount)
         unit = data.medicine.get_price(standard_date)
+
+        print('>>>',data.medicine.name) 
+        print('>>>',quantity) 
+        print(unit)
         price = quantity * int(data.medicine.get_price(standard_date))
         medicine.update({
             'manager_id':data.id,
@@ -1560,7 +1596,8 @@ def waiting_selected(request):
         medicines.append(medicine)
 
 
-
+    print(payment.total)
+    print(payment.sub_total)
     datas = {
         'chart':reception.patient.get_chart_no(),
         'name_kor':reception.patient.name_kor,
@@ -1882,10 +1919,16 @@ def reservation_events(request):
                 'backgroundColor':'rgb(166, 55, 163)',
                 'borderColor':'rgb(166, 55, 163)',
                 })
+        elif reservation.depart.id == 13:  #9	HC
+            data.update({
+                'backgroundColor':'rgb(0, 136, 136)',
+                'borderColor':'rgb(0, 136, 136)',
+                })
         name = ''
         depart = ''
         memo = ''
         is_vaccine = ''
+        is_kc = ''
         try:
             patient = Patient.objects.get(pk = reservation.patient_id)
 
@@ -1900,8 +1943,11 @@ def reservation_events(request):
             
         if reservation.division == 'VACCIN':
             is_vaccine = u'\U0001F489'#💉
+        if reservation.depart.id == 13:
+            is_kc = u'\U0001F50E'
+            print(reservation.division)
         data.update({
-                'title': is_vaccine + name  + '\n' + depart + '\n' + reservation.memo,
+                'title': is_kc + is_vaccine + name  + '\n' + depart + '\n' + reservation.memo,
                 })
 
     
@@ -2683,7 +2729,11 @@ def reservation_info(request):
         reception_last = Reception(None)        
     # print(reservation.patient.nationality)
     print(reservation.pick_up_addr if reservation.pick_up_addr is None else reservation.patient.address)
-
+    tax = None
+    try:
+        tax = reservation.patient.taxinvoice
+    except:
+        tax = None
     context = {
         'reservation_id':reservation.id,
         'reservation_date': reservation.reservation_date.strftime('%Y-%m-%d %H:%M:%S'),
@@ -2723,6 +2773,21 @@ def reservation_info(request):
         'reservation_patient_eng': reservation.name if reservation.patient is None else reservation.patient.name_eng,
 
         'reservation_memo': "" if reservation.memo is None else reservation.memo,
+
+        'tax_invoice_address': '' if tax is None else reservation.patient.taxinvoice.address,
+        'tax_invoice_company_name': '' if tax is None else reservation.patient.taxinvoice.company_name,
+        'tax_invoice_number':'' if tax is None else reservation.patient.taxinvoice.number,
+        'tax_invoice_contact': '' if tax is None else reservation.patient.taxinvoice.contact,
+        'tax_invoice_employee': '' if tax is None else reservation.patient.taxinvoice.employee,
+        'tax_invoice_memo': '' if tax is None else reservation.patient.taxinvoice.memo,
+
+
+            # 'number':patient.taxinvoice.number,
+            # 'company_name':patient.taxinvoice.company_name,
+            # 'address':patient.taxinvoice.address,
+            # 'employee':patient.taxinvoice.employee,
+            # 'contact':patient.taxinvoice.contact,
+            # 'memo':patient.taxinvoice.memo,
         }
     return JsonResponse(context)
 
@@ -3237,7 +3302,8 @@ def document_search(request):
             'address':reception.patient.address,
             'phone':reception.patient.phone,
             'date_time':reception.recorded_date.strftime('%Y-%m-%d %H:%M'),   
-            'passport':reception.patient.passport,      
+            'passport':reception.patient.passport,   
+            'email': reception.patient.email   
             }
         diagnosis = True
         try:
@@ -3925,7 +3991,7 @@ def document_excel(request, reception_id):
 
                 no = 1
                 no_other = 1
-                current_row = 67
+                current_row = 74
                 for precedure in precedure_set:
                     if precedure.precedure.precedure_class_id == 8:
                         ws['A' + str(current_row)] = no_other
@@ -4151,7 +4217,7 @@ def document_excel(request, reception_id):
                 writing_number +=1 
                 current_row +=1
 
-            ws['F' + str(60)] = 'Ngày/Date: ' + datetime.datetime.now().strftime('%d/%m/%Y')  
+            ws['F' + str(61)] = 'Ngày/Date: ' + datetime.datetime.now().strftime('%d/%m/%Y')  
 
         reception = Reception.objects.get(id = reception_id)
         ws = wb.get_sheet_by_name('Vaccine_Certification')# grab the active worksheet
@@ -5236,6 +5302,7 @@ def get_memo_detail(request):
             'memo_detail_disease': '',
     }
     data_relative = []
+    patient = None
     try:
         patient = Patient.objects.filter(pk=patient_id).first()
         memo_detail = DetailMemo.objects.filter(patient=patient)
@@ -5275,7 +5342,7 @@ def get_memo_detail(request):
         'datas': data,
         'data_note': data_note,
         'data_relative': data_relative,
-        'marking': patient.marking
+        'marking': patient.marking if patient is not None else ""
     })
 
     
@@ -5285,11 +5352,13 @@ def create_memo_detail(request):
     patient_id = request.POST.get('patient_id')
     memo_depart = request.POST.get('memo_depart')
     memo = request.POST.get('memo')
-
+    marking = request.POST.get('marking')
     data = []
     if request.user.is_authenticated:
         try:
             patient = Patient.objects.filter(pk=patient_id).first()
+            patient.marking = marking
+            patient.save()
             DetailMemo.objects.create(creator=user, patient=patient, memo=memo, memo_depart=memo_depart)
             memo_detail = DetailMemo.objects.filter(patient=patient)
             for val in memo_detail:
@@ -5305,7 +5374,8 @@ def create_memo_detail(request):
 
     return JsonResponse({
         'result':True,
-        'datas': data
+        'datas': data,
+        'marking': marking
     }) 
 
 

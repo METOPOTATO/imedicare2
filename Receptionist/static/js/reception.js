@@ -1203,6 +1203,11 @@ function save_patient() {
     var tax_invoice_number = $('#tax_invoice_number').val();
     var tax_invoice_company_name = $('#tax_invoice_company_name').val();
     var tax_invoice_address = $('#tax_invoice_address').val();
+
+    var tax_invoice_contact = $('#tax_invoice_contact').val();
+    var tax_invoice_employee = $('#tax_invoice_employee').val();
+    var tax_invoice_memo = $('#tax_invoice_memo').val();
+
 // 77777
     var patient_table_vital_ht = $('#patient_table_vital_ht').val();
     var patient_table_vital_wt = $('#patient_table_vital_wt').val();
@@ -1240,6 +1245,10 @@ function save_patient() {
             'tax_invoice_number': tax_invoice_number,
             'tax_invoice_company_name': tax_invoice_company_name,
             'tax_invoice_address': tax_invoice_address,
+            'tax_invoice_contact': tax_invoice_contact,
+            'tax_invoice_employee': tax_invoice_employee,
+            'tax_invoice_memo': tax_invoice_memo,
+
 
             'need_invoice': need_invoice,
             'need_insurance': need_insurance,
@@ -1362,6 +1371,10 @@ function save_recept() {
     var tax_invoice_number = $('#tax_invoice_number').val();
     var tax_invoice_company_name = $('#tax_invoice_company_name').val();
     var tax_invoice_address = $('#tax_invoice_address').val();
+    
+    var tax_invoice_contact = $('#tax_invoice_contact').val();
+    var tax_invoice_employee = $('#tax_invoice_employee').val();
+    var tax_invoice_memo = $('#tax_invoice_memo').val();
 
     var need_medical_report = $('#need_medical_report').prop("checked");
     var need_invoice = $("#need_invoice").prop("checked");
@@ -1405,6 +1418,10 @@ function save_recept() {
             'tax_invoice_number': tax_invoice_number,
             'tax_invoice_company_name': tax_invoice_company_name,
             'tax_invoice_address': tax_invoice_address,
+
+            'tax_invoice_contact': tax_invoice_contact,
+            'tax_invoice_employee': tax_invoice_employee,
+            'tax_invoice_memo': tax_invoice_memo,
 
             'need_medical_report': need_medical_report,
             'need_invoice': need_invoice,
@@ -1508,10 +1525,14 @@ function set_patient_data(patient_id) {
 
             $('input:radio[name=gender]').filter('[value=' + response.gender + ']').prop('checked', true);  
 
-            //tax invoice
+            //tax invoice 6666
             $('#tax_invoice_number').val(response.tax_invoice_number);
             $('#tax_invoice_company_name').val(response.tax_invoice_company_name);
             $('#tax_invoice_address').val(response.tax_invoice_address);
+
+            $('#tax_invoice_contact').val(response.tax_invoice_contact);
+            $('#tax_invoice_employee').val(response.tax_invoice_employee);
+            $('#tax_invoice_memo').val(response.tax_invoice_memo);
 
             //prop('checked', false)
             $('#need_invoice').prop('checked', false)
@@ -1783,6 +1804,9 @@ function reception_search() {
                     str += response.datas[i]['chart'];
                     if (response.datas[i]['is_vaccine'] == true) {
                         str += "<br/><label class='label label-success'>VACCINE<label>"
+                    }
+                    if (response.datas[i]['is_ksk'] == true) {
+                        str += "<br/><label class='label label-danger'>KSK<label>"
                     }
                     str += "</td>" +
                         "<td>" + response.datas[i]['name_kor'] + "<br/>" + response.datas[i]['name_eng'] + "</td>" +
@@ -2118,6 +2142,9 @@ function set_reservation_data(reservation_id) {
             $('#tax_invoice_number').val(response.tax_invoice_number);
             $('#tax_invoice_company_name').val(response.tax_invoice_company_name);
             $('#tax_invoice_address').val(response.tax_invoice_address);
+            $('#tax_invoice_contact').val(response.tax_invoice_contact);
+            $('#tax_invoice_employee').val(response.tax_invoice_employee);
+            $('#tax_invoice_memo').val(response.tax_invoice_memo);
 
             //prop('checked', false)
             $('#need_invoice').prop('checked', false)
@@ -2549,7 +2576,7 @@ function create_memo_detail(){
     var patient_id = $("#patient_id").val();
     var memo = $('#new_memo_detail').val();
     var help_text = $('#help_text').val();
-
+    var marking = $("#patient_mark").val();
     if (help_text != null && help_text){
         memo = $('#help_text option:selected').text();
         console.log($('#help_text option:selected').text())
@@ -2563,6 +2590,7 @@ function create_memo_detail(){
             'patient_id': patient_id,
             'memo': memo,
             'memo_depart': memo_depart,
+            'marking': marking
         },
         dataType: 'Json',
         success: function (response) {
@@ -2947,4 +2975,9 @@ function set_patient_data2(patient_id) {
     $('#memo_detail_modal').modal('hide');
     new_patient_option(true);
 
+}
+
+
+function open_tax_search(){
+    window.open('https://masothue.com/')
 }
