@@ -229,6 +229,11 @@ class Reception(models.Model):
         choices=profile_status_choice,
         default = 'waiting',
         )        
+    
+    send_email_status = models.IntegerField(
+        default=0,
+        null = True
+    )
 
     objects=ReceptionQueryManager()
 

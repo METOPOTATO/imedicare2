@@ -169,6 +169,10 @@ class TaxInvoice(models.Model):
         max_length = 2048,
         default = '',
         )
+    address_p = models.CharField(
+        max_length = 2048,
+        default = '',
+        )
     recommend = models.CharField(
         max_length = 2048,
         default = '',

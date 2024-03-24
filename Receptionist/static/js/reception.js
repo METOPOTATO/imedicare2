@@ -103,6 +103,16 @@ $(function () {
             patient_search2();
         }
     })
+    $('#nation_id').keydown(function (key) {
+        if (key.keyCode == 13) {
+            patient_search2();
+        }
+    })
+    $('#address_id').keydown(function (key) {
+        if (key.keyCode == 13) {
+            patient_search2();
+        }
+    })
 
 
     $('#patient_search_input').keydown(function (key) {
@@ -333,6 +343,7 @@ $(function () {
                 $('#tax_invoice_number').val(response['number']);
                 $('#tax_invoice_company_name').val(response['company_name']);
                 $('#tax_invoice_address').val(response['address']);
+                $('#tax_invoice_address_p').val(response['address_p']);
                 $('#tax_invoice_employee').val(response['employee']);
                 $('#tax_invoice_contact').val(response['contact']);
                 $('#tax_invoice_memo').val(response['memo']);
@@ -362,6 +373,7 @@ $(function () {
                     'number': $('#tax_invoice_number').val(),
                     'company_name': $('#tax_invoice_company_name').val(),
                     'address': $('#tax_invoice_address').val(),
+                    'address_p': $('#tax_invoice_address_p').val(),
                     'employee': $('#tax_invoice_employee').val(),
                     'contact': $('#tax_invoice_contact').val(),
                     'memo': $('#tax_invoice_memo').val(),
@@ -1203,7 +1215,7 @@ function save_patient() {
     var tax_invoice_number = $('#tax_invoice_number').val();
     var tax_invoice_company_name = $('#tax_invoice_company_name').val();
     var tax_invoice_address = $('#tax_invoice_address').val();
-
+    var tax_invoice_address_p = $('#tax_invoice_address_p').val();
     var tax_invoice_contact = $('#tax_invoice_contact').val();
     var tax_invoice_employee = $('#tax_invoice_employee').val();
     var tax_invoice_memo = $('#tax_invoice_memo').val();
@@ -1245,6 +1257,7 @@ function save_patient() {
             'tax_invoice_number': tax_invoice_number,
             'tax_invoice_company_name': tax_invoice_company_name,
             'tax_invoice_address': tax_invoice_address,
+            'tax_invoice_address_p': tax_invoice_address_p,
             'tax_invoice_contact': tax_invoice_contact,
             'tax_invoice_employee': tax_invoice_employee,
             'tax_invoice_memo': tax_invoice_memo,
@@ -1371,7 +1384,7 @@ function save_recept() {
     var tax_invoice_number = $('#tax_invoice_number').val();
     var tax_invoice_company_name = $('#tax_invoice_company_name').val();
     var tax_invoice_address = $('#tax_invoice_address').val();
-    
+    var tax_invoice_address_p = $('#tax_invoice_address_p').val();
     var tax_invoice_contact = $('#tax_invoice_contact').val();
     var tax_invoice_employee = $('#tax_invoice_employee').val();
     var tax_invoice_memo = $('#tax_invoice_memo').val();
@@ -1418,7 +1431,7 @@ function save_recept() {
             'tax_invoice_number': tax_invoice_number,
             'tax_invoice_company_name': tax_invoice_company_name,
             'tax_invoice_address': tax_invoice_address,
-
+            'tax_invoice_address_p': tax_invoice_address_p,
             'tax_invoice_contact': tax_invoice_contact,
             'tax_invoice_employee': tax_invoice_employee,
             'tax_invoice_memo': tax_invoice_memo,
@@ -1529,7 +1542,7 @@ function set_patient_data(patient_id) {
             $('#tax_invoice_number').val(response.tax_invoice_number);
             $('#tax_invoice_company_name').val(response.tax_invoice_company_name);
             $('#tax_invoice_address').val(response.tax_invoice_address);
-
+            $('#tax_invoice_address_p').val(response.tax_invoice_address_p);
             $('#tax_invoice_contact').val(response.tax_invoice_contact);
             $('#tax_invoice_employee').val(response.tax_invoice_employee);
             $('#tax_invoice_memo').val(response.tax_invoice_memo);
@@ -1629,7 +1642,8 @@ function patient_search2(data) {
     var phone = $('#phone_id').val();
     var dob = $('#dob_id').val();
     var memo_detail = $('#memo_detail_id').val();
-
+    var nation = $('#nation_id').val();
+    var address = $('#address_id').val();
     $.ajax({
         type: 'POST',
         url: '/receptionist/patient_search2/',
@@ -1641,7 +1655,9 @@ function patient_search2(data) {
             'email': email,
             'phone': phone,
             'dob': dob,
-            'memo_detail':memo_detail
+            'memo_detail':memo_detail,
+            'nation': nation,
+            'address': address
         },
         dataType: 'Json',
         success: function (response) {
@@ -2142,6 +2158,7 @@ function set_reservation_data(reservation_id) {
             $('#tax_invoice_number').val(response.tax_invoice_number);
             $('#tax_invoice_company_name').val(response.tax_invoice_company_name);
             $('#tax_invoice_address').val(response.tax_invoice_address);
+            $('#tax_invoice_address_p').val(response.tax_invoice_address_p);
             $('#tax_invoice_contact').val(response.tax_invoice_contact);
             $('#tax_invoice_employee').val(response.tax_invoice_employee);
             $('#tax_invoice_memo').val(response.tax_invoice_memo);
@@ -2955,6 +2972,7 @@ function set_patient_data2(patient_id) {
             $('#tax_invoice_number').val(response.tax_invoice_number);
             $('#tax_invoice_company_name').val(response.tax_invoice_company_name);
             $('#tax_invoice_address').val(response.tax_invoice_address);
+            $('#tax_invoice_address_p').val(response.tax_invoice_address_p);
             $('#chief_complaint').val(response.chief_complaint);
 
             //prop('checked', false)

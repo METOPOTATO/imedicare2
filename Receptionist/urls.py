@@ -133,4 +133,5 @@ urlpatterns = [
     path('upload_file_patient/',views.upload_file_patient,name='upload_file_patient'),
     path('draft_patient_list/',views.draft_patient_list,name='draft_patient_list'),
     path('remove_draft_patient/',views.remove_draft_patient,name='remove_draft_patient'),
+    path('update_send_mail_status/',views.update_send_mail_status,name='update_send_mail_status'),
 ]

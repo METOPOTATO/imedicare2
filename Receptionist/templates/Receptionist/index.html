@@ -132,11 +132,14 @@
                             {{reception.doctor}}
                         </div>
                     </td>
-                    <td>
-                        <div class="input-group"> 
-                            <span class="input-group-addon patient_table_title" id="basic-addon1">{{ _('Note (C/C)') }}</span>
+                    <td style="display: flex; flex-direction: row;"> 
+                        <div class="input-group" > 
+                            <span class="input-group-addon patient_table_title" id="basic-addon1">{{ _('Medical Note') }}</span>
                             {{reception.chief_complaint}}
+                            
                         </div>
+                        <div style="display: flex; justify-content: center; align-items: center;"><input style=" width: 50px;" type="button" value="{{ _('PM') }}" class="btn btn-success" id="patient_initial_report_click" /></div>
+                        
                     </td>
                 </tr>
                 
@@ -157,99 +160,119 @@
                             <input type="text" id="patient_funnel_etc" class="form-control" aria-describedby="basic-addon1" autocomplete="off">
                         </div>
                     </td>
-                    <td>
+                    <td style="display: flex; flex-direction: row; justify-content: center; align-items: center;">
                         <div class="input-group"> 
                             <span class="input-group-addon patient_table_title" id="lbl_memo">{{ _('Memo') }}</span>
                             <input type="text" id="memo" class="form-control" aria-describedby="basic-addon1" autocomplete="off">
 
                             <!-- <div><button>Input</button></div> -->
                         </div>
+                        <div>
+                            <!-- <label for="" style="width: 60px;"></label> -->
+                            <input value="Detail" style="width: 50px;" type="button" id="show_memo_detail" onclick="show_memo_detail()" class="btn btn-info" >
+                        </div>
                         <!-- <div class="input-group-btn">
                             <input id="show_memo_detail" type="button" value="{{_('Detail Memo') }}" class="btn btn-primary save_cancel_btn" style="width:100px;" onmouseover="show_memo_detail()"/>
                         </div> -->
                     </td>
                 </tr>
+
+
+
+
+            </table>
+                            <!-- # tax -->
+            <table id="document_info">
                 <tr>
                     <td>
                         <span class="btn btn-danger">{{ _('Document Information') }}</span>
                     </td>
 
                 </tr>
-
-                <!-- # tax -->
                 <tr>
-                    <td >
-
-
-                        <div class="input-group edit_reception_title" style="display: flex;">
+                    <td  style="display: flex; flex-direction: row;">
+                        <div class="input-group edit_reception_title" style="display: flex; flex-direction: row; width: 250px;">
                             <span style="display: flex; text-align: center; justify-content: center; align-items: center;" class="input-group-addon patient_table_title" id="basic-addon1">{{ _('Tax code') }}</span>
                             <input type="text" id="tax_invoice_number" class="form-control" aria-describedby="basic-addon1">
                             <button class="btn btn-primary" onclick="open_tax_search()">{{ _('Search Tax') }}</button>
                         </div>
-                    </td>
-                    <td >
-                        <div class="input-group edit_reception_title" style="display: flex;">
+                        <div class="input-group edit_reception_title" style="display: flex; flex-direction: row;  width: 410px;">
                             <span style="display: flex; text-align: center; justify-content: center; align-items: center;" class="input-group-addon patient_table_title" id="basic-addon2">{{ _('Company Name') }}</span>
                             <input type="text" id="tax_invoice_company_name" class="form-control" aria-describedby="basic-addon2">
+                        </div>
+
+                        <div class="input-group  edit_reception_title" style="display: flex; flex-direction: row; width: 250px;">
+                            <span class="input-group-addon patient_table_title" id="basic-addon2">{{ _('Contact') }}</span>
+                            <input type="text" id="tax_invoice_contact" class="form-control" aria-describedby="basic-addon2" placeholder="Email or phone number">
                         </div>
                     </td>
                 </tr>
                 <tr>
-                    <td >
-
-                        <div class="input-group input-group-half edit_reception_title">
-                            <span class="input-group-addon patient_table_title" id="basic-addon2">{{ _('Contact') }}</span>
-                            <input type="text" id="tax_invoice_contact" class="form-control" aria-describedby="basic-addon2" placeholder="Email or phone number">
+                    <td style="display: flex; flex-direction: row;">
+                        <div class="input-group edit_reception_title" style="display: flex; flex-direction: row;  width: 330px;">
+                            <span style="display: flex; text-align: center; justify-content: center; align-items: center;" class="input-group-addon patient_table_title" id="basic-addon2">{{ _('Personal Address') }}</span>
+                            <input type="text" id="tax_invoice_address_p" class="form-control" aria-describedby="basic-addon2">
                         </div>
-                        <div class="input-group input-group-half edit_reception_title">
-                            <span class="input-group-addon patient_table_title" id="basic-addon1">{{ _('Tax Memo') }}</span>
-                            <input type="text" id="tax_invoice_memo" class="form-control" aria-describedby="basic-addon1">
-                        </div>
-       
-                    </td>
-                    <td >
-                        <div class="input-group edit_reception_title">
-                            <span class="input-group-addon patient_table_title" id="basic-addon1">{{ _('Detail Address') }}</span>
+                        <div class="input-group edit_reception_title" style="display: flex; flex-direction: row; width: 330px;">
+                            <span style="display: flex; text-align: center; justify-content: center; align-items: center;" class="input-group-addon patient_table_title" id="basic-addon1">{{ _('Company Address') }}</span>
                             <input type="text" id="tax_invoice_address" class="form-control" aria-describedby="basic-addon1">
                         </div>
+                        <div class="input-group  edit_reception_title" style="display: flex; flex-direction: row; width: 250px;">
+                            <span style="display: flex; text-align: center; justify-content: center; align-items: center;" class="input-group-addon patient_table_title" id="basic-addon1">{{ _('Tax Memo') }}</span>
+                            <input type="text" id="tax_invoice_memo" class="form-control" aria-describedby="basic-addon1">
+                        </div>
+
                     </td>
                 </tr>
-
-
                 <tr>
                     <td colspan="2">
                     <div class="input-group" id="vital_sign">
                         <!-- <span class="input-group-addon patient_table_title" id="basic-addon1" style="border:1px solid #ccc">{{ _('Vital Sign') }}</span> -->
                         <input type="button" value="{{ _('Vital Sign') }}" class="btn btn-default" id="vital_sign_click" />
                         <div id="vital_sign_control">
-                       <text id="patient_vital_first">{{ _('Ht') }}: </text><input type="text" class="form-control" id="patient_table_vital_ht"/>
-                       {{ _('Wt') }}: <input type="text" class="form-control" id="patient_table_vital_wt"/>
-                       {{ _('BP') }}: <input type="text" class="form-control" id="patient_table_vital_bp"/>
-                       {{ _('BT') }}: <input type="text" class="form-control" id="patient_table_vital_bt"/>
-                       {{ _('PR') }}: <input type="text" class="form-control" id="patient_table_vital_pr"/>
-                       {{ _('RR') }}: <input type="text" class="form-control " id="patient_table_vital_breath"/>
+                        <text id="patient_vital_first">{{ _('Ht') }}: </text><input type="text" class="form-control" id="patient_table_vital_ht"/>
+                        {{ _('Wt') }}: <input type="text" class="form-control" id="patient_table_vital_wt"/>
+                        {{ _('BP') }}: <input type="text" class="form-control" id="patient_table_vital_bp"/>
+                        {{ _('BT') }}: <input type="text" class="form-control" id="patient_table_vital_bt"/>
+                        {{ _('PR') }}: <input type="text" class="form-control" id="patient_table_vital_pr"/>
+                        {{ _('RR') }}: <input type="text" class="form-control " id="patient_table_vital_breath"/>
                             </div>
                     </div>
                     </td>
                 </tr>
 
                 <tr>
-                    <td colspan="2">
-                        <div style="float:left;">
+                    <td style="display: flex; flex-direction: row; justify-content: space-between;" >
+                        <div >
                             <!-- <input type="button" value="{{ _('Inform Tax Invoice') }}" class="btn btn-default" id="patient_tax_invoice_click" /> -->
-                            <input type="button" value="{{ _('Initial Report') }}" class="btn btn-success" id="patient_initial_report_click" />
-                            <label class="btn btn-warning need_medical_report" ><input type="checkbox" id="need_medical_report" /><text> {{_('Medical Report') }}</text></label>
-                            <label class="need_medical_report" style="margin-right:10px;"><input type="checkbox" id="need_invoice" /><text> {{_('Red Invoice') }}</text></label>
-                            <label class="need_medical_report" style="margin-right:10px;"><input type="checkbox" id="need_insurance" /><text> {{_('Insurance') }}</text></label>
-                            <label class="need_medical_report" style="margin-right:10px;"><input type="checkbox" id="is_vaccine" /><text> {{_('Vaccine') }}</text></label>
-                         </div>
-                        <div style="float:right;">
+                            
+                            <!-- <label class="btn btn-warning need_medical_report" ><input type="checkbox" id="need_medical_report" /><text> {{_('Medical Report') }}</text></label> -->
+                            
+                            <div>
+                                <button class="btn btn-primary " style="width: 120px;">VAT Invoice</button>
+                                <label class="need_medical_report" style="margin-right:10px;"><input type="checkbox" id="" /><text> {{_('Company') }}</text></label>
+                                <label class="need_medical_report" style="margin-right:10px;"><input type="checkbox" id="" /><text> {{_('Personal') }}</text></label>
+                                <label class="need_medical_report" style="margin-right:10px;"><input type="checkbox" id="need_insurance" /><text> {{_('Insurance') }}</text></label>
+                                <label class="need_medical_report" style="margin-right:10px;"><input type="checkbox" id="need_invoice" /><text> {{_('Red Invoice') }}</text></label>
+                            </div>
+                            <div>
+                                <button class="btn btn-primary" style="width: 120px;">Without</button>
+                                <label class="need_medical_report" style="margin-right:10px;"><input type="checkbox" id="" /><text> {{_('Name') }}</text></label>
+                                <!-- <label class="need_medical_report" style="margin-right:10px;"><input type="checkbox" id="is_vaccine" /><text> {{_('Vaccine') }}</text></label> -->
+    
+                                <label class="need_medical_report" style="margin-right:10px;"><input type="checkbox" id="" /><text> {{_('Email') }}</text></label>
+                                <label class="need_medical_report" style="margin-right:10px;"><input type="checkbox" id="" /><text> {{_('Only today') }}</text></label>
+                            </div>
+
+                        </div>
+                        <div>
                             <input class="btn btn-default save_cancel_btn"  value="{{ _('Cancel') }}" onclick="set_cancel()" />
                             <input class="btn btn-info save_cancel_btn" value="{{ _('Save') }}" onclick="show_memo_detail()"/>
                             <!--<input type="button" value="{{_('Package') }}" class="btn btn-danger save_cancel_btn" style="width:80px;" onclick="patient_package_list_modal()"/>-->
                             <input type="button" value="{{_('Registration') }}" class="btn btn-primary save_cancel_btn" style="width:100px;" onclick="show_memo_detail()"/>
                         </div>
                     </td>
+
                 </tr>
             </table>
         </div>
@@ -283,8 +306,8 @@
                                 <input style="width: 160px;" type="text" name="search_input" id="dob_id" class="form-control patient_search_input" aria-describedby="basic-addon1" required=""> 
                             </td>
                             <td>
-                                <label for="" style="width: 60px;"></label>
-                                <input value="Show Memo Detail" style="width: 160px;" type="button" id="show_memo_detail" onclick="show_memo_detail()" class="btn btn-info" >
+                                <label  style="width: 70px;" for="Nationality">{{ _('Nationality') }}</label>
+                                <input style="width: 160px;" type="text" name="search_input" id="nation_id" class="form-control patient_search_input" aria-describedby="basic-addon1" required="">   
                             </td>
                         </tr>
                         <tr>
@@ -301,8 +324,10 @@
                                 <input style="width: 160px;" type="text" name="search_input" id="memo_id" class="form-control patient_search_input" aria-describedby="basic-addon1" required="">                              
                             </td>
                             <td>
-                                <label style="width: 60px;" for="memo_d">{{ _('Memo.D') }}</label>
-                                <input style="width: 160px;" type="text" name="memo_d" id="memo_detail_id" class="form-control patient_search_input" aria-describedby="basic-addon1" required="">   
+                                <label style="width: 70px;" for="address">{{ _('Address') }}</label>
+                                <input style="width: 160px;" type="text" name="search_input" id="address_id" class="form-control patient_search_input" aria-describedby="basic-addon1" required="">   
+                                <!-- <label style="width: 60px;" for="memo_d">{{ _('Memo.D') }}</label>
+                                <input style="width: 160px;" type="text" name="memo_d" id="memo_detail_id" class="form-control patient_search_input" aria-describedby="basic-addon1" required="">    -->
                             </td>
                         </tr>
                     </table>

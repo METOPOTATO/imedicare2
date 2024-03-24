@@ -155,6 +155,7 @@ def save_patient(request):
     tax_invoice_number = request.POST.get('tax_invoice_number','')
     tax_invoice_company_name = request.POST.get('tax_invoice_company_name','')
     tax_invoice_address = request.POST.get('tax_invoice_address','')
+    tax_invoice_address_p = request.POST.get('tax_invoice_address_p','')
 
     tax_invoice_contact = request.POST.get('tax_invoice_contact','')
     tax_invoice_employee = request.POST.get('tax_invoice_employee','')
@@ -216,6 +217,7 @@ def save_patient(request):
         taxinvoice.number = '' if tax_invoice_number == '' else tax_invoice_number
         taxinvoice.company_name = '' if tax_invoice_number == '' else tax_invoice_company_name
         taxinvoice.address = '' if tax_invoice_number == '' else tax_invoice_address
+        taxinvoice.address_p = '' if tax_invoice_number == '' else tax_invoice_address_p
 
         taxinvoice.contact = '' if tax_invoice_contact == '' else tax_invoice_contact
         taxinvoice.employee = '' if tax_invoice_employee == '' else tax_invoice_employee
@@ -318,6 +320,7 @@ def set_patient_data(request):
         'tax_invoice_number':'' if taxinvoice is None else taxinvoice.number,
         'tax_invoice_company_name':'' if taxinvoice is None else taxinvoice.company_name,
         'tax_invoice_address':'' if taxinvoice is None else taxinvoice.address,
+        'tax_invoice_address_p':'' if taxinvoice is None else taxinvoice.address_p,
         'tax_invoice_contact':'' if taxinvoice is None else taxinvoice.contact,
         'tax_invoice_employee':'' if taxinvoice is None else taxinvoice.employee,
         'tax_invoice_memo':'' if taxinvoice is None else taxinvoice.memo,
@@ -486,7 +489,7 @@ def save_reception(request):
     tax_invoice_number = request.POST.get('tax_invoice_number','')
     tax_invoice_company_name = request.POST.get('tax_invoice_company_name','')
     tax_invoice_address = request.POST.get('tax_invoice_address','')
-
+    tax_invoice_address_p = request.POST.get('tax_invoice_address_p','')
     tax_invoice_contact = request.POST.get('tax_invoice_contact','')
     tax_invoice_employee = request.POST.get('tax_invoice_employee','')
     tax_invoice_memo = request.POST.get('tax_invoice_memo','')
@@ -575,6 +578,7 @@ def save_reception(request):
         taxinvoice.number = '' if tax_invoice_number == '' else tax_invoice_number
         taxinvoice.company_name = '' if tax_invoice_number == '' else tax_invoice_company_name
         taxinvoice.address = '' if tax_invoice_number == '' else tax_invoice_address
+        taxinvoice.address_p = '' if tax_invoice_number == '' else tax_invoice_address_p
 
         taxinvoice.contact = '' if tax_invoice_contact == '' else tax_invoice_contact
         taxinvoice.employee = '' if tax_invoice_employee == '' else tax_invoice_employee
@@ -1509,6 +1513,7 @@ def get_today_selected(request):
         'tax_invoice_number':'' if taxinvoice is None else taxinvoice.number,
         'tax_invoice_company_name':'' if taxinvoice is None else taxinvoice.company_name,
         'tax_invoice_address':'' if taxinvoice is None else taxinvoice.address,
+        'tax_invoice_address_p':'' if taxinvoice is None else taxinvoice.address_p,
         'tax_recommendation':'' if taxinvoice is None else taxinvoice.recommend,
                 
         'need_invoice':reception.need_invoice,
@@ -1650,6 +1655,7 @@ def waiting_selected(request):
         'tax_invoice_number':'' if taxinvoice is None else taxinvoice.number,
         'tax_invoice_company_name':'' if taxinvoice is None else taxinvoice.company_name,
         'tax_invoice_address':'' if taxinvoice is None else taxinvoice.address,
+        'tax_invoice_address_p':'' if taxinvoice is None else taxinvoice.address_p,
         'tax_recommendation': '' if taxinvoice is None else taxinvoice.recommend,
         'reception_id':reception.id,
 
@@ -2775,6 +2781,7 @@ def reservation_info(request):
         'reservation_memo': "" if reservation.memo is None else reservation.memo,
 
         'tax_invoice_address': '' if tax is None else reservation.patient.taxinvoice.address,
+        'tax_invoice_address_p': '' if tax is None else reservation.patient.taxinvoice.address_p,
         'tax_invoice_company_name': '' if tax is None else reservation.patient.taxinvoice.company_name,
         'tax_invoice_number':'' if tax is None else reservation.patient.taxinvoice.number,
         'tax_invoice_contact': '' if tax is None else reservation.patient.taxinvoice.contact,
@@ -3303,7 +3310,8 @@ def document_search(request):
             'phone':reception.patient.phone,
             'date_time':reception.recorded_date.strftime('%Y-%m-%d %H:%M'),   
             'passport':reception.patient.passport,   
-            'email': reception.patient.email   
+            'email': reception.patient.email,
+            'send_email_status': reception.send_email_status 
             }
         diagnosis = True
         try:
@@ -5554,6 +5562,10 @@ def patient_search2(request):
     email = request.POST.get('email')
     phone = request.POST.get('phone')
     dob = request.POST.get('dob')
+
+    nation = request.POST.get('nation')
+    address = request.POST.get('address')
+    dob = request.POST.get('dob')
     memo_detail = request.POST.get('memo_detail')
     argument_list = [] 
     if memo and memo != '':
@@ -5573,7 +5585,12 @@ def patient_search2(request):
 
     if dob and dob != '':
         argument_list.append( Q(**{'patient__date_of_birth__icontains':dob} ) )
-
+    
+    if nation and nation != '':
+        argument_list.append( Q(**{'patient__nationality__icontains':nation} ) )
+    
+    if address and address != '':
+        argument_list.append( Q(**{'patient__address__icontains':address} ) )
     # patient = Patient.objects.filter(name_kor=string).first()
     # print(patient)
     datas=[]
@@ -5864,3 +5881,139 @@ def remove_draft_patient(request):
     
     context = {'datas':datas}
     return JsonResponse(context)
+
+@login_required
+def update_send_mail_status(request):
+    print('asdasdas')
+    try:
+        id = request.POST.get('id', '')
+        re = Reception.objects.get(pk=id)
+        if re.send_email_status < 2:
+            re.send_email_status += 1
+            re.save()
+    except Exception as e:
+        print(e)
+    start = request.POST.get('document_control_start')
+    end = request.POST.get('document_control_end')
+    depart = request.POST.get('document_control_depart')
+    input = request.POST.get('document_control_input')
+
+    
+    
+    kwargs={}
+    if depart != '':
+        kwargs['depart_id'] = depart
+        #argument_list.append( Q(**{'depart_id':depart} ) ) 
+
+    argument_list = [] 
+
+    argument_list.append( Q(**{'patient__name_kor__icontains':input} ) ) 
+    argument_list.append( Q(**{'patient__name_eng__icontains':input} ) ) 
+
+
+    date_min = datetime.datetime.combine(datetime.datetime.strptime(start, "%Y-%m-%d").date(), datetime.time.min)
+    date_max = datetime.datetime.combine(datetime.datetime.strptime(end, "%Y-%m-%d").date(), datetime.time.max)
+
+    datas=[]
+    receptions = Reception.objects.select_related(
+                    'patient'
+                ).select_related(
+                    'depart'
+                ).select_related(
+                    'doctor'
+                ).select_related(
+                    'diagnosis'
+                ).select_related(
+                    'payment'
+                ).prefetch_related(
+                    'diagnosis__medicinemanager_set'
+                ).prefetch_related(
+                    'diagnosis__testmanager_set'
+                ).order_by(
+                    '-recorded_date'
+                ).filter(
+                    functools.reduce(operator.or_, argument_list),
+                    **kwargs,
+                    recorded_date__range = (date_min, date_max) 
+                    ,progress = 'done'
+                ).exclude(progress='deleted')
+    for reception in receptions:
+        data= {
+            'id':reception.id,
+            'chart':reception.patient.get_chart_no(),
+            'name':reception.patient.get_name_kor_eng(),
+            'date_of_birth':reception.patient.date_of_birth.strftime('%Y-%m-%d'),   
+            'age':reception.patient.get_age(),
+            'gender':reception.patient.get_gender_simple(),
+            'depart':reception.depart.name,
+            'doctor':reception.doctor.name_short,
+            'address':reception.patient.address,
+            'phone':reception.patient.phone,
+            'date_time':reception.recorded_date.strftime('%Y-%m-%d %H:%M'),   
+            'passport':reception.patient.passport,   
+            'email': reception.patient.email,
+            'send_email_status': reception.send_email_status 
+            }
+        diagnosis = True
+        try:
+            if reception.diagnosis.medicinemanager_set.count() !=0:
+                data.update({
+                    'prescription':True,
+                    'medicine_receipt':True,
+                    })
+                is_vac = reception.diagnosis.medicinemanager_set.filter(medicine__code__icontains = 'VC')
+                if is_vac.count() != 0:
+                    data.update({
+                        'vaccine_certificate':True,
+                        })
+        except:
+            diagnosis = False
+            
+        try:    
+            if reception.diagnosis.testmanager_set.count() !=0:
+                data.update({
+                    'lab_report':True,
+                    })
+        except:
+            diagnosis = False
+
+        check = False
+
+        if diagnosis == True:
+            for check in reception.diagnosis.preceduremanager_set.all():
+                #2,4,5,6,8
+                class_id = check.precedure.precedure_class_id 
+                if class_id is 2 or class_id is 4 or class_id is 5 or class_id is 6 or class_id is 8 :
+                    check = True
+                elif class_id is 10:
+                    if 'R' in check.precedure.code:
+                        check = True
+
+            if reception.diagnosis.testmanager_set.count() !=0 or check is True:
+                data.update({
+                    'subclinical':True,
+                    })
+            try:
+                report = Report.objects.filter(reception_id = reception.id).last()
+                data.update({
+                    'medical_report':True,
+                    })
+
+            except Report.DoesNotExist:
+                pass
+        try:
+            if reception.payment is not None:
+                data.update({
+                    'medical_receipt':True,
+                    })
+        except:
+            pass
+
+        datas.append(data)
+    
+
+    print('==========================')
+    return JsonResponse({
+        'result':True,
+        'datas':datas,
+        })
