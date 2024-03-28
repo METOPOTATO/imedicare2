@@ -235,6 +235,11 @@ class Reception(models.Model):
         null = True
     )
 
+    need_invoice_p = models.BooleanField(
+        default = False,
+        null = True
+    )
+
     objects=ReceptionQueryManager()
 
     

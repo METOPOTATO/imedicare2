@@ -6,6 +6,17 @@ function numberWithCommas(x) {
     return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 }
 
+function checkTax(checkbox){
+    var checkboxes = document.getElementsByName('tax_invoice');
+    checkboxes.forEach((item) => {
+        if (item !== checkbox) {
+            console.log(item)
+            item.checked = false
+            console.log('here')
+        }
+    })
+}
+
 $(document).ready(function() {
     if ($('#patient_nationality').val() != 'Other'){
         $('#patient_nationality_etc').prop("disabled",true);
@@ -109,6 +120,11 @@ $(function () {
         }
     })
     $('#address_id').keydown(function (key) {
+        if (key.keyCode == 13) {
+            patient_search2();
+        }
+    })
+    $('#tax_id').keydown(function (key) {
         if (key.keyCode == 13) {
             patient_search2();
         }
@@ -994,6 +1010,7 @@ function new_patient_option(on_off) {
         $('#patient_initial_report_click').attr('disabled', false);
         $('#need_medical_report').attr('disabled', false);
         $('#need_invoice').attr('disabled', false);
+        $('#need_invoice_p').attr('disabled', false);
         $('#need_insurance').attr('disabled', false);
 
     } else {
@@ -1004,6 +1021,7 @@ function new_patient_option(on_off) {
         $('#need_medical_report').prop('checked', false);
         //$('#need_invoice').attr('disabled', true);
         $('#need_invoice').prop('checked', false);
+        $('#need_invoice_p').prop('checked', false);
         //$('#need_insurance').attr('disabled', true);
         $('#need_insurance').prop('checked', false);
 
@@ -1210,6 +1228,7 @@ function save_patient() {
 
     //var need_medical_report = $('#need_medical_report').prop("checked");
     var need_invoice = $("#need_invoice").prop("checked");
+    var need_invoice_p = $("#need_invoice_p").prop("checked");
     var need_insurance = $("#need_insurance").prop("checked");
 
     var tax_invoice_number = $('#tax_invoice_number').val();
@@ -1264,6 +1283,7 @@ function save_patient() {
 
 
             'need_invoice': need_invoice,
+            'need_invoice_p': need_invoice_p,
             'need_insurance': need_insurance,
 
 
@@ -1391,6 +1411,7 @@ function save_recept() {
 
     var need_medical_report = $('#need_medical_report').prop("checked");
     var need_invoice = $("#need_invoice").prop("checked");
+    var need_invoice_p = $("#need_invoice_p").prop("checked");
     var need_insurance = $("#need_insurance").prop("checked");
     var is_vaccine = $("#is_vaccine").prop("checked");
 
@@ -1438,6 +1459,7 @@ function save_recept() {
 
             'need_medical_report': need_medical_report,
             'need_invoice': need_invoice,
+            'need_invoice_p': need_invoice_p,
             'need_insurance': need_insurance,
             'is_vaccine': is_vaccine,
 
@@ -1519,7 +1541,7 @@ function set_patient_data(patient_id) {
             
             if(response.nationality == "Korea" || response.nationality == "Vietnam"){
                 $('#patient_nationality').val(response.nationality);
-               
+                $('#patient_nationality_etc').val('');
             }
             else{
                 $('#patient_nationality_etc').val(response.nationality);
@@ -1549,9 +1571,13 @@ function set_patient_data(patient_id) {
 
             //prop('checked', false)
             $('#need_invoice').prop('checked', false)
+            $('#need_invoice_p').prop('checked', false)
             $('#need_insurance').prop('checked', false)
             if (response.invoice) {
                 $('#need_invoice').prop('checked', true)
+            }
+            if (response.invoice_p) {
+                $('#need_invoice_p').prop('checked', true)
             }
             if (response.insurance) {
                 $('#need_insurance').prop('checked', true)
@@ -1644,6 +1670,7 @@ function patient_search2(data) {
     var memo_detail = $('#memo_detail_id').val();
     var nation = $('#nation_id').val();
     var address = $('#address_id').val();
+    var tax = $('#tax_id').val();
     $.ajax({
         type: 'POST',
         url: '/receptionist/patient_search2/',
@@ -1657,7 +1684,8 @@ function patient_search2(data) {
             'dob': dob,
             'memo_detail':memo_detail,
             'nation': nation,
-            'address': address
+            'address': address,
+            'tax': tax
         },
         dataType: 'Json',
         success: function (response) {
@@ -2166,8 +2194,12 @@ function set_reservation_data(reservation_id) {
             //prop('checked', false)
             $('#need_invoice').prop('checked', false)
             $('#need_insurance').prop('checked', false)
+            $('#need_invoice_p').prop('checked', false)
             if (response.need_invoice) {
                 $('#need_invoice').prop('checked', true)
+            }
+            if (response.need_invoice_p) {
+                $('#need_invoice_p').prop('checked', true)
             }
             if (response.need_insurance) {
                 $('#need_insurance').prop('checked', true)
@@ -2977,9 +3009,13 @@ function set_patient_data2(patient_id) {
 
             //prop('checked', false)
             $('#need_invoice').prop('checked', false)
+            $('#need_invoice_p').prop('checked', false)
             $('#need_insurance').prop('checked', false)
             if (response.invoice) {
                 $('#need_invoice').prop('checked', true)
+            }
+            if (response.invoice_p) {
+                $('#need_invoice_p').prop('checked', true)
             }
             if (response.insurance) {
                 $('#need_insurance').prop('checked', true)

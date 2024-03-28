@@ -80,10 +80,10 @@ function document_search() {
                     
                     var tr_class = '';
                     if(response.datas[i].send_email_status == '1'){
-                        tr_class  = "class ='success'";
+                        tr_class  = "class ='green'";
                     }
                     else if(response.datas[i].send_email_status == '2'){
-                        tr_class  = "class ='danger'";
+                        tr_class  = "class ='warning'";
                     }
                     
                     str = "<tr " + tr_class + "><td>" + (i + 1) + "</td>" +
@@ -108,7 +108,12 @@ function document_search() {
                     str += '</td>';
                     // Passport
                     console.log('======================')
-                    str += '<td>' + response.datas[i].email + '</td>' 
+                    str += '<td>' + response.datas[i].email + '</td>' ;
+
+                    str += '<td>' + response.datas[i].is_invoice + '</td>' 
+                    str += '<td>' + response.datas[i].is_insurance + '</td>' 
+                    str += '<td>' + response.datas[i].tax_code + '</td>' 
+                    str += '<td>' + response.datas[i].address2 + '</td>' 
 
                     if (response.datas[i].medical_receipt== true) {
                         str += '<td>' + "<a class='btn btn-default btn-xs' href='javascript: void (0);' onclick='print_medical_receipt(" + response.datas[i].id + ")' ><i class='fa fa-lg fa-print'></i></a>" + '</td>';
@@ -300,11 +305,11 @@ function update_send_mail_status(pid){
 
                     
                     var tr_class = '';
-                    if(response.datas[i].send_email_status == '1'){
-                        tr_class  = "class ='success'";
+                    if(response.datas[i].send_email_status == 1){
+                        tr_class  = "class ='green'";
                     }
                     else if(response.datas[i].send_email_status == '2'){
-                        tr_class  = "class ='danger'";
+                        tr_class  = "class ='warning'";
                     }
                     
                     str = "<tr " + tr_class + "><td>" + (i + 1) + "</td>" +
@@ -329,7 +334,11 @@ function update_send_mail_status(pid){
                     str += '</td>';
                     // Passport
                     console.log('======================')
-                    str += '<td>' + response.datas[i].email + '</td>' 
+                    str += '<td>' + response.datas[i].email + '</td>' ;
+                    str += '<td>' + response.datas[i].is_invoice + '</td>' 
+                    str += '<td>' + response.datas[i].is_insurance + '</td>' 
+                    str += '<td>' + response.datas[i].tax_code + '</td>' 
+                    str += '<td>' + response.datas[i].address2 + '</td>' 
 
                     if (response.datas[i].medical_receipt== true) {
                         str += '<td>' + "<a class='btn btn-default btn-xs' href='javascript: void (0);' onclick='print_medical_receipt(" + response.datas[i].id + ")' ><i class='fa fa-lg fa-print'></i></a>" + '</td>';

@@ -176,7 +176,62 @@
                         </div> -->
                     </td>
                 </tr>
+                <tr>
+                    <td colspan="2">
+                    <div class="input-group" id="vital_sign">
+                        <!-- <span class="input-group-addon patient_table_title" id="basic-addon1" style="border:1px solid #ccc">{{ _('Vital Sign') }}</span> -->
+                        <input type="button" value="{{ _('Vital Sign') }}" class="btn btn-default" id="vital_sign_click" />
+                        <div id="vital_sign_control">
+                        <text id="patient_vital_first">{{ _('Ht') }}: </text><input type="text" class="form-control" id="patient_table_vital_ht"/>
+                        {{ _('Wt') }}: <input type="text" class="form-control" id="patient_table_vital_wt"/>
+                        {{ _('BP') }}: <input type="text" class="form-control" id="patient_table_vital_bp"/>
+                        {{ _('BT') }}: <input type="text" class="form-control" id="patient_table_vital_bt"/>
+                        {{ _('PR') }}: <input type="text" class="form-control" id="patient_table_vital_pr"/>
+                        {{ _('RR') }}: <input type="text" class="form-control " id="patient_table_vital_breath"/>
+                            </div>
+                    </div>
+                    </td>
+                </tr>
 
+                <tr>
+                    <td colspan="2" >
+                        <div style="display: flex; flex-direction: row; justify-content: space-between;" >
+                            <!-- <input type="button" value="{{ _('Inform Tax Invoice') }}" class="btn btn-default" id="patient_tax_invoice_click" /> -->
+                            
+                            <!-- <label class="btn btn-warning need_medical_report" ><input type="checkbox" id="need_medical_report" /><text> {{_('Medical Report') }}</text></label> -->
+                            
+                            <div >
+                                <button class="btn btn-primary " style="width: 90px;">VAT Invoice</button>
+
+                                
+                                <label class="need_medical_report"  style="margin-right:10px;"><input name="tax_invoice" type="checkbox" id="need_invoice" onclick="checkTax(this)" /><text> {{_('Company') }}</text></label>
+                                <label class="need_medical_report"  style="margin-right:10px;"><input name="tax_invoice" type="checkbox" id="need_invoice_p" onclick="checkTax(this)" /><text> {{_('Personal') }}</text></label>
+                                
+                                <!-- <label class="need_medical_report" style="margin-right:10px;"><input type="checkbox" id="" /><text> {{_('Red Invoice') }}</text></label> -->
+                            </div>
+                            <div>
+                                <button class="btn btn-primary " style="width: 90px;">Insurance</button>
+                                <label class="need_medical_report " style="margin-right:10px;" >
+                                    <input type="checkbox" id="need_insurance" />
+                                    <text> {{_('Insurance') }}</text>
+                                </label>
+                            </div>
+                            <div>
+                                <button class="btn btn-primary" style="width: 90px;">Without</button>
+                                <label class="need_medical_report" style="margin-right:10px;"><input type="checkbox" id="" /><text> {{_('Name') }}</text></label>
+                                <!-- <label class="need_medical_report" style="margin-right:10px;"><input type="checkbox" id="is_vaccine" /><text> {{_('Vaccine') }}</text></label> -->
+    
+                                <label class="need_medical_report" style="margin-right:10px;"><input type="checkbox" id="" /><text> {{_('Email') }}</text></label>
+                                <label class="need_medical_report" style="margin-right:10px;"><input type="checkbox" id="" /><text> {{_('Only today') }}</text></label>
+                            </div>
+
+                        </div>
+                    
+
+                    </td>
+
+
+                </tr>
 
 
 
@@ -210,11 +265,11 @@
                 <tr>
                     <td style="display: flex; flex-direction: row;">
                         <div class="input-group edit_reception_title" style="display: flex; flex-direction: row;  width: 330px;">
-                            <span style="display: flex; text-align: center; justify-content: center; align-items: center;" class="input-group-addon patient_table_title" id="basic-addon2">{{ _('Personal Address') }}</span>
+                            <span style="display: flex; text-align: center; justify-content: center; align-items: center; width: 120px;" class="input-group-addon patient_table_title" id="basic-addon2">{{ _('Personal Address') }}</span>
                             <input type="text" id="tax_invoice_address_p" class="form-control" aria-describedby="basic-addon2">
                         </div>
                         <div class="input-group edit_reception_title" style="display: flex; flex-direction: row; width: 330px;">
-                            <span style="display: flex; text-align: center; justify-content: center; align-items: center;" class="input-group-addon patient_table_title" id="basic-addon1">{{ _('Company Address') }}</span>
+                            <span style="display: flex; text-align: center; justify-content: center; align-items: center; width: 120px;" class="input-group-addon patient_table_title" id="basic-addon1">{{ _('Company Address') }}</span>
                             <input type="text" id="tax_invoice_address" class="form-control" aria-describedby="basic-addon1">
                         </div>
                         <div class="input-group  edit_reception_title" style="display: flex; flex-direction: row; width: 250px;">
@@ -225,54 +280,17 @@
                     </td>
                 </tr>
                 <tr>
-                    <td colspan="2">
-                    <div class="input-group" id="vital_sign">
-                        <!-- <span class="input-group-addon patient_table_title" id="basic-addon1" style="border:1px solid #ccc">{{ _('Vital Sign') }}</span> -->
-                        <input type="button" value="{{ _('Vital Sign') }}" class="btn btn-default" id="vital_sign_click" />
-                        <div id="vital_sign_control">
-                        <text id="patient_vital_first">{{ _('Ht') }}: </text><input type="text" class="form-control" id="patient_table_vital_ht"/>
-                        {{ _('Wt') }}: <input type="text" class="form-control" id="patient_table_vital_wt"/>
-                        {{ _('BP') }}: <input type="text" class="form-control" id="patient_table_vital_bp"/>
-                        {{ _('BT') }}: <input type="text" class="form-control" id="patient_table_vital_bt"/>
-                        {{ _('PR') }}: <input type="text" class="form-control" id="patient_table_vital_pr"/>
-                        {{ _('RR') }}: <input type="text" class="form-control " id="patient_table_vital_breath"/>
+                    <td >
+                        <div style="display: flex; justify-content: end; align-content: end; align-items: end;">
+                            <div >
+                                <input class="btn btn-default save_cancel_btn"  value="{{ _('Cancel') }}" onclick="set_cancel()" />
+                                <input class="btn btn-info save_cancel_btn" value="{{ _('Save') }}" onclick="show_memo_detail()"/>
+                                <!--<input type="button" value="{{_('Package') }}" class="btn btn-danger save_cancel_btn" style="width:80px;" onclick="patient_package_list_modal()"/>-->
+                                <input type="button" value="{{_('Registration') }}" class="btn btn-primary save_cancel_btn" style="width:100px;" onclick="show_memo_detail()"/>
                             </div>
-                    </div>
-                    </td>
-                </tr>
-
-                <tr>
-                    <td style="display: flex; flex-direction: row; justify-content: space-between;" >
-                        <div >
-                            <!-- <input type="button" value="{{ _('Inform Tax Invoice') }}" class="btn btn-default" id="patient_tax_invoice_click" /> -->
-                            
-                            <!-- <label class="btn btn-warning need_medical_report" ><input type="checkbox" id="need_medical_report" /><text> {{_('Medical Report') }}</text></label> -->
-                            
-                            <div>
-                                <button class="btn btn-primary " style="width: 120px;">VAT Invoice</button>
-                                <label class="need_medical_report" style="margin-right:10px;"><input type="checkbox" id="" /><text> {{_('Company') }}</text></label>
-                                <label class="need_medical_report" style="margin-right:10px;"><input type="checkbox" id="" /><text> {{_('Personal') }}</text></label>
-                                <label class="need_medical_report" style="margin-right:10px;"><input type="checkbox" id="need_insurance" /><text> {{_('Insurance') }}</text></label>
-                                <label class="need_medical_report" style="margin-right:10px;"><input type="checkbox" id="need_invoice" /><text> {{_('Red Invoice') }}</text></label>
-                            </div>
-                            <div>
-                                <button class="btn btn-primary" style="width: 120px;">Without</button>
-                                <label class="need_medical_report" style="margin-right:10px;"><input type="checkbox" id="" /><text> {{_('Name') }}</text></label>
-                                <!-- <label class="need_medical_report" style="margin-right:10px;"><input type="checkbox" id="is_vaccine" /><text> {{_('Vaccine') }}</text></label> -->
-    
-                                <label class="need_medical_report" style="margin-right:10px;"><input type="checkbox" id="" /><text> {{_('Email') }}</text></label>
-                                <label class="need_medical_report" style="margin-right:10px;"><input type="checkbox" id="" /><text> {{_('Only today') }}</text></label>
-                            </div>
-
                         </div>
-                        <div>
-                            <input class="btn btn-default save_cancel_btn"  value="{{ _('Cancel') }}" onclick="set_cancel()" />
-                            <input class="btn btn-info save_cancel_btn" value="{{ _('Save') }}" onclick="show_memo_detail()"/>
-                            <!--<input type="button" value="{{_('Package') }}" class="btn btn-danger save_cancel_btn" style="width:80px;" onclick="patient_package_list_modal()"/>-->
-                            <input type="button" value="{{_('Registration') }}" class="btn btn-primary save_cancel_btn" style="width:100px;" onclick="show_memo_detail()"/>
-                        </div>
-                    </td>
 
+                    </td>
                 </tr>
             </table>
         </div>
@@ -295,39 +313,45 @@
                         </thead> -->
                         <tr>
                             <td>
-                                <label style="width: 40px;" for="name">{{ _('Name') }}</label>
-                                <input style="width: 180px;" type="text" name="search_input" id="name_id" class="form-control patient_search_input" aria-describedby="basic-addon1" required=""> </td>
+                                <label style="width: 80px;" for="name">{{ _('Name') }}</label>
+                                <input style="width: 200px;" type="text" name="search_input" id="name_id" class="form-control patient_search_input" aria-describedby="basic-addon1" required=""> </td>
                             <td>
-                                <label style="width: 60px;"  for="phone">{{ _('Phone') }}</label>
-                                <input style="width: 180px;" type="text" name="search_input" id="phone_id" class="form-control patient_search_input" aria-describedby="basic-addon1" required=""> 
+                                <label style="width: 80px;"  for="phone">{{ _('Phone') }}</label>
+                                <input style="width: 200px;" type="text" name="search_input" id="phone_id" class="form-control patient_search_input" aria-describedby="basic-addon1" required=""> 
                             </td>
                             <td>
-                                <label style="width: 40px;"  for="dob">{{ _('Birth') }}</label>
-                                <input style="width: 160px;" type="text" name="search_input" id="dob_id" class="form-control patient_search_input" aria-describedby="basic-addon1" required=""> 
+                                <label style="width: 80px;"  for="dob">{{ _('Birth') }}</label>
+                                <input style="width: 200px;" type="text" name="search_input" id="dob_id" class="form-control patient_search_input" aria-describedby="basic-addon1" required=""> 
                             </td>
-                            <td>
-                                <label  style="width: 70px;" for="Nationality">{{ _('Nationality') }}</label>
-                                <input style="width: 160px;" type="text" name="search_input" id="nation_id" class="form-control patient_search_input" aria-describedby="basic-addon1" required="">   
-                            </td>
+
                         </tr>
                         <tr>
                             <td>
-                                <label style="width: 40px;"  for="email">{{ _('Email') }}</label>
-                                <input style="width: 180px;" type="text" name="search_input" id="email_id" class="form-control patient_search_input" aria-describedby="basic-addon1" required=""> 
+                                <label  style="width: 80px;" for="Nationality">{{ _('Nationality') }}</label>
+                                <input style="width: 200px;" type="text" name="search_input" id="nation_id" class="form-control patient_search_input" aria-describedby="basic-addon1" required="">   
                             </td>
                             <td>
-                                <label style="width: 60px;"  for="chart">{{ _('Chart No') }}</label>
-                                <input style="width: 180px;" type="text" name="search_input" id="chart_id" class="form-control patient_search_input" aria-describedby="basic-addon1" required=""> 
+                                <label style="width: 80px;"  for="email">{{ _('Email') }}</label>
+                                <input style="width: 200px;" type="text" name="search_input" id="email_id" class="form-control patient_search_input" aria-describedby="basic-addon1" required=""> 
                             </td>
                             <td>
-                                <label for="memo">{{ _('Memo') }}</label>
-                                <input style="width: 160px;" type="text" name="search_input" id="memo_id" class="form-control patient_search_input" aria-describedby="basic-addon1" required="">                              
+                                <label style="width: 80px;"  for="chart">{{ _('Chart No') }}</label>
+                                <input style="width: 200px;" type="text" name="search_input" id="chart_id" class="form-control patient_search_input" aria-describedby="basic-addon1" required=""> 
+                            </td>
+
+                        </tr>
+                        <tr>
+                            <td>
+                                <label style="width: 80px;" for="memo">{{ _('Memo') }}</label>
+                                <input style="width: 200px;" type="text" name="search_input" id="memo_id" class="form-control patient_search_input" aria-describedby="basic-addon1" required="">                              
                             </td>
                             <td>
-                                <label style="width: 70px;" for="address">{{ _('Address') }}</label>
-                                <input style="width: 160px;" type="text" name="search_input" id="address_id" class="form-control patient_search_input" aria-describedby="basic-addon1" required="">   
-                                <!-- <label style="width: 60px;" for="memo_d">{{ _('Memo.D') }}</label>
-                                <input style="width: 160px;" type="text" name="memo_d" id="memo_detail_id" class="form-control patient_search_input" aria-describedby="basic-addon1" required="">    -->
+                                <label style="width: 80px;" for="address">{{ _('Address') }}</label>
+                                <input style="width: 200px;" type="text" name="search_input" id="address_id" class="form-control patient_search_input" aria-describedby="basic-addon1" required="">   
+                            </td>
+                            <td>
+                                <label style="width: 80px;" for="memo">{{ _('Tax Code') }}</label>
+                                <input style="width: 200px;" type="text" name="search_input" id="tax_id" class="form-control patient_search_input" aria-describedby="basic-addon1" required="">                              
                             </td>
                         </tr>
                     </table>

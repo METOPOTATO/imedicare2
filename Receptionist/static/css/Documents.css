@@ -1,3 +1,7 @@
+.green{
+    background-color: rgb(129, 228, 178);
+}
+
 .document_grid {
     margin: 0 auto;
     height: 100%;
@@ -37,6 +41,7 @@
 .document_contents_div {
     height: 540px;
     overflow:auto;
+    width: 1900px;
 }
 
 #document_contents_table{
@@ -75,8 +80,48 @@
             width: 130px;
         }
         #document_contents_table thead tr th:nth-child(9) {
+            width: 200px;
+        }
+        #document_contents_table thead tr th:nth-child(10) {
+            width: 80px;
+        }
+        #document_contents_table thead tr th:nth-child(11) {
+            width: 80px;
+        }
+        #document_contents_table thead tr th:nth-child(12) {
+            width: 100px;
+        }
+        #document_contents_table thead tr th:nth-child(13) {
             width: 300px;
         }
+        #document_contents_table thead tr th:nth-child(14) {
+            width: 80px;
+        }
+        #document_contents_table thead tr th:nth-child(15) {
+            width: 80px;
+        }
+        #document_contents_table thead tr th:nth-child(16) {
+            width: 80px;
+        }
+        #document_contents_table thead tr th:nth-child(17) {
+            width: 80px;
+        }
+        #document_contents_table thead tr th:nth-child(18) {
+            width: 80px;
+        }
+        #document_contents_table thead tr th:nth-child(19) {
+            width: 80px;
+        }
+        #document_contents_table thead tr th:nth-child(20) {
+            width: 80px;
+        }
+        #document_contents_table thead tr th:nth-child(21) {
+            width: 80px;
+        }
+        #document_contents_table thead tr th:nth-child(22) {
+            width: 80px;
+        }
+
 
 #document_contents tr td
 {
@@ -109,7 +154,7 @@
 }
 @media ( min-width: 1900px ) {
     .reception_patient {
-        width: 1920px;
+
         height: 800px;
     }
 
@@ -142,6 +187,7 @@
     }
 
 }
+
 
 
 
