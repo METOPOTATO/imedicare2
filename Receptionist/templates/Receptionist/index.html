@@ -25,26 +25,15 @@
             <table class="table patient_table" id="reception_table">
                 <tr>
                     <td >
-                        <div class="input-group ">
+                        <div class="input-group input-group-half ">
                             <span class="input-group-addon patient_table_title" id="lbl_chart">{{ _('Chart No') }}</span>
                             <input type="hidden" id="patient_id" />
                             {{patient.id}}
 
                         </div>
-                    </td>
-                    <td>
-
-                    </td>
-                </tr>
-                <tr>
-                    <td>
                         <div class="input-group input-group-half">
-                            <span class="input-group-addon patient_table_title" id="lbl_name_kor">{{ _('Name Kr/Vn') }}</span>
-                            {{patient.name_kor}}
-                        </div>
-                        <div class="input-group input-group-half">
-                            <span class="input-group-addon patient_table_title" id="lbl_name_eng">{{ _('Name Eng') }}</span>
-                            {{patient.name_eng}}
+                            <span class="input-group-addon patient_table_title" id="basic-addon1">{{ _('Passport No') }}</span>
+                            {{patient.passport}}
                         </div>
                     </td>
                     <td>
@@ -60,6 +49,35 @@
                             </div>
                             <input type="text" id="patient_nationality_etc" class="form-control" aria-describedby="basic-addon1" autocomplete="off">
                         </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <div class="input-group input-group-half">
+                            <span class="input-group-addon patient_table_title" id="lbl_name_kor">{{ _('Name Kr/Vn') }}</span>
+                            {{patient.name_kor}}
+                        </div>
+                        <div class="input-group input-group-half">
+                            <span class="input-group-addon patient_table_title" id="lbl_name_eng">{{ _('Name Eng') }}</span>
+                            {{patient.name_eng}}
+                        </div>
+                    </td>
+                    <td>
+                        <div style="display: flex;">
+                            <div class="input-group input-group-half">
+                                <span class="input-group-addon patient_table_title" id="lbl_phone">{{ _('Phone') }}</span>
+                                {{patient.phone}}
+                            </div>
+                            <div class="input-group input-group-half" >
+                                <span class="input-group-addon patient_table_title" id="basic-addon1">{{ _('Gender') }}</span>
+                                <select name="gender" id="patient_gender" class="form-control costom-select" aria-describedby="basic-addon1" required="">
+                                    <option value="">---------</option>
+                                    <option value="Male">{{ _('Male (Nam)') }}</option>
+                                    <option value="Female">{{ _('Female (Nữ)') }}</option>
+                                </select>
+                                
+                            </div>
+                        </div>
 
                     </td>
                 </tr>
@@ -71,44 +89,19 @@
                             {{patient.date_of_birth}}
                         </div>
                         <div class="input-group input-group-half">
-                            <span class="input-group-addon patient_table_title" id="basic-addon1">{{ _('Short Address') }}</span>
+                            <span class="input-group-addon patient_table_title" id="basic-addon1">{{ _('Actual Residence') }}</span>
                             {{patient.address}}
                         </div>
-                    </td>
-                    <td >
-                        <div class="input-group">
-                            <span class="input-group-addon patient_table_title" id="lbl_phone">{{ _('Phone') }}</span>
-                            {{patient.phone}}
-                        </div>
-
-                    </td>
-                </tr>
-                <tr>
-                    <td >
-                        <div class="input-group input-group-half">
-                            <span class="input-group-addon patient_table_title" id="basic-addon1">{{ _('Passport No') }}</span>
-                            {{patient.passport}}
-                        </div>
-                      
-                        <div class="input-group input-group-half" >
-                            <span class="input-group-addon patient_table_title" id="basic-addon1">{{ _('Gender') }}</span>
-                            <select name="gender" id="patient_gender" class="form-control costom-select" aria-describedby="basic-addon1" required="">
-                                <option value="">---------</option>
-                                <option value="Male">{{ _('Male (Nam)') }}</option>
-                                <option value="Female">{{ _('Female (Nữ)') }}</option>
-                            </select>
-                            
-                        </div>
-                           
-                        
                     </td>
                     <td >
                         <div class="input-group">
                             <span class="input-group-addon patient_table_title" id="lbl_email" style="border:1px solid #ccc">{{ _('Email') }}</span>
                             {{patient.email}}
                         </div>
+
                     </td>
                 </tr>
+
                 <!-- <tr>
                     <td >
 
@@ -205,7 +198,7 @@
 
                                 
                                 <label class="need_medical_report"  style="margin-right:10px;"><input name="tax_invoice" type="checkbox" id="need_invoice" onclick="checkTax(this)" /><text> {{_('Company') }}</text></label>
-                                <label class="need_medical_report"  style="margin-right:10px;"><input name="tax_invoice" type="checkbox" id="need_invoice_p" onclick="checkTax(this)" /><text> {{_('Personal') }}</text></label>
+                                <label class="need_medical_report"  style="margin-right:10px;"><input name="tax_invoice" type="checkbox" id="need_invoice_p" onclick="checkTax(this)" /><text style="color: red;"> {{_('Personal') }}</text></label>
                                 
                                 <!-- <label class="need_medical_report" style="margin-right:10px;"><input type="checkbox" id="" /><text> {{_('Red Invoice') }}</text></label> -->
                             </div>
@@ -264,14 +257,15 @@
                 </tr>
                 <tr>
                     <td style="display: flex; flex-direction: row;">
-                        <div class="input-group edit_reception_title" style="display: flex; flex-direction: row;  width: 330px;">
-                            <span style="display: flex; text-align: center; justify-content: center; align-items: center; width: 120px;" class="input-group-addon patient_table_title" id="basic-addon2">{{ _('Personal Address') }}</span>
-                            <input type="text" id="tax_invoice_address_p" class="form-control" aria-describedby="basic-addon2">
-                        </div>
                         <div class="input-group edit_reception_title" style="display: flex; flex-direction: row; width: 330px;">
                             <span style="display: flex; text-align: center; justify-content: center; align-items: center; width: 120px;" class="input-group-addon patient_table_title" id="basic-addon1">{{ _('Company Address') }}</span>
                             <input type="text" id="tax_invoice_address" class="form-control" aria-describedby="basic-addon1">
                         </div>
+                        <div class="input-group edit_reception_title" style="display: flex; flex-direction: row;  width: 330px;">
+                            <span style="display: flex; text-align: center; justify-content: center; align-items: center; width: 120px; color: red;" class="input-group-addon patient_table_title" id="basic-addon2">{{ _('Personal Address') }}</span>
+                            <input type="text" id="tax_invoice_address_p" class="form-control" aria-describedby="basic-addon2">
+                        </div>
+
                         <div class="input-group  edit_reception_title" style="display: flex; flex-direction: row; width: 250px;">
                             <span style="display: flex; text-align: center; justify-content: center; align-items: center;" class="input-group-addon patient_table_title" id="basic-addon1">{{ _('Tax Memo') }}</span>
                             <input type="text" id="tax_invoice_memo" class="form-control" aria-describedby="basic-addon1">

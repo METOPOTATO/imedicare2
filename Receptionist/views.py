@@ -162,6 +162,9 @@ def save_patient(request):
     tax_invoice_employee = request.POST.get('tax_invoice_employee','')
     tax_invoice_memo = request.POST.get('tax_invoice_memo','')
 
+    tax_change = request.POST.get('tax_change', False)
+    print(tax_change)
+
     id = request.POST.get('id')
     if request.POST.get('id') is None or request.POST.get('id') is '':
         patient = Patient()
@@ -209,21 +212,22 @@ def save_patient(request):
         history.family_history = family_history
     history.save()
 
-    # if tax_invoice_number != '' or tax_invoice_company_name != '' or tax_invoice_address != '':
-    try:
-        taxinvoice = TaxInvoice.objects.get(patient=patient)
-    except TaxInvoice.DoesNotExist:
-        taxinvoice = TaxInvoice(patient = patient)
+    if tax_change == 'true':
+        try:
+            taxinvoice = TaxInvoice.objects.get(patient=patient)
+        except TaxInvoice.DoesNotExist:
+            taxinvoice = TaxInvoice(patient = patient)
 
-    taxinvoice.number = '' if tax_invoice_number == '' else tax_invoice_number
-    taxinvoice.company_name = '' if tax_invoice_company_name == '' else tax_invoice_company_name
-    taxinvoice.address = '' if tax_invoice_address == '' else tax_invoice_address
-    taxinvoice.address_p = '' if tax_invoice_address_p == '' else tax_invoice_address_p
+        taxinvoice.number = '' if tax_invoice_number == '' else tax_invoice_number
+        taxinvoice.company_name = '' if tax_invoice_company_name == '' else tax_invoice_company_name
+        taxinvoice.address = '' if tax_invoice_address == '' else tax_invoice_address
+        taxinvoice.address_p = '' if tax_invoice_address_p == '' else tax_invoice_address_p
 
-    taxinvoice.contact = '' if tax_invoice_contact == '' else tax_invoice_contact
-    taxinvoice.employee = '' if tax_invoice_employee == '' else tax_invoice_employee
-    taxinvoice.memo = '' if tax_invoice_memo == '' else tax_invoice_memo
-    taxinvoice.save()
+        taxinvoice.contact = '' if tax_invoice_contact == '' else tax_invoice_contact
+        taxinvoice.employee = '' if tax_invoice_employee == '' else tax_invoice_employee
+        taxinvoice.memo = '' if tax_invoice_memo == '' else tax_invoice_memo
+        print('tax_invoice_memo',tax_invoice_memo)
+        taxinvoice.save()
 
     if reservation_id != '':
         try:
@@ -299,7 +303,7 @@ def set_patient_data(request):
 
     try:
         rec = Reception.objects.filter(patient_id = patient_id,).last()
-    except TaxInvoice.DoesNotExist:
+    except:
         rec = None
 
 
@@ -333,7 +337,7 @@ def set_patient_data(request):
         'invoice':'' if rec is None else rec.need_invoice,
         'invoice_p':'' if rec is None else rec.need_invoice_p,
         'insurance':'' if rec is None else rec.need_insurance,
-        'chief_complaint':' ',
+        'chief_complaint':'' if rec is None else rec.chief_complaint,
         })
     return JsonResponse(context)
 
@@ -499,6 +503,7 @@ def save_reception(request):
     tax_invoice_contact = request.POST.get('tax_invoice_contact','')
     tax_invoice_employee = request.POST.get('tax_invoice_employee','')
     tax_invoice_memo = request.POST.get('tax_invoice_memo','')
+    tax_change = request.POST.get('tax_change', False)
 
     need_medical_report = request.POST.get('need_medical_report',False)
     need_invoice = request.POST.get('need_invoice',False)
@@ -578,20 +583,21 @@ def save_reception(request):
     reception.save()
 
 
-    try:
-        taxinvoice = TaxInvoice.objects.get(patient=patient)
-    except TaxInvoice.DoesNotExist:
-        taxinvoice = TaxInvoice(patient = patient)
+    if tax_change == 'true':
+        try:
+            taxinvoice = TaxInvoice.objects.get(patient=patient)
+        except TaxInvoice.DoesNotExist:
+            taxinvoice = TaxInvoice(patient = patient)
 
-    taxinvoice.number = '' if tax_invoice_number == '' else tax_invoice_number
-    taxinvoice.company_name = '' if tax_invoice_company_name == '' else tax_invoice_company_name
-    taxinvoice.address = '' if tax_invoice_address == '' else tax_invoice_address
-    taxinvoice.address_p = '' if tax_invoice_address_p == '' else tax_invoice_address_p
+        taxinvoice.number = '' if tax_invoice_number == '' else tax_invoice_number
+        taxinvoice.company_name = '' if tax_invoice_company_name == '' else tax_invoice_company_name
+        taxinvoice.address = '' if tax_invoice_address == '' else tax_invoice_address
+        taxinvoice.address_p = '' if tax_invoice_address_p == '' else tax_invoice_address_p
 
-    taxinvoice.contact = '' if tax_invoice_contact == '' else tax_invoice_contact
-    taxinvoice.employee = '' if tax_invoice_employee == '' else tax_invoice_employee
-    taxinvoice.memo = '' if tax_invoice_memo == '' else tax_invoice_memo
-    taxinvoice.save()
+        taxinvoice.contact = '' if tax_invoice_contact == '' else tax_invoice_contact
+        taxinvoice.employee = '' if tax_invoice_employee == '' else tax_invoice_employee
+        taxinvoice.memo = '' if tax_invoice_memo == '' else tax_invoice_memo
+        taxinvoice.save()
 
 
     #33333
@@ -1714,6 +1720,8 @@ def storage_page_save(request):
 
     reception = Reception.objects.get(pk = reception_id)
     patient = Patient.objects.get(pk = reception.patient.id)
+
+    
     try:
         taxinvoice = TaxInvoice.objects.get(patient=patient)        
     except TaxInvoice.DoesNotExist:
@@ -3319,6 +3327,11 @@ def document_search(request):
             address2 = reception.patient.taxinvoice.address
         elif reception.need_invoice_p == True:
             address2 = reception.patient.taxinvoice.address_p
+        tax_code = ''
+        try:
+            tax_code = reception.patient.taxinvoice.number
+        except:
+            pass
         data= {
             'id':reception.id,
             'chart':reception.patient.get_chart_no(),
@@ -3335,9 +3348,9 @@ def document_search(request):
             'email': reception.patient.email,
             'send_email_status': reception.send_email_status ,
 
-            'is_invoice': reception.need_invoice,
-            'is_insurance': reception.need_insurance,
-            'tax_code': reception.patient.taxinvoice.number,
+            'is_invoice': 'Yes' if reception.need_invoice == True else 'No',
+            'is_insurance': 'Yes' if reception.need_insurance else 'No',
+            'tax_code':tax_code,
             'address2': address2
             }
         diagnosis = True
@@ -5623,7 +5636,7 @@ def patient_search2(request):
     # patient = Patient.objects.filter(name_kor=string).first()
     # print(patient)
     datas=[]
-    if (memo and memo != '') or (name and name != '') or (chart and chart != '') or (email and email != '') or (phone and phone != '') or (dob and dob != '') or (tax and tax != ''):
+    if (memo and memo != '') or (name and name != '') or (chart and chart != '') or (email and email != '') or (phone and phone != '') or (dob and dob != '') or (tax and tax != '') or (nation and nation != '') or (address and address != ''):
         receptions = Reception.objects.select_related('patient').values('patient_id','depart_id').filter( functools.reduce(operator.and_, argument_list) ).exclude(progress='deleted').annotate(c_pt=Count('patient_id'),c_dp=Count('depart_id'))
         # print(receptions)
         patient_memo = []
@@ -5986,8 +5999,8 @@ def update_send_mail_status(request):
             'passport':reception.patient.passport,   
             'email': reception.patient.email,
             'send_email_status': reception.send_email_status ,
-            'is_invoice': reception.need_invoice,
-            'is_insurance': reception.need_insurance,
+            'is_invoice': 'Yes' if reception.need_invoice == True else 'No',
+            'is_insurance': 'Yes' if reception.need_insurance else 'No',
             'tax_code': reception.patient.taxinvoice.number,
             'address2': address2
             }

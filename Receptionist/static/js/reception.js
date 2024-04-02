@@ -1294,6 +1294,7 @@ function save_patient() {
             'patient_table_vital_bt ': patient_table_vital_bt,
             'patient_table_vital_pr': patient_table_vital_pr,
             'patient_table_vital_breath': patient_table_vital_breath,
+            'tax_change': true
 
         },
         dataType: 'Json',
@@ -1470,6 +1471,7 @@ function save_recept() {
             'patient_table_vital_bt': patient_table_vital_bt,
             'patient_table_vital_pr': patient_table_vital_pr,
             'patient_table_vital_breath': patient_table_vital_breath,
+            'tax_change': true
         },
         dataType: 'Json',
         success: function (response) {
@@ -1561,6 +1563,7 @@ function set_patient_data(patient_id) {
             $('input:radio[name=gender]').filter('[value=' + response.gender + ']').prop('checked', true);  
 
             //tax invoice 6666
+            console.log('hohoh')
             $('#tax_invoice_number').val(response.tax_invoice_number);
             $('#tax_invoice_company_name').val(response.tax_invoice_company_name);
             $('#tax_invoice_address').val(response.tax_invoice_address);
