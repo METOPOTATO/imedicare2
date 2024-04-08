@@ -211,11 +211,11 @@
                             </div>
                             <div>
                                 <button class="btn btn-primary" style="width: 90px;">Without</button>
-                                <label class="need_medical_report" style="margin-right:10px;"><input type="checkbox" id="" /><text> {{_('Name') }}</text></label>
+                                <label class="need_medical_report" style="margin-right:10px;"><input style="accent-color: red;" type="checkbox" id="wo_name" /><text> {{_('Name') }}</text></label>
                                 <!-- <label class="need_medical_report" style="margin-right:10px;"><input type="checkbox" id="is_vaccine" /><text> {{_('Vaccine') }}</text></label> -->
     
-                                <label class="need_medical_report" style="margin-right:10px;"><input type="checkbox" id="" /><text> {{_('Email') }}</text></label>
-                                <label class="need_medical_report" style="margin-right:10px;"><input type="checkbox" id="" /><text> {{_('Only today') }}</text></label>
+                                <label class="need_medical_report" style="margin-right:10px;"><input style="accent-color: red;" type="checkbox" id="wo_email" /><text> {{_('Email') }}</text></label>
+                                <label class="need_medical_report" style="margin-right:10px;"><input style="accent-color: red;" type="checkbox" id="wo_today" /><text> {{_('Only today') }}</text></label>
                             </div>
 
                         </div>
@@ -267,7 +267,7 @@
                         </div>
 
                         <div class="input-group  edit_reception_title" style="display: flex; flex-direction: row; width: 250px;">
-                            <span style="display: flex; text-align: center; justify-content: center; align-items: center;" class="input-group-addon patient_table_title" id="basic-addon1">{{ _('Tax Memo') }}</span>
+                            <span style="display: flex; text-align: center; justify-content: center; align-items: center;" class="input-group-addon patient_table_title" id="basic-addon1">{{ _('Docu Memo') }}</span>
                             <input type="text" id="tax_invoice_memo" class="form-control" aria-describedby="basic-addon1">
                         </div>
 

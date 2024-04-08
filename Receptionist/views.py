@@ -153,6 +153,10 @@ def save_patient(request):
     need_invoice_p = request.POST.get('need_invoice_p',False)
     need_insurance = request.POST.get('need_insurance',False)
 
+    wo_name = request.POST.get('wo_name',False)
+    wo_email = request.POST.get('wo_email',False)
+    wo_today = request.POST.get('wo_today',False)
+
     tax_invoice_number = request.POST.get('tax_invoice_number','')
     tax_invoice_company_name = request.POST.get('tax_invoice_company_name','')
     tax_invoice_address = request.POST.get('tax_invoice_address','')
@@ -243,14 +247,31 @@ def save_patient(request):
             reception_last.need_invoice = True
         elif need_invoice == 'false':
             reception_last.need_invoice = False
+
         if need_invoice_p == 'true':
             reception_last.need_invoice_p = True
         elif need_invoice_p == 'false':
             reception_last.need_invoice_p = False
+
         if need_insurance == 'true':
             reception_last.need_insurance = True
         elif need_insurance == 'false':
             reception_last.need_insurance = False
+
+        if wo_name == 'true':
+            reception_last.without_name = True
+        elif wo_name == 'false':
+            reception_last.without_name = False
+
+        if wo_email == 'true':
+            reception_last.without_email = True
+        elif wo_email == 'false':
+            reception_last.without_email = False
+
+        if wo_today == 'true':
+            reception_last.without_today = True
+        elif wo_today == 'false':
+            reception_last.without_today = False
         reception_last.save()
     except:
         pass
@@ -338,6 +359,10 @@ def set_patient_data(request):
         'invoice_p':'' if rec is None else rec.need_invoice_p,
         'insurance':'' if rec is None else rec.need_insurance,
         'chief_complaint':'' if rec is None else rec.chief_complaint,
+
+        'wo_name':'' if rec is None else rec.without_name,
+        'wo_email':'' if rec is None else rec.without_email,
+        'wo_today':'' if rec is None else rec.without_today,
         })
     return JsonResponse(context)
 
@@ -511,6 +536,10 @@ def save_reception(request):
     need_insurance = request.POST.get('need_insurance',False)
     is_vaccine = request.POST.get('is_vaccine',False)
 
+    wo_name = request.POST.get('wo_name',False)
+    wo_email = request.POST.get('wo_email',False)
+    wo_today = request.POST.get('wo_today',False)
+
     id = request.POST.get('id')
     if request.POST.get('id') is None or request.POST.get('id') is '':
         patient = Patient()
@@ -579,6 +608,21 @@ def save_reception(request):
         reception.need_insurance = True
     if is_vaccine == 'true':
         reception.is_vaccine = True
+    
+    if wo_name == 'true':
+        reception.without_name = True
+    elif wo_name == 'false':
+        reception.without_name = False
+
+    if wo_email == 'true':
+        reception.without_email = True
+    elif wo_email == 'false':
+        reception.without_email = False
+
+    if wo_today == 'true':
+        reception.without_today = True
+    elif wo_today == 'false':
+        reception.without_today = False
 
     reception.save()
 
@@ -1534,7 +1578,9 @@ def get_today_selected(request):
         'need_invoice':reception.need_invoice,
         'need_invoice_p':reception.need_invoice_p,
         'need_insurance':reception.need_insurance,
-
+        'wo_name':reception.without_name,
+        'wo_email':reception.without_email,
+        'wo_today':reception.without_today,
 
         }
     return JsonResponse(context)
@@ -1679,6 +1725,11 @@ def waiting_selected(request):
         'need_invoice_p':reception.need_invoice_p,
         'need_insurance':reception.need_insurance,
         'method':payment_record.method,
+
+        'wo_name':reception.without_name,
+        'wo_email':reception.without_email,
+        'w0_today':reception.without_today,
+
         }
     return JsonResponse(context)
 
@@ -1698,6 +1749,10 @@ def storage_page_save(request):
     need_invoice = request.POST.get('need_invoice')
     need_invoice_p = request.POST.get('need_invoice_p')
     need_insurance = request.POST.get('need_insurance')    
+
+    wo_name = request.POST.get('wo_name',False)
+    wo_email = request.POST.get('wo_email',False)
+    wo_today = request.POST.get('wo_today',False)
     
 
     discount = request.POST.get('discount',0)
@@ -1741,6 +1796,10 @@ def storage_page_save(request):
     reception.need_invoice = True if need_invoice.lower() == 'true' else False
     try: 
         reception.need_invoice_p = True if need_invoice_p.lower() == 'true' else False 
+
+        reception.without_name = True if wo_name.lower() == 'true' else False 
+        reception.without_email = True if wo_email.lower() == 'true' else False 
+        reception.without_today = True if wo_today.lower() == 'true' else False 
     except:
         pass
     reception.need_insurance = True if need_insurance.lower() == 'true' else False  
@@ -2790,7 +2849,12 @@ def reservation_info(request):
         'patient_address': reservation.pick_up_addr if reservation.patient is None else reservation.patient.address,   
         'patient_email':'' if reservation.patient is None else reservation.patient.email,      
         'need_invoice':'' if reception_last is None else reception_last.need_invoice,  
-        'need_invoice_p':'' if reception_last is None else reception_last.need_invoice_p,  
+        'need_invoice_p':'' if reception_last is None else reception_last.need_invoice_p, 
+         
+        'wo_name':'' if reception_last is None else reception_last.without_name, 
+        'wo_email':'' if reception_last is None else reception_last.without_email, 
+        'wo_today':'' if reception_last is None else reception_last.without_today, 
+        
         'need_insurance':'' if reception_last is None else reception_last.need_insurance, 
         'chief_complaint':'' if reception_last is None else reception_last.chief_complaint, 
         'reservation_reception_id':reservation_reception_id, 
@@ -5605,6 +5669,12 @@ def patient_search2(request):
     nation = request.POST.get('nation')
     address = request.POST.get('address')
     tax = request.POST.get('tax')
+
+    is_tax_numeric = tax.isnumeric() if tax else True
+    if not is_tax_numeric:
+        print(is_tax_numeric)
+        return JsonResponse({'datas': []})
+    
     memo_detail = request.POST.get('memo_detail')
     argument_list = [] 
     if memo and memo != '':

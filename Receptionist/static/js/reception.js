@@ -1012,6 +1012,9 @@ function new_patient_option(on_off) {
         $('#need_invoice').attr('disabled', false);
         $('#need_invoice_p').attr('disabled', false);
         $('#need_insurance').attr('disabled', false);
+        $('#wo_name').attr('disabled', false);
+        $('#wo_email').attr('disabled', false);
+        $('#wo_today').attr('disabled', false);
 
     } else {
         $('#patient_tax_invoice_click').attr('disabled', true);
@@ -1024,6 +1027,10 @@ function new_patient_option(on_off) {
         $('#need_invoice_p').prop('checked', false);
         //$('#need_insurance').attr('disabled', true);
         $('#need_insurance').prop('checked', false);
+
+        $('#wo_name').prop('checked', false);
+        $('#wo_email').prop('checked', false);
+        $('#wo_today').prop('checked', false);
 
 
     }
@@ -1231,6 +1238,10 @@ function save_patient() {
     var need_invoice_p = $("#need_invoice_p").prop("checked");
     var need_insurance = $("#need_insurance").prop("checked");
 
+    var wo_name = $("#wo_name").prop("checked");
+    var wo_email = $("#wo_email").prop("checked");
+    var wo_today = $("#wo_today").prop("checked");
+
     var tax_invoice_number = $('#tax_invoice_number').val();
     var tax_invoice_company_name = $('#tax_invoice_company_name').val();
     var tax_invoice_address = $('#tax_invoice_address').val();
@@ -1285,6 +1296,10 @@ function save_patient() {
             'need_invoice': need_invoice,
             'need_invoice_p': need_invoice_p,
             'need_insurance': need_insurance,
+
+            'wo_name': wo_name,
+            'wo_email': wo_email,
+            'wo_today': wo_today,
 
 
             'patient_table_vital_ht': patient_table_vital_ht,
@@ -1413,6 +1428,11 @@ function save_recept() {
     var need_medical_report = $('#need_medical_report').prop("checked");
     var need_invoice = $("#need_invoice").prop("checked");
     var need_invoice_p = $("#need_invoice_p").prop("checked");
+
+    var wo_name = $("#wo_name").prop("checked");
+    var wo_email = $("#wo_email").prop("checked");
+    var wo_today = $("#wo_today").prop("checked");
+
     var need_insurance = $("#need_insurance").prop("checked");
     var is_vaccine = $("#is_vaccine").prop("checked");
 
@@ -1461,6 +1481,9 @@ function save_recept() {
             'need_medical_report': need_medical_report,
             'need_invoice': need_invoice,
             'need_invoice_p': need_invoice_p,
+            'wo_name': wo_name,
+            'wo_email': wo_email,
+            'wo_today': wo_today,
             'need_insurance': need_insurance,
             'is_vaccine': is_vaccine,
 
@@ -1575,6 +1598,11 @@ function set_patient_data(patient_id) {
             //prop('checked', false)
             $('#need_invoice').prop('checked', false)
             $('#need_invoice_p').prop('checked', false)
+
+            $('#wo_name').prop('checked', false)
+            $('#wo_email').prop('checked', false)
+            $('#wo_today').prop('checked', false)
+            
             $('#need_insurance').prop('checked', false)
             if (response.invoice) {
                 $('#need_invoice').prop('checked', true)
@@ -1585,7 +1613,17 @@ function set_patient_data(patient_id) {
             if (response.insurance) {
                 $('#need_insurance').prop('checked', true)
             }
-            $('#chief_complaint').val(response.chief_complaint);
+
+            if (response.wo_name) {
+                $('#wo_name').prop('checked', true)
+            }
+            if (response.wo_email) {
+                $('#wo_email').prop('checked', true)
+            }
+            if (response.wo_today) {
+                $('#wo_today').prop('checked', true)
+            }
+            // $('#chief_complaint').val(response.chief_complaint);
         },
         error: function (request, status, error) {
             console.log("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
@@ -2198,6 +2236,10 @@ function set_reservation_data(reservation_id) {
             $('#need_invoice').prop('checked', false)
             $('#need_insurance').prop('checked', false)
             $('#need_invoice_p').prop('checked', false)
+            $('#wo_name').prop('checked', false)
+            $('#wo_email').prop('checked', false)
+            $('#wo_today').prop('checked', false)
+
             if (response.need_invoice) {
                 $('#need_invoice').prop('checked', true)
             }
@@ -2206,6 +2248,15 @@ function set_reservation_data(reservation_id) {
             }
             if (response.need_insurance) {
                 $('#need_insurance').prop('checked', true)
+            }
+            if (response.wo_name) {
+                $('#wo_name').prop('checked', true)
+            }
+            if (response.wo_email) {
+                $('#wo_email').prop('checked', true)
+            }
+            if (response.wo_today) {
+                $('#wo_today').prop('checked', true)
             }
             $('#depart_select').val(response.reservation_depart);
             get_doctor($("#depart_select"),null, response.reservation_doctor);
@@ -3013,6 +3064,9 @@ function set_patient_data2(patient_id) {
             //prop('checked', false)
             $('#need_invoice').prop('checked', false)
             $('#need_invoice_p').prop('checked', false)
+            $('#wo_name').prop('checked', false)
+            $('#wo_email').prop('checked', false)
+            $('#wo_today').prop('checked', false)
             $('#need_insurance').prop('checked', false)
             if (response.invoice) {
                 $('#need_invoice').prop('checked', true)
@@ -3022,6 +3076,15 @@ function set_patient_data2(patient_id) {
             }
             if (response.insurance) {
                 $('#need_insurance').prop('checked', true)
+            }
+            if (response.wo_name) {
+                $('#wo_name').prop('checked', true)
+            }
+            if (response.wo_email) {
+                $('#wo_email').prop('checked', true)
+            }
+            if (response.wo_today) {
+                $('#wo_today').prop('checked', true)
             }
         },
         error: function (request, status, error) {

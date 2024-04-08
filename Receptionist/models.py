@@ -240,6 +240,21 @@ class Reception(models.Model):
         null = True
     )
 
+    without_name = models.BooleanField(
+        default = False,
+        null = True
+    )
+
+    without_email = models.BooleanField(
+        default = False,
+        null = True
+    )
+
+    without_today = models.BooleanField(
+        default = False,
+        null = True
+    )
+
     objects=ReceptionQueryManager()
 
     
