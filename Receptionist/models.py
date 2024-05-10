@@ -240,6 +240,11 @@ class Reception(models.Model):
         null = True
     )
 
+    need_insurance_p = models.BooleanField(
+        default = False,
+        null = True
+    )
+
     without_name = models.BooleanField(
         default = False,
         null = True
@@ -251,6 +256,34 @@ class Reception(models.Model):
     )
 
     without_today = models.BooleanField(
+        default = False,
+        null = True
+    )
+
+    send_invoice_status = models.BooleanField(
+        default = False,
+        null = True
+    )
+
+    without_day = models.DateField(
+        default=None,
+        null = True
+    )
+
+    without_email_today = models.BooleanField(
+        default = False,
+        null = True
+    )
+
+    need_invoice_today = models.BooleanField(
+        default = False,
+        null = True
+    )
+    need_invoice_p_today = models.BooleanField(
+        default = False,
+        null = True
+    )
+    need_insurance_today = models.BooleanField(
         default = False,
         null = True
     )

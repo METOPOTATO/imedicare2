@@ -27,6 +27,15 @@ from django.http import JsonResponse, HttpResponseRedirect,HttpResponse
 from openpyxl import Workbook,load_workbook
 from openpyxl.styles import Color, Font,Border,Side,Alignment,PatternFill
 import dateutil.relativedelta
+
+import os
+from django.conf import settings
+from django.core.files.storage import FileSystemStorage
+from django.core.mail import EmailMessage, EmailMultiAlternatives
+from django.template.loader import render_to_string
+from django.utils.html import strip_tags
+from django.template.loader import get_template
+import unidecode
 # Create your views here.
 
 
@@ -151,6 +160,7 @@ def save_patient(request):
 
     need_invoice = request.POST.get('need_invoice',False)
     need_invoice_p = request.POST.get('need_invoice_p',False)
+    need_insurance_p = request.POST.get('need_insurance_p',False)
     need_insurance = request.POST.get('need_insurance',False)
 
     wo_name = request.POST.get('wo_name',False)
@@ -257,6 +267,11 @@ def save_patient(request):
             reception_last.need_insurance = True
         elif need_insurance == 'false':
             reception_last.need_insurance = False
+        
+        if need_insurance_p == 'true':
+            reception_last.need_insurance_p = True
+        elif need_insurance_p == 'false':
+            reception_last.need_insurance_p = False
 
         if wo_name == 'true':
             reception_last.without_name = True
@@ -270,6 +285,7 @@ def save_patient(request):
 
         if wo_today == 'true':
             reception_last.without_today = True
+        
         elif wo_today == 'false':
             reception_last.without_today = False
         reception_last.save()
@@ -339,6 +355,7 @@ def set_patient_data(request):
         'gender':patient.gender,
         'email':patient.email,
         'nationality':patient.nationality,
+        'txt_nation': search_nation(patient.nationality),
         'phone':patient.phone,
         'address':patient.address,
         # 'address':patient.passport,
@@ -358,6 +375,7 @@ def set_patient_data(request):
         'invoice':'' if rec is None else rec.need_invoice,
         'invoice_p':'' if rec is None else rec.need_invoice_p,
         'insurance':'' if rec is None else rec.need_insurance,
+        'insurance_p':'' if rec is None else rec.need_insurance_p,
         'chief_complaint':'' if rec is None else rec.chief_complaint,
 
         'wo_name':'' if rec is None else rec.without_name,
@@ -534,6 +552,7 @@ def save_reception(request):
     need_invoice = request.POST.get('need_invoice',False)
     need_invoice_p = request.POST.get('need_invoice_p',False)
     need_insurance = request.POST.get('need_insurance',False)
+    need_insurance_p = request.POST.get('need_insurance_p',False)
     is_vaccine = request.POST.get('is_vaccine',False)
 
     wo_name = request.POST.get('wo_name',False)
@@ -606,6 +625,8 @@ def save_reception(request):
         reception.need_invoice_p = True
     if need_insurance == 'true':
         reception.need_insurance = True
+    if need_insurance_p == 'true':
+        reception.need_insurance_p = True
     if is_vaccine == 'true':
         reception.is_vaccine = True
     
@@ -743,6 +764,7 @@ def patient_search(request):
                             'last_visit':reception_last.recorded_date.strftime('%Y-%m-%d'),
                             
                             'nationality':reception_last.patient.nationality,
+                            'txt_nation': search_nation(reception_last.patient.nationality),
                             'passport':reception_last.patient.passport,
                             'email':reception_last.patient.email,
                             'category':reception_last.patient.category
@@ -770,6 +792,7 @@ def patient_search(request):
                     'last_visit':reception_last.recorded_date.strftime('%Y-%m-%d'),
                     
                     'nationality':reception_last.patient.nationality,
+                    'txt_nation': search_nation(reception_last.patient.nationality),
                     'passport':reception_last.patient.passport,
                     'email':reception_last.patient.email,
                     'category':reception_last.patient.category
@@ -801,6 +824,7 @@ def patient_search(request):
                     'last_visit':reception_last.recorded_date.strftime('%Y-%m-%d'),
                     
                     'nationality':reception_last.patient.nationality,
+                    'txt_nation': search_nation(reception_last.patient.nationality),
                     'passport':reception_last.patient.passport,
                     'email':reception_last.patient.email,
                     'category':reception_last.patient.category
@@ -1330,6 +1354,8 @@ def waiting_list(request):
                     marking = query.se1
                 except COMMCODE.DoesNotExist:
                     marking=''
+                except:
+                    marking=''
 
                 if payment_set.count() is 0:
                     if reception.recorded_date.strftime('%Y%m%d') == datetime.datetime.today().strftime('%Y%m%d'):
@@ -1416,6 +1442,8 @@ def get_today_list(request):
             query = COMMCODE.objects.get(upper_commcode = '000006',commcode_grp='PT_INFO',commcode = reception.patient.marking)
             marking = query.se1
         except COMMCODE.DoesNotExist:
+            marking= ''
+        except:
             marking= ''
 
 
@@ -1578,6 +1606,7 @@ def get_today_selected(request):
         'need_invoice':reception.need_invoice,
         'need_invoice_p':reception.need_invoice_p,
         'need_insurance':reception.need_insurance,
+        'need_insurance_p':reception.need_insurance_p,
         'wo_name':reception.without_name,
         'wo_email':reception.without_email,
         'wo_today':reception.without_today,
@@ -1724,6 +1753,7 @@ def waiting_selected(request):
         'need_invoice':reception.need_invoice,
         'need_invoice_p':reception.need_invoice_p,
         'need_insurance':reception.need_insurance,
+        'need_insurance_p':reception.need_insurance_p,
         'method':payment_record.method,
 
         'wo_name':reception.without_name,
@@ -1748,7 +1778,8 @@ def storage_page_save(request):
     recommendation = request.POST.get('recommendation')
     need_invoice = request.POST.get('need_invoice')
     need_invoice_p = request.POST.get('need_invoice_p')
-    need_insurance = request.POST.get('need_insurance')    
+    need_insurance = request.POST.get('need_insurance')  
+    need_insurance_p = request.POST.get('need_insurance_p')  
 
     wo_name = request.POST.get('wo_name',False)
     wo_email = request.POST.get('wo_email',False)
@@ -1788,9 +1819,10 @@ def storage_page_save(request):
     taxinvoice.address = '' if address == '' else address    
     taxinvoice.save()
 
-    if payment.progress == 'paid':
-        context = {'result':'paid'}
-        return JsonResponse(context)
+    # if payment.progress == 'paid':
+    #     print('++++++')
+    #     context = {'result':'paid'}
+    #     return JsonResponse(context)
 
 
     reception.need_invoice = True if need_invoice.lower() == 'true' else False
@@ -1800,6 +1832,7 @@ def storage_page_save(request):
         reception.without_name = True if wo_name.lower() == 'true' else False 
         reception.without_email = True if wo_email.lower() == 'true' else False 
         reception.without_today = True if wo_today.lower() == 'true' else False 
+        reception.need_insurance_p = True if need_insurance_p.lower() == 'true' else False 
     except:
         pass
     reception.need_insurance = True if need_insurance.lower() == 'true' else False  
@@ -2845,7 +2878,8 @@ def reservation_info(request):
         'patient_name_kor':reservation.name if reservation.patient is None else reservation.patient.name_kor,
         'patient_name_eng':reservation.name if reservation.patient is None else reservation.patient.name_eng,
         'patient_gender':'' if reservation.patient is None else reservation.patient.gender,
-        'patient_nationality':'' if reservation.patient is None else reservation.patient.nationality,        
+        'patient_nationality':'' if reservation.patient is None else reservation.patient.nationality,
+        'txt_nation': search_nation(reservation.patient.nationality),        
         'patient_address': reservation.pick_up_addr if reservation.patient is None else reservation.patient.address,   
         'patient_email':'' if reservation.patient is None else reservation.patient.email,      
         'need_invoice':'' if reception_last is None else reception_last.need_invoice,  
@@ -2856,6 +2890,7 @@ def reservation_info(request):
         'wo_today':'' if reception_last is None else reception_last.without_today, 
         
         'need_insurance':'' if reception_last is None else reception_last.need_insurance, 
+        'need_insurance_p':'' if reception_last is None else reception_last.need_insurance_p,
         'chief_complaint':'' if reception_last is None else reception_last.chief_complaint, 
         'reservation_reception_id':reservation_reception_id, 
         'address': reservation.pick_up_addr,     
@@ -3340,6 +3375,229 @@ def Documents(request):
 
 
 @login_required
+def upload_image(request):
+    patient_id=request.POST.get("patient_id")
+    instance = Patient.objects.filter(pk=patient_id).first()
+    try:
+        
+        img = request.FILES.getlist('image')[0]
+        
+        if request.method == 'POST':
+            instance.history_image = img
+            instance.save()
+        else:
+            print('****')
+    except:
+        pass
+    return JsonResponse({'url':instance.history_image.url})
+
+@login_required
+def upload_pdf(request):
+    if request.method == 'POST' and request.FILES['pdf_file']:
+        pdf_file = request.FILES['pdf_file']
+        patient_id = request.POST.get("patient_id")
+        file_name = request.POST.get("file_name", 'default.pdf')
+
+        fs = FileSystemStorage()
+        
+        upload_dir = os.path.join(settings.MEDIA_ROOT, 'doc', str(datetime.date.today()), patient_id)
+        os.makedirs(upload_dir, exist_ok=True)
+
+        file_path = os.path.join(upload_dir, file_name)
+
+        fs.save(file_path, pdf_file)
+        
+        return HttpResponse('File uploaded successfully!')
+    return JsonResponse({'resulr': 'ok'})
+
+
+@login_required
+def send_email_document(request):
+    print(datetime.datetime.now())
+    patient_id = request.POST.get("patient_id")
+    patient = Patient.objects.get(pk = patient_id)
+    nation = patient.nationality
+    patient_name = patient.name_eng
+
+    subject = ''
+    html_template = get_template('email.html')
+    str_time = datetime.datetime.today().strftime('%d.%m.%Y')
+
+    if nation == 'Korea':
+        patient_name = patient.name_kor
+        subject = '[아이메디케어병원]' + patient_name + str_time
+        html_template = get_template('email_korea.html')
+    elif nation == 'Vietnam':
+        patient_name = patient.name_eng
+        subject = '[Phòng khám I-medicare]' + patient_name + str_time
+        html_template = get_template('email_vn.html')
+    else:
+        patient_name = patient.name_eng
+        subject = '[Imedicare Clinic]' + patient_name + str_time
+        html_template = get_template('email.html')
+
+    to_emails = request.POST.get("email")
+    list_emails = to_emails.split(',')
+  
+
+    from_email = settings.EMAIL_HOST_USER
+    to_email = list_emails
+
+    
+    context = {'recipient_name': 'Recipient', 'patient_name': patient_name}
+    html_content = html_template.render(context)
+    # html_content = render_to_string('Receptionist/email.html', {'patient_id': patient_id})
+    email = EmailMultiAlternatives(subject, strip_tags(html_content), from_email, to_email)
+    email.attach_alternative(html_content, "text/html")
+    
+    print('2', datetime.datetime.now())
+    # Thư mục chứa các tệp cần đính kèm
+    upload_dir = os.path.join(settings.MEDIA_ROOT, 'doc', str(datetime.date.today()), patient_id)
+    os.makedirs(upload_dir, exist_ok=True)
+
+    # Lặp qua tất cả các tệp trong thư mục
+    for file_name in os.listdir(upload_dir):
+        file_path = os.path.join(upload_dir, file_name)
+        # Kiểm tra xem tệp có tồn tại không
+        if os.path.isfile(file_path):
+            # Đọc nội dung của tệp và đính kèm vào email
+            with open(file_path, 'rb') as file:
+                email.attach(file_name, file.read())
+
+    email.send()
+    print('3', datetime.datetime.now())
+    return JsonResponse({'resulr': 'ok'})
+
+@login_required
+def Documents2(request):
+
+    departs = Depart.objects.all()
+
+    return render(request,
+    'Receptionist/Documents2.html',
+            {
+                'departs':departs,
+            },
+        )
+
+
+
+
+@login_required
+def get_document(request):
+    rec_id = request.POST.get('rec_id', '')
+    print(rec_id)
+    reception = Reception.objects.get(pk = rec_id)
+
+    tax_code = ''
+    try:
+        tax_code = reception.patient.taxinvoice.number
+    except:
+        pass
+
+    address2 = ''
+    need_invoice = 'No'
+
+    if reception.need_invoice == True:
+        address2 = reception.patient.taxinvoice.address
+        need_invoice = 'Yes'
+    elif reception.need_invoice_p == True:
+        address2 = reception.patient.taxinvoice.address_p
+        need_invoice = 'Yes(P)'
+
+    data = {
+        'id':reception.id,
+        'chart':reception.patient.get_chart_no(),
+        'patient_id': reception.patient.id,
+        'name':reception.patient.get_name_kor_eng(),
+        'date_of_birth':reception.patient.date_of_birth.strftime('%Y-%m-%d'),   
+        'age':reception.patient.get_age(),
+        'gender':reception.patient.get_gender_simple(),
+        'depart':reception.depart.name,
+        'doctor':reception.doctor.name_short,
+        'address':reception.patient.address,
+        'phone':reception.patient.phone,
+        'date_time':reception.recorded_date.strftime('%Y-%m-%d %H:%M'),   
+        'passport':reception.patient.passport,   
+        'email': reception.patient.email,
+        'send_email_status': reception.send_email_status ,
+        'send_invoice_status': reception.send_invoice_status,
+
+        'is_invoice': need_invoice,
+        'is_insurance': reception.need_insurance ,
+        'tax_code':tax_code,
+        'address2': address2,
+
+        'need_invoice':reception.need_invoice,
+        'need_invoice_p':reception.need_invoice_p,
+        'need_insurance':reception.need_insurance,
+        'need_insurance_p':reception.need_insurance_p,
+        'wo_name':reception.without_name,
+        'wo_email':reception.without_email,
+        'wo_today':reception.without_today,
+    }
+    
+    diagnosis = True
+    try:
+        if reception.diagnosis.medicinemanager_set.count() !=0:
+            data.update({
+                'prescription':True,
+                'medicine_receipt':True,
+                })
+            is_vac = reception.diagnosis.medicinemanager_set.filter(medicine__code__icontains = 'VC')
+            if is_vac.count() != 0:
+                data.update({
+                    'vaccine_certificate':True,
+                    })
+    except:
+        diagnosis = False
+        
+    try:    
+        if reception.diagnosis.testmanager_set.count() !=0:
+            data.update({
+                'lab_report':True,
+                })
+    except:
+        diagnosis = False
+
+    check = False
+
+    if diagnosis == True:
+        for check in reception.diagnosis.preceduremanager_set.all():
+            #2,4,5,6,8
+            class_id = check.precedure.precedure_class_id 
+            if class_id is 2 or class_id is 4 or class_id is 5 or class_id is 6 or class_id is 8 :
+                check = True
+            elif class_id is 10:
+                if 'R' in check.precedure.code:
+                    check = True
+
+        if reception.diagnosis.testmanager_set.count() !=0 or check is True:
+            data.update({
+                'subclinical':True,
+                })
+        try:
+            report = Report.objects.filter(reception_id = reception.id).last()
+            data.update({
+                'medical_report':True,
+                })
+
+        except Report.DoesNotExist:
+            pass
+    try:
+        if reception.payment is not None:
+            data.update({
+                'medical_receipt':True,
+                })
+    except:
+        pass
+
+    return JsonResponse({
+        'result':True,
+        'data':data,
+        })
+
+@login_required
 def document_search(request):
     start = request.POST.get('document_control_start')
     end = request.POST.get('document_control_end')
@@ -3385,12 +3643,20 @@ def document_search(request):
                     recorded_date__range = (date_min, date_max) 
                     ,progress = 'done'
                 ).exclude(progress='deleted')
+    
     for reception in receptions:
+
         address2 = ''
+        need_invoice = 'No'
+
         if reception.need_invoice == True:
             address2 = reception.patient.taxinvoice.address
+            need_invoice = 'Yes'
         elif reception.need_invoice_p == True:
             address2 = reception.patient.taxinvoice.address_p
+            need_invoice = 'Yes(P)'
+
+
         tax_code = ''
         try:
             tax_code = reception.patient.taxinvoice.number
@@ -3412,8 +3678,13 @@ def document_search(request):
             'email': reception.patient.email,
             'send_email_status': reception.send_email_status ,
 
-            'is_invoice': 'Yes' if reception.need_invoice == True else 'No',
-            'is_insurance': 'Yes' if reception.need_insurance else 'No',
+            'is_invoice': need_invoice,
+            'is_insurance': 'Yes' if reception.need_insurance == True else 'No',
+
+            'need_invoice': reception.need_invoice,
+            'need_invoice_p': reception.need_invoice_p,
+            'need_insurance': reception.need_insurance,
+            'need_insurance_p': reception.need_insurance_p,
             'tax_code':tax_code,
             'address2': address2
             }
@@ -3806,27 +4077,38 @@ def document_excel(request, reception_id):
             # wb = load_workbook('/home/light/Desktop/Projects/imedicare2/static/excel_form/document_report_im.xlsx')
         elif name == 'DENTAL':
             wb = load_workbook('/home/imedicare/Cofee/static/excel_form/document_report_dental.xlsx') #Workbook()
+            # wb = load_workbook('/home/light/Desktop/Projects/imedicare2/static/excel_form/document_report_dental.xlsx')
         elif name == 'DERM':
             wb = load_workbook('/home/imedicare/Cofee/static/excel_form/document_report_derm.xlsx') #Workbook()
+            # wb = load_workbook('/home/light/Desktop/Projects/imedicare2/static/excel_form/document_report_derm.xlsx')
         elif name == 'ENT':
             wb = load_workbook('/home/imedicare/Cofee/static/excel_form/document_report_ent.xlsx') #Workbook()
+            # wb = load_workbook('/home/light/Desktop/Projects/imedicare2/static/excel_form/document_report_ent.xlsx')
         elif name == 'OBGYN':
             wb = load_workbook('/home/imedicare/Cofee/static/excel_form/document_report_obgyn.xlsx') #Workbook()
+            # wb = load_workbook('/home/light/Desktop/Projects/imedicare2/static/excel_form/document_report_obgyn.xlsx')
         elif name == 'PM':
             wb = load_workbook('/home/imedicare/Cofee/static/excel_form/document_report_pm.xlsx') #Workbook()  
+            # wb = load_workbook('/home/light/Desktop/Projects/imedicare2/static/excel_form/document_report_pm.xlsx')
         elif name == 'OPH':
             wb = load_workbook('/home/imedicare/Cofee/static/excel_form/document_report_oph.xlsx') #Workbook()
+            # wb = load_workbook('/home/light/Desktop/Projects/imedicare2/static/excel_form/document_report_oph.xlsx')
         elif name == 'OBGYN':
             wb = load_workbook('/home/imedicare/Cofee/static/excel_form/document_report_obgyn.xlsx') #Workbook()
+            # wb = load_workbook('/home/light/Desktop/Projects/imedicare2/static/excel_form/document_report_obgyn.xlsx')
         elif name == 'PM':
             wb = load_workbook('/home/imedicare/Cofee/static/excel_form/document_report_pm.xlsx') #Workbook()
+            # wb = load_workbook('/home/light/Desktop/Projects/imedicare2/static/excel_form/document_report_pm.xlsx')
         elif name == 'DENTAL':
             wb = load_workbook('/home/imedicare/Cofee/static/excel_form/document_report_dental.xlsx') #Workbook()
+            # wb = load_workbook('/home/light/Desktop/Projects/imedicare2/static/excel_form/document_report_dental.xlsx')
         elif name == 'VACCINE':
             wb = load_workbook('/home/imedicare/Cofee/static/excel_form/document_report_vaccine.xlsx') #Workbook()
+            # wb = load_workbook('/home/light/Desktop/Projects/imedicare2/static/excel_form/document_report_vaccine.xlsx')
         else:
             wb = load_workbook('/home/imedicare/Cofee/static/excel_form/Document_report.xlsx') #Workbook()
-        # wb = load_workbook('/Users/light/Desktop/work/imdc/imedicare2/static/excel_form/Document_report.xlsx')
+            # wb = load_workbook('/home/light/Desktop/Projects/imedicare2/static/excel_form/Document_report.xlsx')
+
         border_thin = Border(top=Side(border_style="thin", color="000000") ,
                             left=Side(border_style="thin", color="000000") ,
                         right=Side(border_style="thin", color="000000") ,
@@ -5670,10 +5952,10 @@ def patient_search2(request):
     address = request.POST.get('address')
     tax = request.POST.get('tax')
 
-    is_tax_numeric = tax.isnumeric() if tax else True
-    if not is_tax_numeric:
-        print(is_tax_numeric)
-        return JsonResponse({'datas': []})
+    # is_tax_numeric = tax.isnumeric() if tax else True
+    # if not is_tax_numeric:
+    #     print(is_tax_numeric)
+    #     return JsonResponse({'datas': []})
     
     memo_detail = request.POST.get('memo_detail')
     argument_list = [] 
@@ -5702,7 +5984,7 @@ def patient_search2(request):
         argument_list.append( Q(**{'patient__address__icontains':address} ) )
 
     if tax and tax != '':
-        argument_list.append( Q(**{'patient__taxinvoice__number__iexact':tax} ) )
+        argument_list.append( Q(**{'patient__taxinvoice__number__icontains':tax} ) )
     # patient = Patient.objects.filter(name_kor=string).first()
     # print(patient)
     datas=[]
@@ -5734,6 +6016,7 @@ def patient_search2(request):
                             'last_visit':reception_last.recorded_date.strftime('%Y-%m-%d'),
                             
                             'nationality':reception_last.patient.nationality,
+                            'txt_nation': search_nation(reception_last.patient.nationality),
                             'passport':reception_last.patient.passport,
                             'email':reception_last.patient.email,
                             'category':reception_last.patient.category
@@ -5759,6 +6042,7 @@ def patient_search2(request):
                     'last_visit':reception_last.recorded_date.strftime('%Y-%m-%d'),
                     
                     'nationality':reception_last.patient.nationality,
+                    'txt_nation': search_nation(reception_last.patient.nationality),
                     'passport':reception_last.patient.passport,
                     'email':reception_last.patient.email,
                     'category':reception_last.patient.category
@@ -5790,6 +6074,7 @@ def patient_search2(request):
                     'last_visit':reception_last.recorded_date.strftime('%Y-%m-%d'),
                     
                     'nationality':reception_last.patient.nationality,
+                    'txt_nation': search_nation(reception_last.patient.nationality),
                     'passport':reception_last.patient.passport,
                     'email':reception_last.patient.email,
                     'category':reception_last.patient.category
@@ -5992,6 +6277,16 @@ def remove_draft_patient(request):
     context = {'datas':datas}
     return JsonResponse(context)
 
+
+@login_required
+def update_send_invoice_status(request):
+    id = request.POST.get('id', '')
+    re = Reception.objects.get(pk=id)
+    re.send_invoice_status = True
+    re.save()
+    print(re.send_invoice_status)
+    return JsonResponse({'result': True})
+
 @login_required
 def update_send_mail_status(request):
     print('asdasdas')
@@ -6137,3 +6432,231 @@ def update_send_mail_status(request):
         'result':True,
         'datas':datas,
         })
+
+
+def get_nation(request):
+    data = search_nation(None)
+    
+    lists = []
+    string = request.POST.get('string')
+    for key, v in data.items():
+        # print(key, v)
+        if string.lower() in key.lower():
+            lists.append(
+                {
+                    'value': key,
+                    'data': key,
+                    'code': v,
+                }
+            )
+            # print(key)
+    print(lists)
+    return JsonResponse({
+        'result':True,
+        'datas':lists,
+    })
+
+def search_nation(string):
+    data = {
+        "Afghanistan": unidecode.unidecode("Afghanistan"),
+        "Albania": unidecode.unidecode("Albania"),
+        "Algeria": unidecode.unidecode("Algeria"),
+        "Andorra": unidecode.unidecode("Andorra"),
+        "Angola": unidecode.unidecode("Angola"),
+        "Antigua and Barbuda": unidecode.unidecode("Antigua and Barbuda"),
+        "Argentina": unidecode.unidecode("Argentina"),
+        "Armenia": unidecode.unidecode("Armenia"),
+        "Australia": unidecode.unidecode("Australia"),
+        "Austria": unidecode.unidecode("Austria"),
+        "Azerbaijan": unidecode.unidecode("Azerbaijan"),
+        "Bahamas": unidecode.unidecode("Bahamas"),
+        "Bahrain": unidecode.unidecode("Bahrain"),
+        "Bangladesh": unidecode.unidecode("Bangladesh"),
+        "Barbados": unidecode.unidecode("Barbados"),
+        "Belarus": unidecode.unidecode("Belarus"),
+        "Belgium": unidecode.unidecode("Belgium"),
+        "Belize": unidecode.unidecode("Belize"),
+        "Benin": unidecode.unidecode("Benin"),
+        "Bhutan": unidecode.unidecode("Bhutan"),
+        "Bolivia": unidecode.unidecode("Bolivia"),
+        "Bosnia and Herzegovina": unidecode.unidecode("Bosnia and Herzegovina"),
+        "Botswana": unidecode.unidecode("Botswana"),
+        "Brazil": unidecode.unidecode("Brazil"),
+        "Brunei": unidecode.unidecode("Brunei"),
+        "Bulgaria": unidecode.unidecode("Bulgaria"),
+        "Burkina Faso": unidecode.unidecode("Burkina Faso"),
+        "Burundi": unidecode.unidecode("Burundi"),
+        "Côte d'Ivoire": unidecode.unidecode("Côte d'Ivoire"),
+        "Cabo Verde": unidecode.unidecode("Cabo Verde"),
+        "Cambodia": unidecode.unidecode("Cambodia"),
+        "Cameroon": unidecode.unidecode("Cameroon"),
+        "Canada": unidecode.unidecode("Canada"),
+        "Central African Republic": unidecode.unidecode("Central African Republic"),
+        "Chad": unidecode.unidecode("Chad"),
+        "Chile": unidecode.unidecode("Chile"),
+        "China": unidecode.unidecode("China"),
+        "Colombia": unidecode.unidecode("Colombia"),
+        "Comoros": unidecode.unidecode("Comoros"),
+        "Congo (Congo-Brazzaville)": unidecode.unidecode("Congo (Congo-Brazzaville)"),
+        "Costa Rica": unidecode.unidecode("Costa Rica"),
+        "Croatia": unidecode.unidecode("Croatia"),
+        "Cuba": unidecode.unidecode("Cuba"),
+        "Cyprus": unidecode.unidecode("Cyprus"),
+        "Czechia (Czech Republic)": unidecode.unidecode("Czechia (Czech Republic)"),
+        "Democratic Republic of the Congo": unidecode.unidecode("Democratic Republic of the Congo"),
+        "Denmark": unidecode.unidecode("Denmark"),
+        "Djibouti": unidecode.unidecode("Djibouti"),
+        "Dominica": unidecode.unidecode("Dominica"),
+        "Dominican Republic": unidecode.unidecode("Dominican Republic"),
+        "Ecuador": unidecode.unidecode("Ecuador"),
+        "Egypt": unidecode.unidecode("Egypt"),
+        "El Salvador": unidecode.unidecode("El Salvador"),
+        "Equatorial Guinea": unidecode.unidecode("Equatorial Guinea"),
+        "Eritrea": unidecode.unidecode("Eritrea"),
+        "Estonia": unidecode.unidecode("Estonia"),
+        "Eswatini (fmr. Swaziland)": unidecode.unidecode("Eswatini (fmr. Swaziland)"),
+        "Ethiopia": unidecode.unidecode("Ethiopia"),
+        "Fiji": unidecode.unidecode("Fiji"),
+        "Finland": unidecode.unidecode("Finland"),
+        "France": unidecode.unidecode("France"),
+        "Gabon": unidecode.unidecode("Gabon"),
+        "Gambia": unidecode.unidecode("Gambia"),
+        "Georgia": unidecode.unidecode("Georgia"),
+        "Germany": unidecode.unidecode("Germany"),
+        "Ghana": unidecode.unidecode("Ghana"),
+        "Greece": unidecode.unidecode("Greece"),
+        "Grenada": unidecode.unidecode("Grenada"),
+        "Guatemala": unidecode.unidecode("Guatemala"),
+        "Guinea": unidecode.unidecode("Guinea"),
+        "Guinea-Bissau": unidecode.unidecode("Guinea-Bissau"),
+        "Guyana": unidecode.unidecode("Guyana"),
+        "Haiti": unidecode.unidecode("Haiti"),
+        "Holy See": unidecode.unidecode("Holy See"),
+        "Honduras": unidecode.unidecode("Honduras"),
+        "Hungary": unidecode.unidecode("Hungary"),
+        "Iceland": unidecode.unidecode("Iceland"),
+        "India": unidecode.unidecode("India"),
+        "Indonesia": unidecode.unidecode("Indonesia"),
+        "Iran": unidecode.unidecode("Iran"),
+        "Iraq": unidecode.unidecode("Iraq"),
+        "Ireland": unidecode.unidecode("Ireland"),
+        "Israel": unidecode.unidecode("Israel"),
+        "Italy": unidecode.unidecode("Italy"),
+        "Jamaica": unidecode.unidecode("Jamaica"),
+        "Japan": unidecode.unidecode("Japan"),
+        "Jordan": unidecode.unidecode("Jordan"),
+        "Kazakhstan": unidecode.unidecode("Kazakhstan"),
+        "Kenya": unidecode.unidecode("Kenya"),
+        "Kiribati": unidecode.unidecode("Kiribati"),
+        "Kuwait": unidecode.unidecode("Kuwait"),
+        "Kyrgyzstan": unidecode.unidecode("Kyrgyzstan"),
+        "Laos": unidecode.unidecode("Laos"),
+        "Latvia": unidecode.unidecode("Latvia"),
+        "Lebanon": unidecode.unidecode("Lebanon"),
+        "Lesotho": unidecode.unidecode("Lesotho"),
+        "Liberia": unidecode.unidecode("Liberia"),
+        "Libya": unidecode.unidecode("Libya"),
+        "Liechtenstein": unidecode.unidecode("Liechtenstein"),
+        "Lithuania": unidecode.unidecode("Lithuania"),
+        "Luxembourg": unidecode.unidecode("Luxembourg"),
+        "Madagascar": unidecode.unidecode("Madagascar"),
+        "Malawi": unidecode.unidecode("Malawi"),
+        "Malaysia": unidecode.unidecode("Malaysia"),
+        "Maldives": unidecode.unidecode("Maldives"),
+        "Mali": unidecode.unidecode("Mali"),
+        "Malta": unidecode.unidecode("Malta"),
+        "Marshall Islands": unidecode.unidecode("Marshall Islands"),
+        "Mauritania": unidecode.unidecode("Mauritania"),
+        "Mauritius": unidecode.unidecode("Mauritius"),
+        "Mexico": unidecode.unidecode("Mexico"),
+        "Micronesia": unidecode.unidecode("Micronesia"),
+        "Moldova": unidecode.unidecode("Moldova"),
+        "Monaco": unidecode.unidecode("Monaco"),
+        "Mongolia": unidecode.unidecode("Mongolia"),
+        "Montenegro": unidecode.unidecode("Montenegro"),
+        "Morocco": unidecode.unidecode("Morocco"),
+        "Mozambique": unidecode.unidecode("Mozambique"),
+        "Myanmar (formerly Burma)": unidecode.unidecode("Myanmar (formerly Burma)"),
+        "Namibia": unidecode.unidecode("Namibia"),
+        "Nauru": unidecode.unidecode("Nauru"),
+        "Nepal": unidecode.unidecode("Nepal"),
+        "Netherlands": unidecode.unidecode("Netherlands"),
+        "New Zealand": unidecode.unidecode("New Zealand"),
+        "Nicaragua": unidecode.unidecode("Nicaragua"),
+        "Niger": unidecode.unidecode("Niger"),
+        "Nigeria": unidecode.unidecode("Nigeria"),
+        "North Korea": unidecode.unidecode("North Korea"),
+        "North Macedonia": unidecode.unidecode("North Macedonia"),
+        "Norway": unidecode.unidecode("Norway"),
+        "Oman": unidecode.unidecode("Oman"),
+        "Pakistan": unidecode.unidecode("Pakistan"),
+        "Palau": unidecode.unidecode("Palau"),
+        "Palestine State": unidecode.unidecode("Palestine State"),
+        "Panama": unidecode.unidecode("Panama"),
+        "Papua New Guinea": unidecode.unidecode("Papua New Guinea"),
+        "Paraguay": unidecode.unidecode("Paraguay"),
+        "Peru": unidecode.unidecode("Peru"),
+        "Philippines": unidecode.unidecode("Philippines"),
+        "Poland": unidecode.unidecode("Poland"),
+        "Portugal": unidecode.unidecode("Portugal"),
+        "Qatar": unidecode.unidecode("Qatar"),
+        "Romania": unidecode.unidecode("Romania"),
+        "Russia": unidecode.unidecode("Russia"),
+        "Rwanda": unidecode.unidecode("Rwanda"),
+        "Saint Kitts and Nevis": unidecode.unidecode("Saint Kitts and Nevis"),
+        "Saint Lucia": unidecode.unidecode("Saint Lucia"),
+        "Saint Vincent and the Grenadines": unidecode.unidecode("Saint Vincent and the Grenadines"),
+        "Samoa": unidecode.unidecode("Samoa"),
+        "San Marino": unidecode.unidecode("San Marino"),
+        "Sao Tome and Principe": unidecode.unidecode("Sao Tome and Principe"),
+        "Saudi Arabia": unidecode.unidecode("Saudi Arabia"),
+        "Senegal": unidecode.unidecode("Senegal"),
+        "Serbia": unidecode.unidecode("Serbia"),
+        "Seychelles": unidecode.unidecode("Seychelles"),
+        "Sierra Leone": unidecode.unidecode("Sierra Leone"),
+        "Singapore": unidecode.unidecode("Singapore"),
+        "Slovakia": unidecode.unidecode("Slovakia"),
+        "Slovenia": unidecode.unidecode("Slovenia"),
+        "Solomon Islands": unidecode.unidecode("Solomon Islands"),
+        "Somalia": unidecode.unidecode("Somalia"),
+        "South Africa": unidecode.unidecode("South Africa"),
+        "HÀN QUỐC / REPUBLIC OF KOREA": "Korea",
+        "South Sudan": unidecode.unidecode("South Sudan"),
+        "Spain": unidecode.unidecode("Spain"),
+        "Sri Lanka": unidecode.unidecode("Sri Lanka"),
+        "Sudan": unidecode.unidecode("Sudan"),
+        "Suriname": unidecode.unidecode("Suriname"),
+        "Sweden": unidecode.unidecode("Sweden"),
+        "Switzerland": unidecode.unidecode("Switzerland"),
+        "Syria": unidecode.unidecode("Syria"),
+        "Tajikistan": unidecode.unidecode("Tajikistan"),
+        "Tanzania": unidecode.unidecode("Tanzania"),
+        "Thailand": unidecode.unidecode("Thailand"),
+        "Timor-Leste": unidecode.unidecode("Timor-Leste"),
+        "Togo": unidecode.unidecode("Togo"),
+        "Tonga": unidecode.unidecode("Tonga"),
+        "Trinidad and Tobago": unidecode.unidecode("Trinidad and Tobago"),
+        "Tunisia": unidecode.unidecode("Tunisia"),
+        "Turkey": unidecode.unidecode("Turkey"),
+        "Turkmenistan": unidecode.unidecode("Turkmenistan"),
+        "Tuvalu": unidecode.unidecode("Tuvalu"),
+        "Uganda": unidecode.unidecode("Uganda"),
+        "Ukraine": unidecode.unidecode("Ukraine"),
+        "United Arab Emirates": unidecode.unidecode("United Arab Emirates"),
+        "United Kingdom": unidecode.unidecode("United Kingdom"),
+        "United States of America": unidecode.unidecode("United States of America"),
+        "Uruguay": unidecode.unidecode("Uruguay"),
+        "Uzbekistan": unidecode.unidecode("Uzbekistan"),
+        "Vanuatu": unidecode.unidecode("Vanuatu"),
+        "Venezuela": unidecode.unidecode("Venezuela"),
+        "Việt Nam": unidecode.unidecode("Vietnam"),
+        "Yemen": unidecode.unidecode("Yemen"),
+        "Zambia": unidecode.unidecode("Zambia"),
+        "Zimbabwe": unidecode.unidecode("Zimbabwe")
+    }
+    if not string:
+        return data
+    for k, v in data.items():
+        if v == string:
+            return k
+    return ''

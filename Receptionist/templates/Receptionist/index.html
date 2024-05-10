@@ -38,7 +38,7 @@
                     </td>
                     <td>
                         <div class="input-group">
-                            <span class="input-group-addon patient_table_title" id="basic-addon1">{{ _('Nationality') }}</span>
+                            <!-- <span class="input-group-addon patient_table_title" id="basic-addon1">{{ _('Nationality') }}</span>
                             <div class="input-group-btn patient_funnels_div">
                                 <select name="nationality" id="patient_nationality" class="form-control costom-select" aria-describedby="basic-addon1" required="">
                                     <option value="">---------</option>
@@ -47,7 +47,14 @@
                                     <option value="Other">{{ _('Other') }}</option>
                                 </select>
                             </div>
-                            <input type="text" id="patient_nationality_etc" class="form-control" aria-describedby="basic-addon1" autocomplete="off">
+                            <input type="text" id="patient_nationality_etc" class="form-control" aria-describedby="basic-addon1" autocomplete="off"> -->
+
+                            <div class="input-group-btn patient_funnels_div input-group-half">
+                                <span class="input-group-addon patient_table_title" id="basic-addon1">{{ _('Nationality') }}</span>
+                                <input type="text" id="txt_nation" class="form-control" aria-describedby="basic-addon1" autocomplete="off">
+                                <input type="text" id="patient_nationality" hidden>                              
+                            </div>
+                            <input id="search_nation" class="form-control ui-autocomplete-input" style="width:200px;" aria-describedby="basic-addon1" autocomplete="off">
                         </div>
                     </td>
                 </tr>
@@ -205,8 +212,12 @@
                             <div>
                                 <button class="btn btn-primary " style="width: 90px;">Insurance</button>
                                 <label class="need_medical_report " style="margin-right:10px;" >
-                                    <input type="checkbox" id="need_insurance" />
-                                    <text> {{_('Insurance') }}</text>
+                                    <input type="checkbox" name="insurance" id="need_insurance" onclick="checkInsurance(this)"/>
+                                    <text> {{_('Company') }}</text>
+                                </label>
+                                <label class="need_medical_report " style="margin-right:10px;" >
+                                    <input type="checkbox" name="insurance" id="need_insurance_p" onclick="checkInsurance(this)"/>
+                                    <text style="color: red;"> {{_('Personal') }}</text>
                                 </label>
                             </div>
                             <div>
@@ -242,10 +253,12 @@
                         <div class="input-group edit_reception_title" style="display: flex; flex-direction: row; width: 250px;">
                             <span style="display: flex; text-align: center; justify-content: center; align-items: center;" class="input-group-addon patient_table_title" id="basic-addon1">{{ _('Tax code') }}</span>
                             <input type="text" id="tax_invoice_number" class="form-control" aria-describedby="basic-addon1">
-                            <button class="btn btn-primary" onclick="open_tax_search()">{{ _('Search Tax') }}</button>
+                            <button class="btn btn-primary" onclick="open_tax_search()">
+                                <i class="fa fa-search" aria-hidden="true"></i>
+                            </button>
                         </div>
                         <div class="input-group edit_reception_title" style="display: flex; flex-direction: row;  width: 410px;">
-                            <span style="display: flex; text-align: center; justify-content: center; align-items: center;" class="input-group-addon patient_table_title" id="basic-addon2">{{ _('Company Name') }}</span>
+                            <span style="display: flex; text-align: center; justify-content: center; align-items: center;" class="input-group-addon patient_table_title" id="basic-addon1">{{ _('Company Name') }}</span>
                             <input type="text" id="tax_invoice_company_name" class="form-control" aria-describedby="basic-addon2">
                         </div>
 
@@ -1375,6 +1388,46 @@
             </div>
         </div>
     </div>
+</div>
+
+<div id="tax_detail_modal" class="modal fade">
+
+    <div class="modal-dialog" style="width:800px;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span> <span class="sr-only">close</span></button>
+                <h4>{{ _('Search Tax') }}</h4>
+
+            </div>
+            <div class="modal-body" >
+                <div>
+                    <div class="input-group" style="margin-bottom: 10px;">
+                        <span class="input-group-addon patient_table_title" id="basic-addon1">{{ _('ID') }}</span>
+                        <input type="text" class="form-control" id="tax_search_id"/>
+                    </div>
+                    <div class="input-group" style="margin-bottom: 10px;">
+                        <span class="input-group-addon patient_table_title" id="basic-addon1">{{ _('International Name') }}</span>
+                        <input type="text" class="form-control" id="tax_search_iname"/>
+                    </div>
+                    <div class="input-group" style="margin-bottom: 10px;">
+                        <span class="input-group-addon patient_table_title" id="basic-addon1">{{ _('Name') }}</span>
+                        <input type="text" class="form-control" id="tax_search_name"/>
+                    </div>
+                    <div class="input-group" style="margin-bottom: 10px;">
+                        <span class="input-group-addon patient_table_title" id="basic-addon1">{{ _('Address') }}</span>
+                        <input type="text" class="form-control" id="tax_search_address"/>
+                    </div>
+                    
+
+                </div>
+                <div style="display: flex; justify-content: center; align-items: center; width: 100%;">
+                    <input style="width: 200px; height: 40px; font-size: 20px; font-weight: 500;" type="button" class="btn btn-info save_cancel_btn" id="btn_apply_data" value="{{ _('Apply') }}" onclick="apply_data()"/>
+                </div>
+                
+            </div>
+        </div>
+    </div>
+
 </div>
 {% endblock %}
 

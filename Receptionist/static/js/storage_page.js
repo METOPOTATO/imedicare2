@@ -175,7 +175,7 @@ $(function () {
 		  resolve => {
 			setTimeout(() => {
 			  resolve(); // invoke the function
-			}, 300)
+			}, 1000)
 		  }
 		);		
 		const ret = await $('#dynamic_div').printThis({});

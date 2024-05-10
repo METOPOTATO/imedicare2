@@ -219,8 +219,11 @@ MEDIA_URL ='/uploads/'
 
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = "smtp.gmail.com"
-EMAIL_HOST_USER = 'hyungmo1004@gmail.com'
-EMAIL_HOST_PASSWORD = 'Gudah0827!'
+# EMAIL_HOST_USER = 'hyungmo1004@gmail.com'
+# EMAIL_HOST_PASSWORD = 'Gudah0827!'
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 #DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
+
+EMAIL_HOST_USER = 'clinic.imedi@gmail.com'  # Địa chỉ email của bạn
+EMAIL_HOST_PASSWORD = 'pcpq jivy vsgt ofvd'  # Mật khẩu ứng dụng

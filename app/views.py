@@ -179,6 +179,11 @@ def set_menu(request):
                     "name": "Send Documents",
                     "url": "/manage/statistics/profile_status/",
                     "code": "sta_pro"
+                },
+                {
+                    "name": "Send Email",
+                    "url": "/receptionist/Documents2/",
+                    "code": "sta_pro"
                 }
 
             ],

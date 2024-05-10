@@ -82,7 +82,11 @@ urlpatterns = [
 
     #Documetation
     path('Documents/',views.Documents,name='Documents'),
+    path('Documents2/',views.Documents2,name='Documents'),
     path('document_search/',views.document_search,name='document_search'),
+    path('get_document/',views.get_document,name='get_document'),
+    path('upload_pdf/',views.upload_pdf,name='upload_pdf'),
+    path('send_email_document/',views.send_email_document,name='send_email_document'),
 
     path('document_lab/<int:reception_id>',views.document_lab,name='document_lab'),
     path('document_lab2/<int:reception_id>',views.document_lab2,name='document_lab'),
@@ -134,4 +138,6 @@ urlpatterns = [
     path('draft_patient_list/',views.draft_patient_list,name='draft_patient_list'),
     path('remove_draft_patient/',views.remove_draft_patient,name='remove_draft_patient'),
     path('update_send_mail_status/',views.update_send_mail_status,name='update_send_mail_status'),
+    path('update_send_invoice_status/',views.update_send_invoice_status,name='update_send_invoice_status'),
+    path('get_nation/',views.get_nation,name='get_nation'),
 ]

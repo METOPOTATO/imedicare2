@@ -124,6 +124,7 @@
 }
 .input-group-addon {
     padding: 5px;
+    font-size: 11px;
 }
 
 #patient_table_vital_ht, #patient_table_vital_wt, #patient_table_vital_bmi, #patient_table_vital_bp, #patient_table_vital_bt, #patient_table_vital_pr, #patient_table_vital_breath {

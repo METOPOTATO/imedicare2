@@ -16,6 +16,23 @@ function checkTax(checkbox){
         }
     })
 }
+function checkInsurance(checkbox){
+    var checkboxes = document.getElementsByName('insurance');
+    checkboxes.forEach((item) => {
+        if (item !== checkbox) {
+            console.log(item)
+            item.checked = false
+            console.log('here')
+        }
+    })
+}
+
+function split(val) {
+    return val.split(/,\s*/);
+}
+function extractLast(term) {
+    return split(term).pop();
+}
 
 $(document).ready(function() {
     if ($('#patient_nationality').val() != 'Other'){
@@ -75,7 +92,75 @@ $(document).ready(function() {
         $('#chart_id').val('')
         $('#memo_id').val('')
         $('#memo_detail_id').val('')
+        $('#nation_id').val('')
+        $('#address_id').val('')
+        $('#tax_id').val('')
     })
+
+    $("#search_nation")
+        .on("keydown", function (event) {
+            if (event.keyCode === $.ui.keyCode.TAB && $(this).autocomplete("instance").menu.active) {
+                event.preventDefault();
+            }
+        })
+        .autocomplete({
+            source: function (request, response) {
+                //$.getJSON("search.php", { term: extractLast(request.term) }, response);
+                $.ajax({
+                    type: 'POST',
+                    url: '/receptionist/get_nation/',
+                    data: {
+                        'csrfmiddlewaretoken': $('#csrf').val(),
+                        'string': request.term
+                    },
+                    dataType: 'Json',
+                    success: function (response1) {
+                        response(response1.datas);
+                    },
+                    error: function (request, status, error) {
+                        console.log("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
+                    },
+                })
+            },
+            search: function () {
+                // 최소 입력 길이를 마지막 항목으로 처리합니다.
+                var term = extractLast(this.value);
+                if (term.length < 2) {
+                    return false;
+                }
+            },
+
+            focus: function () {
+                return false;
+            },
+
+            select: function (event, ui) {
+                var terms = split(this.value);
+                // 현재 입력값 제거합니다.
+                terms.pop();
+                // 선택된 아이템을 추가합니다.
+                //terms.push(ui.item.value);
+                // 끝에 콤마와 공백을 추가합니다.
+                terms.push("");
+                this.value = terms.join("");
+
+                $("#txt_nation").val(ui.item.data)
+
+                $("#patient_nationality").val(ui.item.code);
+
+                return false;
+            },
+            open: function (event, ui) {
+                var $input = $(event.target),
+                    $results = $input.autocomplete("widget"),
+                    top = $results.position().top,
+                    height = $results.height(),
+                    inputHeight = $input.height(),
+                    newTop = top - height - inputHeight;
+
+                $results.css("top", newTop + "px");
+            }
+        });
 })
 
 
@@ -1012,6 +1097,7 @@ function new_patient_option(on_off) {
         $('#need_invoice').attr('disabled', false);
         $('#need_invoice_p').attr('disabled', false);
         $('#need_insurance').attr('disabled', false);
+        $('#need_insurance_p').attr('disabled', false);
         $('#wo_name').attr('disabled', false);
         $('#wo_email').attr('disabled', false);
         $('#wo_today').attr('disabled', false);
@@ -1027,6 +1113,7 @@ function new_patient_option(on_off) {
         $('#need_invoice_p').prop('checked', false);
         //$('#need_insurance').attr('disabled', true);
         $('#need_insurance').prop('checked', false);
+        $('#need_insurance_p').prop('checked', false);
 
         $('#wo_name').prop('checked', false);
         $('#wo_email').prop('checked', false);
@@ -1172,7 +1259,13 @@ function patient_check_required() {
         } 
     }
     
-     
+    var taxCode = $('#tax_invoice_number').val();
+    var regex = /^[0-9-]+$/;
+    
+    if (taxCode != '' && regex.test(taxCode) == false){
+        alert(gettext("Tax code only allow digit or -"));
+        return false;
+    }
 
     if ($('#patient_gender').val() == '' ){
         alert(gettext("'Gender' is necessary."));
@@ -1237,7 +1330,7 @@ function save_patient() {
     var need_invoice = $("#need_invoice").prop("checked");
     var need_invoice_p = $("#need_invoice_p").prop("checked");
     var need_insurance = $("#need_insurance").prop("checked");
-
+    var need_insurance_p = $("#need_insurance_p").prop("checked");
     var wo_name = $("#wo_name").prop("checked");
     var wo_email = $("#wo_email").prop("checked");
     var wo_today = $("#wo_today").prop("checked");
@@ -1296,6 +1389,7 @@ function save_patient() {
             'need_invoice': need_invoice,
             'need_invoice_p': need_invoice_p,
             'need_insurance': need_insurance,
+            'need_insurance_p': need_insurance_p,
 
             'wo_name': wo_name,
             'wo_email': wo_email,
@@ -1340,6 +1434,7 @@ function save_patient() {
             } else {
                 alert(gettext('Failed.'));
             }
+            $('#memo_detail_modal').modal('hide');
 
         },
         error: function (request, status, error) {
@@ -1434,6 +1529,7 @@ function save_recept() {
     var wo_today = $("#wo_today").prop("checked");
 
     var need_insurance = $("#need_insurance").prop("checked");
+    var need_insurance_p = $("#need_insurance_p").prop("checked");
     var is_vaccine = $("#is_vaccine").prop("checked");
 
     var patient_table_vital_ht = $('#patient_table_vital_ht').val();
@@ -1485,6 +1581,7 @@ function save_recept() {
             'wo_email': wo_email,
             'wo_today': wo_today,
             'need_insurance': need_insurance,
+            'need_insurance_p': need_insurance_p,
             'is_vaccine': is_vaccine,
 
             'patient_table_vital_ht': patient_table_vital_ht,
@@ -1528,7 +1625,7 @@ function save_recept() {
                 alert(gettext('failed to recepted.'));
             }
 
-
+            $('#memo_detail_modal').modal('hide');
         },
         error: function (request, status, error) {
             console.log("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
@@ -1564,14 +1661,17 @@ function set_patient_data(patient_id) {
             $('#patient_phone').val(response.phone);
             $("#patient_gender").val(response.gender);
             
-            if(response.nationality == "Korea" || response.nationality == "Vietnam"){
-                $('#patient_nationality').val(response.nationality);
-                $('#patient_nationality_etc').val('');
-            }
-            else{
-                $('#patient_nationality_etc').val(response.nationality);
-                $('#patient_nationality').val(response.nationality);
-            }
+            $('#patient_nationality').val(response.nationality);
+            $('#txt_nation').val(response.txt_nation);
+            // $('#txt_nation').val(response.txt_nationality);
+            // if(response.nationality == "Korea" || response.nationality == "Vietnam"){
+            //     $('#patient_nationality').val(response.nationality);
+            //     $('#patient_nationality_etc').val('');
+            // }
+            // else{
+            //     $('#patient_nationality_etc').val(response.nationality);
+            //     $('#patient_nationality').val(response.nationality);
+            // }
            
             $('#patient_email').val(response.email);
             // $('#reception_chief_complaint}').val(response.chief_complaint);
@@ -1604,6 +1704,8 @@ function set_patient_data(patient_id) {
             $('#wo_today').prop('checked', false)
             
             $('#need_insurance').prop('checked', false)
+            $('#need_insurance_p').prop('checked', false)
+
             if (response.invoice) {
                 $('#need_invoice').prop('checked', true)
             }
@@ -1612,6 +1714,9 @@ function set_patient_data(patient_id) {
             }
             if (response.insurance) {
                 $('#need_insurance').prop('checked', true)
+            }
+            if (response.insurance_p) {
+                $('#need_insurance_p').prop('checked', true)
             }
 
             if (response.wo_name) {
@@ -2202,15 +2307,16 @@ function set_reservation_data(reservation_id) {
             $('#patient_address').val(response.patient_address);
             $('#patient_phone').val(response.reservation_phone);
             $("#patient_gender").val(response.patient_gender);
-            // $('#patient_nationality').val(response.patient_nationality);
-            if(response.patient_nationality == "Korea" || response.patient_nationality == "Vietnam"){
-                $('#patient_nationality').val(response.patient_nationality);
-                $('#patient_nationality_etc').val('');
-            }
-            else{
-                $('#patient_nationality_etc').val(response.patient_nationality);
-                $('#patient_nationality').val(response.patient_nationality);
-            }
+            $('#patient_nationality').val(response.patient_nationality);
+            $('#txt_nation').val(response.txt_nation);
+            // if(response.patient_nationality == "Korea" || response.patient_nationality == "Vietnam"){
+            //     $('#patient_nationality').val(response.patient_nationality);
+            //     $('#patient_nationality_etc').val('');
+            // }
+            // else{
+            //     $('#patient_nationality_etc').val(response.patient_nationality);
+            //     $('#patient_nationality').val(response.patient_nationality);
+            // }
             $('#patient_email').val(response.patient_email);
             $('#patient_passport').val(response.patient_passport);
             $('#memo').val(response.patient_memo);
@@ -2235,6 +2341,7 @@ function set_reservation_data(reservation_id) {
             //prop('checked', false)
             $('#need_invoice').prop('checked', false)
             $('#need_insurance').prop('checked', false)
+            $('#need_insurance_p').prop('checked', false)
             $('#need_invoice_p').prop('checked', false)
             $('#wo_name').prop('checked', false)
             $('#wo_email').prop('checked', false)
@@ -2248,6 +2355,9 @@ function set_reservation_data(reservation_id) {
             }
             if (response.need_insurance) {
                 $('#need_insurance').prop('checked', true)
+            }
+            if (response.need_insurance_p) {
+                $('#need_insurance_p').prop('checked', true)
             }
             if (response.wo_name) {
                 $('#wo_name').prop('checked', true)
@@ -3033,14 +3143,16 @@ function set_patient_data2(patient_id) {
             $('#patient_phone').val(response.phone);
             $("#patient_gender").val(response.gender);
             
-            if(response.nationality == "Korea" || response.nationality == "Vietnam"){
-                $('#patient_nationality').val(response.nationality);
+            $('#patient_nationality').val(response.nationality);
+            $('#txt_nation').val(response.txt_nation);
+            // if(response.nationality == "Korea" || response.nationality == "Vietnam"){
+            //     $('#patient_nationality').val(response.nationality);
                
-            }
-            else{
-                $('#patient_nationality_etc').val(response.nationality);
-                $('#patient_nationality').val(response.nationality);
-            }
+            // }
+            // else{
+            //     $('#patient_nationality_etc').val(response.nationality);
+            //     $('#patient_nationality').val(response.nationality);
+            // }
            
             $('#patient_email').val(response.email);
             // $('#reception_chief_complaint}').val(response.chief_complaint);
@@ -3068,6 +3180,7 @@ function set_patient_data2(patient_id) {
             $('#wo_email').prop('checked', false)
             $('#wo_today').prop('checked', false)
             $('#need_insurance').prop('checked', false)
+            $('#need_insurance_p').prop('checked', false)
             if (response.invoice) {
                 $('#need_invoice').prop('checked', true)
             }
@@ -3076,6 +3189,9 @@ function set_patient_data2(patient_id) {
             }
             if (response.insurance) {
                 $('#need_insurance').prop('checked', true)
+            }
+            if (response.insurance_p) {
+                $('#need_insurance_p').prop('checked', true)
             }
             if (response.wo_name) {
                 $('#wo_name').prop('checked', true)
@@ -3099,5 +3215,32 @@ function set_patient_data2(patient_id) {
 
 
 function open_tax_search(){
-    window.open('https://masothue.com/')
+    // window.open('https://masothue.com/')
+    var current_tax = $('#tax_invoice_number').val();
+    if(current_tax != ''){
+        fetch('https://api.vietqr.io/v2/business/' + current_tax)
+        .then((response) => response.json())
+        .then((json) => {
+            $('#tax_search_id').val(json.data.id);
+            $('#tax_search_name').val(json.data.name);
+            $('#tax_search_iname').val(json.data.internationalName);
+            $('#tax_search_address').val(json.data.address);
+            $('#tax_detail_modal').modal('show')
+        })
+    }else{
+        alert('No value for Tax code')
+    }
+
 }
+
+function apply_data(){
+    var id = $('#tax_search_id').val();
+    var name = $('#tax_search_name').val();
+    var address = $('#tax_search_address').val();
+
+    $('#tax_invoice_number').val(id);
+    $('#tax_invoice_company_name').val(name);
+    $('#tax_invoice_address').val(address);
+    $('#tax_detail_modal').modal('hide')
+}
+
