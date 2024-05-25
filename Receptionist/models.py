@@ -287,6 +287,15 @@ class Reception(models.Model):
         default = False,
         null = True
     )
+    need_insurance_p_today = models.BooleanField(
+        default = False,
+        null = True
+    )
+
+    memo_email = models.CharField(
+        max_length = 2048,
+        null=True,
+    )
 
     objects=ReceptionQueryManager()
 

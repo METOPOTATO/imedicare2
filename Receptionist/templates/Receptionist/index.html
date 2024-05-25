@@ -213,11 +213,12 @@
                                 <button class="btn btn-primary " style="width: 90px;">Insurance</button>
                                 <label class="need_medical_report " style="margin-right:10px;" >
                                     <input type="checkbox" name="insurance" id="need_insurance" onclick="checkInsurance(this)"/>
-                                    <text> {{_('Company') }}</text>
+                                    <text> {{_('Insurance') }}</text>
                                 </label>
-                                <label class="need_medical_report " style="margin-right:10px;" >
-                                    <input type="checkbox" name="insurance" id="need_insurance_p" onclick="checkInsurance(this)"/>
-                                    <text style="color: red;"> {{_('Personal') }}</text>
+                                <label class="need_medical_report " style="margin-right:10px;" >(
+                                    <input type="checkbox" name="insurance_c" id="need_insurance_p" />
+                                    <text style="color: red;"> {{_('Company') }}</text>
+                                )
                                 </label>
                             </div>
                             <div>

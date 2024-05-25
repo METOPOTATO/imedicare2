@@ -121,6 +121,9 @@
         #document_contents_table thead tr th:nth-child(22) {
             width: 80px;
         }
+        #document_contents_table thead tr th:nth-child(23) {
+            width: 80px;
+        }
 
 
 #document_contents tr td

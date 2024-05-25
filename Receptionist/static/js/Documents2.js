@@ -81,13 +81,14 @@ function get_document(id){
             console.log(response.data);
             $('#rec_id').val(response.data.id);
             $('#patient_id').val(response.data.patient_id);
+            $('#depart').val(response.data.depart);
             $('#txt_address').val(response.data.address);
             $('#patient_name').val(response.data.name);
             $('#txt_time').val(response.data.date_time);
             $('#txt_email').val(response.data.email);
             $('#txt_tax').val(response.data.tax_code);
-            $('#txt_invoice_address').val(response.data.address2);
-
+            $('#txt_invoice_address').val(response.data.address2);         
+            $('#txt_memo_email').val(response.data.memo_email);
             if (response.data.medical_receipt== true) {
                 $('#download_pdf1').show();
                 $('#upload1').show()
@@ -162,13 +163,14 @@ function get_document(id){
             if (response.data.need_insurance_p) {
                 $('#need_insurance_p').prop('checked', true)
             }
-            if (response.wo_name) {
+            if (response.data.wo_name) {
                 $('#wo_name').prop('checked', true)
             }
-            if (response.wo_email) {
+            if (response.data.wo_email) {
                 $('#wo_email').prop('checked', true)
             }
-            if (response.wo_today) {
+            if (response.data.wo_today) {
+                console.log('here')
                 $('#wo_today').prop('checked', true)
             }
             
@@ -242,8 +244,8 @@ function document_search() {
                         // '<td>' + response.datas[i].address + '</td>' +
                         '<td>' + response.datas[i].phone + '</td>' ;
                     
-
-                        str += '</tr>'
+                    str += '<td>' + response.datas[i].send_invoice_status + '</td>' ;
+                    str += '</tr>'
                     // }
                     // else {
                     //     str += '<td></td>';
@@ -356,7 +358,7 @@ function excel_download() {
     window.open(url);
 }
 
-function update_send_mail_status(){
+function update_send_mail_status(e, status=1){
     var rec_id = $('#rec_id').val();
     var document_control_start = $('#document_control_start').val();
     var document_control_end = $('#document_control_end').val();
@@ -367,7 +369,8 @@ function update_send_mail_status(){
         document_control_start = moment(document_control_start, 'DD/MM/YYYY').format('YYYY-MM-DD');
         document_control_end = moment(document_control_end, 'DD/MM/YYYY').format('YYYY-MM-DD');
     }
-
+    console.log('+++++')
+    console.log(status)
 
 
     $.ajax({
@@ -379,10 +382,114 @@ function update_send_mail_status(){
             'document_control_end': document_control_end,
             'document_control_depart': document_control_depart,
             'document_control_input': document_control_input,
-            'id': rec_id
+            'id': rec_id,
+            'status': status,
         },
         dataType: 'Json',
         success: function (response) {
+            if (response.result == true) {
+                $('#document_contents').empty();
+                for (var i = 0; i < response.datas.length; i++) {
+
+                    
+                    var tr_class = '';
+                    if(response.datas[i].send_email_status == 1){
+                        tr_class  = "class ='green'";
+                    }
+                    else if(response.datas[i].send_email_status == '2'){
+                        tr_class  = "class ='warning'";
+                    }
+                    
+                    str = "<tr onclick='get_document(" + response.datas[i].id + ")'" + tr_class + "><td>" + (i + 1) + "</td>" +
+                        '<td>' + response.datas[i].chart + '</td>' +
+                        '<td>' + response.datas[i].name + '</td>' +
+                    '<td>';
+                    if ($("#language").val() == 'vi') {
+                        str += moment(response.datas[i].date_of_birth, 'YYYY-MM-DD').format('DD/MM/YYYY');
+                    } else {
+                        str += response.datas[i].date_of_birth;
+                    }
+                    str += '</td>' +
+                        '<td>' + response.datas[i].depart + '</td>' +
+                        '<td>' + response.datas[i].phone + '</td>'
+                    str += '<td>' + response.datas[i].send_invoice_status + '</td>' ;
+                    str += '</tr>'
+
+                    $("#document_contents").append(str);
+                }
+            }
+        },
+        error: function (request, status, error) {
+            console.log("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
+
+        },
+    });
+}
+
+function upload_pdf(file_name, data){
+
+    // event.preventDefault();
+
+    
+    var p_id = $('#patient_id').val()
+    var depart = $('#depart').val()
+    var form_data = new FormData();
+
+    form_data.append('pdf_file', data)
+    form_data.append('patient_id', p_id)
+    form_data.append('file_name', file_name)
+    form_data.append('depart', depart)
+    $.ajax({
+        type: 'POST',
+        headers:{'X-CSRFToken':$('#csrf').val()},
+        url: '/receptionist/upload_pdf/',
+        data: form_data,
+        cache: false,
+        processData: false,
+        contentType: false,
+
+        success: function(response) {
+            alert('Upload success');
+        },
+        error: function (request, status, error) {
+            console.log("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
+        },
+    });
+    return false;
+}
+
+function send_email_document(){
+    var rec_id = $('#rec_id').val();
+    var document_control_start = $('#document_control_start').val();
+    var document_control_end = $('#document_control_end').val();
+    var document_control_depart = $('#document_control_depart').val();
+    var document_control_input = $('#document_control_input').val();
+
+    if ($("#language").val() == 'vi') {
+        document_control_start = moment(document_control_start, 'DD/MM/YYYY').format('YYYY-MM-DD');
+        document_control_end = moment(document_control_end, 'DD/MM/YYYY').format('YYYY-MM-DD');
+    }
+    $.ajax({
+        type: 'POST',
+        headers:{'X-CSRFToken':$('#csrf').val()},
+        url: '/receptionist/send_email_document/',
+        data: {
+            'patient_id': $('#patient_id').val(),
+            'patient_name': $('#patient_name').val(),
+            'email': $('#txt_email').val(),
+            'depart': $('#depart').val(),
+            'rec_id': $('#rec_id').val(),
+
+            'document_control_start': document_control_start,
+            'document_control_end': document_control_end,
+            'document_control_depart': document_control_depart,
+            'document_control_input': document_control_input,
+            'id': rec_id,
+            'status': 2,
+        },
+
+
+        success: function(response) {
             if (response.result == true) {
                 $('#document_contents').empty();
                 for (var i = 0; i < response.datas.length; i++) {
@@ -412,59 +519,7 @@ function update_send_mail_status(){
 
                     $("#document_contents").append(str);
                 }
-            }
-        },
-        error: function (request, status, error) {
-            console.log("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
-
-        },
-    });
-}
-
-function upload_pdf(file_name, data){
-
-    // event.preventDefault();
-
-    
-    var p_id = $('#patient_id').val()
-    var form_data = new FormData();
-
-    form_data.append('pdf_file', data)
-    form_data.append('patient_id', p_id)
-    form_data.append('file_name', file_name)
-    $.ajax({
-        type: 'POST',
-        headers:{'X-CSRFToken':$('#csrf').val()},
-        url: '/receptionist/upload_pdf/',
-        data: form_data,
-        cache: false,
-        processData: false,
-        contentType: false,
-
-        success: function(response) {
-            alert('Upload success');
-        },
-        error: function (request, status, error) {
-            console.log("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
-        },
-    });
-    return false;
-}
-
-function send_email_document(){
-    $.ajax({
-        type: 'POST',
-        headers:{'X-CSRFToken':$('#csrf').val()},
-        url: '/receptionist/send_email_document/',
-        data: {
-            'patient_id': $('#patient_id').val(),
-            'patient_name': $('#patient_name').val(),
-            'email': $('#txt_email').val()
-        },
-
-
-        success: function(response) {
-            alert('Send email success');
+            }   
         },
         error: function (request, status, error) {
             console.log("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
@@ -533,6 +588,27 @@ function update_send_invoice_status(){
         error: function (request, status, error) {
             console.log("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
 
+        },
+    });
+}
+
+function save_memo_email(){
+    var rec_id = $('#rec_id').val();
+    var txt_memo_email = $('#txt_memo_email').val()
+    $.ajax({
+        type: 'POST',
+        url: '/receptionist/save_memo_email/',
+        data: {
+            'csrfmiddlewaretoken': $('#csrf').val(),
+            'id': rec_id,
+            'memo_email': txt_memo_email
+        },
+        dataType: 'Json',
+        success: function (response) {
+            alert('Saved!')
+        },
+        error: function (request, status, error) {
+            console.log("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error)
         },
     });
 }

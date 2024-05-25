@@ -252,7 +252,15 @@ def save_patient(request):
         reservation.patient = patient
         reservation.save()
     try:
-        reception_last = Reception.objects.filter(patient = patient).last()
+
+        reception_last = Reception.objects.filter(patient = patient).exclude(progress='deleted').last()
+        
+        if wo_today == 'true':
+            reception_last.without_today = True
+            reception_last.without_day = datetime.date.today()  
+        else:
+            reception_last.without_today = False
+
         if need_invoice == 'true':
             reception_last.need_invoice = True
         elif need_invoice == 'false':
@@ -283,14 +291,9 @@ def save_patient(request):
         elif wo_email == 'false':
             reception_last.without_email = False
 
-        if wo_today == 'true':
-            reception_last.without_today = True
-        
-        elif wo_today == 'false':
-            reception_last.without_today = False
         reception_last.save()
-    except:
-        pass
+    except Exception as e:
+        print('error:',e)
 
     result = True
 
@@ -339,11 +342,33 @@ def set_patient_data(request):
         taxinvoice = None
 
     try:
-        rec = Reception.objects.filter(patient_id = patient_id,).last()
+        rec = Reception.objects.filter(patient_id = patient_id,).exclude(progress='deleted').last()
     except:
         rec = None
 
 
+    invoice = ''
+    invoice_p = ''
+    insurance = ''
+    insurance_p = ''
+    invoice = '' if rec is None else rec.need_invoice
+    invoice_p = '' if rec is None else rec.need_invoice_p
+    insurance = '' if rec is None else rec.need_insurance
+    insurance_p = '' if rec is None else rec.need_insurance_p
+    print(rec.id)
+    print(invoice)
+    print(invoice_p)
+    print(insurance)
+    print(insurance_p)
+    print(rec.without_today)
+    wo_today = '' if rec is None else rec.without_today
+    if rec.without_day !=  datetime.date.today():
+        wo_today = ''
+    # else:
+    #     invoice = '' if rec is None else rec.need_invoice_today
+    #     invoice_p = '' if rec is None else rec.need_invoice_p_today
+    #     insurance = '' if rec is None else rec.need_insurance_today
+    #     insurance_p = '' if rec is None else rec.need_insurance_p_today
 
 
     context.update({
@@ -372,15 +397,15 @@ def set_patient_data(request):
         'tax_invoice_employee':'' if taxinvoice is None else taxinvoice.employee,
         'tax_invoice_memo':'' if taxinvoice is None else taxinvoice.memo,
 
-        'invoice':'' if rec is None else rec.need_invoice,
-        'invoice_p':'' if rec is None else rec.need_invoice_p,
-        'insurance':'' if rec is None else rec.need_insurance,
-        'insurance_p':'' if rec is None else rec.need_insurance_p,
+        'invoice': invoice,
+        'invoice_p':invoice_p,
+        'insurance':insurance,
+        'insurance_p':insurance_p,
         'chief_complaint':'' if rec is None else rec.chief_complaint,
 
         'wo_name':'' if rec is None else rec.without_name,
         'wo_email':'' if rec is None else rec.without_email,
-        'wo_today':'' if rec is None else rec.without_today,
+        'wo_today': wo_today,
         })
     return JsonResponse(context)
 
@@ -617,19 +642,33 @@ def save_reception(request):
     except Reservation.DoesNotExist:
        reservation = Reservation(None)
 
-    if need_medical_report == 'true':
-        reception.need_medical_report = True
+
+    if wo_today == 'true':
+        reception.without_today = True
+        reception.without_day = datetime.date.today()
+    else:
+        reception.without_today = False
+
     if need_invoice == 'true':
         reception.need_invoice = True
+    elif need_invoice == 'false':
+        reception.need_invoice = False
+
     if need_invoice_p == 'true':
         reception.need_invoice_p = True
+    elif need_invoice_p == 'false':
+        reception.need_invoice_p = False
+
     if need_insurance == 'true':
         reception.need_insurance = True
+    elif need_insurance == 'false':
+        reception.need_insurance = False
+    
     if need_insurance_p == 'true':
         reception.need_insurance_p = True
-    if is_vaccine == 'true':
-        reception.is_vaccine = True
-    
+    elif need_insurance_p == 'false':
+        reception.need_insurance_p = False             
+
     if wo_name == 'true':
         reception.without_name = True
     elif wo_name == 'false':
@@ -639,11 +678,6 @@ def save_reception(request):
         reception.without_email = True
     elif wo_email == 'false':
         reception.without_email = False
-
-    if wo_today == 'true':
-        reception.without_today = True
-    elif wo_today == 'false':
-        reception.without_today = False
 
     reception.save()
 
@@ -2857,6 +2891,26 @@ def reservation_info(request):
     except Exception as e:
         print(e)
         tax = None
+
+    invoice = ''
+    invoice_p = ''
+    insurance = ''
+    insurance_p = ''
+    if reception_last is not None:
+        # if reception_last.without_day !=  datetime.date.today():
+        invoice = '' if reception_last is None else reception_last.need_invoice
+        invoice_p = '' if reception_last is None else reception_last.need_invoice_p
+        insurance = '' if reception_last is None else reception_last.need_insurance
+        insurance_p = '' if reception_last is None else reception_last.need_insurance_p
+        # else:
+        #     invoice = '' if reception_last is None else reception_last.need_invoice_today
+        #     invoice_p = '' if reception_last is None else reception_last.need_invoice_p_today
+        #     insurance = '' if reception_last is None else reception_last.need_insurance_today
+        #     insurance_p = '' if reception_last is None else reception_last.need_insurance_p_today
+    wo_today = '' if reception_last is None else reception_last.without_today
+    if reception_last is not None:
+        if reception_last.without_day !=  datetime.date.today():
+            wo_today = ''
     context = {
         'reservation_id':reservation.id,
         'reservation_date': reservation.reservation_date.strftime('%Y-%m-%d %H:%M:%S'),
@@ -2882,15 +2936,15 @@ def reservation_info(request):
         'txt_nation': search_nation(reservation.patient.nationality),        
         'patient_address': reservation.pick_up_addr if reservation.patient is None else reservation.patient.address,   
         'patient_email':'' if reservation.patient is None else reservation.patient.email,      
-        'need_invoice':'' if reception_last is None else reception_last.need_invoice,  
-        'need_invoice_p':'' if reception_last is None else reception_last.need_invoice_p, 
+        'need_invoice':invoice,  
+        'need_invoice_p':invoice_p, 
          
         'wo_name':'' if reception_last is None else reception_last.without_name, 
         'wo_email':'' if reception_last is None else reception_last.without_email, 
-        'wo_today':'' if reception_last is None else reception_last.without_today, 
+        'wo_today': wo_today, 
         
-        'need_insurance':'' if reception_last is None else reception_last.need_insurance, 
-        'need_insurance_p':'' if reception_last is None else reception_last.need_insurance_p,
+        'need_insurance': insurance, 
+        'need_insurance_p':insurance_p,
         'chief_complaint':'' if reception_last is None else reception_last.chief_complaint, 
         'reservation_reception_id':reservation_reception_id, 
         'address': reservation.pick_up_addr,     
@@ -3396,11 +3450,12 @@ def upload_pdf(request):
     if request.method == 'POST' and request.FILES['pdf_file']:
         pdf_file = request.FILES['pdf_file']
         patient_id = request.POST.get("patient_id")
+        depart = request.POST.get("depart", '')
         file_name = request.POST.get("file_name", 'default.pdf')
 
         fs = FileSystemStorage()
         
-        upload_dir = os.path.join(settings.MEDIA_ROOT, 'doc', str(datetime.date.today()), patient_id)
+        upload_dir = os.path.join(settings.MEDIA_ROOT, 'doc', str(datetime.date.today()), patient_id, depart)
         os.makedirs(upload_dir, exist_ok=True)
 
         file_path = os.path.join(upload_dir, file_name)
@@ -3413,33 +3468,62 @@ def upload_pdf(request):
 
 @login_required
 def send_email_document(request):
-    print(datetime.datetime.now())
     patient_id = request.POST.get("patient_id")
+    rec_id =  request.POST.get('rec_id')
     patient = Patient.objects.get(pk = patient_id)
     nation = patient.nationality
     patient_name = patient.name_eng
+    depart = request.POST.get("depart", '')
+
+    if depart == 'PED':
+        pass
+    if depart == 'IM':
+        depart = '내과 -서류'
+    if depart == 'LAB':
+        pass
+    if depart == 'PS':
+        pass
+    if depart == 'ENT':
+        depart = '이비인후과 -서류'
+    if depart == 'DERM':
+        depart = '피부과 서류'
+    if depart == 'PM':
+        depart = '통증 재활과-서류'
+    if depart == 'DENTAL':
+        pass
+    if depart == 'OBGYN':
+        depart = '산부인과 -서류'
+    if depart == 'VACCINE':
+        pass
+    if depart == 'SURGERY':
+        pass
+    if depart == 'OPH':
+        depart = '안과 -서류'
+    if depart == 'HEALTH CHECKUP':
+        pass
 
     subject = ''
     html_template = get_template('email.html')
-    str_time = datetime.datetime.today().strftime('%d.%m.%Y')
-
+    # str_time = datetime.datetime.today().strftime('%d.%m.%Y')
+    reception = Reception.objects.get(pk=rec_id)
+    str_time = reception.done_treatement_date.strftime('%d.%m.%Y')
+    print(str_time)
     if nation == 'Korea':
-        patient_name = patient.name_kor
-        subject = '[아이메디케어병원]' + patient_name + str_time
+        patient_name = patient.name_eng
+        subject = '[아이메디케어병원]' + patient_name + str_time + '-' + depart
         html_template = get_template('email_korea.html')
     elif nation == 'Vietnam':
         patient_name = patient.name_eng
-        subject = '[Phòng khám I-medicare]' + patient_name + str_time
+        subject = '[Phòng khám I-medicare]' + patient_name + str_time + '-' + depart
         html_template = get_template('email_vn.html')
     else:
         patient_name = patient.name_eng
-        subject = '[Imedicare Clinic]' + patient_name + str_time
+        subject = '[Imedicare Clinic]' + patient_name + str_time + '-' + depart
         html_template = get_template('email.html')
 
     to_emails = request.POST.get("email")
     list_emails = to_emails.split(',')
   
-
     from_email = settings.EMAIL_HOST_USER
     to_email = list_emails
 
@@ -3452,7 +3536,7 @@ def send_email_document(request):
     
     print('2', datetime.datetime.now())
     # Thư mục chứa các tệp cần đính kèm
-    upload_dir = os.path.join(settings.MEDIA_ROOT, 'doc', str(datetime.date.today()), patient_id)
+    upload_dir = os.path.join(settings.MEDIA_ROOT, 'doc', str(datetime.date.today()), patient_id, reception.depart.name)
     os.makedirs(upload_dir, exist_ok=True)
 
     # Lặp qua tất cả các tệp trong thư mục
@@ -3466,7 +3550,19 @@ def send_email_document(request):
 
     email.send()
     print('3', datetime.datetime.now())
-    return JsonResponse({'resulr': 'ok'})
+
+    status = request.POST.get('status', '')
+    start = request.POST.get('document_control_start')
+    end = request.POST.get('document_control_end')
+    depart = request.POST.get('document_control_depart')
+    inp = request.POST.get('document_control_input')
+    id = request.POST.get('id', '')
+    print('start', start)
+    print('end',end)
+    return update_send_mail_status2(status, start, end, depart, inp, id)
+  
+
+    # return JsonResponse({'resulr': 'ok'})
 
 @login_required
 def Documents2(request):
@@ -3488,7 +3584,7 @@ def get_document(request):
     rec_id = request.POST.get('rec_id', '')
     print(rec_id)
     reception = Reception.objects.get(pk = rec_id)
-
+    print(reception.id)
     tax_code = ''
     try:
         tax_code = reception.patient.taxinvoice.number
@@ -3504,7 +3600,11 @@ def get_document(request):
     elif reception.need_invoice_p == True:
         address2 = reception.patient.taxinvoice.address_p
         need_invoice = 'Yes(P)'
-
+    try:
+        rec = Reception.objects.filter(patient_id = reception.patient_id,).exclude(progress='deleted').last()
+    except:
+        rec = None
+        
     data = {
         'id':reception.id,
         'chart':reception.patient.get_chart_no(),
@@ -3527,15 +3627,17 @@ def get_document(request):
         'is_insurance': reception.need_insurance ,
         'tax_code':tax_code,
         'address2': address2,
+        'memo_email': reception.memo_email,
 
-        'need_invoice':reception.need_invoice,
-        'need_invoice_p':reception.need_invoice_p,
-        'need_insurance':reception.need_insurance,
-        'need_insurance_p':reception.need_insurance_p,
-        'wo_name':reception.without_name,
-        'wo_email':reception.without_email,
-        'wo_today':reception.without_today,
+        'need_invoice':rec.need_invoice if rec is not None else '',
+        'need_invoice_p':rec.need_invoice_p if rec is not None else '',
+        'need_insurance':rec.need_insurance if rec is not None else '',
+        'need_insurance_p':rec.need_insurance_p if rec is not None else '',
+        'wo_name':rec.without_name if rec is not None else '',
+        'wo_email':rec.without_email if rec is not None else '',
+        'wo_today':rec.without_today if rec is not None else '',
     }
+    print('===', rec.without_today)
     
     diagnosis = True
     try:
@@ -3677,7 +3779,7 @@ def document_search(request):
             'passport':reception.patient.passport,   
             'email': reception.patient.email,
             'send_email_status': reception.send_email_status ,
-
+            'send_invoice_status': 'Yes' if reception.send_invoice_status == True else 'No',
             'is_invoice': need_invoice,
             'is_insurance': 'Yes' if reception.need_insurance == True else 'No',
 
@@ -3688,6 +3790,12 @@ def document_search(request):
             'tax_code':tax_code,
             'address2': address2
             }
+        #
+        print(reception.id)
+        print(reception.need_invoice)
+        print(reception.need_invoice_p)
+        print(reception.need_insurance)
+        print(reception.need_insurance_p)
         diagnosis = True
         try:
             if reception.diagnosis.medicinemanager_set.count() !=0:
@@ -5989,99 +6097,40 @@ def patient_search2(request):
     # print(patient)
     datas=[]
     if (memo and memo != '') or (name and name != '') or (chart and chart != '') or (email and email != '') or (phone and phone != '') or (dob and dob != '') or (tax and tax != '') or (nation and nation != '') or (address and address != ''):
-        receptions = Reception.objects.select_related('patient').values('patient_id','depart_id').filter( functools.reduce(operator.and_, argument_list) ).exclude(progress='deleted').annotate(c_pt=Count('patient_id'),c_dp=Count('depart_id'))
+        receptions = Reception.objects.select_related('patient').values('patient_id','depart_id','id').filter( functools.reduce(operator.and_, argument_list) ) \
+        .exclude(progress='deleted').annotate(c_pt=Count('patient_id'),c_dp=Count('depart_id')) \
+        .order_by('patient__name_eng')
         # print(receptions)
         patient_memo = []
-        if memo_detail:
-            patient_memo = DetailMemo.objects.filter(memo__icontains=memo_detail).values_list('patient_id', flat=True);
-            patient_memo = list(patient_memo)
+
         for reception in receptions:
-            if memo_detail and memo_detail != '':
-                if reception['patient_id'] in patient_memo:
-                    reception_last = Reception.objects.filter(patient = reception['patient_id'], depart = reception['depart_id']).last()
-                    if reception_last:
-                        data = {}
-                        data.update({
-                            'id':reception_last.patient.id,
-                            'chart':reception_last.patient.get_chart_no(),
-                            'name_kor':reception_last.patient.name_kor,
-                            'name_eng':reception_last.patient.name_eng,
-                            'gender':reception_last.patient.gender,
-                            'date_of_birth':reception_last.patient.date_of_birth.strftime('%Y-%m-%d'),
-                            'phonenumber':reception_last.patient.phone,
-                            'age' : reception_last.patient.get_age(),
-                            'address':reception_last.patient.address,
-                            'has_unpaid':reception_last.patient.has_unpaid(),
-                            'depart':reception_last.depart.name,
-                            'last_visit':reception_last.recorded_date.strftime('%Y-%m-%d'),
-                            
-                            'nationality':reception_last.patient.nationality,
-                            'txt_nation': search_nation(reception_last.patient.nationality),
-                            'passport':reception_last.patient.passport,
-                            'email':reception_last.patient.email,
-                            'category':reception_last.patient.category
+            rec = Reception.objects.get(pk=reception['id'])
+            data = {}
 
+            data.update({
+                'id':rec.patient.id,
+                'chart':rec.patient.get_chart_no(),
+                'name_kor':rec.patient.name_kor,
+                'name_eng':rec.patient.name_eng,
+                'gender':rec.patient.gender,
+                'date_of_birth':rec.patient.date_of_birth.strftime('%Y-%m-%d'),
+                'phonenumber':rec.patient.phone,
+                'age' : rec.patient.get_age(),
+                'address':rec.patient.address,
+                'has_unpaid':rec.patient.has_unpaid(),
+                'depart':rec.depart.name,
+                'last_visit':rec.recorded_date.strftime('%Y-%m-%d'),
+                
+                'nationality':rec.patient.nationality,
+                'txt_nation': search_nation(rec.patient.nationality),
+                'passport':rec.patient.passport,
+                'email':rec.patient.email,
+                'category':rec.patient.category,
+                'rec_id': rec.id
 
-                            })
-                        datas.append(data)
-            else:
-                reception_last = Reception.objects.filter(patient = reception['patient_id'], depart = reception['depart_id']).last()
-                data = {}
-                data.update({
-                    'id':reception_last.patient.id,
-                    'chart':reception_last.patient.get_chart_no(),
-                    'name_kor':reception_last.patient.name_kor,
-                    'name_eng':reception_last.patient.name_eng,
-                    'gender':reception_last.patient.gender,
-                    'date_of_birth':reception_last.patient.date_of_birth.strftime('%Y-%m-%d'),
-                    'phonenumber':reception_last.patient.phone,
-                    'age' : reception_last.patient.get_age(),
-                    'address':reception_last.patient.address,
-                    'has_unpaid':reception_last.patient.has_unpaid(),
-                    'depart':reception_last.depart.name,
-                    'last_visit':reception_last.recorded_date.strftime('%Y-%m-%d'),
-                    
-                    'nationality':reception_last.patient.nationality,
-                    'txt_nation': search_nation(reception_last.patient.nationality),
-                    'passport':reception_last.patient.passport,
-                    'email':reception_last.patient.email,
-                    'category':reception_last.patient.category
-
-
-                    })
-                datas.append(data)
-    else:
-        print(3)
-        if memo_detail:
-            patient_memo = DetailMemo.objects.filter(memo__icontains=memo_detail).values_list('patient_id', flat=True);
-            patient_memo = list(patient_memo)
-            receptions = Reception.objects.select_related('patient').values('patient_id','depart_id').filter( patient__in=patient_memo ).exclude(progress='deleted').annotate(c_pt=Count('patient_id'),c_dp=Count('depart_id'))
-            for reception in receptions:
-                reception_last = Reception.objects.filter(patient = reception['patient_id'], depart = reception['depart_id']).last()
-                data = {}
-                data.update({
-                    'id':reception_last.patient.id,
-                    'chart':reception_last.patient.get_chart_no(),
-                    'name_kor':reception_last.patient.name_kor,
-                    'name_eng':reception_last.patient.name_eng,
-                    'gender':reception_last.patient.gender,
-                    'date_of_birth':reception_last.patient.date_of_birth.strftime('%Y-%m-%d'),
-                    'phonenumber':reception_last.patient.phone,
-                    'age' : reception_last.patient.get_age(),
-                    'address':reception_last.patient.address,
-                    'has_unpaid':reception_last.patient.has_unpaid(),
-                    'depart':reception_last.depart.name,
-                    'last_visit':reception_last.recorded_date.strftime('%Y-%m-%d'),
-                    
-                    'nationality':reception_last.patient.nationality,
-                    'txt_nation': search_nation(reception_last.patient.nationality),
-                    'passport':reception_last.patient.passport,
-                    'email':reception_last.patient.email,
-                    'category':reception_last.patient.category
-
-
-                    })
-                datas.append(data)
+                })
+            datas.append(data)
+   
     # print(datas)
     context = {'datas':datas}
     return JsonResponse(context)
@@ -6287,24 +6336,41 @@ def update_send_invoice_status(request):
     print(re.send_invoice_status)
     return JsonResponse({'result': True})
 
+
 @login_required
 def update_send_mail_status(request):
-    print('asdasdas')
-    try:
-        id = request.POST.get('id', '')
-        re = Reception.objects.get(pk=id)
-        if re.send_email_status < 2:
-            re.send_email_status += 1
-            re.save()
-    except Exception as e:
-        print(e)
+    status = request.POST.get('status', '')
     start = request.POST.get('document_control_start')
     end = request.POST.get('document_control_end')
     depart = request.POST.get('document_control_depart')
     input = request.POST.get('document_control_input')
 
-    
-    
+    try:
+        id = request.POST.get('id', '')
+        re = Reception.objects.get(pk=id)
+        re.send_email_status = status
+        re.save()
+    except Exception as e:
+        print(e)
+    return update_send_mail_status2(status, start, end, depart, input, id)
+# @login_required
+
+def update_send_mail_status2(status, start, end, depart, input, id):
+  
+    # status = request.POST.get('status', '')
+    # start = request.POST.get('document_control_start')
+    # end = request.POST.get('document_control_end')
+    # depart = request.POST.get('document_control_depart')
+    # input = request.POST.get('document_control_input')
+
+    try:
+        # id = request.POST.get('id', '')
+        re = Reception.objects.get(pk=id)
+        re.send_email_status = status
+        re.save()
+    except Exception as e:
+        print(e)
+
     kwargs={}
     if depart != '':
         kwargs['depart_id'] = depart
@@ -6314,7 +6380,6 @@ def update_send_mail_status(request):
 
     argument_list.append( Q(**{'patient__name_kor__icontains':input} ) ) 
     argument_list.append( Q(**{'patient__name_eng__icontains':input} ) ) 
-
 
     date_min = datetime.datetime.combine(datetime.datetime.strptime(start, "%Y-%m-%d").date(), datetime.time.min)
     date_max = datetime.datetime.combine(datetime.datetime.strptime(end, "%Y-%m-%d").date(), datetime.time.max)
@@ -6427,7 +6492,6 @@ def update_send_mail_status(request):
         datas.append(data)
     
 
-    print('==========================')
     return JsonResponse({
         'result':True,
         'datas':datas,
@@ -6660,3 +6724,41 @@ def search_nation(string):
         if v == string:
             return k
     return ''
+
+def data_excel(request):
+    response = HttpResponse(content_type='application/ms-excel')
+    response['Content-Disposition'] = 'attachment; filename="data.xlsx"'
+    
+    wb = load_workbook('/home/light/Desktop/Projects/imedicare2/data2.xlsx') #Workbook()
+    ws = wb.active
+
+
+    current_row = 2
+    query_datas = Test.objects.select_related('test_class').select_related('parent_test').filter(parent_test = None).exclude(use_yn = 'N').order_by("id")
+
+    ws['A1'] = 'Name'
+    ws['B1'] = 'Code'
+    ws['C1'] = 'Price'
+    for data in query_datas: 
+        print(data.price)  
+        ws['A' + str(current_row)] = data.name
+        ws['B' + str(current_row)] = data.code
+        ws['C' + str(current_row)] = data.get_price()
+
+        current_row += 1
+
+
+    wb.save('/home/light/Desktop/Projects/imedicare2/data3.xlsx')
+    return JsonResponse({'re': 'data'})
+
+def save_memo_email(request):
+    rec_id = request.POST.get('id', '')
+    memo_email = request.POST.get('memo_email', '')
+    print('======', rec_id)
+    reception = Reception.objects.get(pk = rec_id)
+    if reception:
+        reception.memo_email = memo_email
+        reception.save()
+    return JsonResponse({
+        'result': True
+    })

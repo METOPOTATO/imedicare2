@@ -4035,7 +4035,7 @@ def test_search(request):
 
     datas=[]
     for query_data in query_datas:
-        print(query_data.__dict__)
+        # print(query_data.__dict__)
         data = {
                 'id' : query_data.id,
                 'code': query_data.code,

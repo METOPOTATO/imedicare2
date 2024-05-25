@@ -1020,20 +1020,22 @@ def get_order_result_by_patient(request):
         depart_id = request.GET.get('ReceptionDepartment', 0)
         depart_id = int(depart_id)
         if depart_id != 0:
-            reception = Reception.objects.filter( patient_id = patient_code, recorded_date__year=date_request[0:4], recorded_date__month=date_request[4:6], recorded_date__day=date_request[6:], depart_id=depart_id)
+            reception = Reception.objects.filter( patient_id = patient_code, recorded_date__year=date_request[0:4], recorded_date__month=date_request[4:6], recorded_date__day=date_request[6:], depart_id=depart_id).last()
         else:
-            reception = Reception.objects.filter( patient_id = patient_code, recorded_date__year=date_request[0:4], recorded_date__month=date_request[4:6], recorded_date__day=date_request[6:])
+            reception = Reception.objects.filter( patient_id = patient_code, recorded_date__year=date_request[0:4], recorded_date__month=date_request[4:6], recorded_date__day=date_request[6:]).last()
         if not reception:
             return JsonResponse({'result': 'no result 1'}) 
         
         receptions = Reception.objects.filter( patient_id = patient_code, recorded_date__year=date_request[0:4], recorded_date__month=date_request[4:6], recorded_date__day=date_request[6:], depart_id=depart_id)
 
         diagnosis = None
-        for r in reception:
-            print(r)
-            diagnosis = Diagnosis.objects.filter(reception_id = r.id).first()
-            if diagnosis:
-                break
+        # print(reception)
+        # for r in reception:
+            # print('===',r)
+        diagnosis = Diagnosis.objects.filter(reception_id = reception.id).first()
+        # print(diagnosis)
+        # if diagnosis:
+        #     break
         if not diagnosis:
             return JsonResponse({'result': 'no result 2'}) 
         

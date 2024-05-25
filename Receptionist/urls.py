@@ -140,4 +140,6 @@ urlpatterns = [
     path('update_send_mail_status/',views.update_send_mail_status,name='update_send_mail_status'),
     path('update_send_invoice_status/',views.update_send_invoice_status,name='update_send_invoice_status'),
     path('get_nation/',views.get_nation,name='get_nation'),
+    path('data_excel/',views.data_excel,name='data_excel'),
+    path('save_memo_email/',views.save_memo_email,name='save_memo_email'),
 ]

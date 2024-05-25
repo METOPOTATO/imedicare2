@@ -164,6 +164,9 @@ function document_search() {
                     else {
                         str += '<td></td>';
                     }
+
+                    str += '<td>' + response.datas[i].send_invoice_status + '</td>' ;
+                    
                     // if (response.datas[i].vaccine_certificate == true) {
                         str += '<td>' + "<a class='btn btn-default btn-xs' href='javascript: void (0);' onclick='excel_download(" + response.datas[i].id + ")' ><i class='fa fa-lg fa-file-excel-o'></i></a>" + '</td>';
                         // str += '<td>' + response.datas[i].send_email_status+' </td>';
@@ -389,6 +392,7 @@ function update_send_mail_status(pid){
                     else {
                         str += '<td></td>';
                     }
+                    str += '<td>' + response.datas[i].send_invoice_status + '</td>' ;
                     // if (response.datas[i].vaccine_certificate == true) {
                         str += '<td>' + "<a class='btn btn-default btn-xs' href='javascript: void (0);' onclick='excel_download(" + response.datas[i].id + ")' ><i class='fa fa-lg fa-file-excel-o'></i></a>" + '</td>';
                         // str += '<td>' + response.datas[i].send_email_status+' </td>';

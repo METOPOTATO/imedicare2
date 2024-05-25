@@ -16,17 +16,13 @@ function checkTax(checkbox){
         }
     })
 }
-function checkInsurance(checkbox){
-    var checkboxes = document.getElementsByName('insurance');
-    checkboxes.forEach((item) => {
-        if (item !== checkbox) {
-            console.log(item)
-            item.checked = false
-            console.log('here')
-        }
-    })
-}
 
+function checkInsurance(checkbox){
+    if (checkbox.checked == false){
+        $('#need_insurance_p').prop('checked', false);
+        // $('#need_insurance_c').attr('disabled', true);
+    }
+}
 function split(val) {
     return val.split(/,\s*/);
 }
@@ -34,7 +30,32 @@ function extractLast(term) {
     return split(term).pop();
 }
 
+
 $(document).ready(function() {
+    $('th').click(function() {
+        console.log('asdasdasda')
+        var table = $(this).parents('table').eq(0)
+        var rows = table.find('tr:gt(0)').toArray().sort(comparer($(this).index()))
+        this.asc = !this.asc
+        if (!this.asc) {
+            rows = rows.reverse()
+        }
+        for (var i = 0; i < rows.length; i++) {
+            table.append(rows[i])
+        }
+    })
+
+    function comparer(index) {
+        return function(a, b) {
+            var valA = getCellValue(a, index), valB = getCellValue(b, index)
+            return $.isNumeric(valA) && $.isNumeric(valB) ? valA - valB : valA.localeCompare(valB)
+        }
+    }
+
+    function getCellValue(row, index) {
+        return $(row).children('td').eq(index).text()
+    }
+
     if ($('#patient_nationality').val() != 'Other'){
         $('#patient_nationality_etc').prop("disabled",true);
     }
@@ -1686,7 +1707,6 @@ function set_patient_data(patient_id) {
             $('input:radio[name=gender]').filter('[value=' + response.gender + ']').prop('checked', true);  
 
             //tax invoice 6666
-            console.log('hohoh')
             $('#tax_invoice_number').val(response.tax_invoice_number);
             $('#tax_invoice_company_name').val(response.tax_invoice_company_name);
             $('#tax_invoice_address').val(response.tax_invoice_address);
