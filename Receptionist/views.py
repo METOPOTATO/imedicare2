@@ -1,6 +1,6 @@
 from ast import Tuple
 import json
-from time import time
+from time import strftime, time
 from django.shortcuts import render, redirect
 import datetime ,calendar
 from django.utils import timezone
@@ -177,6 +177,8 @@ def save_patient(request):
     tax_invoice_memo = request.POST.get('tax_invoice_memo','')
 
     tax_change = request.POST.get('tax_change', False)
+
+    rec_id = request.POST.get('rec_id','')
     print(tax_change)
 
     id = request.POST.get('id')
@@ -252,8 +254,10 @@ def save_patient(request):
         reservation.patient = patient
         reservation.save()
     try:
-
-        reception_last = Reception.objects.filter(patient = patient).exclude(progress='deleted').last()
+        if rec_id:
+            reception_last = Reception.objects.get(pk=rec_id)
+        else:
+            reception_last = Reception.objects.filter(patient = patient).exclude(progress='deleted').last()
         
         if wo_today == 'true':
             reception_last.without_today = True
@@ -2147,7 +2151,6 @@ def reservation_events(request):
                 }
             })
 
-
     context = {
         'datas':datas,
         'count_patient':date_list,
@@ -2500,6 +2503,10 @@ def reservation(request):
             'code':data['commcode'],
             'name':data['name'],
             })
+    _now = datetime.datetime.now().date()
+    list_doctor = []
+    for d in TodayDoctor.objects.filter(active_day=_now):
+        list_doctor.append(d)
     return render(request,
     'Receptionist/reservation.html',
             {
@@ -2510,6 +2517,7 @@ def reservation(request):
                 'list_depart':list_depart,
                 'list_funnels': list_funnels,
                 'list_reservation_division':list_reservation_division,
+                'list_doctors': list_doctor
             },
         )
 
@@ -3788,7 +3796,8 @@ def document_search(request):
             'need_insurance': reception.need_insurance,
             'need_insurance_p': reception.need_insurance_p,
             'tax_code':tax_code,
-            'address2': address2
+            'address2': address2,
+            'paid_by': str(reception.payment.paymentrecord_set.first().method) if reception.payment.paymentrecord_set.first() else ''
             }
         #
         print(reception.id)
@@ -6099,7 +6108,7 @@ def patient_search2(request):
     if (memo and memo != '') or (name and name != '') or (chart and chart != '') or (email and email != '') or (phone and phone != '') or (dob and dob != '') or (tax and tax != '') or (nation and nation != '') or (address and address != ''):
         receptions = Reception.objects.select_related('patient').values('patient_id','depart_id','id').filter( functools.reduce(operator.and_, argument_list) ) \
         .exclude(progress='deleted').annotate(c_pt=Count('patient_id'),c_dp=Count('depart_id')) \
-        .order_by('patient__name_eng')
+        .order_by('patient__name_kor')
         # print(receptions)
         patient_memo = []
 
@@ -6432,7 +6441,8 @@ def update_send_mail_status2(status, start, end, depart, input, id):
             'is_invoice': 'Yes' if reception.need_invoice == True else 'No',
             'is_insurance': 'Yes' if reception.need_insurance else 'No',
             'tax_code': reception.patient.taxinvoice.number,
-            'address2': address2
+            'address2': address2,
+            'paid_by': reception.payment.paymentrecord_set.first()
             }
         diagnosis = True
         try:
@@ -6762,3 +6772,52 @@ def save_memo_email(request):
     return JsonResponse({
         'result': True
     })
+
+
+def save_doctor_reservation(request):
+    doctor = request.POST.get('doctor')
+    doctor_date = request.POST.get('doctor_date')
+
+    TodayDoctor.objects.create(
+        name = doctor,
+        active_day = doctor_date
+    )    
+    lists = TodayDoctor.objects.filter(active_day = doctor_date)
+    data = []
+    for d in lists:
+        data.append(
+            {
+                'name': d.name,
+                'id': d.id
+            }
+        )
+    return JsonResponse({'datas': data})
+
+def get_doctor_reservation(request):
+    doctor_date = request.POST.get('doctor_date')
+    lists = TodayDoctor.objects.filter(active_day = doctor_date)
+    data = []
+    for d in lists:
+        data.append(
+            {
+                'name': d.name,
+                'id': d.id
+            }
+        )
+    return JsonResponse({'datas': data})
+
+def delete_doctor_reservation(request):
+    _id = request.POST.get('id')
+    doctor_date = request.POST.get('doctor_date')
+    TodayDoctor.objects.get(pk=_id).delete()
+
+    lists = TodayDoctor.objects.filter(active_day = doctor_date)
+    data = []
+    for d in lists:
+        data.append(
+            {
+                'name': d.name,
+                'id': d.id
+            }
+        )
+    return JsonResponse({'datas': data})

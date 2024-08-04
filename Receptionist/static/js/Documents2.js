@@ -245,6 +245,7 @@ function document_search() {
                         '<td>' + response.datas[i].phone + '</td>' ;
                     
                     str += '<td>' + response.datas[i].send_invoice_status + '</td>' ;
+                    str += '<td>' + response.datas[i].paid_by + '</td>' ;
                     str += '</tr>'
                     // }
                     // else {
@@ -413,6 +414,7 @@ function update_send_mail_status(e, status=1){
                         '<td>' + response.datas[i].depart + '</td>' +
                         '<td>' + response.datas[i].phone + '</td>'
                     str += '<td>' + response.datas[i].send_invoice_status + '</td>' ;
+                    str += '<td>' + response.datas[i].paid_by + '</td>' ;
                     str += '</tr>'
 
                     $("#document_contents").append(str);
@@ -611,4 +613,119 @@ function save_memo_email(){
             console.log("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error)
         },
     });
+}
+
+
+function get_token(){
+
+    $.ajax({
+        type: 'POST',
+        headers:{'X-CSRFToken':$('#csrf').val()},
+        url: '/get_token/',
+        cache: false,
+        processData: false,
+        contentType: false,
+
+        success: function(response) {
+            alert('Get Token success');
+            $('#login_token').val(response.data)
+        },
+        error: function (request, status, error) {
+            console.log("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
+        },
+    });
+    return false;
+}
+
+function get_invoice_template(){
+    $.ajax({
+        type: 'POST',
+        headers:{'X-CSRFToken':$('#csrf').val()},
+        url: '/get_invoice_template/',
+        data: {
+            'csrfmiddlewaretoken': $('#csrf').val(),
+            'token': $('#login_token').val()
+        },
+        dataType: 'Json',
+        success: function(response) {
+            alert('Get template success');
+            $('#invoice_version').val(response.data)
+        },
+        error: function (request, status, error) {
+            console.log("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
+        },
+    });
+    return false;
+}
+
+function public_invoice(){
+    var rec_id = $('#rec_id').val();
+    $.ajax({
+        type: 'POST',
+        headers:{'X-CSRFToken':$('#csrf').val()},
+        url: '/public_invoice/',
+        data: {
+            'csrfmiddlewaretoken': $('#csrf').val(),
+            'token': $('#login_token').val(),
+            'template': $('#invoice_version').val(),
+            'rec_id': rec_id
+        },
+        dataType: 'Json',
+        success: function(response) {
+            alert('Send data success');
+           
+        },
+        error: function (request, status, error) {
+            console.log("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
+        },
+    });
+    return false;
+}
+
+function view_invoice(){
+    var rec_id = $('#rec_id').val();
+    $.ajax({
+        type: 'POST',
+        headers:{'X-CSRFToken':$('#csrf').val()},
+        url: '/view_invoice/',
+        data: {
+            'csrfmiddlewaretoken': $('#csrf').val(),
+            'token': $('#login_token').val(),
+            'template': $('#invoice_version').val(),
+            'rec_id': rec_id
+        },
+        dataType: 'Json',
+        success: function(response) {
+            alert('Send data success');
+           window.open( response.data,'_blank')
+        },
+        error: function (request, status, error) {
+            console.log("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
+        },
+    });
+    return false;
+}
+
+function create_invoice(){
+    var rec_id = $('#rec_id').val();
+    $.ajax({
+        type: 'POST',
+        headers:{'X-CSRFToken':$('#csrf').val()},
+        url: '/create_invoice/',
+        data: {
+            'csrfmiddlewaretoken': $('#csrf').val(),
+            'token': $('#login_token').val(),
+            'template': $('#invoice_version').val(),
+            'rec_id': rec_id
+        },
+        dataType: 'Json',
+        success: function(response) {
+            alert('Send data success');
+        //    window.open( response.data,'_blank')
+        },
+        error: function (request, status, error) {
+            console.log("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
+        },
+    });
+    return false;
 }

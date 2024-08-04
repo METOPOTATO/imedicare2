@@ -25,10 +25,104 @@
      <div id="cal_fc-left" style="display:none">
 
     </div>
-      <div style="height:100%; width:100%;margin:auto;">
+    <div style="height:100%; width:100%;margin:auto;">
+
+    <div id="doctor-today" style="height:100px; width:auto;margin:auto; ">
+        <div style="display: flex; justify-content: space-between; padding: 10px 0px 0px 0px; margin-bottom: 5px;">
+            <span class="btn btn-danger" style="font-size:16px; height:26.5px; padding-top:1.5px; background:#d2322d;">{{ _('List Doctors Today')}}</span>
+            <span id="btn-add-doctor-calendar" class="btn btn-info" style="font-size:16px; height:26.5px; padding-top:1.5px;">{{ _('Add Doctor Calendar')}}</span>
+        </div>
+        <div>
+            {% for doctor in list_doctors %}
+                <span style="background-color: rgb(243, 236, 227); border-radius: 5px; padding: 5px; margin: 10px 0 0 0;">{{doctor.name}}</span>
+            {% endfor %}
+        </div>
+    </div>
+
     <div id='calendar' style="overflow:auto;"></div>
     </div>
 </div>  
+
+<div id="createDoctorCalendar" class="modal fade">
+    <div class="modal-dialog">
+       <div class="modal-content">
+           <div class="modal-header">
+               <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span> <span class="sr-only">close</span></button>
+               <h4>Add Reservation</h4>
+               <div id="modalBody" class="modal-body" >
+                   <table class="table table-bordered" id="retable" style="border-top: none; border-right: none; border-left: none;">
+                    <tr>
+                        <td>
+                            <div class="input-group" style="display:inline-table">
+                                <span class="input-group-addon" id="basic-addon1">{{ _('Date') }}</span>
+                                <input type="text" id="doctor-date" class="form-control reservation_input" aria-describedby="sizing-addon1" />
+                            </div>
+                        </td>
+                    </tr>
+   
+                    <tr>
+                        <td>
+                            <div class="input-group" style="display:inline-table">
+                                <span class="input-group-addon" id="basic-addon1">{{ _('Doctor') }}</span>
+                                <select name="payment_info" class="form-control costom-select" aria-describedby="basic-addon1" id="list-doctors">
+                                    <option value="">-----------</option>
+                                    <option value="Phạm Thị Hằng (Da liễu) ">Phạm Thị Hằng (Da liễu) </option>
+                                    <option value="Lê Thị Hằng (Da liễu)">Lê Thị Hằng (Da liễu)</option>
+                                    <option value="Bùi Quốc Huy (Khoa Nha)">Bùi Quốc Huy (Khoa Nha)</option>
+                                    <option value="Nguyễn Tiến Mạnh (Khoa Nha)">Nguyễn Tiến Mạnh (Khoa Nha)</option>
+                                    <option value="Phạm Thị Lê (Khoa Nha)">Phạm Thị Lê (Khoa Nha)</option>
+                                    <option value="Trần Thị Giang Anh (Khoa Mắt)">Trần Thị Giang Anh (Khoa Mắt)</option>
+                                    <option value="Nguyễn Thị Kim Linh (Khoa Mắt)">Nguyễn Thị Kim Linh (Khoa Mắt)</option>
+                                    <option value="Tôn Việt Dũng (Khoa Mắt)">Tôn Việt Dũng (Khoa Mắt)</option>
+                                    <option value="Cảnh Thị Phượng (Khoa Nội)">Cảnh Thị Phượng (Khoa Nội)</option>
+                                    <option value="Đàm Thanh Đức (Khoa Nội)">Đàm Thanh Đức (Khoa Nội)</option>
+                                    <option value="Hoàng Minh Dương (Khoa ENT)">Hoàng Minh Dương (Khoa ENT)</option>
+                                    <option value="Cung Quang Hưng (Khoa ENT)">Cung Quang Hưng (Khoa ENT)</option>
+                                    <option value="Nguyễn Năng Toàn (Khoa ENT)">Nguyễn Năng Toàn (Khoa ENT)</option>
+                                    <option value="Nguyễn Thị Nguyệt Hoa (Khám sức khỏe)">Nguyễn Thị Nguyệt Hoa (Khám sức khỏe)</option>
+                                    <option value="Nguyễn Thị Thanh Hiền (Khoa Sản)">Nguyễn Thị Thanh Hiền (Khoa Sản)</option>
+                                    <option value="Bùi Phương Dung (Khoa Sản)">Bùi Phương Dung (Khoa Sản)</option>
+                                    <option value="Nghiêm Thị Ngọc Liên (Siêu âm)">Nghiêm Thị Ngọc Liên (Siêu âm)</option>
+                                    <option value="Bùi Thị Lan (Siêu âm)">Bùi Thị Lan (Siêu âm)</option>
+                                    <option value="Phạm Thị Bốn (Siêu âm)">Phạm Thị Bốn (Siêu âm)</option>
+                                    <option value="Trần Trọng Dương (PHCN)">Trần Trọng Dương (PHCN)</option>
+                                    <option value="Park Jong Sung (PHCN)">Park Jong Sung (PHCN)</option>
+
+
+                                </select>
+                            </div>
+                        </td>
+                    </tr>
+
+                   </table>     
+                   <div class="modal-footer">
+                       
+                       
+                       <!-- <a class="btn btn-default" data-dismiss="modal" aria-hidden="true" onclick="reset_inputs">{{ _('Cancel') }}</a> -->
+                       <input type="button" class="btn btn-primary" value="{{ _('Save') }}" onclick="save_doctor_reservation()"/>
+                       
+                   </div>
+               </div>
+
+               <div id="modalBody2" class="modal-body" >
+                <table class="table table-bordered" id="list_by_day" style="border-top: none; border-right: none; border-left: none;">
+                    <thead>
+                        <tr>
+                            <th>{{ _('Doctor Name')}}</th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>   
+
+
+                </table>     
+
+            </div>
+               
+           </div>
+       </div>
+
+   </div>
+</div>
 
 <div id="createEventModal" class="modal fade">
      <div class="modal-dialog">
@@ -324,6 +418,10 @@
                 $('#reservation_nationality_etc').prop("disabled",false);
             }
         });
+
+        $('#btn-add-doctor-calendar').on('click', function(){
+            $('#createDoctorCalendar').modal('show')
+        })
     });
 
     var calendar_p;
@@ -1387,6 +1485,117 @@ function disableTable(disableState) {
         // $('#reservation_patient').val(text)
         // console.log(text)
     }
+
+    $('#doctor-date').datepicker({
+        // autoUpdateInput: true,
+        // singleDatePicker: true,
+        // showDropdowns: true,
+        // drops: "down",
+        // locale: {
+        //     format: 'YYYY-MM-DD',
+        // },
+        dateFormat: 'yy-mm-dd',
+        onSelect: function(){
+            get_doctor_reservation()
+        }
+    }
+);
+
+    // $('#doctor_date').on( 'change',function(e){
+        
+    // })
+
+    function save_doctor_reservation(){
+        console.log($('#list-doctors:selected').val())
+        $.ajax({
+                type: 'POST',
+                url: '/receptionist/save_doctor_reservation/',
+                data: {
+                    'csrfmiddlewaretoken': $('#csrf').val(),
+                    'doctor_date':$('#doctor-date').val(),
+                    'doctor': $('#list-doctors :selected').val()
+                },
+                dataType: 'Json',
+                success: function (response) {
+                    $('#list_by_day > tbody').empty();
+                        if (response.datas.length == 0) {
+                            $('#list_by_day').append("<tr><td colspan='8'>" + gettext('No Result !!') + "</td></tr>");
+                        } else {
+                            for (var i in response.datas) {
+                                str = '<tr><td>' + response.datas[i].name + '</td>';
+                                str +=  '<td><input type="button" class="btn btn-primary" value="Delete" onclick="delete_doctor_reservation(' + response.datas[i].id + ')" /> </td>';
+                                str += ' </tr>';
+                                $('#list_by_day').append(str);
+                            }
+                        }        
+                },
+                error: function (request, status, error) {
+                    console.log("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
+                },
+            });
+    }
+
+    function get_doctor_reservation(){
+        console.log('hi')
+        // console.log($('#list-doctors:selected').val())
+        $.ajax({
+                type: 'POST',
+                url: '/receptionist/get_doctor_reservation/',
+                data: {
+                    'csrfmiddlewaretoken': $('#csrf').val(),
+                    'doctor_date':$('#doctor-date').val(),
+                    // 'doctor': $('#list-doctors :selected').val()
+                },
+                dataType: 'Json',
+                success: function (response) {
+                    $('#list_by_day > tbody').empty();
+                        if (response.datas.length == 0) {
+                            $('#list_by_day').append("<tr><td colspan='8'>" + gettext('No Result !!') + "</td></tr>");
+                        } else {
+                            for (var i in response.datas) {
+                                str = '<tr><td>' + response.datas[i].name + '</td>';
+                                str +=  '<td><input type="button" class="btn btn-primary" value="Delete" onclick="delete_doctor_reservation(' + response.datas[i].id + ')" /> </td>';
+                                str += ' </tr>';
+                                $('#list_by_day').append(str);
+                            }
+                        }        
+                },
+                error: function (request, status, error) {
+                    console.log("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
+                },
+            });
+    }
+
+    function delete_doctor_reservation(id){
+        console.log('hehehhehe')
+        $.ajax({
+                type: 'POST',
+                url: '/receptionist/delete_doctor_reservation/',
+                data: {
+                    'csrfmiddlewaretoken': $('#csrf').val(),
+                    'doctor_date':$('#doctor-date').val(),
+                    'id': id
+                },
+                dataType: 'Json',
+                success: function (response) {
+                    $('#list_by_day > tbody').empty();
+                        if (response.datas.length == 0) {
+                            $('#list_by_day').append("<tr><td colspan='8'>" + gettext('No Result !!') + "</td></tr>");
+                        } else {
+                            for (var i in response.datas) {
+                                str = '<tr><td>' + response.datas[i].name + '</td>';
+                                str +=  '<td><input type="button" class="btn btn-primary" value="Delete" onclick="delete_doctor_reservation(' + response.datas[i].id + ')" /> </td>';
+                                str += ' </tr>';
+                                $('#list_by_day').append(str);
+                            }
+                        }        
+                },
+                error: function (request, status, error) {
+                    console.log("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
+                },
+            });
+    }
+
 </script>
 
 {% endblock %}

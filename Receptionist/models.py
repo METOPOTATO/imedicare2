@@ -1076,3 +1076,7 @@ class DraftPatient(models.Model):
     founded_phone = models.BooleanField(default=False)
     founded_eng_name = models.BooleanField(default=False)
 
+class TodayDoctor(models.Model):
+    name = models.CharField(max_length=255, default='', null=False)
+    depart = models.CharField(max_length=255, default='', null=True)
+    active_day = models.DateField()

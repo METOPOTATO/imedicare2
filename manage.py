@@ -22,10 +22,12 @@ if __name__ == '__main__':
             "available on your PYTHONPATH environment variable? Did you "
             "forget to activate a virtual environment?"
         ) from exc
+    
+    execute_from_command_line(sys.argv)
 
-    jobs = []
-    for i in range(6):
-        p = multiprocessing.Process(target=execute_from_command_line(sys.argv), args=(i,))
-        jobs.append(p)
-        p.start()        
+    # jobs = []
+    # for i in range(6):
+    #     p = multiprocessing.Process(target=execute_from_command_line(sys.argv), args=(i,))
+    #     jobs.append(p)
+    #     p.start()        
     

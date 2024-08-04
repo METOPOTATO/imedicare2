@@ -70,6 +70,7 @@ def waiting_selected(request):
             'days':data.days,
             'total':data.amount * data.days,
             'memo':data.memo,
+            'price': data.medicine.get_price()
             })
         medicines.append(medicine)
 
@@ -158,6 +159,7 @@ def waiting_list(request):
             'status':medicine_manage.progress,
             'ordered':'' if medicine_manage.date_ordered is None else medicine_manage.date_ordered.strftime("%Y-%m-%d %H:%M"),
             'received':'' if medicine_manage.date_received is None else medicine_manage.date_received.strftime("%Y-%m-%d %H:%M"),
+            'total': medicine_manage.diagnosis.reception.payment.total
             })
         datas.append(data)
 

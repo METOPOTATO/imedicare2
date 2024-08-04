@@ -103,6 +103,11 @@ urlpatterns = [
     path('HisConnector/web/UpdateStatusTestOrder', views.update_status_order),
     path('HisConnector/Webservice.svc/GetExamminationOrder', views.get_order_result_by_patient),
     path('get_list_test', views.get_list_test),
+    path('get_token/', views.get_token),
+    path('get_invoice_template/', views.get_invoice_template),
+    path('public_invoice/', views.public_invoice),
+    path('view_invoice/', views.view_invoice),
+    path('create_invoice/', views.create_invoice),
     ]
 
 

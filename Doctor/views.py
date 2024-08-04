@@ -1361,8 +1361,10 @@ def diagnosis_save(request):
         #payment.progress = 'unpaid'
     except Payment.DoesNotExist:
         payment = Payment(reception_id = reception_id)
-    payment.sub_total = total_amount;
-    payment.total = total_amount;
+ 
+    payment.sub_total = total_amount
+    payment.total = total_amount
+
     payment.save()
 
     family_history = request.POST.get('family_history','')

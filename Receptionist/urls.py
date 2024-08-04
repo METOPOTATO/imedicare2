@@ -142,4 +142,7 @@ urlpatterns = [
     path('get_nation/',views.get_nation,name='get_nation'),
     path('data_excel/',views.data_excel,name='data_excel'),
     path('save_memo_email/',views.save_memo_email,name='save_memo_email'),
+    path('save_doctor_reservation/', views.save_doctor_reservation),
+    path('get_doctor_reservation/', views.get_doctor_reservation),
+    path('delete_doctor_reservation/', views.delete_doctor_reservation),
 ]

@@ -132,7 +132,23 @@
         <table class="top">
             <tr>
                 <td>
-                    <img src="{% static '/img/document_top.png' %}" id="logo" />
+                    <div style="display: flex; justify-content: center;">
+                        <div style="width: 100%;">
+                            <img src="{% static '/img/document_top.png' %}" id="logo" />
+                        </div>
+                        <div style=" display: flex; flex-direction: column ;justify-content: center; align-items: center; text-align: center; width: 100px;">
+                            <div>
+                                <img style="width: 100px;" src="{% static '/img/qr-kakao.jpg' %}" alt="qr_logo">
+                            </div>
+                            <div style="align-items: center; justify-content: center; text-align: center;">
+                                <p style="font-size: 12px; justify-content: center; text-align: center; width: 100%; white-space: nowrap; line-height: 13px;">I-MEDICARE (QR CODE)</p>
+                            </div>
+                            <div>
+                                <p style="font-size: 12px; justify-content: center; text-align: center; line-height: 13px;">카카오톡 채널</p>
+                            </div>
+                            
+                        </div>
+                    </div>
                 </td>
             </tr>
         </table>
@@ -151,7 +167,7 @@
                 <td><b>2. Quốc tịch</b>/ <i>Nationality</i> : {{ nationality }}</td>
             </tr>
             <tr>
-                <td><b>3. Họ và tên</b>/ <i>Fullname</i> : <text id="patient_info_name">{{ name }}</text></td>
+                <td style="width: 55%;"><b>3. Họ và tên</b>/ <i>Fullname</i> : <text id="patient_info_name">{{ name }}</text></td>
                 <td><b>4. Giới tính</b>/ <i>Gender</i> : {{ gender }}</td>
             </tr>
             <tr>
@@ -309,6 +325,27 @@
                 </td>
             </tr>
         </table>
+        <!-- <div style='display: flex; justify-content: center; background-color: rgb(47, 65, 226); margin-top: 120px; padding-bottom: 1px; padding-top: 10px;'>
+            <div style="display: flex; flex-direction: row;justify-content: center; align-items: center; width: 90%; background-color: rgb(247, 140, 0);">
+                <div style="font-size: 14px; display: flex; flex-direction: column; align-items: center; align-self: self-end;">
+                    <div>환자분들과 원활한 의사소통, 진료 예약/문의를 위해</div>
+                    <div>아이메디케어 채널에 가입해주세요!</div>
+                    <div>(카메라를 켜고 QR코드를 비춰주시면 링크가 나타납니다).</div>
+                    
+                </div>
+
+                <div style="display: flex; justify-content: center; flex-direction: column; color: rgb(44, 44, 189);">
+                    <div style="font-size: 13px; display: flex; justify-content: center; align-items: center; flex-direction: column;">
+                        <div>I-MEDICARE (QR CODE)</div>
+                        <div>카카오톡 채널</div>
+                    </div>
+                    <div style="display: flex; justify-content: center;">
+                        <img style="width: 80px;" src="{% static '/img/qr-kakao.jpg' %}" id="qr" />
+                    </div>
+                </div>
+            </div>
+        </div> -->
+        
     </div>
 </body>
 </html>

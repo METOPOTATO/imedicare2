@@ -256,7 +256,7 @@ function waiting_selected(diagnosis_id) {
                     "<td>" + response.datas[i]['days'] + "</td>" + 
                     "<td>" + response.datas[i]['total'] + "</td>" + 
                     "<td>" + response.datas[i]['memo'] + "</td>" + 
-                    "<td>" + "-" + "</td></tr>";
+                    "<td>" + response.datas[i]['price'] + "</td></tr>";
 
                 $('#pharmacy_contents_table').append(str);
                 stt += 1;
@@ -329,8 +329,11 @@ function waiting_list(Today = false, alarm= false) {
                 str += "</td>" +
                     "<td>" + response.datas[i]['Date_of_Birth'] + "</td>" +
                     "<td>" + response.datas[i]['Depart'] +"</td>" +
-                    "<td>" + response.datas[i]['ordered'] +"</td>" +
-                    "<td>" + response.datas[i]['received'] +"</td></tr>";
+                    "<td>" + response.datas[i]['total'] +"</td>" +
+                   
+                    "<td>" + response.datas[i]['received'] +"</td>"+ 
+                    "<td>" + response.datas[i]['ordered'] +"</td> </tr>";
+                    
 
                 $('#pharmacy_list_table').append(str);
             }

@@ -1374,7 +1374,7 @@ function save_patient() {
     var patient_table_vital_breath = $('#patient_table_vital_breath').val();
 
 
-
+    var rec_id = $('#rec_id').val();
     $.ajax({
         type: 'POST',
         url: '/receptionist/save_patient/',
@@ -1424,7 +1424,8 @@ function save_patient() {
             'patient_table_vital_bt ': patient_table_vital_bt,
             'patient_table_vital_pr': patient_table_vital_pr,
             'patient_table_vital_breath': patient_table_vital_breath,
-            'tax_change': true
+            'tax_change': true,
+            'rec_id': rec_id
 
         },
         dataType: 'Json',
