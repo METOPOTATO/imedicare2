@@ -902,6 +902,7 @@ def upload_file(request):
 
     # instance = Patient.objects.filter(pk=patient_id).first()
     file_path = '/home/imedicare/Cofee/Pharmacy/static/pharm_data1.xlsx'
+    # file_path = '/home/light/Desktop/Projects/imedicare2/pharm_data1.xlsx'
     try:
         file = request.FILES.getlist('file')[0]
         
@@ -924,6 +925,7 @@ def upload_file(request):
                         # print(medicine.name)
                         medicine.inventory_count = int(ws[f'K{i}'].value)
                         medicine.save()
+                        print(medicine)
                     
     except Exception as e:
         print('====>>>>',e)
