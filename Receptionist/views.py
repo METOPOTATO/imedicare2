@@ -6821,3 +6821,24 @@ def delete_doctor_reservation(request):
             }
         )
     return JsonResponse({'datas': data})
+
+
+def report(request):
+    wb = load_workbook('/home/light/Desktop/Projects/imedicare2/report1.xlsx')
+    ws = wb.active# grab the active worksheet 
+
+    ps = Patient.objects.filter(nationality__icontains='viet')
+
+    for i, p in  enumerate(ps):
+        ws[f'A{i+1}'] = p.name_eng
+        ws[f'B{i+1}'] = p.name_kor
+        ws[f'C{i+1}'] = p.gender
+        ws[f'D{i+1}'] = p.phone
+        ws[f'E{i+1}'] = p.address
+        ws[f'F{i+1}'] = p.email
+        ws[f'G{i+1}'] = p.date_of_birth
+        ws[f'H{i+1}'] = p.nationality
+        # ws[f'I{i+1}'] = p.name_eng
+        # ws[f'J{i+1}'] = p.name_eng
+    wb.save('/home/light/Desktop/Projects/imedicare2/report.xlsx')
+    return JsonResponse({'data': 'ok'})

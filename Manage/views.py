@@ -3880,6 +3880,7 @@ def examfee_search(request):
                 'code': query_data.code,
                 'doctor': '' if doctor is None else doctor.name_eng,
                 'name' : query_data.name,
+                'name_vn' : query_data.name_vn,
                 'price' : query_data.get_price(),
                 
             } 
@@ -3919,6 +3920,7 @@ def exam_add_edit_get(request):
     return JsonResponse({
         'id':exam.id,
         'name':exam.name,
+        'name_vn':exam.name_vn,
         'price':exam.get_price(),
         'doctor_id':exam.doctor_id,
         'result':True,
@@ -3930,6 +3932,7 @@ def exam_add_edit_set(request):
 
     id = request.POST.get('id');
     name = request.POST.get('name');
+    name_vn = request.POST.get('name_vn');
     price = request.POST.get('price');
     doctor = request.POST.get('doctor');
 
@@ -3978,6 +3981,7 @@ def exam_add_edit_set(request):
 
     data.doctor_id = doctor
     data.name = name
+    data.name_vn = name_vn
     data.save()
 
 

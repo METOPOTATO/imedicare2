@@ -766,6 +766,10 @@ class ExamFee(models.Model):
         null=True,
         default='Y',
         )
+    name_vn = models.CharField(
+        max_length = 124,
+        default=''
+    )
 
     def __str__(self):
         return self.name

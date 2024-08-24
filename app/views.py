@@ -1250,7 +1250,7 @@ def get_list_test(request):
         my_test.append(obj)
     return JsonResponse({'result': my_test})
 
-
+#1
 def get_token(request):
     url = 'https://testapi.meinvoice.vn/api/v3/auth/token'
     body = {
@@ -1263,7 +1263,7 @@ def get_token(request):
     data = response.json()
 
     return JsonResponse({"data": data['Data']})
-
+#2
 def get_invoice_template(request):
     token = request.POST.get('token')
     year = datetime.datetime.now().year
@@ -1332,7 +1332,7 @@ def create_invoice(request):
             "TotalDiscountAmount": payment.discounted_amount,
             "TotalAmountOC": payment.total,
             "TotalAmount": payment.total,
-            "TotalAmountInWords": '',
+            "TotalAmountInWords": doc_so(payment.total),
             "TaxRateInfo": [
                 {
                 "VATRateName": "0%",
@@ -1689,6 +1689,7 @@ def public_invoice2(request):
     print(response.json())
     return JsonResponse({'result': 'ok'})
 
+#3
 def view_invoice(request):
     url = 'https://testapi.meinvoice.vn/api/v3/code/itg/invoicepublishing/invoicelinkview?type=1'
 
@@ -1728,11 +1729,11 @@ def view_invoice(request):
         "ContactName": 'Imedicare',
         "TotalSaleAmountOC":payment.sub_total,
         "TotalSaleAmount":payment.sub_total,
-        "TotalDiscountAmountOC":payment.discounted_amount,
-        "TotalDiscountAmount":payment.discounted_amount,
+        "TotalDiscountAmountOC":0,
+        "TotalDiscountAmount":0,
         "TotalAmountOC":payment.total,
         "TotalAmount":payment.total,
-        "TotalAmountInWords":"",
+        "TotalAmountInWords":doc_so(payment.total),
         "IsTaxReduction43":False,
 
         "OptionUserDefined":{
@@ -1750,6 +1751,9 @@ def view_invoice(request):
         "FeeInfo": None
     }
 
+    if reception.need_invoice_p:
+        odata['BuyerAddress'] = taxinvoice.address_p
+        odata['BuyerLegalName'] = reception.patient.name_eng
     vat_0 = 0
     vat_5 = 0
     vat_10 = 0
@@ -1772,20 +1776,25 @@ def view_invoice(request):
         amount = mdata.exam.get_price()
         vat_amount = mdata.exam.get_price() * vat
         amount_without_vat = amount - vat_amount
-
+        percent = 0
         if vat_name == 'KCT':
            print('====', 0)
            vat_0 += vat_amount
            a_w_vat_0 += amount_without_vat
+           percent = 0
         elif vat_name == '5%':
             print('====', 5)
             vat_5 += vat_amount
             a_w_vat_5 += amount_without_vat
+            percent = 5
         elif vat_name == '10%':
             print('====', 10)
             vat_10 += vat_amount
             a_w_vat_10 += amount_without_vat
+            percent = 10
         print('vat_name', vat_name)
+
+        unit_price = mdata.exam.get_price() * (100-percent)/100 - payment.discounted_amount
         exam.update({
                 "ItemType": 1,
                 "LineNumber": count,
@@ -1794,7 +1803,7 @@ def view_invoice(request):
                 "ItemName": mdata.exam.name,
                 "UnitName": '',
                 "Quantity": 1,
-                "UnitPrice": mdata.exam.get_price(),
+                "UnitPrice": unit_price,
                 "DiscountRate": None,
                 "DiscountAmountOC": None,
                 "DiscountAmount": None,
@@ -1819,16 +1828,19 @@ def view_invoice(request):
         amount = mdata.test.get_price()
         vat_amount = mdata.test.get_price() * vat
         amount_without_vat = amount - vat_amount
-
+        percent = 0
         if vat_name == 'KCT':
            vat_0 += vat_amount
            a_w_vat_0 += amount_without_vat
+           percent = 0
         elif vat_name == '5%':
             vat_5 += vat_amount
             a_w_vat_5 += amount_without_vat
+            percent = 5
         elif vat_name == '10%':
             vat_10 += vat_amount
             a_w_vat_10 += amount_without_vat
+            percent = 10
         test.update({
                 "ItemType": 1,
                 "LineNumber": count,
@@ -1837,7 +1849,7 @@ def view_invoice(request):
                 "ItemName": mdata.test.name_vie,
                 "UnitName": '',
                 "Quantity": 1,
-                "UnitPrice": mdata.test.get_price(),
+                "UnitPrice": mdata.test.get_price() * (100-percent)/100,
                 "DiscountRate": None,
                 "DiscountAmountOC": None,
                 "DiscountAmount": None,
@@ -1862,17 +1874,19 @@ def view_invoice(request):
         amount = mdata.precedure.get_price()
         vat_amount = mdata.precedure.get_price() * vat
         amount_without_vat = amount - vat_amount
-
+        percent = 0
         if vat_name == 'KCT':
            vat_0 += vat_amount
            a_w_vat_0 += amount_without_vat
+           percent = 0
         elif vat_name == '5%':
             vat_5 += vat_amount
             a_w_vat_5 += amount_without_vat
+            percent = 5
         elif vat_name == '10%':
             vat_10 += vat_amount
             a_w_vat_10 += amount_without_vat
-
+            percent = 10
         prec.update({
                 "ItemType": 1,
                 "LineNumber": count,
@@ -1881,7 +1895,7 @@ def view_invoice(request):
                 "ItemName": mdata.precedure.name_vie,
                 "UnitName": '',
                 "Quantity": mdata.amount,
-                "UnitPrice": mdata.precedure.get_price(),
+                "UnitPrice": mdata.precedure.get_price() * (100-percent)/100,
                 "DiscountRate": None,
                 "DiscountAmountOC": None,
                 "DiscountAmount": None,
@@ -1908,16 +1922,19 @@ def view_invoice(request):
         price = quantity * int(mdata.medicine.get_price())
         vat_amount = price * vat
         amount_without_vat = price - vat_amount
-
+        percent = 0
         if vat_name == 'KCT':
            vat_0 += vat_amount
            a_w_vat_0 += amount_without_vat
+           percent = 0
         elif vat_name == '5%':
             vat_5 += vat_amount
             a_w_vat_5 += amount_without_vat
+            percent = 5
         elif vat_name == '10%':
             vat_10 += vat_amount
             a_w_vat_10 += amount_without_vat
+            percent = 10
         med.update({
                 "ItemType": 1,
                 "LineNumber": count,
@@ -1926,7 +1943,7 @@ def view_invoice(request):
                 "ItemName": mdata.medicine.name,
                 "UnitName": mdata.medicine.unit_vie,
                 "Quantity": quantity,
-                "UnitPrice": mdata.medicine.get_price(),
+                "UnitPrice": mdata.medicine.get_price() * (100-percent)/100,
                 "DiscountRate": None,
                 "DiscountAmountOC": None,
                 "DiscountAmount": None,
@@ -1989,7 +2006,7 @@ def view_invoice(request):
     print(response.json())
     link = response.json()['Data']
     return JsonResponse({'data': link})
-
+#4
 def public_invoice(request):
     url = 'https://testapi.meinvoice.vn/api/v3/code/itg/invoicepublishing/publishHSM'
 
@@ -5348,3 +5365,59 @@ def get_vat_name(string):
     except:
         val = 'KCT'
     return val
+
+def doc_so(so):
+    chu_so = ["không", "một", "hai", "ba", "bốn", "năm", "sáu", "bảy", "tám", "chín"]
+    hang = ["", "nghìn", "triệu", "tỷ"]
+
+    def doc_3_so(so):
+        tram = so // 100
+        chuc = (so % 100) // 10
+        don_vi = so % 10
+        ket_qua = ""
+
+        if tram > 0:
+            ket_qua += chu_so[tram] + " trăm"
+            if chuc == 0 and don_vi != 0:
+                ket_qua += " lẻ"
+        elif chuc > 0 or don_vi > 0:
+            if len(ket_qua) > 0:  # Nếu có "triệu" hoặc "nghìn" phía trước
+                ket_qua += " lẻ"
+
+        if chuc > 0:
+            if chuc == 1:
+                ket_qua += " mười"
+            else:
+                ket_qua += " " + chu_so[chuc] + " mươi"
+
+            if don_vi == 1 and chuc > 1:
+                ket_qua += " mốt"
+            elif don_vi == 5 and chuc > 0:
+                ket_qua += " lăm"
+            elif don_vi != 0:
+                ket_qua += " " + chu_so[don_vi]
+        elif don_vi != 0:
+            ket_qua += " " + chu_so[don_vi]
+
+        return ket_qua.strip()
+
+    def doc_tien(so):
+        ket_qua = ""
+        vi_tri = 0
+
+        if so == 0:
+            return "không đồng"
+
+        while so > 0:
+            so_hien_tai = so % 1000
+            if so_hien_tai != 0 or vi_tri == 0:
+                ket_qua = doc_3_so(so_hien_tai) + " " + hang[vi_tri] + " " + ket_qua
+            so //= 1000
+            vi_tri += 1
+
+        return ket_qua.strip()
+
+    ket_qua = doc_tien(so)
+    ket_qua = ket_qua[0].upper() + ket_qua[1:] + " đồng"
+
+    return ket_qua.strip()
