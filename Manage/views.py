@@ -3881,6 +3881,7 @@ def examfee_search(request):
                 'doctor': '' if doctor is None else doctor.name_eng,
                 'name' : query_data.name,
                 'name_vn' : query_data.name_vn,
+                'tax_rate' : query_data.tax_rate,
                 'price' : query_data.get_price(),
                 
             } 
@@ -3923,6 +3924,7 @@ def exam_add_edit_get(request):
         'name_vn':exam.name_vn,
         'price':exam.get_price(),
         'doctor_id':exam.doctor_id,
+        'tax_rate':exam.tax_rate,
         'result':True,
         })
 
@@ -3935,6 +3937,7 @@ def exam_add_edit_set(request):
     name_vn = request.POST.get('name_vn');
     price = request.POST.get('price');
     doctor = request.POST.get('doctor');
+    tax = request.POST.get('tax');
 
     if int(id) == 0 :
         data = ExamFee()
@@ -3982,6 +3985,7 @@ def exam_add_edit_set(request):
     data.doctor_id = doctor
     data.name = name
     data.name_vn = name_vn
+    data.tax_rate = tax
     data.save()
 
 
@@ -4047,7 +4051,8 @@ def test_search(request):
                 'class':query_data.test_class.name,
                 'price' : query_data.get_price(),
                 'price_dollar' : query_data.get_price_dollar(),
-                'parent_test': query_data.parent_test.code if query_data.parent_test else ''
+                'parent_test': query_data.parent_test.code if query_data.parent_test else '',
+                'tax_rate' : query_data.tax_rate,
             }
         
         datas.append(data)
@@ -4091,7 +4096,8 @@ def test_add_edit_get(request):
         'price_dollar':test.get_price_dollar(),
         'precedure_class_id':test.test_class_id,
         'result':True,
-        'parent_test': test.parent_test.code if test.parent_test else ''
+        'parent_test': test.parent_test.code if test.parent_test else '',
+        'tax':test.tax_rate,
         })
 
 
@@ -4103,6 +4109,7 @@ def test_add_edit_set(request):
     name = request.POST.get('name');
     name_vie = request.POST.get('name_vie');
     price = request.POST.get('price');
+    tax = request.POST.get('tax');
     price_dollar = request.POST.get('price_dollar');
 
     parent_test_code = request.POST.get('parent_test');
@@ -4171,6 +4178,7 @@ def test_add_edit_set(request):
 
     data.test_class_id = test_class
     data.name = name
+    data.tax_rate = tax
     data.name_vie = name_vie
     data.parent_test = parent_test_obj
     data.save()
@@ -4405,6 +4413,7 @@ def precedure_search(request):
                 'name' : query_data.get_name_lang(request.session[translation.LANGUAGE_SESSION_KEY]),
                 'class':query_data.precedure_class.name,
                 'price' : query_data.get_price(),
+                'tax_rate' : query_data.tax_rate,
             }
         datas.append(data)
 
@@ -4447,6 +4456,7 @@ def precedure_add_edit_get(request):
         'type':precedure.type,
         'count':precedure.count,
         'result':True,
+        'tax':precedure.tax_rate,
         })
 
 
@@ -4456,6 +4466,7 @@ def precedure_add_edit_set(request):
     type = request.POST.get('type');
     precedure_class = request.POST.get('precedure_class');
     name = request.POST.get('name');
+    tax = request.POST.get('tax');
     name_vie = request.POST.get('name_vie');
     price = request.POST.get('price');
     price_dollar = request.POST.get('price_dollar');
@@ -4583,6 +4594,7 @@ def precedure_add_edit_set(request):
     data.name_vie = name_vie
     data.type = is_package
     data.count = count
+    data.tax_rate = tax
     data.save()
 
 
@@ -4837,9 +4849,11 @@ def medicine_search(request):
                     'id' : medicine.id,
                     'code': medicine.code,
                     'name' : medicine.name,
+                    'tax' : medicine.tax_rate,
                     'company' : '' if medicine.company is None else medicine.company,
                     'unit' : '' if medicine.get_unit_lang(request.session[translation.LANGUAGE_SESSION_KEY]) is None else medicine.get_unit_lang(request.session[translation.LANGUAGE_SESSION_KEY]),
                     'price' : medicine.get_price(),
+                    'tax_rate' : medicine.tax_rate,
                     'count' : medicine.inventory_count,
                     'alaert_expiry':True,
                 }
@@ -4863,10 +4877,12 @@ def medicine_search(request):
                 'id' : medicine.id,
                 'code': medicine.code,
                 'name' : medicine.name,
+                'tax' : medicine.tax_rate,
                 'company' : '' if medicine.company is None else medicine.company,
                 'unit' : '' if medicine.get_unit_lang(request.session[translation.LANGUAGE_SESSION_KEY]) is None else medicine.get_unit_lang(request.session[translation.LANGUAGE_SESSION_KEY]),
                 'price' : medicine.get_price(),
                 'count' : medicine.inventory_count,
+                'tax_rate' : medicine.tax_rate,
             }
 
         datas.append(data)
@@ -4999,7 +5015,7 @@ def medicine_add_edit_get(request):
             'unit':medicine.unit,
             'unit_vie':medicine.unit_vie,
             'company':medicine.company,
-
+            'tax':medicine.tax_rate,
             'type':'Medical Tool' if 'T' in medicine.code else 'Medical Tool',
 
             'price':medicine.get_price(),
@@ -5009,7 +5025,7 @@ def medicine_add_edit_get(request):
 
             'inventory_count':medicine.inventory_count,
             'medicine_class_id':medicine.medicine_class_id,
-
+            'tax':medicine.tax_rate,
             }
     except Medicine.DoesNotExist:
         context = {'result':False}
@@ -5035,7 +5051,7 @@ def medicine_add_edit_set(request):
     multiple_level = request.POST.get('multiple_level')
     price = request.POST.get('price')   
     price_dollar = request.POST.get('price_dollar')
-
+    tax = request.POST.get('tax')
     if int(id) == 0 :
         data = Medicine()
         if type in 'Medical Tool':
@@ -5125,7 +5141,7 @@ def medicine_add_edit_set(request):
     data.unit_vie = unit_vie
     data.company = company
     data.multiple_level = multiple_level
-    
+    data.tax_rate = tax
 
     data.save()
 

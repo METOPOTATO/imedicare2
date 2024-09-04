@@ -254,6 +254,7 @@ function pharmacy_database_search(page = null) {
                         "<td>" + response.datas[i]['name'] + "</td>" +
                         "<td title='" + response.datas[i]['ingredient'] + "'>" + response.datas[i]['ingredient'] + "</td>" +
                         // "<td title='" + response.datas[i]['company'] + "'>" + response.datas[i]['company'] + "</td>" +
+                        "<td>" + response.datas[i]['tax'] + "</td>" +
                         "<td>" + response.datas[i]['country'] + "</td>" +
                         "<td>" + response.datas[i]['unit'] + "</td>" +
                         "<td>" + numberWithCommas(response.datas[i]['price']) + "</td>" +
@@ -371,7 +372,7 @@ function edit_database_medicine(id = null, type='') {
                     $("#add_edit_database_price_dollar").val(response.price_dollar);
                     $("#add_edit_database_type").val(response.type);
                     $("#add_edit_database_class").val(response.medicine_class_id);
-
+                    $("#add_edit_database_tax").val(response.tax);
                     console.log(response.red_invoice)
                     if (response.red_invoice == 'Y') {
                         $("#is_red_invoice").prop("checked", true);
@@ -425,6 +426,7 @@ function save_database_medicine(id = null) {
     var price_input = $("#add_edit_database_price_input").val();
     var multiple_level = $("#add_edit_database_multiple_level").val();
     var price = $("#add_edit_database_price_output").val();
+    var tax = $("#add_edit_database_tax").val();
     var price_dollar = $("#add_edit_database_price_dollar").val();
 
     var medicine_class = $("#add_edit_database_class").val();
@@ -460,7 +462,7 @@ function save_database_medicine(id = null) {
             'multiple_level': multiple_level,
             'price': price,
             'price_dollar': price_dollar,
-
+            'tax': tax,
             'red_invoice': red_invoice,
         },
         dataType: 'Json',

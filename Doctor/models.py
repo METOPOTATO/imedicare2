@@ -181,8 +181,9 @@ class Test(models.Model):
         default=None,
         on_delete=models.DO_NOTHING
     )
-    
-
+    tax_rate = models.IntegerField(
+        default=0,
+    )
     def __str__(self):
         return self.name
 
@@ -409,6 +410,9 @@ class Precedure(models.Model):
         #패키지에만 해당
     )
 
+    tax_rate = models.IntegerField(
+        default=0,
+    )
     #expiry_date = models.CharField(
     #    max_length = 6,
     #    null=True,
@@ -628,6 +632,9 @@ class Medicine(models.Model):
         default = '',
         )
 
+    tax_rate = models.IntegerField(
+        default=0,
+    )
     def __str__(self):
         if self.name is None:
             return self.name_vie
@@ -755,6 +762,10 @@ class ExamFee(models.Model):
     price = models.IntegerField(
         default=0,
         )
+    
+    tax_rate = models.IntegerField(
+        default=0,
+    )
     doctor = models.ForeignKey(
         to = Doctor,
         on_delete= models.DO_NOTHING,

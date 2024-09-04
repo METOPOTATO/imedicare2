@@ -205,6 +205,7 @@ function exam_database_search(page = null) {
                         "<td>" + response.datas[i]['name_vn'] + "</td>" +
                         "<td>" + response.datas[i]['doctor'] + "</td>" +
                         "<td>" + numberWithCommas(response.datas[i]['price']) + "</td>" +
+                        "<td>" + response.datas[i]['tax_rate'] + " %</td>" +
                         "<td>" +
                         "<a class='btn btn-default btn-xs' style='margin-right:10px;' href='javascript: void (0);' onclick='edit_database_exam(" + response.datas[i]['id'] + ")' ><i class='fa fa-lg fa-pencil'></i></a>" +
                         "<a class='btn btn-danger btn-xs' href='javascript: void (0);' onclick='delete_database_precedure(" + response.datas[i]['id'] + ")' ><i class='fa fa-lg fa-trash'></i></a></tr> ";
@@ -278,6 +279,7 @@ function edit_database_exam(id = null) {
                     $("#add_edit_database_name_vn").val(response.name_vn);
                     $("#add_edit_database_price_output").val(response.price);
                     $("#add_edit_database_class").val(response.doctor_id);
+                    $("#add_edit_database_tax").val(response.tax_rate);
                     console.log(response.doctor_id)
 
                 } else {
@@ -302,6 +304,7 @@ function save_database_test(id = null) {
     }
 
     var name = $("#add_edit_database_name").val();
+    var tax = $("#add_edit_database_tax").val();
     var name_vn = $("#add_edit_database_name_vn").val();
     if (name == '' || name == null) {
         alert(gettext('Name is necessary! '));
@@ -323,6 +326,7 @@ function save_database_test(id = null) {
             'name_vn': name_vn,
             'price': price,
             'doctor':doctor_id,
+            'tax':tax
 
         },
         dataType: 'Json',

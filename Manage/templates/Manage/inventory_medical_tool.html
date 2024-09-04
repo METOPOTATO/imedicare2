@@ -38,6 +38,7 @@
                             <th>{{ _('Company') }}</th>
                             <th>{{ _('Unit') }}</th>
                             <th>{{ _('Price') }}</th>
+                            <th>{{ _('Tax') }}</th>
                             <th>{{ _('Count') }}</th>
                             <th>{{ _('Edit') }}</th>
                         </tr>
@@ -255,6 +256,17 @@
                                     <span class="input-group-addon" id="basic-addon1">{{ _('Price(Dollar $)') }}</span>
                                     <input type="number" id="add_edit_database_price_dollar" class="form-control medicine_control_input" aria-describedby="basic-addon1" min="0">
                                 </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <div class="input-group">
+                                    <span class="input-group-addon" id="basic-addon1">{{ _('Tax') }}*</span>
+                                    <input type="text" id="add_edit_database_tax" class="form-control medicine_control_input" aria-describedby="basic-addon1">
+                                </div>
+                            </td>
+                            <td>
+
                             </td>
                         </tr>
                     </table>

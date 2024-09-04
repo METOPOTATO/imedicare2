@@ -44,7 +44,7 @@ $(function () {
     //ADD , Edit 
 
 
-    ////Level ÀÚµ¿ °è»ê
+    ////Level ï¿½Úµï¿½ ï¿½ï¿½ï¿½
     function set_level_price_multi() {
         var price_input = $("#add_edit_database_price_input").val();
         var level = $('#add_edit_database_multiple_level option:selected').val();
@@ -66,7 +66,7 @@ $(function () {
 
 
     set_is_package();
-    //ÆÐÅ°Áö µðÆúÆ®
+    //ï¿½ï¿½Å°ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Æ®
     $("#add_edit_database_type").change(function () {
         set_is_package();
     })
@@ -214,6 +214,7 @@ function precedure_database_search(page = null) {
                         "<td title='" + response.datas[i]['class'] + "'>" + response.datas[i]['class'] + "</td>" +
                         "<td title='" + response.datas[i]['name'] + "'>" + response.datas[i]['name'] + "</td>" +
                             "<td>" + numberWithCommas(response.datas[i]['price']) + "</td>" +
+                            "<td>" + response.datas[i]['tax_rate'] + " %</td>" +
                             "<td>" +
                             "<a class='btn btn-default btn-xs' style='margin-right:10px;' href='javascript: void (0);' onclick='edit_database_precedure(" + response.datas[i]['id'] + ")' ><i class='fa fa-lg fa-pencil'></i></a>" +
                         "<a class='btn btn-danger btn-xs' href='javascript: void (0);' onclick='delete_database_precedure(" + response.datas[i]['id'] + ")' ><i class='fa fa-lg fa-trash'></i></a></tr> ";
@@ -226,7 +227,7 @@ function precedure_database_search(page = null) {
             }
 
 
-            //ÆäÀÌÂ¡
+            //ï¿½ï¿½ï¿½ï¿½Â¡
             $('#medicine_pagnation').html('');
             str = '';
             if (response.has_previous == true) {
@@ -299,7 +300,7 @@ function edit_database_precedure(id = null) {
                     $("#add_edit_database_price_output").val(response.price);
                     $("#add_edit_database_price_dollar").val(response.price_dollar);
                     $("#add_edit_database_class").val(response.precedure_class_id);
-
+                    $("#add_edit_database_tax").val(response.tax);
                     $("#add_edit_database_type").val(response.type);
                     set_is_package();
                     if (response.count != '') $("#add_edit_database_count").val(response.count);
@@ -341,6 +342,7 @@ function save_database_precedure(id = null) {
     var price_dollar = $("#add_edit_database_price_dollar").val();
 
     var precedure_class = $("#add_edit_database_class").val();
+    var tax = $("#add_edit_database_tax").val();
     var type = $("#add_edit_database_type").val();
 
     var is_package = $("#add_edit_database_type").val();
@@ -365,7 +367,7 @@ function save_database_precedure(id = null) {
             'name_vie': name_vie,
             'price': price,
             'price_dollar': price_dollar,
-
+            'tax': tax,
             'is_package': is_package,
             'count': count,
 

@@ -36,6 +36,7 @@ from django.template.loader import render_to_string
 from django.utils.html import strip_tags
 from django.template.loader import get_template
 import unidecode
+import requests
 # Create your views here.
 
 
@@ -3577,10 +3578,49 @@ def Documents2(request):
 
     departs = Depart.objects.all()
 
+    token = ''
+    try:
+        url = 'https://testapi.meinvoice.vn/api/v3/auth/token'
+        body = {
+            "appid": "7291159a-cbb1-43b2-8e0b-673a4586a8c7",
+            "taxcode": "6868686868-125",
+            "username": "testmisa@yahoo.com",
+            "password": "123456Aa"
+        }
+        response = requests.post(url, json=body)
+        data = response.json()
+
+        token = data['Data']
+    except:
+        token = ''
+
+    template = ''
+    
+    try:
+        year = datetime.datetime.now().year
+        url = f'https://testapi.meinvoice.vn/api/v3/code/itg/InvoicePublishing/templates?invyear={year}'
+
+        header = {
+            "CompanyTaxCode": "6868686868-125",
+            'Authorization': f'Bearer {token}',
+        }
+
+        response = requests.get(url, headers=header)
+        data = response.json()
+        data = data['Data']
+        template = json.loads(data)[0]['InvSeries']
+    except:
+        template = ''
+    
+    print('=====================')
+    print(token)
+    print(template)
     return render(request,
     'Receptionist/Documents2.html',
             {
                 'departs':departs,
+                'token': token,
+                'template': template
             },
         )
 

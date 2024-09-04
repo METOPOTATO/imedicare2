@@ -294,6 +294,7 @@ def medicine_search(request):
                 data = {
                         'id' : medicine.id,
                         'code': medicine.code,
+                        'tax': medicine.tax_rate,
                         'name' : medicine.name,
                         'company' : '' if medicine.company is None else medicine.company,
                         'country' : '' if medicine.get_country_lang(request.session[translation.LANGUAGE_SESSION_KEY]) is None else medicine.get_country_lang(request.session[translation.LANGUAGE_SESSION_KEY]),
@@ -324,6 +325,7 @@ def medicine_search(request):
                 'id' : medicine.id,
                 'code': medicine.code,
                 'name' : medicine.name,
+                'tax' : medicine.tax_rate,
                 'company' : '' if medicine.company is None else medicine.company,
                 'country' : '' if medicine.get_country_lang(request.session[translation.LANGUAGE_SESSION_KEY]) is None else medicine.get_country_lang(request.session[translation.LANGUAGE_SESSION_KEY]),
                 'ingredient' : '' if medicine.get_ingredient_lang(request.session[translation.LANGUAGE_SESSION_KEY]) is None else medicine.get_ingredient_lang(request.session[translation.LANGUAGE_SESSION_KEY]),
@@ -479,7 +481,7 @@ def medicine_add_edit_get(request):
             'medicine_class_id':medicine.medicine_class_id,
 
             'red_invoice':medicine.red_invoice,
-
+            'tax':medicine.tax_rate,
             }
     except Medicine.DoesNotExist:
         context = {'result':False}
@@ -512,6 +514,7 @@ def medicine_add_edit_set(request):
     price = request.POST.get('price')   
     price_dollar = request.POST.get('price_dollar')
     red_invoice = request.POST.get('red_invoice')
+    tax = request.POST.get('tax')
 
     if int(id) == 0 :
         data = Medicine()
@@ -638,7 +641,7 @@ def medicine_add_edit_set(request):
     data.name_display = name_display
     data.multiple_level = multiple_level
     data.red_invoice = red_invoice
-    
+    data.tax_rate = tax
 
     data.save()
 

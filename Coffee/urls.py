@@ -106,8 +106,9 @@ urlpatterns = [
     path('get_token/', views.get_token),
     path('get_invoice_template/', views.get_invoice_template),
     path('public_invoice/', views.public_invoice),
+    path('get_invoice/', views.get_invoice),
     path('view_invoice/', views.view_invoice),
-    path('create_invoice/', views.create_invoice),
+    # path('create_invoice/', views.create_invoice),
     ]
 
 

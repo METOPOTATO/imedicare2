@@ -373,6 +373,7 @@ function pharmacy_database_search(page = null) {
 
                     var str = "<tr style='cursor: pointer; height:4vh;' onclick='set_data_control(" + response.datas[i]['id'] + ")'><td>" + response.datas[i]['id'] + "</td>" +
                         "<td>" + response.datas[i]['name'] + "</td>" +
+                        "<td>" + response.datas[i]['tax'] + "</td>" +
                         "<td>" + response.datas[i]['company'] + "</td>" +
                         "<td>" + response.datas[i]['country'] + "</td>" +
                         "<td>" + response.datas[i]['ingredient'] + "</td>" +
