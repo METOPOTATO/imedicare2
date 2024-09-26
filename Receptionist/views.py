@@ -2482,6 +2482,7 @@ def reservation(request):
 
     list_reservation_division= []
     query_reservation_division = COMMCODE.objects.filter(use_yn = 'Y',upper_commcode='000006', commcode_grp='RSRVT_DVSN').annotate(code = F('commcode'),name =f_name ).values('code','name')
+    print('======>>>>>>>>>>>>.', query_reservation_division)
     for data in query_reservation_division:
         list_reservation_division.append({
             'code':data['code'],
@@ -5167,6 +5168,8 @@ def document_medical_receipt_old(request,reception_id,):
     
         paid_total = paymentrecord_query['total_price']
         print(paid_total)
+        if not paid_total:
+            paid_total = 0
         remain_amount = int(total) - int(paid_total)
 
     

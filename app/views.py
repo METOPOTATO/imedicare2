@@ -1306,6 +1306,13 @@ def get_invoice(request):
     email = reception.patient.email
     if email.lower() == 'na' or email == '':
         email = 'default@imedicare.com'
+
+    address2 = ''
+    if reception.need_invoice == True:
+        address2 = reception.patient.taxinvoice.address
+    elif reception.need_invoice_p == True:
+        address2 = reception.patient.taxinvoice.address_p
+    print(address2)
     odata = {
         "RefID":reception_id,
         "InvSeries":template,
@@ -1315,7 +1322,7 @@ def get_invoice(request):
         "InvDate": reception.recorded_date.strftime("%Y-%m-%d"),
         "PaymentMethodName":"TM/CK",
         "BuyerTaxCode":taxinvoice.number,
-        "BuyerAddress":taxinvoice.address,
+        "BuyerAddress":address2, 
         "BuyerCode":reception.patient.getID(),
         "BuyerFullName":reception.patient.name_eng,
         "BuyerPhoneNumber":reception.patient.phone,
@@ -1345,8 +1352,6 @@ def get_invoice(request):
         "FeeInfo": None
     }
 
-    if reception.need_invoice_p:
-        odata['BuyerAddress'] = reception.patient.address
     if reception.need_invoice:
         odata['BuyerLegalName'] = taxinvoice.company_name
     vat_0 = 0

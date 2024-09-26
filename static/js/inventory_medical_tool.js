@@ -23,6 +23,7 @@ $(function () {
     $('#inventory_history_date').daterangepicker({
         singleDatePicker: true,
         showDropdowns: true,
+        autoApply: true,
         locale: {
             format: 'YYYY-MM-DD'
         }
@@ -65,6 +66,7 @@ $(function () {
     $('#add_medicine_reg').daterangepicker({
         singleDatePicker: true,
         showDropdowns: true,
+        autoApply: true,
         locale: {
             format: 'YYYY-MM-DD'
         }
@@ -72,6 +74,7 @@ $(function () {
     $('#add_medicine_expiry').daterangepicker({
         singleDatePicker: true,
         showDropdowns: true,
+        autoApply: true,
         locale: {
             format: 'YYYY-MM-DD'
         }
@@ -81,7 +84,7 @@ $(function () {
     //ADD , Edit 
 
 
-    ////Level ÀÚµ¿ °è»ê
+    ////Level ï¿½Úµï¿½ ï¿½ï¿½ï¿½
     function set_level_price_multi() {
         var price_input = $("#add_edit_database_price_input").val();
         var level = $('#add_edit_database_multiple_level option:selected').val();
@@ -131,7 +134,7 @@ function numberWithCommas(x) {
 
 
 function pharmacy_database_search(page = null) {
-    var context_in_page = 10;
+    var context_in_page = 16;
 
     var string = $('#medicine_search_input').val();
     //var filter = $('#precedure_search_select').val();
@@ -159,24 +162,27 @@ function pharmacy_database_search(page = null) {
                     else {
                         var str = "<tr"
                     }
-                    str += " style='cursor: pointer;' onclick='get_inentory_history(" + response.datas[i]['id'] + ",\"" + response.datas[i]['name'] + "\");get_expiry_date();'><td>" + response.datas[i]['code'] + "</td>" +
+                    str += " style='cursor: pointer;' onclick='get_inentory_history(" + response.datas[i]['id'] + ",\"" + response.datas[i]['name'] + "\");get_expiry_date();'>" +
+                        "<td>" + response.datas[i]['id'] + "</td>" +
+                        "<td>" + response.datas[i]['code'] + "</td>" +
                         "<td>" + response.datas[i]['name'] + "</td>" +
                         "<td title='" + response.datas[i]['company'] + "'>" + response.datas[i]['company'] + "</td>" +
                         "<td>" + response.datas[i]['unit'] + "</td>" +
                         "<td>" + numberWithCommas(response.datas[i]['price']) + "</td>" +
+                        "<td>" + response.datas[i]['tax_rate'] + " %</td>" +
                         "<td>" + response.datas[i]['count'] + "</td>" +
                         "<td>" +
                         "<a class='btn btn-default btn-xs' style='margin-right:5px;' href='javascript: void (0);' onclick='edit_database_medicine(" + response.datas[i]['id'] + ")' ><i class='fa fa-lg fa-pencil'></i></a>" +
                         "<a class='btn btn-danger btn-xs' href='javascript: void (0);' onclick='delete_database_medicine(" + response.datas[i]['id'] + ")' ><i class='fa fa-lg fa-trash'></i></a></tr> ";
 
                 } else {
-                    var str = "<tr><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>";
+                    var str = "<tr><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>";
                 }
                 $('#inventory_database_table > tbody').append(str);
             }
 
 
-            //ÆäÀÌÂ¡
+            //ï¿½ï¿½ï¿½ï¿½Â¡
             $('#medicine_pagnation').html('');
             str = '';
             if (response.has_previous == true) {
@@ -248,10 +254,11 @@ function edit_database_medicine(id = null) {
                     $("#add_edit_database_price_input").val(response.price_input);
                     $("#add_edit_database_multiple_level option:contains('" + response.multiple_level + "')").attr("selected", "selected");
                     $("#add_edit_database_price_output").val(response.price);
+                    $("#add_edit_database_tax").val(response.tax_rate);
                     $("#add_edit_database_price_dollar").val(response.price_dollar);
                     $("#add_edit_database_type").val(response.type);
                     $("#add_edit_database_class").val(response.medicine_class_id);
-
+                    $("#add_edit_database_tax").val(response.tax);
 
 
 
@@ -297,7 +304,7 @@ function save_database_medicine(id = null) {
     var multiple_level = $("#add_edit_database_multiple_level").val();
     var price = $("#add_edit_database_price_output").val();
     var price_dollar = $("#add_edit_database_price_dollar").val();
-
+    var tax = $("#add_edit_database_tax").val();
     var medicine_class = $("#add_edit_database_class").val();
     var type = $("#add_edit_database_type").val();
 
@@ -320,6 +327,7 @@ function save_database_medicine(id = null) {
             'price_input': price_input,
             'multiple_level': multiple_level,
             'price': price,
+            'tax': tax,
             'price_dollar': price_dollar,
 
         },
@@ -666,7 +674,7 @@ function save_database_disposal_medicine() {
                 }
                 else {
                     if (response.msg == 1) {
-                        alert(gettext('Count is more than left')); // »èÁ¦ ÇÏ·Á´Â°Ô ³²¾ÆÀÖ´Â°Í º¸´Ù ¸¹´Ù.
+                        alert(gettext('Count is more than left')); // ï¿½ï¿½ï¿½ï¿½ ï¿½Ï·ï¿½ï¿½Â°ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ö´Â°ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½.
                     }
 
                 }
@@ -718,3 +726,12 @@ function worker_on(path) {
 
     }
 }
+
+
+function excel_download() {
+
+    var url = '/manage/expendables_inventory_excel?'
+
+    window.open(url);
+}
+

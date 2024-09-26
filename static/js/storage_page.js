@@ -129,9 +129,9 @@ $(function () {
     });
 
 
-    $('#patient_tax_invoice_click').click(function () {
+    // $('#patient_tax_invoice_click').click(function () {
         $('#patient_tax_invoice').toggle();
-    })
+    // })
 
     $('#Bill').click(async function () {
         id = $("#selected_reception").val();
@@ -159,7 +159,7 @@ $(function () {
             for_bf += '&total_amount=' + total_amount;
 
         }
-		
+
 		console.log(record_id)
 
         //console.log(record_id)
@@ -175,16 +175,14 @@ $(function () {
 		  resolve => {
 			setTimeout(() => {
 			  resolve(); // invoke the function
-			}, 300)
+			}, 1000)
 		  }
 		);		
 		const ret = await $('#dynamic_div').printThis({});
 
-
         //$('.page_bill').printThis({
         //});
     });
-
 
 
 
@@ -209,6 +207,11 @@ $(function () {
 
     });
 
+    $('#payment_waiting_list').keydown(function (key) {
+        if (key.keyCode == 13) {
+            get_today_list();
+        }
+    })
 
 
 
@@ -545,7 +548,7 @@ function waiting_selected(paymentrecord_id) {
             $('#patient_date_of_birth').val(response.datas['date_of_birth']);
             $('#patient_phone').val(response.datas['phone']);
             $('#patient_address').val(response.datas['address']);
-            $('#patient_doctor').val(response.datas['doctor_kor'] + ' / ' + response.datas['doctor_eng']);
+            $('#patient_doctor').val(response.datas['date']);
             if ($("#language").val() == 'vi') {
                 if (response.datas['reservation'] == '' || response.datas['reservation'] == undefined)
                     $('#id_follow_update').val('');
@@ -558,7 +561,7 @@ function waiting_selected(paymentrecord_id) {
             $('#recommendation').val(response.datas['recommendation']);
 
             $('#need_invoice').prop('checked', response.need_invoice);
-            $('#need_insurance').prop('checked', response.need_invoice);
+            $('#need_insurance').prop('checked', response.need_insurance);
 
             $("#storage_memo").val(response.datas['payment_memo']);
 
@@ -821,6 +824,7 @@ function waiting_selected(paymentrecord_id) {
             $('#tax_invoice_number').val(response.tax_invoice_number);
             $('#tax_invoice_company_name').val(response.tax_invoice_company_name);
             $('#tax_invoice_address').val(response.tax_invoice_address);
+            $('#tax_recommendation').val(response.tax_recommendation);
 
 
             $('#report_id').val(response.report);
@@ -899,7 +903,7 @@ function waiting_list(Today = false) {
         start = moment(start, 'DD/MM/YYYY').format('YYYY-MM-DD');
         end = moment(end, 'DD/MM/YYYY').format('YYYY-MM-DD');
     }
-
+    var depart= $('#reception_waiting_depart').val()
     $.ajax({
         type: 'POST',
         url: '/receptionist/waiting_list/',
@@ -970,14 +974,14 @@ function waiting_list(Today = false) {
 
 
 function get_today_list() {
-
     $.ajax({
         type: 'POST',
         url: '/receptionist/get_today_list/',
         data: {
             'csrfmiddlewaretoken': $('#csrf').val(),
             'doctor': $("#waiting_list_doctor option:selected").val(),
-            'depart': $('#depart_select').val(),
+            'depart': $('#depart_select  option:selected').val(),
+            'patient': $('#payment_waiting_list').val(),
         },
         dataType: 'Json',
         success: function (response) {
@@ -1038,7 +1042,7 @@ function get_today_selected(reception_id) {
             $('#patient_date_of_birth').val(response.datas['date_of_birth']);
             $('#patient_phone').val(response.datas['phone']);
             $('#patient_address').val(response.datas['address']);
-            $('#patient_doctor').val(response.datas['doctor_kor'] + ' / ' + response.datas['doctor_eng'])
+            $('#patient_doctor').val(response.datas['date'] )
             if ($("#language").val() == 'vi') {
                 if (response.datas['reservation'] == '' || response.datas['reservation'] == undefined)
                     $('#id_follow_update').val('');
@@ -1051,7 +1055,7 @@ function get_today_selected(reception_id) {
             $('#recommendation').val(response.datas['recommendation']);
 
             $('#need_invoice').prop('checked', response.need_invoice);
-            $('#need_insurance').prop('checked', response.need_invoice);
+            $('#need_insurance').prop('checked', response.need_insurance);
 
             $("#storage_memo").val('');
             $("#id_payment_info").val('');
@@ -1263,7 +1267,7 @@ function get_today_selected(reception_id) {
             $('#tax_invoice_number').val(response.tax_invoice_number);
             $('#tax_invoice_company_name').val(response.tax_invoice_company_name);
             $('#tax_invoice_address').val(response.tax_invoice_address);
-
+            $('#tax_recommendation').val(response.tax_recommendation);
 
             $('#report_id').val(response.report);
 
@@ -1387,6 +1391,13 @@ function save_storage() {
             'discount_amount': $('#discount_amount').val(),
             'total': $("#discount_total").html(),
             'payment_memo': $("#storage_memo").val(),
+
+            'tax_number': $("#tax_invoice_number").val(),
+            'company': $("#tax_invoice_company_name").val(),
+            'address': $("#tax_invoice_address").val(),
+            'recommendation': $("#tax_recommendation").val(),
+            'need_invoice': $("#need_invoice").prop("checked"),
+            'need_insurance': $("#need_insurance").prop("checked"),
 
 
             'list_checked': JSON.stringify(list_checked),

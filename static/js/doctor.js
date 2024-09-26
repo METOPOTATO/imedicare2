@@ -7,6 +7,23 @@ var timer_count = 0;
 function numberWithCommas(x) {
     return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 }
+// $(document).ready(
+//     $(document).on('change', '.diagnosis_selected_input_number', function (event) {
+//         console.log('abc')
+//         var amount = event.target.value;
+//         var code = $(event.target.parentElement.parentElement).find('td:nth-child(1)').text();
+//         console.log(code)
+//         var sourceRow = $(`#diagnosis_select_medicine_contents .contents_items > tr > td:contains("${code}")`).parent();
+//         var amountData = $(sourceRow).find('td:nth-child(4)').html();
+//         console.log(amount)
+//         console.log(amountData)
+//         if ( parseInt(amount) > parseInt(amountData) ){
+//             alert('Cannot add more medicine');
+//             $(this).val(parseInt(amountData))
+//         }
+//         show_total_price()
+//     })
+// )
 $(function () {
     var _oldShow = $.fn.show;
     var _oldHide = $.fn.hide;
@@ -42,6 +59,17 @@ $(function () {
     }
 
     // init start
+
+
+    $('#search_patient').keydown(function (key) {
+        if (key.keyCode == 13) {
+            reception_waiting();
+            worker_on(false);
+        }
+    })
+
+
+
     reception_waiting(true);
 
     $('.diagnosis_select_contents').hide();
@@ -69,6 +97,17 @@ $(function () {
 
     //select and set methods
     $('.contents_items tr').click(function (event) {
+        // var isValidCount = true;
+        // if (event.target.parentElement.parentElement.parentElement.parentElement.id == 'diagnosis_select_medicine_contents') {
+        //     var count = $(event.target.parentElement).find('td:nth-child(4)').html();
+        //     count = parseInt(count);
+        //     if (count <= 0){
+        //         isValidCount = false;
+        //         console.log('Not valid count')
+        //         alert('This medicine is not available!(Loại thuốc này không còn trong kho)')
+        //     }
+        // }
+        // if (isValidCount){
         if (event.target.nodeName.toLowerCase() == 'td') {
             //diagnosis_select_test_contents
             $(event.target.parentElement.parentElement.parentElement.parentElement).attr('id');
@@ -112,9 +151,11 @@ $(function () {
                                 $('#diagnosis_selected_medicine').append(str);
 
 
+                            $('#diagnosis_selected input').off('change');
                             $('#diagnosis_selected input').change(function () {
                                 show_total_price();
                             })
+                            $('#diagnosis_selected input').off('keyup');
                             $('#diagnosis_selected input').keyup(function () {
                                 show_total_price();
                             })
@@ -168,16 +209,23 @@ $(function () {
             else if (what_class == 'diagnosis_select_medicine_contents')
                 $('#diagnosis_selected_medicine').append(str);
 
+            $('#diagnosis_selected input').off('change');
             $('#diagnosis_selected input').change(function () {
                 show_total_price();
             })
+            $('#diagnosis_selected input').off('keyup');
             $('#diagnosis_selected input').keyup(function () {
                 show_total_price();
             })
             
             show_total_price();
         }
+        // }
     });
+
+    $('#diagnosis_selected_medicine').click(function (event){
+        console.log(event.target)
+    })
 
     if ($("#patient_date_of_birth").length > 0) {
         $("#patient_date_of_birth").datepicker({
@@ -194,12 +242,15 @@ $(function () {
         });
     }
 
-    $('#reception_waiting_date').daterangepicker({
+    $('#reception_waiting_date, #reception_waiting_date_end').daterangepicker({
         singleDatePicker: true,
         showDropdowns: true,
         drops: "up",
         locale: {
             format: "YYYY-MM-DD",
+        },
+        ranges: {
+            'Today': [moment(), moment()],
         },
     });
     
@@ -207,7 +258,7 @@ $(function () {
     //초기값
     if ($("#language").val() == 'vi') {
         var today = moment().format('DD[/]MM[/]YYYY');
-        $('#reception_waiting_date').val(today);
+        $('#reception_waiting_date, #reception_waiting_date_end').val(today);
     }
     //선택 시 
     $('#reception_waiting_date').on('apply.daterangepicker', function (ev, picker) {
@@ -217,6 +268,20 @@ $(function () {
             today = moment().format('DD[/]MM[/]YYYY');
         } 
         date = $('#reception_waiting_date').val();
+        if (date == today) {
+            worker_on(true);
+        } else {
+            worker_on(false);
+        }
+    });
+    //선택 시 
+    $('#reception_waiting_date_end').on('apply.daterangepicker', function (ev, picker) {
+        var today = moment().format('YYYY[-]MM[-]DD');
+        if ($("#language").val() == 'vi') {
+            $(this).val(picker.startDate.format('DD/MM/YYYY'));
+            today = moment().format('DD[/]MM[/]YYYY');
+        }
+        date = $('#reception_waiting_date_end').val();
         if (date == today) {
             worker_on(true);
         } else {
@@ -252,6 +317,9 @@ $(function () {
         picker.container.find(".hourselect").append('<option value="16">16</option>');
         picker.container.find(".hourselect").append('<option value="17">17</option>');
         picker.container.find(".hourselect").append('<option value="18">18</option>');
+        picker.container.find(".hourselect").append('<option value="19">19</option>');
+        picker.container.find(".hourselect").append('<option value="20">20</option>');
+        picker.container.find(".hourselect").append('<option value="21">21</option>');
     });
 
     $('#reservation_date').on('apply.daterangepicker', function (ev, picker) {
@@ -276,17 +344,6 @@ $(function () {
         $(".show_list_contents").slideToggle("slow");
     });
 
-    $('.vital_input').keypress(function (key) {
-        if (key.keyCode == 13) {
-            if ($(this).parent().is(':last-child')) {
-                if (confirm('Save?')) {
-                    set_vital();
-                }
-            } else {
-                $(this).parent().next().children('input').focus();
-            }
-        }
-    });
 
     $('.contents_items').change(function () {
     })
@@ -393,7 +450,7 @@ $(function () {
         });
 
 
-
+    //진료창 크게 보기
     $("#past_diagnosis_showlarge").click(function () {
         $('#past_diagnosis_showlarge_table tbody').empty();
         $.ajax({
@@ -407,14 +464,16 @@ $(function () {
             dataType: 'Json',
             success: function (response) {
                 for (var i in response.datas) {
-                    var str = "<tr style='background:#94ee90'><td colspan='5'>" + response.datas[i]['date'] + "(" + response.datas[i]['day'] + ")[" + response.datas[i]['doctor'] + "]</td>" +
+                    var str = "<tr style='background:#94ee90'><td colspan='5'>" + response.datas[i]['date'] + "(" + response.datas[i]['day'] + ")[" + response.datas[i]['doctor'] + "]"+ 
+                        "</td > " +
                         "</td></tr>" + /*"<tr><td colspan='5'>History: D-" + response.datas[i]['diagnosis']  + */
 
                         "<tr><td colspan='5'><font style='font-weight:700;'>History:</font><br/><font style='font-weight:700; color:#d2322d'>S - </font>" + response.datas[i]['subjective'] + "<br/><font style='font-weight:700; color:#d2322d'>O - </font>" +
                         response.datas[i]['objective'] + "<br/><font style='font-weight:700; color:#d2322d'>A - </font>" +
                         response.datas[i]['assessment'] + "<br/><font style='font-weight:700; color:#d2322d'>P - </font>" +
                         response.datas[i]['plan'] + "<br/><font style='font-weight:700; color:#d2322d'>D - </font>" +
-                        response.datas[i]['diagnosis'] +
+                        response.datas[i]['diagnosis'] + "<br/><font style='font-weight:700; color:#d2322d'>Sub Clinical Test - </font>" +
+                        response.datas[i]['sub_clinical_test'] +
                         "</td></tr>";
 
 
@@ -461,12 +520,24 @@ $(function () {
         $('#past_diagnosis_showlarge_modal').modal('show');
     });
 
+
+
+
     get_medicine_count();
 
 
 
     $("#playtest").click(function () {
 
+    });
+
+    $('#vaccine_date').daterangepicker({
+        singleDatePicker: true,
+        showDropdowns: true,
+        autoApply: true,
+        locale: {
+            format: 'YYYY-MM-DD'
+        }
     });
 
    
@@ -543,14 +614,21 @@ function get_all_diagnosis() {
         dataType: 'Json',
         success: function (response) {
             for (var i in response.datas) {
-                var str = "<tr style='background:#94ee90'><td colspan='5'>" + response.datas[i]['date'] + "(" + response.datas[i]['day'] + ")[" + response.datas[i]['doctor'] + "]</td>" +
+                var str = "<tr style='background:#94ee90'><td colspan='5'>" +
+                    "<div style='width:400px;height:26px;display:inline-table;'><span style='display:table-cell;vertical-align:middle;'>" + response.datas[i]['date'] + "(" + response.datas[i]['day'] + ")[" + response.datas[i]['doctor'] + "]</span></div>" +
+
+                    "<span style='float:right;'>" +
+                    '<a class="btn btn-default btn-xs" href="javascript: void(0);" onclick="reception_select(' + response.datas[i]['reception_id'] +',true);get_diagnosis(' + response.datas[i]['reception_id'] + ',true)"><i class="fa fa-clone"> Copy</i></a>' +
+                    "</span>" +
+                    "</td > " +
                     "</td></tr>" + /*"<tr><td colspan='5'>History: D-" + response.datas[i]['diagnosis']  + */
 
                     "<tr><td colspan='5'><font style='font-weight:700;'>History:</font><br/><font style='font-weight:700; color:#d2322d'>S - </font>" + response.datas[i]['subjective'] + "<br/><font style='font-weight:700; color:#d2322d'>O - </font>" +
                     response.datas[i]['objective'] + "<br/><font style='font-weight:700; color:#d2322d'>A - </font>" +
                     response.datas[i]['assessment'] + "<br/><font style='font-weight:700; color:#d2322d'>P - </font>" +
                     response.datas[i]['plan'] + "<br/><font style='font-weight:700; color:#d2322d'>D - </font>" +
-                    response.datas[i]['diagnosis'] +
+                    response.datas[i]['diagnosis'] + "<br/><font style='font-weight:700; color:#d2322d'>Sub Clinical Test - </font>" +
+                    response.datas[i]['sub_clinical_test'] +
                     "</td></tr>";
 
 
@@ -642,7 +720,11 @@ function set_past_diagnosis_date(element) {
 
 
 
-function reception_select(reception_id) {
+function reception_select(reception_id, from_history = false) { 
+    $('#reservation_date').val('');
+    $('#reservation_type').val('');
+    $('#reservation_memo').val('');
+
     $.ajax({
         type: 'POST',
         url: '/doctor/reception_select/',
@@ -658,15 +740,21 @@ function reception_select(reception_id) {
             $('#patient_date_of_birth').val(response.date_of_birth);
             $('#patient_address').val(response.address);
             $('#patient_phone').val(response.phone);
+            $("#patient_mark").val(response.marking);
+            $('#patient_memo').val(response.memo);
 
             $('#history_past').val(response.history_past);
             $('#history_family').val(response.history_family);
 
             $('input:radio[name=gender]').filter('[value=' + response.gender + ']').prop('checked', true);
             $('#chief_complaint').val(response.chief_complaint);
-
-            $('#selected_reception').val(response.reception_id);
-            $('#reservation_date').val(response.reservation)
+            if (from_history == false) {
+                $('#selected_reception').val(response.reception_id);
+            }
+            
+            $('#reservation_date').val(response.reservation_date)
+            $('#reservation_type').val(response.reservation_type)
+            $('#reservation_memo').val(response.reservation_memo)
 
             $('#assessment').val(response.assessment);
             $('#objective_data').val(response.objective_data);
@@ -674,6 +762,7 @@ function reception_select(reception_id) {
             $('#diagnosis').val(response.diagnosis);
             $('#text_icd').val(response.ICD);
             $('#icd_code').val(response.icd_code);
+            $("#sub_clinical_test").val(response.sub_clinical_test)
             $("#recommendation").val(response.recommendation);
 
 
@@ -682,11 +771,16 @@ function reception_select(reception_id) {
                 $('#need_medical_report').show();
             }
             $('#need_invoice').prop('checked', response.need_invoice);
-            $('#need_insurance').prop('checked', response.need_invoice);
+            $('#need_insurance').prop('checked', response.need_insurance);
 
+            $(".vital_input").val('');
 
             get_vital();
-            get_all_diagnosis();
+            set_under_treatment_btn(response.status);
+
+            if (from_history == false) {
+                get_all_diagnosis();
+            }
         },
         error: function (request, status, error) {
             console.log("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
@@ -711,7 +805,7 @@ function get_vital() {
         success: function (response) {
             $('#vital_get_body').empty();
             for (var i in response.datas) {
-                var str = "<tr><td>" + response.datas[i]['date'] + "</td>" +
+                var str = "<tr title=" + response.datas[i]['fulldate'] + "><td>" + response.datas[i]['date'] + "</td>" +
                     "<td>" + response.datas[i]['weight'] + "</td>" +
                     "<td>" + response.datas[i]['height'] +
                     "<td>" + response.datas[i]['blood_pressure'] + "</td>" +
@@ -733,6 +827,19 @@ function set_vital() {
         alert(gettext('Select patient first.'));
         return;
     }
+
+    var is_empty = false;
+    var list_vital = $(".vital_input")
+    for (var i = 0; i < list_vital.length; i++) {
+        if ($(list_vital[i]).val() != '')
+            is_empty = true;
+    }
+
+    if (is_empty == false) {
+        alert(gettext('Fill the blanks.'));
+        return;
+    }
+
     $.ajax({
         type: 'POST',
         url: '/doctor/set_vital/',
@@ -767,7 +874,8 @@ function set_vital_clear() {
     $('#vital_input_pulse_rate').val('');
 }
 
-function get_diagnosis(reception_no) {
+function get_diagnosis(reception_no, from_history = false) {
+
     $.ajax({
         type: 'POST',
         url: '/doctor/get_diagnosis/',
@@ -782,8 +890,11 @@ function get_diagnosis(reception_no) {
             $('#diagnosis_selected tbody').empty();
 
             for (var j in response.datas['exams']) {
-                var str = "<tr><td>" + response.datas['exams'][j]['code'] + "<input type='hidden' value='" +
-                    response.datas['exams'][j]['id'] + "'/></td><td colspan='5'>" +
+                var str = "<tr><td>" + response.datas['exams'][j]['code'] + "<input type='hidden' value='";
+                if (from_history == false) {
+                        str += response.datas['exams'][j]['id'];
+                    }
+                    str += "'/></td><td colspan='5'>" +
                     response.datas['exams'][j]['name'] + "</td>" +
                     "<td style='cursor:pointer' onclick='delete_this_td(this)'>" + "x" + "</td>" +
                     "<td style='display:none;'>" + response.datas['exams'][j]['price'] + "</td></tr > ";
@@ -793,8 +904,11 @@ function get_diagnosis(reception_no) {
 
             for (var j in response.datas['tests']) {
                     
-                var str = "<tr><td>" + response.datas['tests'][j]['code'] + "<input type='hidden' value='" +
-                    response.datas['tests'][j]['id'] + "'/></td><td colspan='5'>" +
+                var str = "<tr><td>" + response.datas['tests'][j]['code'] + "<input type='hidden' value='";
+                if (from_history == false) {
+                    str += response.datas['tests'][j]['id'];
+                }
+                str +=  "'/></td><td colspan='5'>" +
                     response.datas['tests'][j]['name'] + "</td>" +
                     "<td style='cursor:pointer' onclick='delete_this_td(this)'>" + "x" + "</td>" + 
                     "<td style='display:none;'>" + response.datas['tests'][j]['price']+ "</td></tr > ";
@@ -802,8 +916,11 @@ function get_diagnosis(reception_no) {
             }
                 
             for (var j in response.datas['precedures']) {
-                var str = "<tr><td>" + response.datas['precedures'][j]['code'] + "<input type='hidden' value='" +
-                    response.datas['precedures'][j]['id'] + "'/></td><td colspan='5'>" +
+                var str = "<tr><td>" + response.datas['precedures'][j]['code'] + "<input type='hidden' value='";
+                if (from_history == false) {
+                    str += response.datas['precedures'][j]['id'];
+                }
+                str += "'/></td><td colspan='5'>" +
                     response.datas['precedures'][j]['name'] + "</td>" +
                     "<td style='cursor:pointer' onclick='delete_this_td(this)'>" + "x" + "</td>" +
                     "<td style='display:none;'>" + response.datas['precedures'][j]['price'] + "</td></tr > ";
@@ -811,10 +928,13 @@ function get_diagnosis(reception_no) {
             }
                 
             for (var j in response.datas['medicines']) {
-                var str = "<tr><td>" + response.datas['medicines'][j]['code'] + "<input type='hidden' value='" +
-                    response.datas['medicines'][j]['id'] + "'/></td><td>" +
+                var str = "<tr><td>" + response.datas['medicines'][j]['code'] + "<input type='hidden' value='";
+                if (from_history == false) {
+                    str += response.datas['medicines'][j]['id'];
+                }
+                    str += "'/></td><td>" +
                     response.datas['medicines'][j]['name'] + "</td>" +
-                    "<td>" + response.datas['medicines'][j]['unit'] + "</td>"  + 
+                    "<td style='text-align: center;'>" + response.datas['medicines'][j]['unit'] + "</td>"  + 
                     "<td><input type='number' class='diagnosis_selected_input_number' id='amount' value='" +
                     response.datas['medicines'][j]['amount'] + "'>" + "</td>" +
                     "<td><input type='number' class='diagnosis_selected_input_number' id='days' value='" +
@@ -834,6 +954,14 @@ function get_diagnosis(reception_no) {
                 }
 
             })
+            $('#diagnosis_selected input').off('change');
+            $('#diagnosis_selected input').change(function () {
+                show_total_price();
+            })
+            $('#diagnosis_selected input').off('keyup');
+            $('#diagnosis_selected input').keyup(function () {
+                show_total_price();
+            })
                 
             show_total_price();
         },
@@ -849,11 +977,13 @@ function reception_waiting(Today = false, alarm = false) {
     var date;
 
     progress = $('#reception_progress').val();
-    string = '';//$("#search_patient").val();
+    string = $("#search_patient").val();
     date = $('#reception_waiting_date').val();
+    date_end = $('#reception_waiting_date_end').val();
     //언어에 따라 날짜가 다르기 때문에 서버 형식에 맞게 재설정 후 전송
     if ($("#language").val() == 'vi') {
         date = moment(date, 'DD/MM/YYYY').format('YYYY-MM-DD')
+        date_end = moment(date_end, 'DD/MM/YYYY').format('YYYY-MM-DD')
     }
 
     $.ajax({
@@ -862,6 +992,7 @@ function reception_waiting(Today = false, alarm = false) {
         data: {
             'csrfmiddlewaretoken': $('#csrf').val(),
             'date': date,
+            'date_end': date_end,
             'progress': progress,
             'string': string,
         },
@@ -875,16 +1006,16 @@ function reception_waiting(Today = false, alarm = false) {
                     var color;
                     var is_new = false;
                     $('#status').val(response.datas[i]['status']);
-                    //if (response.datas[i]['status'] == 'new')
-                    //    tr_class = "class ='success'"
-                    //else if (response.datas[i]['status'] == 'hold')
-                    //    tr_class = "class ='warning'"
-                    //else if (response.datas[i]['status'] == 'done')
-                    //    tr_class = "class ='danger'"
-                    if (response.datas[i]['status'] == 'done')
+                    if (response.datas[i]['status'] == 'under_treat')
                         tr_class = "class ='success'"
+                    else if (response.datas[i]['status'] == 'hold')
+                        tr_class = "class ='warning'"
+                    else if (response.datas[i]['status'] == 'done')
+                        tr_class = "class ='danger'"
+                    //if (response.datas[i]['status'] == 'done')
+                    //    tr_class = "class ='danger'"
                     else {
-                        tr_class = "class =''";
+                        tr_class = "class =''"
                         is_new = true;
                     }
                         
@@ -894,10 +1025,25 @@ function reception_waiting(Today = false, alarm = false) {
                         ");" +
                         "get_diagnosis(" + response.datas[i]['reception_no'] +
                         ");'><td>" + (parseInt(i) + 1) + "</td>" +
-                        "<td>" + response.datas[i]['chart'] + "</td>" +
-                        "<td>" + response.datas[i]['name_kor'] + "/" + response.datas[i]['name_eng'] + "</td>" +
-                        "<td>" + response.datas[i]['date_of_birth'] + '<br/>'+ ' (' + response.datas[i]['age'] + '/' +response.datas[i]['gender'] + ")</td>" +
-                        "<td>" + response.datas[i]['reception_time'] + "</td></tr>";
+                        "<td>";
+                    if (response.datas[i]['package']) { // 패키지 접수
+                        str += '<i class="fa fa-product-hunt"></i> ';
+                    }
+
+                    str += response.datas[i]['chart'];
+                    console.log(response.datas[i]['is_vaccine'])
+                    if (response.datas[i]['is_vaccine'] == true) {
+                        str += "<br/><label class='label label-success'>VACCINE<label>"
+                    }
+                    str += "</td>" +
+                        "<td>" + response.datas[i]['name_kor'] + "<br/>" + response.datas[i]['name_eng'] + "</td>" +
+                        "<td>" + response.datas[i]['date_of_birth'] + '<br/>' + ' (' + response.datas[i]['age'] + '/' + response.datas[i]['gender'] + ")</td>";
+                    if (string == '') {
+                        str += "<td>" + response.datas[i]['reception_time'] + "</td></tr>";
+                    }
+                    else {
+                        str += "<td>" + response.datas[i]['reception_datetime'] + "</td></tr>";
+                    }
 
                     $('#Rectption_Status').append(str);
                 }
@@ -960,6 +1106,18 @@ function delete_this_td(x) {
 
 
 function diagnosis_save(set) {
+
+
+    //상태값 저장
+    var status = $("#status_drop_down").attr('status');
+    if (status == '') {
+        alert(gettext('Select status.'));
+        return;
+    }
+    //set_under_treatment(status);
+
+
+
     if ($('#selected_reception').val().trim() == '') {
         alert(gettext('Select patient first.'));
         return;
@@ -985,10 +1143,30 @@ function diagnosis_save(set) {
         alert(gettext('Diagnosis is Empty.\nPlease fill in all the input of History Taking.'));
         return;
     }
+    if ($('#sub_clinical_test').val().trim() == '') {
+        alert(gettext('Sub Clinical Test is Empty.\nPlease fill in all the input of History Taking.'));
+        return;
+    }
 
 
     chief_complaint = $('#chief_complaint').val();
-    date = $("#reservation_date").val();
+
+    reservation_date = $("#reservation_date").val();
+    reservation_type = $("#reservation_type").val();
+    reservation_memo = $("#reservation_memo").val();
+
+    if (reservation_date != '') {
+        if (reservation_type == '') {
+            alert(gettext('Select Reservation Type.'));
+        }
+    }
+    if (reservation_type != '') {
+        if (reservation_date == '') {
+            alert(gettext('Select Date.'));
+        }
+    }
+
+
     datas = [];
     var table = $('#diagnosis_selected');
     var is_valid = true;
@@ -1085,18 +1263,21 @@ function diagnosis_save(set) {
             'assessment': $('#assessment').val(),
             'plan': $('#plan').val(),
             'ICD': $("#text_icd").val(),
-            'icd_code':$("#icd_code").val(),
+            'icd_code': $("#icd_code").val(),
+            'sub_clinical_test': $("#sub_clinical_test").val(),
             'recommendation': $('#recommendation').val(),
             'datas': datas,
-            'set': set,
-            'date': date,
+            'set': status,// set,
+            'reservation_date': reservation_date,
+            'reservation_type': reservation_type,
+            'reservation_memo': reservation_memo,
             'family_history': $("#history_family").val(),
             'past_history': $("#history_past").val(),
         },
         dataType: 'Json',
         success: function (response) {
             if (response.result == false) {
-                alert(gettext('Failed \nalready settled or is settled.'))
+                alert(response.msg)
             } else {
                 alert(gettext('Saved'));
                 set_all_empty();
@@ -1120,6 +1301,7 @@ function diagnosis_save(set) {
     var gender = $('input[name="gender"]:checked').val();
     var address = $('#patient_address').val();
     var phone = $('#patient_phone').val();
+    var marking = $("#patient_mark").val();
 
     var past_history = $('#history_past').val();
     var history_family = $('#history_family').val();
@@ -1134,6 +1316,7 @@ function diagnosis_save(set) {
             'phone': phone,
             'gender': gender,
             'address': address,
+            'marking': marking,
             'past_history': past_history,
             'family_history': history_family,
         },
@@ -1144,6 +1327,7 @@ function diagnosis_save(set) {
             console.log("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
         },
     })
+
 
 }
 
@@ -1168,6 +1352,60 @@ function get_test_contents(category_id) {
     })
 }
 
+
+
+function set_under_treatment(status) {
+    var reception_id = $('#selected_reception').val();
+    if (reception_id == '') {
+        alert(gettext('Select patient first.'));
+        return;
+    }
+
+    $.ajax({
+        type: 'POST',
+        url: '/doctor/set_under_treatment/',
+        data: {
+            'csrfmiddlewaretoken': $('#csrf').val(),
+            'reception_id': reception_id,
+            'status': status,
+        },
+        dataType: 'Json',
+        success: function (response) {
+
+
+        },
+        error: function (request, status, error) {
+            console.log("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
+
+        },
+    })
+
+    //set_under_treatment_btn(status);
+}
+
+function set_under_treatment_btn(status) {
+    var str_status = '-'
+    $("#status_drop_down").removeClass("btn-default btn-danger btn-warning btn-success");
+    if (status == 'new') {
+        str_status = gettext('Waiting');
+        $("#status_drop_down").addClass('btn-default');
+        $("#status_drop_down").attr('status','new');
+    } else if (status == 'under_treat') {
+        str_status = gettext('Under Treatement');
+        $("#status_drop_down").addClass('btn-success');
+        $("#status_drop_down").attr('status', 'under_treat');
+    } else if (status == 'hold') {
+        str_status = gettext('Hold');
+        $("#status_drop_down").addClass('btn-warning');
+        $("#status_drop_down").attr('status', 'hold');
+    } else if (status == 'done') {
+        str_status = gettext('Done');
+        $("#status_drop_down").addClass('btn-danger');
+        $("#status_drop_down").attr('status', 'done');
+    }
+
+    $("#status_drop_down_span").html(str_status);
+}
 
 
 
@@ -1198,3 +1436,203 @@ $('#print_test').on('click', function () {
 
 
 
+function vaccine_img_kor() {
+    window.open('/static/img/vaccine_kor.jpg', 'Vaccine Kor', 'height = ' + screen.height + ', width = ' + screen.width + 'fullscreen = yes')
+}
+function vaccine_img_vie() {
+    window.open('/static/img/vaccine_vie.jpg', 'Vaccine Vie', 'height = ' + screen.height + ', width = ' + screen.width + 'fullscreen = yes')
+}
+
+
+//백신
+function vaccine_history_list() {
+
+    var patient_id = $('#patient_id').val();
+    if (patient_id == '') {
+        alert(gettext('Select patient first.'));
+        return;
+    }
+
+    $('#past_vaccine_table tbody').empty();
+
+    //환자 방문 이력
+    $.ajax({
+        type: 'POST',
+        url: '/manage/get_vaccine_history_list/',
+        data: {
+            'csrfmiddlewaretoken': $('#csrf').val(),
+            'patient_id': patient_id,
+        },
+        dataType: 'Json',
+        success: function (response) {
+            console.log(response.list_history)
+            for (var i = 0; i < response.list_history.length; i++) {
+
+                var str = "<tr><td>" + parseInt(i + 1) + "</td>" +
+
+                    "<td>" + response.list_history[i]['vaccine_name'] + "</td>" +
+                    "<td>" + response.list_history[i]['medicine_name'] + "</td>" +
+                    "<td>" + response.list_history[i]['round'] + "</td>" +
+                    "<td>" + response.list_history[i]['hospital'] + "</td>" +
+                    "<td>" + response.list_history[i]['vaccine_date'] + "</td>" +
+                    "<td>" + response.list_history[i]['reservation'] + "</td>" +
+                    "<td>" + response.list_history[i]['re_reservation'] + "</td>" +
+                    "<td>" + response.list_history[i]['memo'] + "</td>" +
+
+                    "<td>" +
+                    "<a class='btn btn-default btn-xs' style='margin-right:5px;' href='javascript: void (0);' onclick='vaccine_history_modal(" + response.list_history[i].id + ")' ><i class='fa fa-lg fa-pencil'></i></a>" +
+                    "<a class='btn btn-danger btn-xs' href='javascript: void (0);' onclick='vaccine_history_delete(" + response.list_history[i].id + ")' ><i class='fa fa-lg fa-trash'></i></a>" +
+
+                    '</td></tr > ';
+
+                $('#past_vaccine_table tbody').append(str);
+
+            }
+        },
+        error: function (request, status, error) {
+            console.log("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
+
+        },
+    })
+
+
+
+    $('#past_vaccine_modal').modal({ backdrop: 'static' });
+    $("#past_vaccine_modal").scrollTop(0);
+    $("#past_vaccine_modal").modal('show');
+}
+
+
+
+function vaccine_history_modal(id = '') {
+
+    $("#selected_vaccine_history").val('');
+    $("#vaccine_name").val('');
+    $("#medicine_name").val('');
+    $("#round").val('');
+    $("#vaccine_date").val('');
+    $("#hospital").val('');
+    $("#memo").val('');
+
+
+    if (id != '') {
+        $.ajax({
+            type: 'POST',
+            url: '/manage/get_vaccine_history/',
+            data: {
+                'csrfmiddlewaretoken': $('#csrf').val(),
+                'id': id,
+            },
+            dataType: 'Json',
+            success: function (response) {
+
+                $("#selected_vaccine_history").val(id);
+                $("#vaccine_name").val(response.vaccine_name);
+                $("#medicine_name").val(response.medicine_name);
+                $("#round").val(response.round);
+                $("#vaccine_date").val(response.vaccine_date);
+                $("#hospital").val(response.vaccine_hospital);
+                $("#memo").val(response.memo);
+
+            },
+            error: function (request, status, error) {
+                console.log("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
+
+            },
+        })
+    }
+
+
+
+    $('#vaccine_history_modal').modal({ backdrop: 'static', keyboard: false });
+    $('#vaccine_history_modal').modal('show');
+}
+
+
+function vaccine_history_save() {
+
+    var id = $("#selected_vaccine_history").val();
+    var patient_id = $("#patient_id").val();
+    var vaccine_name = $("#vaccine_name").val();
+    var medicine_name = $("#medicine_name").val();
+    var round = $("#round").val();
+    var hospital = $("#hospital").val();
+    var vaccine_date = $("#vaccine_date").val();
+    var memo = $("#memo").val();
+
+
+    if (selected_vaccine_history != '') {
+        $.ajax({
+            type: 'POST',
+            url: '/manage/vaccine_history_save/',
+            data: {
+                'csrfmiddlewaretoken': $('#csrf').val(),
+                'id': id,
+                'patient_id': patient_id,
+                'vaccine_name': vaccine_name,
+                'medicine_name': medicine_name,
+                'hospital': hospital,
+                'round': round,
+                'vaccine_date': vaccine_date,
+                'memo': memo,
+            },
+            dataType: 'Json',
+            success: function (response) {
+                alert(gettext('Saved.'))
+
+                vaccine_history_list(patient_id)
+
+                $('#vaccine_history_modal').modal('hide');
+
+            },
+            error: function (request, status, error) {
+                console.log("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
+
+            },
+        })
+    }
+}
+
+
+function vaccine_history_delete(id) {
+
+    if (confirm(gettext('Do you want to delete?'))) {
+        var patient_id = $("#patient_id").val();
+        $.ajax({
+            type: 'POST',
+            url: '/manage/vaccine_history_delete/',
+            data: {
+                'csrfmiddlewaretoken': $('#csrf').val(),
+                'id': id,
+            },
+            dataType: 'Json',
+            success: function (response) {
+                alert(gettext('Deleted.'))
+
+                get_vaccine_history_list(patient_id)
+
+
+            },
+            error: function (request, status, error) {
+                console.log("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
+
+            },
+        })
+    }
+
+}
+
+
+
+
+$('.vital_input').keypress(function (key) {
+    if (key.keyCode == 13) {
+        if ($(this).parent().is(':last-child')) {
+            if (confirm('Save?')) {
+                set_vital();
+            }
+        } else {
+            $(this).parent().next().children('input').focus();
+        }
+    }
+});

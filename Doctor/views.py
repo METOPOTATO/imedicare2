@@ -1344,7 +1344,7 @@ def diagnosis_save(request):
             report = Report.objects.get(reception_id = reception_id)
 
 
-        except Report.DoesNotExist:
+        except:
             report = Report()
             report.reception_id = reception_id
 

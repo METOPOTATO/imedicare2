@@ -8,6 +8,7 @@ $(function () {
     $(".date_input").daterangepicker({
         singleDatePicker: true,
         showDropdowns: true,
+        autoApply: true,
         drops: "down",
         locale: {
             format: "YYYY-MM-DD",
@@ -21,10 +22,23 @@ $(function () {
     search_payment();
     //search_doctor_profit();
     //search_medicine();
-    $('.contents_filter_wrap select, .date_input').change(function () {
+    $('.contents_filter_wrap select, .date_input,#is_vaccine,#is_red_invoice').change(function () {
         search_payment();
     })
 
+    function split(val) {
+        return val.split(/,\s*/);
+    }
+    function extractLast(term) {
+        return split(term).pop();
+    }
+    $('#patient_search_input').change(function () {
+        var term = extractLast(this.value);
+        if (term.length >= 2 || term.length == 0) {
+            search_payment();
+        }
+        
+    })
 
     $('.doctor_profit_control').keyup(function () {
         var regex = /[^0-9]/g;
@@ -103,7 +117,17 @@ function get_doctor(part, depart = null) {
 
 
 function search_payment(page = null) {
+
     var page_context = $("#contents_filter_context_count").val();
+    var is_vaccine = $("#is_vaccine").prop("checked");
+
+    if (is_vaccine == undefined)
+        is_vaccine = false
+
+    if (page == null) {
+        page = 1;
+    }
+    var depart= $('#contents_filter_depart').val()
 
     $.ajax({
         type: 'POST',
@@ -113,12 +137,16 @@ function search_payment(page = null) {
 
             'page_context': page_context,
 
+            'date_type': $("#contents_filter_date_type").val(),
+
             'start': $("#payment_search_date_start").val(),
             'end': $("#payment_search_date_end").val(),
 
             'depart': $('#contents_filter_depart').val(),
             'doctor': $('#contents_filter_doctor').val(),
-
+			
+			//11-02 추가
+            'is_red_invoice':$("#is_red_invoice").prop("checked"),
             //'general': $('#payment_search_general option:selected').val(),
             //'medicine': $('#payment_search_medicine option:selected').val(),
             //'lab': $('#payment_search_lab option:selected').val(),
@@ -126,6 +154,10 @@ function search_payment(page = null) {
             'payment_method': $('#contents_filter_payment_method').val(),
             'payment_status': $('#contents_filter_payment_status').val(),
 
+            'patient_type': $("#patient_search_select").val(),
+            'patient_search': $("#patient_search_input").val(),
+
+            'is_vaccine': is_vaccine,
 
             'page': page, 
         },
@@ -135,13 +167,13 @@ function search_payment(page = null) {
 
             var str = '';
             for (var i = 0; i < page_context; i++) {//response.datas) {
-                
                 if (response.datas[i]) {
                     str += '<tr>';
 
                     //진료 기본 정보
                     str += '<td>' + response.datas[i]['no'] + '</td>' +
                         '<td>' + response.datas[i]['date'] + '</td>' +
+                        '<td>' + response.datas[i]['date_paid'] + '</td>' +
                         '<td>' + response.datas[i]['patient_eng'] + '<br/>' +
                         response.datas[i]['Patient'] + ' (' +
                         response.datas[i]['date_of_birth'] +
@@ -210,7 +242,7 @@ function search_payment(page = null) {
 
                         
                     //수납 정보
-
+                    console.log(response.datas[i])
                     str += '<td>' + response.datas[i]['paid_by'] +
                         '</td><td>' + numberWithCommas(response.datas[i]['sub_total']) +
                         '</td><td>' + numberWithCommas(response.datas[i]['additional']) +
@@ -222,13 +254,23 @@ function search_payment(page = null) {
                     } else {
                         str += " style='color:red;'>" + numberWithCommas(response.datas[i]['unpaid']) + '</td>';
                     }
+
+                    var paid = response.datas[i]['all_paid'];
+                    console.log(paid)
+                    if (paid == 0) {
+                        str += "<td> - </td>";
+                    } else {
+                        str += "<td>" + numberWithCommas(paid) + '</td>';
+                    }
+
+                    str += '<td>' + response.datas[i]['red_invoice'] + '</td>' ;
                     //str +="<td>-</td><td>-</td><td>-</td><td></td></tr>';"
                     str += "</tr>';"
 
 
                 } else {
                     //str += '<tr><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>'
-                    str += '<tr><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>'
+                    str += '<tr><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>'
 
                 }
             }
@@ -239,6 +281,7 @@ function search_payment(page = null) {
             $("#payment_discount_total").html(numberWithCommas(response.payment_total_discount));
             $("#payment_total_total").html(numberWithCommas(response.payment_total_total));
             $("#payment_unpaid_total").html(numberWithCommas(response.payment_total_unpaid));
+            $("#payment_paid_total").html(numberWithCommas(response.payment_total_paid_amount));
 
 
 
@@ -333,10 +376,10 @@ function search_payment(page = null) {
 
             for (var i = response.page_range_start; i < response.page_range_stop; i++) {
                 if (response.page_number == i) {
-                    str += '<li class="active"><span>' + i + ' <span class="sr-only">(current)</span></span></li>';
+                    str += '<li class="active"><span>' + i + ' <span class="sr-only" >(current)</span></span></li>';
                 }
                 else if (response.page_number + 5 > i && response.page_number - 5 < i) {
-                    str += '<li> <a onclick="search_payment(' + i + ')">' + i + '</a></li>';
+                    str += '<li> <a style="cursor:pointer" onclick="search_payment(' + i + ')" >' + i + '</a></li>';
                 }
                 else {
                 }
@@ -613,26 +656,47 @@ function excel_download() {
     var date_start = $("#payment_search_date_start").val();
     var date_end = $("#payment_search_date_end").val();
 
+    var depart = $("#contents_filter_depart").val();
+    var doctor = $("#contents_filter_doctor").val();
+
+    var payment_method = $("#contents_filter_payment_method").val();
+    var payment_status = $("#contents_filter_payment_status").val();
+
+    var patient_type = $("#patient_search_select").val();
+    var patient_search = $("#patient_search_input").val();
+
+    var is_vaccine = $("#is_vaccine").prop("checked");
+
+    if (is_vaccine == undefined)
+        is_vaccine = false
+
+
+
+
     var url = '/manage/audit_excel?'
+    url += 'date_start=' + date_start + '&';
+    url += 'date_end=' + date_end + '&';
+    url += 'depart=' + depart + '&';
+    url += 'doctor=' + doctor + '&';
+    url += 'payment_method=' + payment_method + '&';
+    url += 'payment_status=' + payment_status + '&';
+    url += 'patient_type=' + patient_type + '&';
+    url += 'patient_search=' + patient_search + '&';
+    url += 'is_vaccine=' + is_vaccine + '&';
+
+    window.open(url);
+}
+
+
+function excel_download_debit() {
+
+    var date_start = $("#payment_search_date_start").val();
+    var date_end = $("#payment_search_date_end").val();
+
+    var url = '/manage/debit_report_excel?'
     url += 'date_start=' + date_start + '&';
     url += 'date_end=' + date_end + '&';
 
     window.open(url);
-    ///$.ajax({
-    ///    type: 'POST',
-    ///    url: '/manage/audit_excel/',
-    ///    data: {
-    ///        'csrfmiddlewaretoken': $('#csrf').val(),
-    ///    },
-    ///    dataType: 'Json',
-    ///    success: function (response) {
-    ///        
-    ///
-    ///    },
-    ///    error: function (request, status, error) {
-    ///        console.log("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
-    ///
-    ///    },
-    ///})
 }
 
