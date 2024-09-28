@@ -36,6 +36,7 @@ from django.template.loader import render_to_string
 from django.utils.html import strip_tags
 from django.template.loader import get_template
 import unidecode
+import requests
 # Create your views here.
 
 
@@ -2481,6 +2482,7 @@ def reservation(request):
 
     list_reservation_division= []
     query_reservation_division = COMMCODE.objects.filter(use_yn = 'Y',upper_commcode='000006', commcode_grp='RSRVT_DVSN').annotate(code = F('commcode'),name =f_name ).values('code','name')
+    print('======>>>>>>>>>>>>.', query_reservation_division)
     for data in query_reservation_division:
         list_reservation_division.append({
             'code':data['code'],
@@ -3577,10 +3579,49 @@ def Documents2(request):
 
     departs = Depart.objects.all()
 
+    token = ''
+    try:
+        url = 'https://testapi.meinvoice.vn/api/v3/auth/token'
+        body = {
+            "appid": "7291159a-cbb1-43b2-8e0b-673a4586a8c7",
+            "taxcode": "6868686868-125",
+            "username": "testmisa@yahoo.com",
+            "password": "123456Aa"
+        }
+        response = requests.post(url, json=body)
+        data = response.json()
+
+        token = data['Data']
+    except:
+        token = ''
+
+    template = ''
+    
+    try:
+        year = datetime.datetime.now().year
+        url = f'https://testapi.meinvoice.vn/api/v3/code/itg/InvoicePublishing/templates?invyear={year}'
+
+        header = {
+            "CompanyTaxCode": "6868686868-125",
+            'Authorization': f'Bearer {token}',
+        }
+
+        response = requests.get(url, headers=header)
+        data = response.json()
+        data = data['Data']
+        template = json.loads(data)[0]['InvSeries']
+    except:
+        template = ''
+    
+    print('=====================')
+    print(token)
+    print(template)
     return render(request,
     'Receptionist/Documents2.html',
             {
                 'departs':departs,
+                'token': token,
+                'template': template
             },
         )
 
@@ -5127,6 +5168,8 @@ def document_medical_receipt_old(request,reception_id,):
     
         paid_total = paymentrecord_query['total_price']
         print(paid_total)
+        if not paid_total:
+            paid_total = 0
         remain_amount = int(total) - int(paid_total)
 
     
@@ -6821,3 +6864,24 @@ def delete_doctor_reservation(request):
             }
         )
     return JsonResponse({'datas': data})
+
+
+def report(request):
+    wb = load_workbook('/home/light/Desktop/Projects/imedicare2/report1.xlsx')
+    ws = wb.active# grab the active worksheet 
+
+    ps = Patient.objects.filter(nationality__icontains='viet')
+
+    for i, p in  enumerate(ps):
+        ws[f'A{i+1}'] = p.name_eng
+        ws[f'B{i+1}'] = p.name_kor
+        ws[f'C{i+1}'] = p.gender
+        ws[f'D{i+1}'] = p.phone
+        ws[f'E{i+1}'] = p.address
+        ws[f'F{i+1}'] = p.email
+        ws[f'G{i+1}'] = p.date_of_birth
+        ws[f'H{i+1}'] = p.nationality
+        # ws[f'I{i+1}'] = p.name_eng
+        # ws[f'J{i+1}'] = p.name_eng
+    wb.save('/home/light/Desktop/Projects/imedicare2/report.xlsx')
+    return JsonResponse({'data': 'ok'})

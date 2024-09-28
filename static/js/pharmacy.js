@@ -9,6 +9,12 @@ $(function () {
 
     })
 
+    $('#pharmacy_search_input').keypress(function (key) {
+        if (key.keyCode == 13) {
+            waiting_list();
+        }
+    });
+
     $('#pharmacy_list_calendar_start').daterangepicker({
         singleDatePicker: true,
         showDropdowns: true,
@@ -43,7 +49,10 @@ $(function () {
         })
     })
 
+    $('#depart_select').change(function() {
+        waiting_list();
 
+    });
 });
 
 //알람
@@ -133,7 +142,49 @@ function set_new() {
 
 }
 
+function pharmacy_control_withdraw() {
+
+    var diagnosis_id = $('#selected_diagnosis').val();
+    if (diagnosis_id.trim() == '') {
+        alert(gettext('Select patient first.'));
+        return;
+    }
+
+    $.ajax({
+        type: 'POST',
+        url: '/pharmacy/withdraw/',
+        data: {
+            'csrfmiddlewaretoken': $('#csrf').val(),
+            'diagnosis_id': diagnosis_id,
+        },
+        dataType: 'Json',
+        success: function (response) {
+			
+            $('#selected_diagnosis_status').val(status);
+            if (response.result) {
+                alert(gettext("Saved."));
+            } else {
+                var str = gettext('Failed\n')
+                str += response.msg
+                alert(str);
+            }
+            waiting_list();
+        },
+        error: function (request, status, error) {
+            console.log("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
+
+        },
+        beforeSend: function () {
+            $("#overlay").fadeIn(300);
+        },
+        complete: function () {
+            $("#overlay").fadeOut(300);
+        }
+    })
+}
+
 function pharmacy_control_save(Done = false) {
+
     var diagnosis_id = $('#selected_diagnosis').val();
     if (diagnosis_id.trim() == '') {
         alert(gettext('Select patient first.'));
@@ -159,12 +210,23 @@ function pharmacy_control_save(Done = false) {
         },
         dataType: 'Json',
         success: function (response) {
+			
+            $('#selected_diagnosis_status').val(status);
+			
+			
             alert(gettext("Saved."));
+            waiting_list();
         },
         error: function (request, status, error) {
             console.log("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
 
         },
+        beforeSend: function () {
+            $("#overlay").fadeIn(300);
+        },
+        complete: function () {
+            $("#overlay").fadeOut(300);
+        }
     })
 
 }
@@ -183,38 +245,55 @@ function waiting_selected(diagnosis_id) {
             $('#selected_diagnosis').val(diagnosis_id);
             $('#selected_diagnosis_status').val(response.status);
             $('#pharmacy_contents_table > tbody ').empty();
+            var stt = 1;
             for (var i in response.datas) {
-                var str = "<tr><td>" + response.datas[i]['code'] + "</td>" +
+                var str = "<tr><td>" + stt + "</td>" +
                     "<td>" + response.datas[i]['name'] + "</td>" +
-                    "<td>" + response.datas[i]['depart'] + "</td>" + 
-                    "<td>" + response.datas[i]['doctor'] + "</td>" + 
+                    // "<td>" + response.datas[i]['depart'] + "</td>" + 
+                    // "<td>" + response.datas[i]['doctor'] + "</td>" + 
                     "<td>" + response.datas[i]['unit'] + "</td>" +
                     "<td>" + response.datas[i]['amount'] + "</td>" + 
                     "<td>" + response.datas[i]['days'] + "</td>" + 
                     "<td>" + response.datas[i]['total'] + "</td>" + 
                     "<td>" + response.datas[i]['memo'] + "</td>" + 
-                    "<td>" + "-" + "</td></tr>";
+                    "<td>" + response.datas[i]['price'] + "</td></tr>";
 
                 $('#pharmacy_contents_table').append(str);
+                stt += 1;
             }
             $('#need_invoice').prop('checked', response.need_invoice);
-            $('#need_insurance').prop('checked', response.need_invoice);
+            $('#need_insurance').prop('checked', response.need_insurance);
 
             $('#show_patient_selected').html(response.patient_name);
+
+            waiting_list();
+
+            $("#patient_chart").val(response.chart);
+            $("#patient_name").val(response.Name);
+            $('input:radio[name=gender]').filter('[value=' + response.gender + ']').prop('checked', true);
+            $("#patient_dob").val(response.Date_of_Birth);
+            $("#patient_depart").val(response.Depart);
+            $("#patient_phone").val(response.phone);
+            $("#patient_address").val(response.address);
+            $("#diagnosis").val(response.diagnosis);
         },
         error: function (request, status, error) {
             console.log("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
         },
     })
+    
 }
 
 function waiting_list(Today = false, alarm= false) {
     var date, start, end;
 
-    start = $('#pharmacy_list_calendar_start').val();
-    end = $('#pharmacy_list_calendar_end').val();
+    var start = $('#pharmacy_list_calendar_start').val();
+    var end = $('#pharmacy_list_calendar_end').val();
     
-  
+    var filter = $("#pharmacy_search_select").val();
+    var string = $("#pharmacy_search_input ").val();
+
+
    
     $.ajax({
         type: 'POST',
@@ -223,29 +302,38 @@ function waiting_list(Today = false, alarm= false) {
             'csrfmiddlewaretoken': $('#csrf').val(),
             'start_date': start,
             'end_date': end,
-            //'string':string,
-            //'filter':filter,
+            'string': string,
+            'filter':filter,
+            'depart_id': $('#depart_select').val(),
         },
         dataType: 'Json',
         success: function(response) {
             $('#pharmacy_list_table > tbody ').empty();
             for (var i = 0; i < response.datas.length; i++) {
                 var tr_class = "";
-                if (response.datas[i]['status'] == 'new') {
+                if (response.datas[i]['status'] == 'hold')
+                    tr_class = "class ='warning'";
+                else if (response.datas[i]['status'] == 'done')
+                    tr_class = "class ='danger'";
+                else {// if (response.datas[i]['status'] == 'new') {
                     tr_class = "class ='success'";
                     var is_new = true;
                 }
-                else if (response.datas[i]['status'] == 'hold')
-                    tr_class = "class ='warning'"
-                else if (response.datas[i]['status'] == 'done')
-                    tr_class = "class ='danger'"
 
-                var str = "<tr " + tr_class + " onclick='waiting_selected(" + response.datas[i]['diagnosis_id'] + ")'>" + 
+                var str = "<tr " + tr_class + " onclick='waiting_selected(" + response.datas[i]['diagnosis_id'] + ")'>" +
                     "<td>" + Number(i + 1) + "</td>" +
                     "<td>" + response.datas[i]['chart'] + "</td>" +
-                    "<td>" + response.datas[i]['Name'] + "</td>" +
+                    "<td>" + response.datas[i]['Name'];
+                if (response.datas[i]['status'] == 'changed')
+                    str += ' <i class="fa fa-lg fa-undo"></i> ';
+                str += "</td>" +
                     "<td>" + response.datas[i]['Date_of_Birth'] + "</td>" +
-                    "<td>" + response.datas[i]['Depart'] +"</td></tr>";
+                    "<td>" + response.datas[i]['Depart'] +"</td>" +
+                    "<td>" + response.datas[i]['total'] +"</td>" +
+                   
+                    "<td>" + response.datas[i]['received'] +"</td>"+ 
+                    "<td>" + response.datas[i]['ordered'] +"</td> </tr>";
+                    
 
                 $('#pharmacy_list_table').append(str);
             }
@@ -285,6 +373,7 @@ function pharmacy_database_search(page = null) {
 
                     var str = "<tr style='cursor: pointer; height:4vh;' onclick='set_data_control(" + response.datas[i]['id'] + ")'><td>" + response.datas[i]['id'] + "</td>" +
                         "<td>" + response.datas[i]['name'] + "</td>" +
+                        "<td>" + response.datas[i]['tax'] + "</td>" +
                         "<td>" + response.datas[i]['company'] + "</td>" +
                         "<td>" + response.datas[i]['country'] + "</td>" +
                         "<td>" + response.datas[i]['ingredient'] + "</td>" +

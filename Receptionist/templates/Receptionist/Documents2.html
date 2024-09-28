@@ -6,8 +6,8 @@
 
 <div class="main">
     <!--Reception-->
-    <div class="table_patient partition">
-        <div class="status_table_title">
+    <div class="table_patient partition" style="height: 800px;">
+        <div class="status_table_title"
             <span class="btn btn-danger">{{ _('Document List') }}</span>
 
             <div class="status_table_filter">
@@ -312,25 +312,35 @@
                     <td colspan="2">
                         <div class="send-invoice" style="display: flex; flex-direction: row;">
                             <div style="margin-right: 10px;">
-                                <input id="btn_get_token" style="width: 150px; height: 30px;" class="btn btn-success" onclick="get_token(event)" value="Get Token"/>
-                                <input type="hidden" id="login_token">
+                                <!-- <input id="btn_get_token" style="width: 150px; height: 30px;" class="btn btn-success" onclick="get_token(event)" value="Get Token"/> -->
+                                <input type="hidden" id="login_token" value="{{token}}">
                             </div>
                             <div style="margin-right: 10px;">
-                                <input id="btn_get_version" style="width: 150px; height: 30px;" class="btn btn-success" onclick="get_invoice_template(event)" value="Get Invoice Template"/>
-                                <input type="hidden" id="invoice_version">
+                                <!-- <input id="btn_get_version" style="width: 150px; height: 30px;" class="btn btn-success" onclick="get_invoice_template(event)" value="Get Invoice Template"/> -->
+                                <input type="hidden" id="invoice_version" value="{{template}}">
                             </div>
 
                             <div style="margin-right: 10px;">
-                                <input id="btn_get_version" style="width: 150px; height: 30px;" class="btn btn-success" onclick="view_invoice(event)" value="Xem hóa đơn"/>
+                                <input id="" style="width: 150px; height: 30px;" class="btn btn-success" onclick="get_invoice(event)" value="Lấy hóa đơn"/>
                             </div>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2">
+                        <div>
+                            <textarea id="invoice_content" rows="10" cols="100"> </textarea>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2" style="display: flex; flex-direction: row;">
+                        <div style="margin-right: 10px;">
+                            <input id="" style="width: 150px; height: 30px;" class="btn btn-success" onclick="view_invoice(event)" value="Xem hóa đơn"/>
+                        </div>
 
-                            <div style="margin-right: 10px;">
-                                <input id="btn_send_invoice" style="width: 150px; height: 30px;" class="btn btn-success" onclick="public_invoice(event)" value="Gửi hóa đơn"/>
-                            </div>
-
-                            <!-- <div style="margin-right: 10px;">
-                                <input style="width: 150px; height: 30px;" class="btn btn-success" onclick="create_invoice(event)" value="Create Invoice"/>
-                            </div> -->
+                        <div style="margin-right: 10px;">
+                            <input id="" style="width: 150px; height: 30px;" class="btn btn-success" onclick="public_invoice(event)" value="Gửi hóa đơn"/>
                         </div>
                     </td>
                 </tr>

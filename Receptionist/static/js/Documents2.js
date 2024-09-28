@@ -668,7 +668,8 @@ function public_invoice(){
             'csrfmiddlewaretoken': $('#csrf').val(),
             'token': $('#login_token').val(),
             'template': $('#invoice_version').val(),
-            'rec_id': rec_id
+            'rec_id': rec_id,
+            'data': $('#invoice_content').val()
         },
         dataType: 'Json',
         success: function(response) {
@@ -682,12 +683,12 @@ function public_invoice(){
     return false;
 }
 
-function view_invoice(){
+function get_invoice(){
     var rec_id = $('#rec_id').val();
     $.ajax({
         type: 'POST',
         headers:{'X-CSRFToken':$('#csrf').val()},
-        url: '/view_invoice/',
+        url: '/get_invoice/',
         data: {
             'csrfmiddlewaretoken': $('#csrf').val(),
             'token': $('#login_token').val(),
@@ -696,8 +697,11 @@ function view_invoice(){
         },
         dataType: 'Json',
         success: function(response) {
+            $('#invoice_content').val(response.data);
+            $('#invoice_content').val(response.data);
             alert('Send data success');
-           window.open( response.data,'_blank')
+            
+            // window.open( response.link,'_blank')
         },
         error: function (request, status, error) {
             console.log("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
@@ -706,22 +710,25 @@ function view_invoice(){
     return false;
 }
 
-function create_invoice(){
-    var rec_id = $('#rec_id').val();
+function view_invoice(){
+    // var rec_id = $('#rec_id').val();
     $.ajax({
         type: 'POST',
         headers:{'X-CSRFToken':$('#csrf').val()},
-        url: '/create_invoice/',
+        url: '/view_invoice/',
         data: {
             'csrfmiddlewaretoken': $('#csrf').val(),
             'token': $('#login_token').val(),
+            'data': $('#invoice_content').val(),
             'template': $('#invoice_version').val(),
-            'rec_id': rec_id
+            'rec_id': $('#rec_id').val()
         },
         dataType: 'Json',
         success: function(response) {
+            // $('#invoice_content').text(response.data);
             alert('Send data success');
-        //    window.open( response.data,'_blank')
+            
+            window.open( response.link,'_blank')
         },
         error: function (request, status, error) {
             console.log("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);

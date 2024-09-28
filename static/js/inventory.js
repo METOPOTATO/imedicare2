@@ -44,7 +44,6 @@ $(function () {
 
 
         $('#add_medicine_database').on('shown.bs.modal', function () {
-            console.log(1);
             var today = new Date();
             $('#add_medicine_database_id').val(0);
             $('#add_medicine_reg').data('daterangepicker').setStartDate(moment(today));
@@ -249,16 +248,25 @@ function pharmacy_database_search(page = null) {
                     else {
                         var str = "<tr"
                     }
-                    str += " style='cursor: pointer;' onclick='get_inentory_history(" + response.datas[i]['id'] + ",\"" + response.datas[i]['name'] + "\");get_expiry_date();'><td>" + response.datas[i]['code'] + "</td>" +
+                    str += " style='cursor: pointer;' onclick='get_inentory_history(" + response.datas[i]['id'] + ",\"" + response.datas[i]['name'] + "\");get_expiry_date();'>" +
+                        "<td>" + response.datas[i]['id'] + "</td>" +
+                        "<td>" + response.datas[i]['code'] + "</td>" +
                         "<td>" + response.datas[i]['name'] + "</td>" +
                         "<td title='" + response.datas[i]['ingredient'] + "'>" + response.datas[i]['ingredient'] + "</td>" +
-                        "<td title='" + response.datas[i]['company'] + "'>" + response.datas[i]['company'] + "</td>" +
+                        // "<td title='" + response.datas[i]['company'] + "'>" + response.datas[i]['company'] + "</td>" +
+                        "<td>" + response.datas[i]['tax'] + "</td>" +
                         "<td>" + response.datas[i]['country'] + "</td>" +
                         "<td>" + response.datas[i]['unit'] + "</td>" +
                         "<td>" + numberWithCommas(response.datas[i]['price']) + "</td>" +
                         "<td>" + response.datas[i]['count'] + "</td>" +
                         "<td>" +
-                        "<a class='btn btn-default btn-xs' style='margin-right:5px;' href='javascript: void (0);' onclick='edit_database_medicine(" + response.datas[i]['id'] + ")' ><i class='fa fa-lg fa-pencil'></i></a>" +
+                        "<a class='btn btn-default btn-xs' style='margin-right:5px;' href='javascript: void (0);' onclick='edit_database_medicine(" + response.datas[i]['id'];
+
+                    console.log(response.datas[i]['code'].indexOf('VC'))
+                    if ( response.datas[i]['code'].indexOf('VC') != -1 ) {
+                        str += ",&#34;VC&#34;";
+                    }
+                    str += ")' ><i class='fa fa-lg fa-pencil'></i></a>" +
                         "<a class='btn btn-danger btn-xs' href='javascript: void (0);' onclick='delete_database_medicine(" + response.datas[i]['id'] + ")' ><i class='fa fa-lg fa-trash'></i></a></tr> ";
                         
                 } else {
@@ -304,13 +312,33 @@ function pharmacy_database_search(page = null) {
 }
 
 
-function edit_database_medicine(id = null) {
-    $("#add_edit_database_header").html(gettext('New Medicine'));
+function edit_database_medicine(id = null, type='') {
+
+
     $('#add_edit_database input').val('');
     $('#add_edit_database input[type=number]').val('0');
     $("#add_edit_database_class option:first").prop("selected", true);
     $("#add_edit_database_type option:first").prop("selected", true);
     $("#add_edit_database_multiple_level option:first").prop("selected", true);
+    $("#is_red_invoice").prop("checked", false);
+
+    is_red_invoice();
+
+    if (type == 'VC') {
+        $("#add_edit_database_header").html(gettext('New Vaccine'));
+        $("#add_edit_database_type").val("Vaccine");
+        $(".va_none").hide();
+        $(".va_show").show();
+        $("#add_edit_database_class").val(53);//백신
+        $("#add_edit_database_class").prop("disabled", true);
+    } else {
+        $("#add_edit_database_header").html(gettext('New Medicine'));
+        $(".va_none").show();
+        $(".va_show").hide();
+        $("#add_edit_database_class").val(1);//백신
+        $("#add_edit_database_class").prop("disabled", false);
+    }
+    console.log($("#add_edit_database_type").val())
 
 
     if (id != null) {
@@ -332,6 +360,8 @@ function edit_database_medicine(id = null) {
                     $("#add_edit_database_ingredient_vie").val(response.ingredient_vie);
                     $("#add_edit_database_unit").val(response.unit);
                     $("#add_edit_database_unit_vie").val(response.unit_vie);
+                    $("#add_edit_database_vaccine_code").val(response.vaccine_code);
+                    $("#add_edit_database_vaccine_recommend_time").val(response.vaccine_recommend_time);
                     $("#add_edit_database_country").val(response.country);
                     $("#add_edit_database_country_vie").val(response.country_vie);
                     $("#add_edit_database_company").val(response.company);
@@ -342,8 +372,11 @@ function edit_database_medicine(id = null) {
                     $("#add_edit_database_price_dollar").val(response.price_dollar);
                     $("#add_edit_database_type").val(response.type);
                     $("#add_edit_database_class").val(response.medicine_class_id);
-
-
+                    $("#add_edit_database_tax").val(response.tax);
+                    console.log(response.red_invoice)
+                    if (response.red_invoice == 'Y') {
+                        $("#is_red_invoice").prop("checked", true);
+                    }
                     
 
                 } else {
@@ -364,6 +397,7 @@ function edit_database_medicine(id = null) {
 
 
 function save_database_medicine(id = null) {
+
     var id = $("#add_edit_database_id").val();
     if (id == null || id == '') {
         id = 0;
@@ -385,16 +419,23 @@ function save_database_medicine(id = null) {
     var unit_vie = $("#add_edit_database_unit_vie").val();
     var country = $("#add_edit_database_country").val();
     var country_vie = $("#add_edit_database_country_vie").val();
+    var vaccine_code = $("#add_edit_database_vaccine_code").val();
+    var vaccine_recommend_time = $("#add_edit_database_vaccine_recommend_time").val();
     var company = $("#add_edit_database_company").val();
     var name_display = $("#add_edit_database_name_display").val();
     var price_input = $("#add_edit_database_price_input").val();
     var multiple_level = $("#add_edit_database_multiple_level").val();
     var price = $("#add_edit_database_price_output").val();
+    var tax = $("#add_edit_database_tax").val();
     var price_dollar = $("#add_edit_database_price_dollar").val();
 
     var medicine_class = $("#add_edit_database_class").val();
     var type = $("#add_edit_database_type").val();
 
+    var red_invoice = $("#is_red_invoice").is(':checked');
+
+    if (red_invoice == true) red_invoice = 'Y'
+    else red_invoice = 'N'
 
 
     $.ajax({
@@ -409,6 +450,8 @@ function save_database_medicine(id = null) {
             'name_vie': name_vie,
             'ingredient': ingredient,
             'ingredient_vie': ingredient_vie,
+            'vaccine_code': vaccine_code,
+            'vaccine_recommend_time': vaccine_recommend_time,
             'unit': unit,
             'unit_vie': unit_vie,
             'country': country,
@@ -419,7 +462,8 @@ function save_database_medicine(id = null) {
             'multiple_level': multiple_level,
             'price': price,
             'price_dollar': price_dollar,
-
+            'tax': tax,
+            'red_invoice': red_invoice,
         },
         dataType: 'Json',
         success: function (response) {
@@ -441,7 +485,6 @@ function save_database_medicine(id = null) {
     //'inventory_count': medicine.inventory_count,
     
     
-
 }
 
 
@@ -493,8 +536,9 @@ function get_inentory_history(id = null,name=null) {
                     str += "<td>" + response.datas[i].changes + "</td>";
                 }
 
-                str +="<td>" + response.datas[i].type + "</td>" + 
-                    "<td>" + response.datas[i].memo + "</td></tr>"
+                str +=  "<td>" + response.datas[i].depart + "</td>" + 
+                        "<td>" + response.datas[i].type + "</td>" + 
+                        "<td>" + response.datas[i].memo + "</td></tr>"
 
                 $("#inventory_history_tbody").append(str);  
                 
@@ -668,7 +712,6 @@ function show_edit_database_add_medicine(id) {
         },
         dataType: 'Json',
         success: function (response) {
-            console.log(response.data)
             if (response.result == true) {
                 $('#add_medicine_database_id').val(response.data.id);
 
@@ -701,7 +744,6 @@ function disposal_edit_database_add_medicine(id) {
         },
         dataType: 'Json',
         success: function (response) {
-            console.log(response.data)
             if (response.result == true) {
                 $('#disposal_medicine_table_id').val(id);
 
@@ -734,7 +776,6 @@ function save_database_disposal_medicine() {
             },
             dataType: 'Json',
             success: function (response) {
-                console.log(response.data)
                 if (response.result == true) {
                     alert(gettext('deleted'));
 
@@ -770,12 +811,112 @@ function edit_database_add_medicine(id) {
 
 
 
+function list_database_medicine_class() {
+    list_database_medicine_class_get();
+    $('#list_class_menu').modal({ backdrop: 'static', keyboard: false });
+    $('#list_class_menu').modal('show');
+
+}
+
+function list_database_medicine_class_get() {
+    $("#class_menu_table > tbody").empty();
+    $.ajax({
+        type: 'POST',
+        url: '/pharmacy/list_database_medicine_class_get/',
+        data: {
+            'csrfmiddlewaretoken': $('#csrf').val(),
+        },
+        dataType: 'Json',
+        success: function (response) {
+            console.log(response)
+            for (var i = 0; i < response.datas.length; i++) {
+                var str = '<tr>' +
+                    '<td>' + response.datas[i].id + '</td>' +
+                    '<td>' + response.datas[i].name + '</td>' +
+                    '<td>' + response.datas[i].name_vie + '</td>' +
+                    '<td>' + "<a class='btn btn-default btn-xs' href='javascript: void (0);' onclick='add_edit_class_menu(" + response.datas[i].id + ")' > <i class='fa fa-lg fa-pencil'></i></a >" + '</td>' +
+                    '</tr>';
+
+                $("#class_menu_table > tbody").append(str);
+            }
+        },
+        error: function (request, status, error) {
+            console.log("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
+        },
+    });
+
+}
+
+
+function add_edit_class_menu(id = null) {
+    $("#class_selected").val('');
+    $("#class_name").val('');
+    $("#class_name_vie").val('');
+
+    if (id != null) {
+        $("#class_selected").val(id);
+
+        $.ajax({
+            type: 'POST',
+            url: '/pharmacy/add_edit_medicine_class_menu_get/',
+            data: {
+                'csrfmiddlewaretoken': $('#csrf').val(),
+                'id': id,
+            },
+            dataType: 'Json',
+            success: function (response) {
+
+                $("#class_name").val(response.name);
+                $("#class_name_vie").val(response.name_vie);
+            },
+            error: function (request, status, error) {
+                console.log("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
+            },
+        })
+    }
+
+    $('#add_edit_class_menu').modal({ backdrop: 'static', keyboard: false });
+    $('#add_edit_class_menu').modal('show');
+}
+
+function save_class() {
+
+    var id = $("#class_selected").val();
+    var class_name = $("#class_name").val();
+    var class_name_vie = $("#class_name_vie").val();
+
+    $.ajax({
+        type: 'POST',
+        url: '/pharmacy/add_edit_medicine_class_menu_save/',
+        data: {
+            'csrfmiddlewaretoken': $('#csrf').val(),
+            'id': id,
+            'class_name': class_name,
+            'class_name_vie': class_name_vie,
+        },
+        dataType: 'Json',
+        success: function (response) {
+
+            list_database_medicine_class_get();
+            $('#add_edit_class_menu').modal('hide');
+
+        },
+        error: function (request, status, error) {
+            console.log("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
+        },
+    })
+}
 
 
 
 
 
+function excel_download() {
 
+    var url = '/manage/medicine_inventory_excel?'
+
+    window.open(url);
+}
 
 
 
@@ -801,3 +942,4 @@ function worker_on(path) {
 
     }
 }
+

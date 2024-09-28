@@ -210,6 +210,7 @@ function test_database_search(page = null) {
                         "<td>" + response.datas[i]['parent_test'] + "</td>" +
                         "<td>" + /*response.datas[i]['unit'] +*/ "</td>" +
                         "<td>" + numberWithCommas(response.datas[i]['price']) + "</td>" +
+                        "<td>" + response.datas[i]['tax_rate'] + " %</td>" +
                         "<td>" +
                         "<a class='btn btn-default btn-xs' style='margin-right:10px;' href='javascript: void (0);' onclick='edit_database_test(" + response.datas[i]['id'] + ")' ><i class='fa fa-lg fa-pencil'></i></a>" +
                         "<a class='btn btn-danger btn-xs' href='javascript: void (0);' onclick='delete_database_precedure(" + response.datas[i]['id'] + ")' ><i class='fa fa-lg fa-trash'></i></a></tr> ";
@@ -287,6 +288,7 @@ function edit_database_test(id = null) {
                     $("#add_edit_database_price_dollar").val(response.price_dollar);
                     $("#add_edit_database_class").val(response.precedure_class_id);
                     $("#add_edit_database_parent_test").val(response.parent_test);
+                    $("#add_edit_database_tax").val(response.tax);
                     get_test_interval(id)
                 } else {
                     alert(gettext('Please Refresh this page.'));
@@ -471,7 +473,7 @@ function save_database_test(id = null) {
     }
     var price = $("#add_edit_database_price_output").val();
     var price_dollar = $("#add_edit_database_price_dollar").val();
-
+    var tax = $("#add_edit_database_tax").val();
     var test_class = $("#add_edit_database_class").val();
     var type = $("#add_edit_database_type").val();
     var parent_test = $("#add_edit_database_parent_test").val();
@@ -486,6 +488,7 @@ function save_database_test(id = null) {
             'type': type,
             'test_class': test_class,
             'name': name,
+            'tax': tax,
             'name_vie': name_vie,
             'price': price,
             'price_dollar': price_dollar,

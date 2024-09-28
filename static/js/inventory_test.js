@@ -24,6 +24,7 @@ $(function () {
     $('#inventory_history_date').daterangepicker({
         singleDatePicker: true,
         showDropdowns: true,
+        autoApply: true,
         locale: {
             format: 'YYYY-MM-DD'
         }
@@ -34,6 +35,7 @@ $(function () {
     $('#add_medicine_reg').daterangepicker({
         singleDatePicker: true,
         showDropdowns: true,
+        autoApply: true,
         locale: {
             format: 'YYYY-MM-DD'
         }
@@ -43,7 +45,7 @@ $(function () {
     //ADD , Edit 
 
 
-    ////Level ÀÚµ¿ °è»ê
+    ////Level ï¿½Úµï¿½ ï¿½ï¿½ï¿½
     function set_level_price_multi() {
         var price_input = $("#add_edit_database_price_input").val();
         var level = $('#add_edit_database_multiple_level option:selected').val();
@@ -200,24 +202,28 @@ function test_database_search(page = null) {
                 var str = "";
                 if (response.datas[i]) {
 
-                    str = "<tr style='cursor: pointer;'><td>" + response.datas[i]['code'] + "</td>" +
+                    str = "<tr style='cursor: pointer;'>" +
+                        "<td>" + response.datas[i]['id'] + "</td>" +
+                        "<td>" + response.datas[i]['code'] + "</td>" +
                         "<td title='" + response.datas[i]['class'] + "'>" + response.datas[i]['class'] + "</td>" +
                         "<td title='" + response.datas[i]['name'] + "'>" + response.datas[i]['name'] + "</td>" +
+                        "<td>" + response.datas[i]['parent_test'] + "</td>" +
                         "<td>" + /*response.datas[i]['unit'] +*/ "</td>" +
                         "<td>" + numberWithCommas(response.datas[i]['price']) + "</td>" +
+                        "<td>" + response.datas[i]['tax_rate'] + " %</td>" +
                         "<td>" +
                         "<a class='btn btn-default btn-xs' style='margin-right:10px;' href='javascript: void (0);' onclick='edit_database_test(" + response.datas[i]['id'] + ")' ><i class='fa fa-lg fa-pencil'></i></a>" +
                         "<a class='btn btn-danger btn-xs' href='javascript: void (0);' onclick='delete_database_precedure(" + response.datas[i]['id'] + ")' ><i class='fa fa-lg fa-trash'></i></a></tr> ";
 
 
                 } else {
-                    var str = "<tr><td></td><td></td><td></td><td></td><td></td><td></td></tr>";
+                    var str = "<tr><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>";
                 }
                 $('#inventory_database_table > tbody').append(str);
             }
 
 
-            //ÆäÀÌÂ¡
+            //ï¿½ï¿½ï¿½ï¿½Â¡
             $('#medicine_pagnation').html('');
             str = '';
             if (response.has_previous == true) {
@@ -261,8 +267,9 @@ function edit_database_test(id = null) {
     $("#add_edit_database_type option:first").prop("selected", true);
     $("#add_edit_database_multiple_level option:first").prop("selected", true);
 
-
+    $("#interval_div").hide();
     if (id != null) {
+        $("#interval_div").show();
         $("#add_edit_database_header").html(gettext('Edit Data'));
         $.ajax({
             type: 'POST',
@@ -274,14 +281,15 @@ function edit_database_test(id = null) {
             dataType: 'Json',
             success: function (response) {
                 if (response.result == true) {
-                    console.log(response);
                     $("#add_edit_database_id").val(response.id);
                     $("#add_edit_database_name").val(response.name);
                     $("#add_edit_database_name_vie").val(response.name_vie);
                     $("#add_edit_database_price_output").val(response.price);
                     $("#add_edit_database_price_dollar").val(response.price_dollar);
                     $("#add_edit_database_class").val(response.precedure_class_id);
-
+                    $("#add_edit_database_parent_test").val(response.parent_test);
+                    $("#add_edit_database_tax").val(response.tax);
+                    get_test_interval(id)
                 } else {
                     alert(gettext('Please Refresh this page.'));
                 }
@@ -294,10 +302,158 @@ function edit_database_test(id = null) {
     }
     $('#add_edit_database').modal({ backdrop: 'static', keyboard: false });
     $('#add_edit_database').modal('show');
+}
+
+function get_test_interval(test_id = null) {
+    if (test_id == null)
+        return;
+
+    $.ajax({
+        type: 'POST',
+        url: '/manage/test_get_interval_list/',
+        data: {
+            'csrfmiddlewaretoken': $('#csrf').val(),
+            'test_id': test_id,
+        },
+        dataType: 'Json',
+        success: function (response) {
+                $("#test_interval_table > tbody").empty();
+
+                for (var i = 0; i < response.datas.length; i++) {
+                    var str = '<tr>' +
+                        '<td>' + response.datas[i].name + '</td>' +
+                        '<td>' + response.datas[i].minimum + '</td>' +
+                        '<td>' + response.datas[i].sign + '</td>' +
+                        '<td>' + response.datas[i].maximum + '</td>' +
+                        '<td>' + response.datas[i].unit + '</td>' +
+                        '<td>' +
+                        "<a class='btn btn-default btn-xs' style='margin-right:10px;' href='javascript: void (0);' onclick='interval_modal(" + response.datas[i]['id'] + ")' ><i class='fa fa-lg fa-pencil'></i></a>" +
+                        "<a class='btn btn-danger btn-xs' href='javascript: void (0);' onclick='delete_interval(" + response.datas[i]['id'] + ")' ><i class='fa fa-lg fa-trash'></i></a>" +
+                        '</td>' +
+                        '</tr>';
+
+                    $("#test_interval_table > tbody").append(str);
+                }
+
+        },
+        error: function (request, status, error) {
+            console.log("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
+        },
+    })
+}
+
+function interval_modal(id = null) {
+    $("#interval_selected").val('');
+    $("#interval_remark").val('');
+    $("#interval_remark_vi").val('');
+    $("#interval_unit").val('');
+    $("#interval_unit_vi").val('');
+    $("#interval_minimum").val('');
+    $("#interval_maximum").val('');
+    $("#interval_sign").val('');
+
+    if (id != null) {
+        $.ajax({
+            type: 'POST',
+            url: '/manage/test_get_interval/',
+            data: {
+                'csrfmiddlewaretoken': $('#csrf').val(),
+                'id': id,
+            },
+            dataType: 'Json',
+            success: function (response) {
+                $("#interval_selected").val(response.id);
+                $("#interval_remark").val(response.name);
+                $("#interval_remark_vi").val(response.name_vie);
+                $("#interval_unit").val(response.unit);
+                $("#interval_unit_vi").val(response.unit_vie);
+                $("#interval_minimum").val(response.minimum);
+                $("#interval_maximum").val(response.maximum);
+                $("#interval_sign").val(response.sign);
+
+            },
+            error: function (request, status, error) {
+                console.log("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
+            },
+        })
+    }
+
+    $('#add_edit_interval').modal({ backdrop: 'static', keyboard: false });
+    $("#add_edit_interval").modal('show');
+}
+
+function save_interval() {
+
+    var selected_test = $("#add_edit_database_id").val();
+
+    var id = $("#interval_selected").val();
+    var remark = $("#interval_remark").val();
+    var remark_vi = $("#interval_remark_vi").val();
+    var unit = $("#interval_unit").val();
+    var unit_vi = $("#interval_unit_vi").val();
+    var minimum = $("#interval_minimum").val();
+    var maximum = $("#interval_maximum").val();
+    var sign = $("#interval_sign").val();
+
+    $.ajax({
+        type: 'POST',
+        url: '/manage/test_save_interval/',
+        data: {
+            'csrfmiddlewaretoken': $('#csrf').val(),
+
+            'selected_test': selected_test,
+            'id': id,
+            'remark': remark,
+            'remark_vi': remark_vi,
+            'unit': unit,
+            'unit_vi': unit_vi,
+            'minimum': minimum,
+            'maximum': maximum,
+            'sign': sign,
+        },
+        dataType: 'Json',
+        success: function (response) {
+
+            alert(gettext('Saved.'));
+            $("#add_edit_interval").modal('hide');
+            edit_database_test($("#add_edit_database_id").val());
+
+        },
+        error: function (request, status, error) {
+            console.log("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
+        },
+    })
 
 
 }
 
+function delete_interval(id = null) {
+    if (id == null) return;
+
+    if (confirm(gettext('Do you want to delete?'))) {
+
+        $.ajax({
+            type: 'POST',
+            url: '/manage/test_delete_interval/',
+            data: {
+                'csrfmiddlewaretoken': $('#csrf').val(),
+                'id': id,
+            },
+            dataType: 'Json',
+            success: function (response) {
+                alert(gettext('Deleted.'));
+                edit_database_test($("#add_edit_database_id").val());
+
+            },
+            error: function (request, status, error) {
+                console.log("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
+            },
+        })
+
+    }
+
+
+}
 
 function save_database_test(id = null) {
     var id = $("#add_edit_database_id").val();
@@ -317,10 +473,10 @@ function save_database_test(id = null) {
     }
     var price = $("#add_edit_database_price_output").val();
     var price_dollar = $("#add_edit_database_price_dollar").val();
-
+    var tax = $("#add_edit_database_tax").val();
     var test_class = $("#add_edit_database_class").val();
     var type = $("#add_edit_database_type").val();
-
+    var parent_test = $("#add_edit_database_parent_test").val();
 
 
     $.ajax({
@@ -332,10 +488,11 @@ function save_database_test(id = null) {
             'type': type,
             'test_class': test_class,
             'name': name,
+            'tax': tax,
             'name_vie': name_vie,
             'price': price,
             'price_dollar': price_dollar,
-
+            'parent_test': parent_test,
         },
         dataType: 'Json',
         success: function (response) {
@@ -428,4 +585,110 @@ function add_result_line() {
     $('html, body').scrollTop(document.body.scrollHeight)
 
     $('#test_result_div').scrollTop($('#test_result_div').prop('scrollHeight'));
+}
+
+function list_database_test_class() {
+    list_database_test_class_get();
+    $('#list_class_menu').modal({ backdrop: 'static', keyboard: false });
+    $('#list_class_menu').modal('show');
+
+}
+
+function list_database_test_class_get() {
+    $("#class_menu_table > tbody").empty();
+    $.ajax({
+        type: 'POST',
+        url: '/manage/list_database_test_class_get/',
+        data: {
+            'csrfmiddlewaretoken': $('#csrf').val(),
+        },
+        dataType: 'Json',
+        success: function (response) {
+            console.log(response)
+            for (var i = 0; i < response.datas.length; i++) {
+                var str = '<tr>' +
+                    '<td>' + response.datas[i].id + '</td>' +
+                    '<td>' + response.datas[i].name + '</td>' +
+                    '<td>' + response.datas[i].name_vie + '</td>' +
+                    '<td>' + "<a class='btn btn-default btn-xs' href='javascript: void (0);' onclick='add_edit_class_menu(" + response.datas[i].id + ")' > <i class='fa fa-lg fa-pencil'></i></a >" + '</td>' +
+                    '</tr>';
+
+                $("#class_menu_table > tbody").append(str);
+            }
+        },
+        error: function (request, status, error) {
+            console.log("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
+        },
+    });
+
+}
+
+
+function add_edit_class_menu(id = null) {
+
+    $("#class_selected").val('');
+    $("#class_name").val('');
+    $("#class_name_vie").val('');
+
+
+    if (id != null) {
+        $("#class_selected").val(id);
+
+        $.ajax({
+            type: 'POST',
+            url: '/manage/add_edit_test_class_menu_get/',
+            data: {
+                'csrfmiddlewaretoken': $('#csrf').val(),
+                'id': id,
+            },
+            dataType: 'Json',
+            success: function (response) {
+
+                $("#class_name").val(response.name);
+                $("#class_name_vie").val(response.name_vie);
+            },
+            error: function (request, status, error) {
+                console.log("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
+            },
+        })
+    }
+
+    $('#add_edit_class_menu').modal({ backdrop: 'static', keyboard: false });
+    $('#add_edit_class_menu').modal('show');
+}
+
+function save_class() {
+
+    var id = $("#class_selected").val();
+    var class_name = $("#class_name").val();
+    var class_name_vie = $("#class_name_vie").val();
+
+    $.ajax({
+        type: 'POST',
+        url: '/manage/add_edit_test_class_menu_save/',
+        data: {
+            'csrfmiddlewaretoken': $('#csrf').val(),
+            'id': id,
+            'class_name': class_name,
+            'class_name_vie': class_name_vie,
+        },
+        dataType: 'Json',
+        success: function (response) {
+
+            list_database_test_class_get();
+            $('#add_edit_class_menu').modal('hide');
+
+        },
+        error: function (request, status, error) {
+            console.log("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
+        },
+    })
+}
+
+
+function excel_download() {
+
+    var url = '/manage/test_inventory_excel?'
+
+    window.open(url);
 }

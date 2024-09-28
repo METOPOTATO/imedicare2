@@ -6,40 +6,283 @@ function numberWithCommas(x) {
     return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 }
 
+function checkTax(checkbox){
+    var checkboxes = document.getElementsByName('tax_invoice');
+    checkboxes.forEach((item) => {
+        if (item !== checkbox) {
+            console.log(item)
+            item.checked = false
+            console.log('here')
+        }
+    })
+}
+
+function checkInsurance(checkbox){
+    if (checkbox.checked == false){
+        $('#need_insurance_p').prop('checked', false);
+        // $('#need_insurance_c').attr('disabled', true);
+    }
+}
+function split(val) {
+    return val.split(/,\s*/);
+}
+function extractLast(term) {
+    return split(term).pop();
+}
+
+
+$(document).ready(function() {
+    $('th').click(function() {
+        console.log('asdasdasda')
+        var table = $(this).parents('table').eq(0)
+        var rows = table.find('tr:gt(0)').toArray().sort(comparer($(this).index()))
+        this.asc = !this.asc
+        if (!this.asc) {
+            rows = rows.reverse()
+        }
+        for (var i = 0; i < rows.length; i++) {
+            table.append(rows[i])
+        }
+    })
+
+    function comparer(index) {
+        return function(a, b) {
+            var valA = getCellValue(a, index), valB = getCellValue(b, index)
+            return $.isNumeric(valA) && $.isNumeric(valB) ? valA - valB : valA.localeCompare(valB)
+        }
+    }
+
+    function getCellValue(row, index) {
+        return $(row).children('td').eq(index).text()
+    }
+
+    if ($('#patient_nationality').val() != 'Other'){
+        $('#patient_nationality_etc').prop("disabled",true);
+    }
+    $('#patient_nationality').change(function(){
+        var patient_nationality = $('#patient_nationality').val()
+        if (patient_nationality != "Other"){
+            $('#patient_nationality_etc').prop("disabled",true);
+        }else{
+            $('#patient_nationality_etc').prop("disabled",false);
+        }
+    });
+
+    $('#new_memo_detail').on('keydown', function(e){ 
+        if(e.keyCode == 13)
+            {
+                create_memo_detail()
+            }
+        }
+    )
+
+    $('#lbl_name_kor').click(function(){
+        var name = $('#patient_name_kor').val()
+        $('#name_id').val(name)
+    })
+    $('#lbl_name_eng').click(function(){
+        var name = $('#patient_name_eng').val()
+        $('#name_id').val(name)
+    })
+    $('#lbl_phone').click(function(){
+        var name = $('#patient_phone').val()
+        $('#phone_id').val(name)
+    })
+    $('#lbl_dob').click(function(){
+        var name = $('#patient_date_of_birth').val()
+        $('#dob_id').val(name)
+    })
+    $('#lbl_email').click(function(){
+        var name = $('#patient_email').val()
+        $('#email_id').val(name)
+    })
+    $('#lbl_chart').click(function(){
+        var name = $('#patient_chart').val()
+        $('#chart_id').val(name)
+    })
+    $('#lbl_memo').click(function(){
+        var name = $('#memo').val()
+        $('#memo_id').val(name)
+    })
+
+    $('#clear_search').click(function(){
+        $('#name_id').val('');
+        $('#phone_id').val('')
+        $('#dob_id').val('')
+        $('#email_id').val('')
+        $('#chart_id').val('')
+        $('#memo_id').val('')
+        $('#memo_detail_id').val('')
+        $('#nation_id').val('')
+        $('#address_id').val('')
+        $('#tax_id').val('')
+    })
+
+    $("#search_nation")
+        .on("keydown", function (event) {
+            if (event.keyCode === $.ui.keyCode.TAB && $(this).autocomplete("instance").menu.active) {
+                event.preventDefault();
+            }
+        })
+        .autocomplete({
+            source: function (request, response) {
+                //$.getJSON("search.php", { term: extractLast(request.term) }, response);
+                $.ajax({
+                    type: 'POST',
+                    url: '/receptionist/get_nation/',
+                    data: {
+                        'csrfmiddlewaretoken': $('#csrf').val(),
+                        'string': request.term
+                    },
+                    dataType: 'Json',
+                    success: function (response1) {
+                        response(response1.datas);
+                    },
+                    error: function (request, status, error) {
+                        console.log("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
+                    },
+                })
+            },
+            search: function () {
+                // 최소 입력 길이를 마지막 항목으로 처리합니다.
+                var term = extractLast(this.value);
+                if (term.length < 2) {
+                    return false;
+                }
+            },
+
+            focus: function () {
+                return false;
+            },
+
+            select: function (event, ui) {
+                var terms = split(this.value);
+                // 현재 입력값 제거합니다.
+                terms.pop();
+                // 선택된 아이템을 추가합니다.
+                //terms.push(ui.item.value);
+                // 끝에 콤마와 공백을 추가합니다.
+                terms.push("");
+                this.value = terms.join("");
+
+                $("#txt_nation").val(ui.item.data)
+
+                $("#patient_nationality").val(ui.item.code);
+
+                return false;
+            },
+            open: function (event, ui) {
+                var $input = $(event.target),
+                    $results = $input.autocomplete("widget"),
+                    top = $results.position().top,
+                    height = $results.height(),
+                    inputHeight = $input.height(),
+                    newTop = top - height - inputHeight;
+
+                $results.css("top", newTop + "px");
+            }
+        });
+})
+
 
 $(function () {
     //init
 
 
     //Patient 
-    $('#patient_search_input').keydown(function (key) {
+    $('#memo_id').keydown(function (key) {
         if (key.keyCode == 13) {
-            patient_search();
+            patient_search2();
+        }
+    })    
+    $('#name_id').keydown(function (key) {
+        if (key.keyCode == 13) {
+            patient_search2();
+        }
+    })
+    $('#chart_id').keydown(function (key) {
+        if (key.keyCode == 13) {
+            patient_search2();
+        }
+    })
+    $('#dob_id').keydown(function (key) {
+        if (key.keyCode == 13) {
+            patient_search2();
+        }
+    })
+    $('#email_id').keydown(function (key) {
+        if (key.keyCode == 13) {
+            patient_search2();
+        }
+    })
+    $('#phone_id').keydown(function (key) {
+        if (key.keyCode == 13) {
+            patient_search2();
+        }
+    })
+    $('#nation_id').keydown(function (key) {
+        if (key.keyCode == 13) {
+            patient_search2();
+        }
+    })
+    $('#address_id').keydown(function (key) {
+        if (key.keyCode == 13) {
+            patient_search2();
+        }
+    })
+    $('#tax_id').keydown(function (key) {
+        if (key.keyCode == 13) {
+            patient_search2();
         }
     })
 
 
-    if ($("#patient_date_of_birth").length > 0) {
-        $("#patient_date_of_birth").daterangepicker({
-            singleDatePicker: true,
-            showDropdowns: true,
-            autoUpdateInput: false,
-            locale: {
-                format: 'YYYY-MM-DD',
-            },
-        });
-    }
-    //선택 시 
-    $('#patient_date_of_birth').on('apply.daterangepicker', function (ev, picker) {
-        var today = moment().format('YYYY[-]MM[-]DD');
-        if ($("#language").val() == 'vi') {
-            $(this).val(picker.startDate.format('DD/MM/YYYY'));
-        } else {
-            $(this).val(picker.startDate.format('YYYY-MM-DD'));
+    $('#patient_search_input').keydown(function (key) {
+        if (key.keyCode == 13) {
+            patient_search2();
         }
+    })
+
+    $('#memo_detail_id').keydown(function (key) {
+        if (key.keyCode == 13) {
+            patient_search2();
+        }
+    })
+    $('#re_patient_search_input').keydown(function (key) {
+        if (key.keyCode == 13) {
+            reservation_search();
+        }
+    })
+
+    $('#reception_patient_search_input').keydown(function (key) {
+        if (key.keyCode == 13) {
+            reception_search();
+        }
+    })
+
+    // if ($("#patient_date_of_birth").length > 0) {
+    //     $("#patient_date_of_birth").daterangepicker({
+    //         singleDatePicker: true,
+    //         showDropdowns: true,
+    //         autoUpdateInput: true,
+    //         locale: {
+    //             format: 'YYYY-MM-DD',
+    //         },
+    //     });
+    // }
+    $('#patient_date_of_birth').daterangepicker({
+        autoUpdateInput: false,
+        singleDatePicker: true,
+        showDropdowns: true,
+        drops: "down",
+        locale: {
+            format: 'YYYY-MM-DD',
+        },
+    });    
+
+    $('#patient_date_of_birth').on('apply.daterangepicker', function (ev, picker) {
+        $('#patient_date_of_birth').val(picker.startDate.format('YYYY-MM-DD'));
     });
-
-
 
 
     //Reception search
@@ -151,6 +394,9 @@ $(function () {
 
         reservation_search();
         reception_search();
+    } else {
+        reservation_search();
+        reception_search();
     }
 
 
@@ -219,6 +465,10 @@ $(function () {
                 $('#tax_invoice_number').val(response['number']);
                 $('#tax_invoice_company_name').val(response['company_name']);
                 $('#tax_invoice_address').val(response['address']);
+                $('#tax_invoice_address_p').val(response['address_p']);
+                $('#tax_invoice_employee').val(response['employee']);
+                $('#tax_invoice_contact').val(response['contact']);
+                $('#tax_invoice_memo').val(response['memo']);
 
             },
             error: function (request, status, error) {
@@ -245,6 +495,10 @@ $(function () {
                     'number': $('#tax_invoice_number').val(),
                     'company_name': $('#tax_invoice_company_name').val(),
                     'address': $('#tax_invoice_address').val(),
+                    'address_p': $('#tax_invoice_address_p').val(),
+                    'employee': $('#tax_invoice_employee').val(),
+                    'contact': $('#tax_invoice_contact').val(),
+                    'memo': $('#tax_invoice_memo').val(),
                 },
                 dataType: 'Json',
                 success: function (response) {
@@ -259,6 +513,43 @@ $(function () {
 
         })
 
+    })
+
+    $('#vital_sign_click').click(function () {
+        $.ajax({
+            type: 'POST',
+            url: '/doctor/get_vital/',
+            data: {
+                'csrfmiddlewaretoken': $('#csrf').val(),
+                'patient_id': $('#patient_id').val(),
+            },
+            dataType: 'Json',
+            success: function (response) {
+                $('#list_vital_sign > tbody ').empty();
+                var str = "";
+                for (var i = 0; i < response.datas.length; i++) {
+                        str += 
+                            "<tr>" +
+                            "<td>" + response.datas[i]['fulldate'] + "</td>" + 
+                            "<td>" + response.datas[i]['height'] + "</td>" + 
+                            "<td>" + response.datas[i]['weight'] + "</td>" + 
+                            "<td>" + response.datas[i]['blood_pressure'] + "</td>" + 
+                            "<td>" + response.datas[i]['blood_temperature'] + "</td>" + 
+                            "<td>" + response.datas[i]['pulse_rate'] + "</td>" + 
+                            "<td>" + response.datas[i]['breath'] + "</td>" + 
+                            "</td></tr>";
+    
+                    
+                }
+                $('#list_vital_sign > tbody').append(str);
+                // $('#list_vital_sign').modal('show')
+            },
+            error: function (request, status, error) {
+                console.log("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
+
+            },
+        })
+        $('#modal_vital').modal('show');
     })
 
 
@@ -763,7 +1054,8 @@ $("#reservation_table").click(function () {
 
 });
 
-function get_doctor(part, depart = null, selected= null) {
+
+function get_doctor(part, depart = null, selected = null) {
     var part_id = part.attr('id');
     var doctor;
     if (part_id == 'depart_select') {
@@ -806,7 +1098,7 @@ function get_doctor(part, depart = null, selected= null) {
                 } else {
                     doctor.append("<option value='" + response.datas[i] + "'>" + i + "</Option>");
                 }
-                
+
             }
 
         },
@@ -817,25 +1109,36 @@ function get_doctor(part, depart = null, selected= null) {
     })
 
 }
-
-
 function new_patient_option(on_off) {
     if (on_off) {
         $('#patient_tax_invoice_click').attr('disabled', false);
+        $('#vital_sign_click').attr('disabled', false);
         $('#patient_initial_report_click').attr('disabled', false);
         $('#need_medical_report').attr('disabled', false);
         $('#need_invoice').attr('disabled', false);
+        $('#need_invoice_p').attr('disabled', false);
         $('#need_insurance').attr('disabled', false);
+        $('#need_insurance_p').attr('disabled', false);
+        $('#wo_name').attr('disabled', false);
+        $('#wo_email').attr('disabled', false);
+        $('#wo_today').attr('disabled', false);
 
     } else {
         $('#patient_tax_invoice_click').attr('disabled', true);
+        $('#vital_sign_click').attr('disabled', true);
         $('#patient_initial_report_click').attr('disabled', true);
         $('#need_medical_report').attr('disabled', true);
         $('#need_medical_report').prop('checked', false);
         //$('#need_invoice').attr('disabled', true);
         $('#need_invoice').prop('checked', false);
+        $('#need_invoice_p').prop('checked', false);
         //$('#need_insurance').attr('disabled', true);
         $('#need_insurance').prop('checked', false);
+        $('#need_insurance_p').prop('checked', false);
+
+        $('#wo_name').prop('checked', false);
+        $('#wo_email').prop('checked', false);
+        $('#wo_today').prop('checked', false);
 
 
     }
@@ -885,12 +1188,16 @@ function earse_inputs() {
     })
     $('#depart_select option:eq(0)').prop("selected", true);
     $('#doctor_select option:eq(0)').prop("selected", true);
-    $('#patient_nationality option:eq(0)').prop("selected", true);
+    // $('#patient_nationality option:eq(0)').prop("selected", true);
     $('#patient_gender option:eq(0)').prop("selected", true);
     $('#patient_mark option:eq(0)').prop("selected", true);
+    $('#patient_funnel option:eq(0)').prop("selected", true);
 
     $('input:radio[name=gender]').prop('checked', false);
-    
+
+
+    $("#is_vaccine").prop("checked", false);
+
 }
 
 function set_cancel() {
@@ -930,6 +1237,56 @@ function patient_check_required() {
         $('#patient_email'),
 
     ]
+    var phone = $('#patient_phone').val();
+    var NumberRegex = /^[0]*(\d{9})*\s*$/;
+
+    var nation =  $('#patient_nationality').val();
+    console.log(nation)
+    if(nation == 'Vietnam'){
+        if(phone.length == 10){
+            if(NumberRegex.test(phone)){
+            //do whatever you want to
+            }else{
+                alert('Invalid phone number')
+                return false;
+            }
+        }else if(phone.length > 10){
+            alert('Invalid phone number')
+            return false;
+        }else if(phone.length < 10){
+            if(phone != 'na' && phone != 'NA' ){
+                alert('Invalid phone number')
+                return false;
+            }              
+        } 
+    }
+    else if(nation == 'Korea'){
+        NumberRegex2 = /^[0]*(\d{10})*\s*$/;
+        if(phone.length == 10 || phone.length == 11){
+            if(NumberRegex.test(phone) || NumberRegex2.test(phone)){
+            //do whatever you want to
+            }else{
+                alert('Invalid phone number')
+                return false;
+            }
+        }else if(phone.length > 11){
+            alert('Invalid phone number')
+            return false;
+        }else if(phone.length < 10){
+            if(phone != 'na' && phone != 'NA' ){
+                alert('Invalid phone number')
+                return false;
+            }              
+        } 
+    }
+    
+    var taxCode = $('#tax_invoice_number').val();
+    var regex = /^[0-9-]+$/;
+    
+    if (taxCode != '' && regex.test(taxCode) == false){
+        alert(gettext("Tax code only allow digit or -"));
+        return false;
+    }
 
     if ($('#patient_gender').val() == '' ){
         alert(gettext("'Gender' is necessary."));
@@ -970,21 +1327,44 @@ function save_patient() {
         date_of_birth = moment(date_of_birth, 'DD/MM/YYYY').format('YYYY-MM-DD');
     }
     var gender = $('#patient_gender').val();
+
     var nationality = $("#patient_nationality").val();
-    //var gender = $('input[name="gender"]:checked').val();
+    
+    if (nationality == "Other"){
+        nationality = $('#patient_nationality_etc').val();
+    }
+
     var address = $('#patient_address').val();
+    var passport = $('#patient_passport').val();
     var phone = $('#patient_phone').val();
     var email = $('#patient_email').val();
-    var memo = $('#patient_memo').val();
+    var memo = $('#memo').val();
     var marking = $("#patient_mark").val();
+    var funnel = $("#patient_funnel").val();
+    var funnel_etc = $("#patient_funnel_etc").val();
 
     var past_history = $('#history_past').val();
     var family_history = $('#history_family').val();
 
+
+    //var need_medical_report = $('#need_medical_report').prop("checked");
+    var need_invoice = $("#need_invoice").prop("checked");
+    var need_invoice_p = $("#need_invoice_p").prop("checked");
+    var need_insurance = $("#need_insurance").prop("checked");
+    var need_insurance_p = $("#need_insurance_p").prop("checked");
+    var wo_name = $("#wo_name").prop("checked");
+    var wo_email = $("#wo_email").prop("checked");
+    var wo_today = $("#wo_today").prop("checked");
+
     var tax_invoice_number = $('#tax_invoice_number').val();
     var tax_invoice_company_name = $('#tax_invoice_company_name').val();
     var tax_invoice_address = $('#tax_invoice_address').val();
+    var tax_invoice_address_p = $('#tax_invoice_address_p').val();
+    var tax_invoice_contact = $('#tax_invoice_contact').val();
+    var tax_invoice_employee = $('#tax_invoice_employee').val();
+    var tax_invoice_memo = $('#tax_invoice_memo').val();
 
+// 77777
     var patient_table_vital_ht = $('#patient_table_vital_ht').val();
     var patient_table_vital_wt = $('#patient_table_vital_wt').val();
     var patient_table_vital_bmi = $('#patient_table_vital_bmi').val();
@@ -994,6 +1374,7 @@ function save_patient() {
     var patient_table_vital_breath = $('#patient_table_vital_breath').val();
 
 
+    var rec_id = $('#rec_id').val();
     $.ajax({
         type: 'POST',
         url: '/receptionist/save_patient/',
@@ -1008,15 +1389,32 @@ function save_patient() {
             'nationality': nationality,
             'gender': gender,
             'address': address,
+            'passport': passport,
             'past_history': past_history,
             'family_history': family_history,
             'email': email,
             'memo': memo,
             'marking': marking,
+            'funnel': funnel,
+            'funnel_etc': funnel_etc,
 
             'tax_invoice_number': tax_invoice_number,
             'tax_invoice_company_name': tax_invoice_company_name,
             'tax_invoice_address': tax_invoice_address,
+            'tax_invoice_address_p': tax_invoice_address_p,
+            'tax_invoice_contact': tax_invoice_contact,
+            'tax_invoice_employee': tax_invoice_employee,
+            'tax_invoice_memo': tax_invoice_memo,
+
+
+            'need_invoice': need_invoice,
+            'need_invoice_p': need_invoice_p,
+            'need_insurance': need_insurance,
+            'need_insurance_p': need_insurance_p,
+
+            'wo_name': wo_name,
+            'wo_email': wo_email,
+            'wo_today': wo_today,
 
 
             'patient_table_vital_ht': patient_table_vital_ht,
@@ -1026,6 +1424,8 @@ function save_patient() {
             'patient_table_vital_bt ': patient_table_vital_bt,
             'patient_table_vital_pr': patient_table_vital_pr,
             'patient_table_vital_breath': patient_table_vital_breath,
+            'tax_change': true,
+            'rec_id': rec_id
 
         },
         dataType: 'Json',
@@ -1049,12 +1449,14 @@ function save_patient() {
                     "<td>" + response.name_kor + '<br/>' + response.name_eng + "</td>" +
                     "<td>" + response.date_of_birth + ' (' + response.gender + '/' + response.age + ")</td>" +
                     "<td>" + response.phonenumber + "</td>" +
+                    "<td>" + response.depart + "</td>" +
                     "<td>" + response.address + "</td></tr>";
 
                 $('#Patient_Search').append(str);
             } else {
                 alert(gettext('Failed.'));
             }
+            $('#memo_detail_modal').modal('hide');
 
         },
         error: function (request, status, error) {
@@ -1103,12 +1505,18 @@ function save_recept() {
     }
     var gender = $('#patient_gender').val();
     var nationality = $("#patient_nationality").val();
+    if (nationality == "Other"){
+        nationality = $('#patient_nationality_etc').val();
+    }
     //var gender = $('input[name="gender"]:checked').val();
     var address = $('#patient_address').val();
+    var passport = $('#patient_passport').val();
     var phone = $('#patient_phone').val();
     var email = $('#patient_email').val();
-    var memo = $('#patient_memo').val();
+    var memo = $('#memo').val();
     var marking = $('#patient_mark').val();
+    var funnel = $('#patient_funnel').val();
+    var funnel_etc = $('#patient_funnel_etc').val();
 
     var past_history = $('#history_past').val();
     var family_history = $('#history_family').val();
@@ -1129,10 +1537,22 @@ function save_recept() {
     var tax_invoice_number = $('#tax_invoice_number').val();
     var tax_invoice_company_name = $('#tax_invoice_company_name').val();
     var tax_invoice_address = $('#tax_invoice_address').val();
+    var tax_invoice_address_p = $('#tax_invoice_address_p').val();
+    var tax_invoice_contact = $('#tax_invoice_contact').val();
+    var tax_invoice_employee = $('#tax_invoice_employee').val();
+    var tax_invoice_memo = $('#tax_invoice_memo').val();
 
     var need_medical_report = $('#need_medical_report').prop("checked");
     var need_invoice = $("#need_invoice").prop("checked");
+    var need_invoice_p = $("#need_invoice_p").prop("checked");
+
+    var wo_name = $("#wo_name").prop("checked");
+    var wo_email = $("#wo_email").prop("checked");
+    var wo_today = $("#wo_today").prop("checked");
+
     var need_insurance = $("#need_insurance").prop("checked");
+    var need_insurance_p = $("#need_insurance_p").prop("checked");
+    var is_vaccine = $("#is_vaccine").prop("checked");
 
     var patient_table_vital_ht = $('#patient_table_vital_ht').val();
     var patient_table_vital_wt = $('#patient_table_vital_wt').val();
@@ -1141,7 +1561,6 @@ function save_recept() {
     var patient_table_vital_bt = $('#patient_table_vital_bt').val();
     var patient_table_vital_pr = $('#patient_table_vital_pr').val();
     var patient_table_vital_breath = $('#patient_table_vital_breath').val();
-
 
     $.ajax({
         type: 'POST',
@@ -1156,6 +1575,7 @@ function save_recept() {
             'phone': phone,
             'gender': gender,
             'address': address,
+            'passport': passport,
             'past_history': past_history,
             'family_history': family_history,
             'depart': depart,
@@ -1165,14 +1585,26 @@ function save_recept() {
             'email': email,
             'memo':memo,
             'marking': marking,
+            'funnel': funnel,
+            'funnel_etc': funnel_etc,
 
             'tax_invoice_number': tax_invoice_number,
             'tax_invoice_company_name': tax_invoice_company_name,
             'tax_invoice_address': tax_invoice_address,
+            'tax_invoice_address_p': tax_invoice_address_p,
+            'tax_invoice_contact': tax_invoice_contact,
+            'tax_invoice_employee': tax_invoice_employee,
+            'tax_invoice_memo': tax_invoice_memo,
 
             'need_medical_report': need_medical_report,
             'need_invoice': need_invoice,
+            'need_invoice_p': need_invoice_p,
+            'wo_name': wo_name,
+            'wo_email': wo_email,
+            'wo_today': wo_today,
             'need_insurance': need_insurance,
+            'need_insurance_p': need_insurance_p,
+            'is_vaccine': is_vaccine,
 
             'patient_table_vital_ht': patient_table_vital_ht,
             'patient_table_vital_wt': patient_table_vital_wt,
@@ -1181,6 +1613,7 @@ function save_recept() {
             'patient_table_vital_bt': patient_table_vital_bt,
             'patient_table_vital_pr': patient_table_vital_pr,
             'patient_table_vital_breath': patient_table_vital_breath,
+            'tax_change': true
         },
         dataType: 'Json',
         success: function (response) {
@@ -1204,6 +1637,7 @@ function save_recept() {
                     "<td>" + response.name_kor + ' / ' + response.name_eng + "</td>" +
                     "<td>" + response.date_of_birth + ' (' + response.gender + '/' + response.age + ")</td>" +
                     "<td>" + response.phonenumber + "</td>" +
+                    "<td>" + response.depart + "</td>" +
                     "<td>" + response.address + "</td></tr>";
 
                 $('#Patient_Search').append(str);
@@ -1213,7 +1647,7 @@ function save_recept() {
                 alert(gettext('failed to recepted.'));
             }
 
-
+            $('#memo_detail_modal').modal('hide');
         },
         error: function (request, status, error) {
             console.log("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
@@ -1223,6 +1657,7 @@ function save_recept() {
 }
 
 function set_patient_data(patient_id) {
+
     $.ajax({
         type: 'POST',
         url: '/receptionist/set_patient_data/',
@@ -1244,22 +1679,77 @@ function set_patient_data(patient_id) {
             }
             
             $('#patient_address').val(response.address);
+            $('#patient_passport').val(response.passport);
             $('#patient_phone').val(response.phone);
             $("#patient_gender").val(response.gender);
+            
             $('#patient_nationality').val(response.nationality);
+            $('#txt_nation').val(response.txt_nation);
+            // $('#txt_nation').val(response.txt_nationality);
+            // if(response.nationality == "Korea" || response.nationality == "Vietnam"){
+            //     $('#patient_nationality').val(response.nationality);
+            //     $('#patient_nationality_etc').val('');
+            // }
+            // else{
+            //     $('#patient_nationality_etc').val(response.nationality);
+            //     $('#patient_nationality').val(response.nationality);
+            // }
+           
             $('#patient_email').val(response.email);
-            $('#patient_memo').val(response.memo);
+            // $('#reception_chief_complaint}').val(response.chief_complaint);
+            $('#memo').val(response.memo);
             $("#patient_mark").val(response.marking);
+            $("#patient_funnel").val(response.funnel);
+            $("#patient_funnel_etc").val(response.funnel_etc);
             
             $('#history_past').val(response.history_past);
             $('#history_family').val(response.history_family);
 
             $('input:radio[name=gender]').filter('[value=' + response.gender + ']').prop('checked', true);  
 
-            //tax invoice
+            //tax invoice 6666
             $('#tax_invoice_number').val(response.tax_invoice_number);
             $('#tax_invoice_company_name').val(response.tax_invoice_company_name);
             $('#tax_invoice_address').val(response.tax_invoice_address);
+            $('#tax_invoice_address_p').val(response.tax_invoice_address_p);
+            $('#tax_invoice_contact').val(response.tax_invoice_contact);
+            $('#tax_invoice_employee').val(response.tax_invoice_employee);
+            $('#tax_invoice_memo').val(response.tax_invoice_memo);
+
+            //prop('checked', false)
+            $('#need_invoice').prop('checked', false)
+            $('#need_invoice_p').prop('checked', false)
+
+            $('#wo_name').prop('checked', false)
+            $('#wo_email').prop('checked', false)
+            $('#wo_today').prop('checked', false)
+            
+            $('#need_insurance').prop('checked', false)
+            $('#need_insurance_p').prop('checked', false)
+
+            if (response.invoice) {
+                $('#need_invoice').prop('checked', true)
+            }
+            if (response.invoice_p) {
+                $('#need_invoice_p').prop('checked', true)
+            }
+            if (response.insurance) {
+                $('#need_insurance').prop('checked', true)
+            }
+            if (response.insurance_p) {
+                $('#need_insurance_p').prop('checked', true)
+            }
+
+            if (response.wo_name) {
+                $('#wo_name').prop('checked', true)
+            }
+            if (response.wo_email) {
+                $('#wo_email').prop('checked', true)
+            }
+            if (response.wo_today) {
+                $('#wo_today').prop('checked', true)
+            }
+            // $('#chief_complaint').val(response.chief_complaint);
         },
         error: function (request, status, error) {
             console.log("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
@@ -1276,12 +1766,12 @@ function patient_search(data) {
 
     var category = $('#patient_search_select option:selected').val();
     var string = $('#patient_search_input').val();
-
-    if (string == null || string == '') {
-        alert(gettext('Input search string.'));
-        return;
-    }
-
+    var string2 = $('#patient_search_input2').val();
+    // if (string == null || string == '') {
+    //     alert(gettext('Input search string.'));
+    //     return;
+    // }
+    console.log(string2)
     $.ajax({
         type: 'POST',
         url: '/receptionist/patient_search/',
@@ -1289,6 +1779,80 @@ function patient_search(data) {
             'csrfmiddlewaretoken': $('#csrf').val(),
             'category': category,
             'string': string,
+            'memo_string': string2,
+        },
+        dataType: 'Json',
+        success: function (response) {
+            $('#Patient_Search > tbody ').empty();
+            if (response.datas.length == 0) {
+                $('#Patient_Search').append("<tr><td colspan='8'>" + gettext('No Result !!') + "</td></tr>");
+            } else {
+                for (var i in response.datas) {
+                    var str = "<tr style='cursor:pointer;' onclick='set_patient_data(" +
+                        parseInt(response.datas[i]['id']) +
+                    ")'><td>" + (parseInt(i) + 1) + "</td>";
+
+                    if (response.datas[i]['has_unpaid']) {
+                        str += "<td style=color:rgb(228,97,131);>";
+                    } else {
+                        str += "<td>";
+                    }
+
+                    str += response.datas[i]['chart'] + "</td>" +
+                        "<td>" + response.datas[i]['name_kor'] + '<br />' + response.datas[i]['name_eng'] + "</td>" +
+                        "<td>";
+                    if ($("#language").val() == 'vi') {
+                        str += moment(response.datas[i]['date_of_birth'], 'YYYY-MM-DD').format('DD/MM/YYYY');
+                    } else {
+                        str += response.datas[i]['date_of_birth'];
+                    }
+                     str += ' (' + response.datas[i]['gender'] + '/' + response.datas[i]['age'] + ")</td>" +
+                        "<td>" + response.datas[i]['phonenumber'] + "</td>" +
+                        "<td>" + response.datas[i]['depart'] + "</td>" +
+                        "<td>" + response.datas[i]['last_visit'] + "</td></tr>";
+                        //"<td><a class='btn btn-default btn-xs' href='javascript: void (0);' onclick='delete_database_precedure(" + response.datas[i]['id'] + ")' ><i class='fa fa-lg fa-history'></i></a></td></tr>";
+
+                    $('#Patient_Search').append(str);
+                }
+            }
+        },
+        error: function (request, status, error) {
+            console.log("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
+
+        },
+    })
+
+}
+
+function patient_search2(data) {
+    //window.location.href = 'reception/' + data;
+
+
+    var memo = $('#memo_id').val();
+    var name = $('#name_id').val();
+    var chart = $('#chart_id').val();
+    var email = $('#email_id').val();
+    var phone = $('#phone_id').val();
+    var dob = $('#dob_id').val();
+    var memo_detail = $('#memo_detail_id').val();
+    var nation = $('#nation_id').val();
+    var address = $('#address_id').val();
+    var tax = $('#tax_id').val();
+    $.ajax({
+        type: 'POST',
+        url: '/receptionist/patient_search2/',
+        data: {
+            'csrfmiddlewaretoken': $('#csrf').val(),
+            'memo': memo,
+            'name': name,
+            'chart': chart,
+            'email': email,
+            'phone': phone,
+            'dob': dob,
+            'memo_detail':memo_detail,
+            'nation': nation,
+            'address': address,
+            'tax': tax
         },
         dataType: 'Json',
         success: function (response) {
@@ -1400,13 +1964,11 @@ function reception_search() {
 
     date_start = $('#reception_waiting_date_start').val().trim();
     date_end = $('#reception_waiting_date_end').val().trim();
-    console.log(date_end)
+    patient_name = $('#reception_patient_search_input').val().trim();
     if ($("#language").val() == 'vi') {
         date_start = moment(date_start, 'DD/MM/YYYY').format('YYYY-MM-DD');
         date_end = moment(date_end, 'DD/MM/YYYY').format('YYYY-MM-DD');
     }
-    console.log(date_start)
-    console.log(date_end)
 
 
 
@@ -1422,6 +1984,7 @@ function reception_search() {
             'date_end': date_end,
             'depart': depart,
             'doctor': doctor,
+            'patient_name':patient_name
         },
         dataType: 'Json',
         success: function (response) {
@@ -1430,14 +1993,33 @@ function reception_search() {
                 $('#Rectption_Status').append("<tr><td colspan='9'>" + gettext('No Result !!') + "</td></tr>");
             } else {
                 for (var i in response.datas) {
-                    var str = "<tr><td>" + (parseInt(i) + 1) + "</td>";
+                    // $('#status').val(response.datas[i]['status']);
+                    if (response.datas[i]['status'] == 'under_treat')
+                        tr_class = "class ='success'"
+                    else if (response.datas[i]['status'] == 'hold')
+                        tr_class = "class ='warning'"
+                    else if (response.datas[i]['status'] == 'done')
+                        tr_class = "class ='danger'"
+                    else {
+                        tr_class = "class =''"
+                        is_new = true;
+                    }
+
+                    var str = "<tr " + tr_class + " onclick='set_patient_data(" + response.datas[i]['patient_id'] + ")'" + "><td>" + (parseInt(i) + 1) + "</td>";
 
                         if (response.datas[i]['has_unpaid']) {
                             str += "<td style=color:rgb(228,97,131);>";
                         } else {
                             str += "<td>";
                         }
-                    str += response.datas[i]['chart'] + "</td>" +
+                    str += response.datas[i]['chart'];
+                    if (response.datas[i]['is_vaccine'] == true) {
+                        str += "<br/><label class='label label-success'>VACCINE<label>"
+                    }
+                    if (response.datas[i]['is_ksk'] == true) {
+                        str += "<br/><label class='label label-danger'>KSK<label>"
+                    }
+                    str += "</td>" +
                         "<td>" + response.datas[i]['name_kor'] + "<br/>" + response.datas[i]['name_eng'] + "</td>" +
                         "<td>";
                     if ($("#language").val() == 'vi') {
@@ -1449,7 +2031,7 @@ function reception_search() {
                     str += ' (' + response.datas[i]['gender'] + '/' + response.datas[i]['age'] + ")</td>" +
                         "<td>" + response.datas[i]['depart'] + "</td>" +
                         "<td>" + response.datas[i]['doctor'] + "</td>" +
-                        "<td>" + response.datas[i]['time'] + "</td>" +
+                        "<td>" + response.datas[i]['date'] +  "<br/>" +  response.datas[i]['time'] + "</td>" +
                         "<td> " + response.datas[i]['is_new'] + "</td>" +
                         "<td>" +
                         "<input type='button' class='btn btn-default' value='Edit' onclick='reception_edit(" + response.datas[i]['id'] + ")' /></td>";
@@ -1532,14 +2114,19 @@ function reservation_search(Today = false) {
     var date, depart, doctor, status;
 
     //date = today = moment().format('YYYY[-]MM[-]DD');
-    date_start = $('#reception_reservation_date_start').val();
-    date_end = $('#reception_reservation_date_end').val();
+    var date_start = $('#reception_reservation_date_start').val();
+    var date_end = $('#reception_reservation_date_end').val();
+
+
     if ($("#language").val() == 'vi') {
         date_start = moment(date_start, 'DD/MM/YYYY').format('YYYY-MM-DD');
         date_end = moment(date_end, 'DD/MM/YYYY').format('YYYY-MM-DD');
     }
+
     depart = $('#reservation_depart_select option:selected').val();
     doctor = $('#reservation_doctor_select option:selected').val();
+    var string = $('#re_patient_search_input').val();
+
 
     $.ajax({
         type: 'POST',
@@ -1551,6 +2138,7 @@ function reservation_search(Today = false) {
             'depart': depart,
             'doctor': doctor,
             'status': status,
+            'string': string,
         },
         dataType: 'Json',
         success: function (response) {
@@ -1566,8 +2154,17 @@ function reservation_search(Today = false) {
                         } else {
                             str += "<td>";
                     }
-                    console.log(response.datas[i])
-                    str += response.datas[i]['chart'] + "</td>" +
+                    var str = "<tr style='cursor:pointer;' onclick='set_reservation_data(" +
+                        parseInt(response.datas[i]['id']) +
+                    ")'><td>" + (parseInt(i) + 1);                    
+                    // str += response.datas[i]['id'] 
+                    str += "</td>" + 
+                        "<td>" + response.datas[i]['chart'] + "</td>";                   
+                    // str += response.datas[i]['chart'] 
+                    if (response.datas[i]['division'] == 'VACCIN') {
+                        str += "<br/><label class='label label-success'>VACCINE<label>"
+                    }
+                    str += "</td>" + 
                         "<td>" + response.datas[i]['name'] + "</td>" +
                         "<td>";
                     if ($("#language").val() == 'vi') {
@@ -1575,10 +2172,9 @@ function reservation_search(Today = false) {
                     } else {
                         str += response.datas[i]['date_of_birth'];
                     }
-                     str +="</td>" +
+                    str += "</td>" +
                         "<td>" + response.datas[i]['phone'] + "</td>" +
-                        "<td>" + response.datas[i]['depart'] + "</td>" +
-                        "<td>" + response.datas[i]['doctor'] + "</td>";
+                        "<td>" + response.datas[i]['depart'] + "<br/>" + response.datas[i]['doctor'] + "</td>";
                     if ($("#language").val() == 'vi') {
                         str += "<td>" + response.datas[i]['time'] + " " +
                             moment(response.datas[i]['date'], 'YYYY-MM-DD').format('DD/MM/YYYY') + "</td>";
@@ -1586,7 +2182,9 @@ function reservation_search(Today = false) {
                         str += "<td>" + response.datas[i]['date'] + ' ' +
                             response.datas[i]['time'] + "</td>";
                     }
-                        str +="</tr>"
+
+                    str += "<td>" + response.datas[i]['memo'] + "</td>"
+                    str += "</tr>";
 
                     $('#Reservation_Status').append(str);
                 }
@@ -1628,6 +2226,15 @@ function edit_reception_save() {
     chief_complaint = $('#edit_reception_chief_complaint').val();
     medical_report = $('#reception_edit_need_medical_report').is(':checked');
 
+    let patient_table_vital_ht = $('#edit_reception_vital_ht').val();
+    let patient_table_vital_wt = $('#edit_reception_vital_wt').val();
+    let patient_table_vital_bp = $('#edit_reception_vital_bp').val();
+    let patient_table_vital_bt = $('#edit_reception_vital_bt').val();
+    let patient_table_vital_pr = $('#edit_reception_vital_pr').val();
+    let patient_table_vital_breath = $('#edit_reception_vital_breath').val();
+
+    console.log("patient_table_vital_bt", patient_table_vital_bt)
+    // #66666
     if (depart == '') {
         alert(gettext('Select Depart.'));
         return;
@@ -1647,6 +2254,15 @@ function edit_reception_save() {
             'doctor': doctor,
             'chief_complaint': chief_complaint,
             'medical_report': medical_report,
+
+            
+            'patient_table_vital_ht': patient_table_vital_ht,
+            'patient_table_vital_wt': patient_table_vital_wt,
+    
+            'patient_table_vital_bp': patient_table_vital_bp,
+            'patient_table_vital_bt': patient_table_vital_bt,
+            'patient_table_vital_pr': patient_table_vital_pr,
+            'patient_table_vital_breath': patient_table_vital_breath,
         },
         dataType: 'Json',
         success: function (response) {
@@ -1688,7 +2304,102 @@ function edit_reception_del() {
 
 }
 
+function set_reservation_data(reservation_id) {
 
+    $.ajax({
+        type: 'POST',
+        url: '/receptionist/reservation_info/',
+        data: {
+            'csrfmiddlewaretoken': $('#csrf').val(),
+            'reservation_id': reservation_id,
+        },
+        dataType: 'Json',
+        success: function (response) {
+            $('#patient_id').val(response.patient_id);
+            $('#patient_chart').val(response.patient_chart);
+            $('#patient_name_kor').val(response.patient_name_kor);
+            $('#patient_name_eng').val(response.patient_name_eng);
+
+            if ($("#language").val() == 'vi') {
+                $('#patient_date_of_birth').val( moment(response.reservation_date_of_birth, 'YYYY-MM-DD').format('DD/MM/YYYY') );
+            } else {
+                $('#patient_date_of_birth').val(response.reservation_date_of_birth);
+            }
+            $('#patient_address').val(response.patient_address);
+            $('#patient_phone').val(response.reservation_phone);
+            $("#patient_gender").val(response.patient_gender);
+            $('#patient_nationality').val(response.patient_nationality);
+            $('#txt_nation').val(response.txt_nation);
+            // if(response.patient_nationality == "Korea" || response.patient_nationality == "Vietnam"){
+            //     $('#patient_nationality').val(response.patient_nationality);
+            //     $('#patient_nationality_etc').val('');
+            // }
+            // else{
+            //     $('#patient_nationality_etc').val(response.patient_nationality);
+            //     $('#patient_nationality').val(response.patient_nationality);
+            // }
+            $('#patient_email').val(response.patient_email);
+            $('#patient_passport').val(response.patient_passport);
+            $('#memo').val(response.patient_memo);
+            $("#patient_mark").val(response.marking);
+            $("#patient_funnel").val(response.funnel);
+            $("#patient_funnel_etc").val(response.funnel_etc);
+            
+            $('#history_past').val(response.history_past);
+            $('#history_family').val(response.history_family);
+            $('#chief_complaint').val(response.reservation_memo);
+            $('input:radio[name=gender]').filter('[value=' + response.gender + ']').prop('checked', true);  
+
+            //tax invoice
+            $('#tax_invoice_number').val(response.tax_invoice_number);
+            $('#tax_invoice_company_name').val(response.tax_invoice_company_name);
+            $('#tax_invoice_address').val(response.tax_invoice_address);
+            $('#tax_invoice_address_p').val(response.tax_invoice_address_p);
+            $('#tax_invoice_contact').val(response.tax_invoice_contact);
+            $('#tax_invoice_employee').val(response.tax_invoice_employee);
+            $('#tax_invoice_memo').val(response.tax_invoice_memo);
+
+            //prop('checked', false)
+            $('#need_invoice').prop('checked', false)
+            $('#need_insurance').prop('checked', false)
+            $('#need_insurance_p').prop('checked', false)
+            $('#need_invoice_p').prop('checked', false)
+            $('#wo_name').prop('checked', false)
+            $('#wo_email').prop('checked', false)
+            $('#wo_today').prop('checked', false)
+
+            if (response.need_invoice) {
+                $('#need_invoice').prop('checked', true)
+            }
+            if (response.need_invoice_p) {
+                $('#need_invoice_p').prop('checked', true)
+            }
+            if (response.need_insurance) {
+                $('#need_insurance').prop('checked', true)
+            }
+            if (response.need_insurance_p) {
+                $('#need_insurance_p').prop('checked', true)
+            }
+            if (response.wo_name) {
+                $('#wo_name').prop('checked', true)
+            }
+            if (response.wo_email) {
+                $('#wo_email').prop('checked', true)
+            }
+            if (response.wo_today) {
+                $('#wo_today').prop('checked', true)
+            }
+            $('#depart_select').val(response.reservation_depart);
+            get_doctor($("#depart_select"),null, response.reservation_doctor);
+        },
+        error: function (request, status, error) {
+            console.log("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
+
+        },
+    })
+
+    new_patient_option(true);
+}
 
 
 
@@ -1960,8 +2671,6 @@ function set_package_to_patient(id) {
 function patient_package_history_modal(id = null) {
     if (id == null) { return;}
 
-    console.log(id)
-
     $.ajax({
         type: 'POST',
         url: '/receptionist/patient_package_history_modal/',
@@ -1997,3 +2706,562 @@ function patient_package_history_modal(id = null) {
 
 
 }
+
+
+
+function vaccine_img_kor() {
+    window.open('/static/img/vaccine_kor.jpg', 'Vaccine Kor', 'height = ' + screen.height + ', width = ' + screen.width + 'fullscreen = yes')
+}
+function vaccine_img_vie() {
+    window.open('/static/img/vaccine_vie.jpg', 'Vaccine Vie', 'height = ' + screen.height + ', width = ' + screen.width + 'fullscreen = yes')
+}
+
+
+// $("#show_memo_detail").click(function () {
+//     console.log('asdasda')
+//     alert('hello')
+//     $('#memo_detail_modal').modal('show')
+// })
+
+
+function show_memo_detail(){
+
+    var id = $("#patient_package_registration_id").val();
+    var patient_id = $("#patient_id").val();
+    var depart_id = $("#depart_filter_reg").val();
+    var doctor_id = $("#doctor_filter_reg").val();
+    $('#memo_patient_search > tbody ').empty();
+    $.ajax({
+        type: 'POST',
+        url: '/receptionist/get_memo_detail/',
+        data: {
+            'csrfmiddlewaretoken': $('#csrf').val(),
+
+            // 'id': id, //패키지 아이디
+            'patient_id': patient_id,
+            // 'depart_id': depart_id,
+            // 'doctor_id': doctor_id,
+
+            
+        },
+        dataType: 'Json',
+        success: function (response) {
+            if (response.result) {
+                $('#table_memo_detail > tbody ').empty();
+                for (var i = 0; i < response.datas.length; i++) {
+                        var str = "<tr>"
+    
+                        str += 
+                            "<td hidden>" + response.datas[i]['detail_memo_id'] + "</td>" + 
+                            "<td>" + (i + 1) + "</td>" +
+                            "<td>" + response.datas[i]['depart'] + "</td>" +
+                            "<td>" + response.datas[i]['creator'] + "</td>" +
+                            "<td><input type='text' class='form-control' value='" + response.datas[i]['memo'] + "'></input></td>" +
+                            "<td>" + response.datas[i]['memo_depart'] + "</td>" +
+                            "<td>" + 
+                            // "<a class='btn btn-default btn-xs' style='margin-right:10px;' href='javascript: void (0);' onclick='update_detail_memo(" + response.datas[i]['detail_memo_id'] + ")' ><i class='fa fa-lg fa-pencil'></i></a>" +
+                            "<a class='btn btn-danger btn-xs' href='javascript: void (0);' onclick='update_detail_memo(" + response.datas[i]['detail_memo_id'] + ")' ><i class='fa fa-lg fa-pencil'></i></a> " +
+                            "<a class='btn btn-danger btn-xs' href='javascript: void (0);' onclick='delete_detail_memo(" + response.datas[i]['detail_memo_id'] + ")' ><i class='fa fa-lg fa-trash'></i></a>" +
+                            "</td></tr>";
+    
+                    $('#table_memo_detail > tbody').append(str);
+    
+                }
+
+                $('#memo_detail_company').val(response.data_note['memo_detail_company'])
+                $('#memo_detail_order').val(response.data_note['memo_detail_order'])
+                $('#memo_detail_insurance').val(response.data_note['memo_detail_insurance'])
+                $('#memo_detail_disease').val(response.data_note['memo_detail_disease'])
+                $("#patient_mark").val(response.marking);
+                // relation
+                $('#table_relative_memo > tbody ').empty();
+                for (var i = 0; i < response.data_relative.length; i++) {
+                    var str = "<tr onclick='set_patient_data2(" + response.data_relative[i]['person_id'] + ")'>"
+    
+                        str += 
+                            "<td hidden>" + response.data_relative[i]['relative_id'] + "</td>" + 
+                            "<td>" + (i + 1) + "</td>" +
+    
+                            "<td>" + response.data_relative[i]['person_name'] + "</td>" +
+    
+                            "<td>" + response.data_relative[i]['relative_name'] + "</td>" +
+                            
+                            "<td>" + 
+                            "<a class='btn btn-danger btn-xs' href='javascript: void (0);' onclick='delete_patient_relation(" + response.data_relative[i]['relative_id'] + ")' ><i class='fa fa-lg fa-trash'></i></a> " +
+                            "</td></tr>";
+    
+                    $('#table_relative_memo > tbody').append(str);
+                }
+
+                $('#memo_detail_modal').modal('show')
+            }
+
+        },
+        error: function (request, status, error) {
+            console.log("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
+
+        },
+    })
+    // $('#memo_detail_modal').modal('show')
+}
+
+function create_memo_detail(){ 
+
+    var patient_id = $("#patient_id").val();
+    var memo = $('#new_memo_detail').val();
+    var help_text = $('#help_text').val();
+    var marking = $("#patient_mark").val();
+    if (help_text != null && help_text){
+        memo = $('#help_text option:selected').text();
+        console.log($('#help_text option:selected').text())
+    }
+    var memo_depart = $('#memo_depart').val();
+    $.ajax({
+        type: 'POST',
+        url: '/receptionist/create_memo_detail/',
+        data: {
+            'csrfmiddlewaretoken': $('#csrf').val(),
+            'patient_id': patient_id,
+            'memo': memo,
+            'memo_depart': memo_depart,
+            'marking': marking
+        },
+        dataType: 'Json',
+        success: function (response) {
+            if (response.result) {
+                $('#table_memo_detail > tbody ').empty();
+                for (var i = 0; i < response.datas.length; i++) {
+                        var str = "<tr>"
+    
+                        str += 
+                            "<td hidden>" + response.datas[i]['detail_memo_id'] + "</td>" + 
+                            "<td>" + (i + 1) + "</td>" +
+                            "<td>" + response.datas[i]['depart'] + "</td>" +
+                            "<td>" + response.datas[i]['creator'] + "</td>" +
+                            "<td><input type='text' class='form-control' value='" + response.datas[i]['memo'] + "'></input></td>" +
+                            "<td>" + response.datas[i]['memo_depart'] + "</td>" +
+                            "<td>" + 
+                            // "<a class='btn btn-default btn-xs' style='margin-right:10px;' href='javascript: void (0);' onclick='update_detail_memo(" + response.datas[i]['detail_memo_id'] + ")' ><i class='fa fa-lg fa-pencil'></i></a>" +
+                            "<a class='btn btn-danger btn-xs' href='javascript: void (0);' onclick='update_detail_memo(" + response.datas[i]['detail_memo_id'] + ")' ><i class='fa fa-lg fa-pencil'></i></a> " +
+                            "<a class='btn btn-danger btn-xs' href='javascript: void (0);' onclick='delete_detail_memo(" + response.datas[i]['detail_memo_id'] + ")' ><i class='fa fa-lg fa-trash'></i></a> " +
+
+                            "</td></tr>";
+    
+                    $('#table_memo_detail > tbody').append(str);
+    
+                }
+                // alert(gettext('Hello'))
+                console.log(response.datas)
+                $('#memo_detail_modal').modal('show');
+                $('#new_memo_detail').val('')
+                $('#depart_memo').val('');
+                $('#help_text').val('');
+                alert(gettext('Created'));
+            }
+
+        },
+        error: function (request, status, error) {
+            console.log("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
+
+        },
+    })
+}
+
+function delete_detail_memo(id){
+    var patient_id = $("#patient_id").val();
+    $.ajax({
+        type: 'POST',
+        url: '/receptionist/delete_memo_detail/',
+        data: {
+            'csrfmiddlewaretoken': $('#csrf').val(),
+            'memo_id': id,
+            'patient_id': patient_id
+        },
+        dataType: 'Json',
+        success: function (response) {
+            if (response.result) {
+                $('#table_memo_detail > tbody ').empty();
+                for (var i = 0; i < response.datas.length; i++) {
+                        var str = "<tr>"
+    
+                        str += 
+                            "<td hidden>" + response.datas[i]['detail_memo_id'] + "</td>" + 
+                            "<td>" + (i + 1) + "</td>" +
+                            "<td>" + response.datas[i]['depart'] + "</td>" +
+                            "<td>" + response.datas[i]['creator'] + "</td>" +
+                            "<td><input type='text' class='form-control' value='" + response.datas[i]['memo'] + "'></input></td>" +
+                            "<td>" + response.datas[i]['memo_depart'] + "</td>" +
+                            "<td>" + 
+                            // "<a class='btn btn-default btn-xs' style='margin-right:10px;' href='javascript: void (0);' onclick='update_detail_memo(" + response.datas[i]['detail_memo_id'] + ")' ><i class='fa fa-lg fa-pencil'></i></a>" +
+                            "<a class='btn btn-danger btn-xs' href='javascript: void (0);' onclick='update_detail_memo(" + response.datas[i]['detail_memo_id'] + ")' ><i class='fa fa-lg fa-pencil'></i></a> " +
+                            "<a class='btn btn-danger btn-xs' href='javascript: void (0);' onclick='delete_detail_memo(" + response.datas[i]['detail_memo_id'] + ")' ><i class='fa fa-lg fa-trash'></i></a>" +
+                            "</td></tr>";
+    
+                    $('#table_memo_detail > tbody').append(str);
+    
+                }
+            }
+        },
+        error: function (request, status, error) {
+            console.log("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
+
+        },
+    })
+}
+
+function update_detail_memo(id){
+    var patient_id = $("#patient_id").val();
+    var memo = $(`#table_memo_detail > tbody > tr:contains("${id}")`).find('td:eq(4)').find('input').val()
+
+    $.ajax({
+        type: 'POST',
+        url: '/receptionist/update_memo_detail/',
+        data: {
+            'csrfmiddlewaretoken': $('#csrf').val(),
+            'memo_id': id,
+            'patient_id': patient_id,
+            'memo': memo,
+        },
+        dataType: 'Json',
+        success: function (response) {
+            if (response.result) {
+                $('#table_memo_detail > tbody ').empty();
+                for (var i = 0; i < response.datas.length; i++) {
+                        var str = "<tr>"
+    
+                        str += 
+                            "<td hidden>" + response.datas[i]['detail_memo_id'] + "</td>" + 
+                            "<td>" + (i + 1) + "</td>" +
+                            "<td>" + response.datas[i]['depart'] + "</td>" +
+                            "<td>" + response.datas[i]['creator'] + "</td>" +
+                            "<td><input type='text' class='form-control' value='" + response.datas[i]['memo'] + "'></input></td>" +
+                            "<td>" + response.datas[i]['memo_depart'] + "</td>" +
+                            "<td>" + 
+                            // "<a class='btn btn-default btn-xs' style='margin-right:10px;' href='javascript: void (0);' onclick='update_detail_memo(" + response.datas[i]['detail_memo_id'] + ")' ><i class='fa fa-lg fa-pencil'></i></a>" +
+                            "<a class='btn btn-danger btn-xs' href='javascript: void (0);' onclick='update_detail_memo(" + response.datas[i]['detail_memo_id'] + ")' ><i class='fa fa-lg fa-pencil'></i></a> " +
+                            "<a class='btn btn-danger btn-xs' href='javascript: void (0);' onclick='delete_detail_memo(" + response.datas[i]['detail_memo_id'] + ")' ><i class='fa fa-lg fa-trash'></i></a></td> " +
+                            "</tr>";
+    
+                    $('#table_memo_detail > tbody').append(str);
+    
+                }
+                alert(gettext('Updated'));
+            }
+        },
+        error: function (request, status, error) {
+            console.log("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
+
+        },
+    })
+}
+
+function update_patient_notes(){
+    var patient_id = $("#patient_id").val();
+    var memo_detail_company = $("#memo_detail_company").val();
+    var memo_detail_order = $("#memo_detail_order").val();
+    var memo_detail_insurance = $("#memo_detail_insurance").val();
+    var memo_detail_disease = $("#memo_detail_disease").val();
+    $.ajax({
+        type: 'POST',
+        url: '/receptionist/update_patient_notes/',
+        data: {
+            'csrfmiddlewaretoken': $('#csrf').val(),
+            'patient_id': patient_id,
+            'memo_detail_company': memo_detail_company,
+            'memo_detail_order': memo_detail_order,
+            'memo_detail_insurance': memo_detail_insurance,
+            'memo_detail_disease': memo_detail_disease,
+        },
+        dataType: 'Json',
+        success: function (response) {
+            console.log("=======",response.datas)
+            if (response.datas) {
+                console.log(response.datas['memo_detail_company'])
+                $('#memo_detail_company').val(response.datas['memo_detail_company'])
+                $('#memo_detail_order').val(response.datas['memo_detail_order'])
+                $('#memo_detail_insurance').val(response.datas['memo_detail_insurance'])
+                $('#memo_detail_disease').val(response.datas['memo_detail_disease'])
+            }
+            alert('success')
+        },
+        error: function (request, status, error) {
+            console.log("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
+        }
+    })
+}
+
+function create_patient_relation(){
+    var patient_id = $("#patient_id").val();
+    var person_name = $("#person_memo_id").val();
+    var relative_name = $("#patient_relative_name").val();
+
+    $.ajax({
+        type: 'POST',
+        url: '/receptionist/create_patient_relative/',
+        data: {
+            'csrfmiddlewaretoken': $('#csrf').val(),
+            'patient_id': patient_id,
+            'person_id': person_name,
+            'relative_name': relative_name,
+        },
+        dataType: 'Json',
+        success: function (response) {
+            if (response.result){
+                $('#table_relative_memo > tbody ').empty();
+                for (var i = 0; i < response.datas.length; i++) {
+                    var str = "<tr onclick='set_patient_data2(" + response.datas[i]['person_id'] + ")'>"
+    
+                        str += 
+                            "<td hidden>" + response.datas[i]['relative_id'] + "</td>" + 
+                            "<td>" + (i + 1) + "</td>" +
+    
+                            "<td>" + response.datas[i]['person_name'] + "</td>" +
+    
+                            "<td>" + response.datas[i]['relative_name'] + "</td>" +
+                            
+                            "<td>" + 
+                            "<a class='btn btn-danger btn-xs' href='javascript: void (0);' onclick='delete_patient_relation(" + response.datas[i]['relative_id'] + ")' ><i class='fa fa-lg fa-trash'></i></a> " +
+                            "</td></tr>";
+    
+                    $('#table_relative_memo > tbody').append(str);
+                }
+
+                $("#patient_relative_name").val('');
+                $("#person_name ").val('');
+            }
+        },
+        error: function (request, status, error) {
+            console.log("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
+        }
+    })
+}
+
+function delete_patient_relation(id){
+    var patient_id = $("#patient_id").val();
+    $.ajax({
+        type: 'POST',
+        url: '/receptionist/delete_patient_relative/',
+        data: {
+            'csrfmiddlewaretoken': $('#csrf').val(),
+            'relative_id': id,
+            'patient_id': patient_id
+        },
+        dataType: 'Json',
+        success: function (response) {
+            if (response.result){
+                $('#table_relative_memo > tbody ').empty();
+                for (var i = 0; i < response.datas.length; i++) {
+                    var str = "<tr onclick='set_patient_data2(" + response.datas[i]['person_id'] + ")'>"
+
+                    str += 
+                        "<td hidden>" + response.datas[i]['relative_id'] + "</td>" + 
+                        "<td>" + (i + 1) + "</td>" +
+
+                        "<td>" + response.datas[i]['person_name'] + "</td>" +
+
+                        "<td>" + response.datas[i]['relative_name'] + "</td>" +
+                        
+                        "<td>" + 
+                        "<a class='btn btn-danger btn-xs' href='javascript: void (0);' onclick='delete_patient_relation(" + response.datas[i]['relative_id'] + ")' ><i class='fa fa-lg fa-trash'></i></a> " +
+                        "</td></tr>";
+    
+                    $('#table_relative_memo > tbody').append(str);
+                }
+
+                $("#patient_relative_name").val('');
+                $("#person_name ").val('');
+            }
+        },
+        error: function (request, status, error) {
+            console.log("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
+        }
+    })
+}
+
+$('textarea').keyup(function(e){
+    if(e.keyCode == 13)
+    {
+        $(this).trigger("enterKey");
+    }
+});
+
+
+function patient_search3(data) {
+    //window.location.href = 'reception/' + data;
+
+    var category = 'name';
+    var string = $('#person_name').val();
+ 
+
+    // console.log(string2)
+    $.ajax({
+        type: 'POST',
+        url: '/receptionist/patient_search3/',
+        data: {
+            'csrfmiddlewaretoken': $('#csrf').val(),
+            'category': category,
+            'string': string,
+        },
+        dataType: 'Json',
+        success: function (response) {
+            console.log('heheheheh')
+            $('#memo_patient_search > tbody ').empty();
+            if (response.datas.length == 0) {
+                $('#memo_patient_search').append("<tr><td colspan='8'>" + gettext('No Result !!') + "</td></tr>");
+            } else {
+                console.log('huhuhu')
+                var str = '';
+                for (var i = 0; i < response.datas.length; i++) {
+                    str += "<tr onclick='set_patient_search_relation(" + response.datas[i]['id'] + ")'>"
+                    str += 
+                        "<td>" + response.datas[i]['id'] + "</td>" +
+                        "<td>" + response.datas[i]['name_kor'] + "</td>" +
+                        "<td>" + response.datas[i]['phonenumber'] + "</td>" +
+                        "<td>" + response.datas[i]['email'] + "</td> </tr>" 
+                    
+                }
+                $('#memo_patient_search > tbody').append(str);
+            }
+        },
+        error: function (request, status, error) {
+            console.log("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
+
+        },
+    })
+
+}
+
+
+function set_patient_search_relation(data){
+    console.log('asdasdasd')
+    $('#person_memo_id').val(data)
+}
+
+function set_patient_data2(patient_id) {
+
+    $.ajax({
+        type: 'POST',
+        url: '/receptionist/set_patient_data/',
+        data: {
+            'csrfmiddlewaretoken': $('#csrf').val(),
+            'patient_id': patient_id,
+        },
+        dataType: 'Json',
+        success: function (response) {
+            $('#patient_id').val(response.id);
+            $('#patient_chart').val(response.chart);
+            $('#patient_name_kor').val(response.name_kor);
+            $('#patient_name_eng').val(response.name_eng);
+
+            if ($("#language").val() == 'vi') {
+                $('#patient_date_of_birth').val( moment(response.date_of_birth, 'YYYY-MM-DD').format('DD/MM/YYYY') );
+            } else {
+                $('#patient_date_of_birth').val(response.date_of_birth);
+            }
+            
+            $('#patient_address').val(response.address);
+            $('#patient_passport').val(response.passport);
+            $('#patient_phone').val(response.phone);
+            $("#patient_gender").val(response.gender);
+            
+            $('#patient_nationality').val(response.nationality);
+            $('#txt_nation').val(response.txt_nation);
+            // if(response.nationality == "Korea" || response.nationality == "Vietnam"){
+            //     $('#patient_nationality').val(response.nationality);
+               
+            // }
+            // else{
+            //     $('#patient_nationality_etc').val(response.nationality);
+            //     $('#patient_nationality').val(response.nationality);
+            // }
+           
+            $('#patient_email').val(response.email);
+            // $('#reception_chief_complaint}').val(response.chief_complaint);
+            $('#memo').val(response.memo);
+            $("#patient_mark").val(response.marking);
+            $("#patient_funnel").val(response.funnel);
+            $("#patient_funnel_etc").val(response.funnel_etc);
+            
+            $('#history_past').val(response.history_past);
+            $('#history_family').val(response.history_family);
+
+            $('input:radio[name=gender]').filter('[value=' + response.gender + ']').prop('checked', true);  
+
+            //tax invoice
+            $('#tax_invoice_number').val(response.tax_invoice_number);
+            $('#tax_invoice_company_name').val(response.tax_invoice_company_name);
+            $('#tax_invoice_address').val(response.tax_invoice_address);
+            $('#tax_invoice_address_p').val(response.tax_invoice_address_p);
+            $('#chief_complaint').val(response.chief_complaint);
+
+            //prop('checked', false)
+            $('#need_invoice').prop('checked', false)
+            $('#need_invoice_p').prop('checked', false)
+            $('#wo_name').prop('checked', false)
+            $('#wo_email').prop('checked', false)
+            $('#wo_today').prop('checked', false)
+            $('#need_insurance').prop('checked', false)
+            $('#need_insurance_p').prop('checked', false)
+            if (response.invoice) {
+                $('#need_invoice').prop('checked', true)
+            }
+            if (response.invoice_p) {
+                $('#need_invoice_p').prop('checked', true)
+            }
+            if (response.insurance) {
+                $('#need_insurance').prop('checked', true)
+            }
+            if (response.insurance_p) {
+                $('#need_insurance_p').prop('checked', true)
+            }
+            if (response.wo_name) {
+                $('#wo_name').prop('checked', true)
+            }
+            if (response.wo_email) {
+                $('#wo_email').prop('checked', true)
+            }
+            if (response.wo_today) {
+                $('#wo_today').prop('checked', true)
+            }
+        },
+        error: function (request, status, error) {
+            console.log("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
+
+        },
+    })
+    $('#memo_detail_modal').modal('hide');
+    new_patient_option(true);
+
+}
+
+
+function open_tax_search(){
+    // window.open('https://masothue.com/')
+    var current_tax = $('#tax_invoice_number').val();
+    if(current_tax != ''){
+        fetch('https://api.vietqr.io/v2/business/' + current_tax)
+        .then((response) => response.json())
+        .then((json) => {
+            $('#tax_search_id').val(json.data.id);
+            $('#tax_search_name').val(json.data.name);
+            $('#tax_search_iname').val(json.data.internationalName);
+            $('#tax_search_address').val(json.data.address);
+            $('#tax_detail_modal').modal('show')
+        })
+    }else{
+        alert('No value for Tax code')
+    }
+
+}
+
+function apply_data(){
+    var id = $('#tax_search_id').val();
+    var name = $('#tax_search_name').val();
+    var address = $('#tax_search_address').val();
+
+    $('#tax_invoice_number').val(id);
+    $('#tax_invoice_company_name').val(name);
+    $('#tax_invoice_address').val(address);
+    $('#tax_detail_modal').modal('hide')
+}
+

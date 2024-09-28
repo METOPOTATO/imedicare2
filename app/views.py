@@ -1250,7 +1250,7 @@ def get_list_test(request):
         my_test.append(obj)
     return JsonResponse({'result': my_test})
 
-
+#1
 def get_token(request):
     url = 'https://testapi.meinvoice.vn/api/v3/auth/token'
     body = {
@@ -1263,7 +1263,7 @@ def get_token(request):
     data = response.json()
 
     return JsonResponse({"data": data['Data']})
-
+#2
 def get_invoice_template(request):
     token = request.POST.get('token')
     year = datetime.datetime.now().year
@@ -1280,416 +1280,9 @@ def get_invoice_template(request):
     template = json.loads(data)[0]['InvSeries']
     return JsonResponse({"data": template})
 
-def create_invoice(request):
-    url = 'https://testapi.meinvoice.vn/api/v3/code/itg/invoicepublishing/createinvoice'
-    company_tax = '6868686868-125'
-    token = request.POST.get('token')
-    template = request.POST.get('template')
-    reception_id = request.POST.get('rec_id')
-    reception = Reception.objects.get(pk = reception_id)
-    diagnosis = Diagnosis.objects.get(reception_id = reception_id)
-    payment = Payment.objects.get(reception_id = reception_id)
 
-    exam_set = ExamManager.objects.filter(diagnosis_id = diagnosis.id)
-    test_set = TestManager.objects.filter(diagnosis_id = diagnosis.id, test__parent_test = None)
-    precedure_set = PrecedureManager.objects.filter(diagnosis_id = diagnosis.id)
-    medicine_set = MedicineManager.objects.filter(diagnosis_id = diagnosis.id)
-    try:
-        taxinvoice = TaxInvoice.objects.get(patient = reception.patient)
-    except TaxInvoice.DoesNotExist:
-        taxinvoice = None
-
-    data = {
-            "RefID": reception_id,
-            "InvSeries": template,
-            "InvoiceName": 'Hóa đơn khám bệnh',
-            "InvDate": "2021-11-08T19:11:51.2675125+07:00",   
-            "CurrencyCode": "VND",
-            "ExchangeRate": 1.0,
-            "PaymentMethodName": "TM/CK",  
-            "BuyerLegalName": taxinvoice.company_name,
-            "BuyerTaxCode": taxinvoice.number,
-            "BuyerAddress": taxinvoice.address,
-            "BuyerCode": reception.patient.getID(),
-            "BuyerPhoneNumber": reception.patient.phone,
-            "BuyerEmail": reception.patient.email,
-            "BuyerFullName": reception.patient.name_kor,
-            "BuyerBankAccount": "",
-            "BuyerBankName": "",
-            "ReferenceType": None,
-            "OrgInvoiceType": None,
-            "OrgInvTemplateNo": None,
-            "OrgInvSeries": None,
-            "OrgInvNo": None,
-            "OrgInvDate": None,
-            "TotalSaleAmountOC": payment.sub_total,
-            "TotalSaleAmount": payment.sub_total,
-            "TotalAmountWithoutVATOC": payment.sub_total,
-            "TotalAmountWithoutVAT": payment.sub_total,
-            "TotalVATAmountOC": payment.total / 11,
-            "TotalVATAmount": payment.total / 11 ,
-            "TotalDiscountAmountOC": payment.discounted_amount,
-            "TotalDiscountAmount": payment.discounted_amount,
-            "TotalAmountOC": payment.total,
-            "TotalAmount": payment.total,
-            "TotalAmountInWords": '',
-            "TaxRateInfo": [
-                {
-                "VATRateName": "0%",
-                "AmountWithoutVATOC": 0,
-                "VATAmountOC": 0
-                }
-            ],
-            "OptionUserDefined":{
-                "MainCurrency": "VND",
-                "AmountDecimalDigits": "0",
-                "AmountOCDecimalDigits": "2",
-                "UnitPriceOCDecimalDigits": "0",
-                "UnitPriceDecimalDigits": "1",
-                "QuantityDecimalDigits": "2",
-                "CoefficientDecimalDigits": "2",
-                "ExchangRateDecimalDigits": "0"
-            },
-            "OriginalInvoiceDetail": []
-        }
-    
-    list_odatadetail = []
-
-    count = 1
-    for mdata in exam_set:
-        count += 1
-        exam = {}
-        exam.update({
-                "ItemType": 1,
-                "LineNumber": count,
-                "SortOrder": 1,
-                "ItemCode": mdata.exam.code,
-                "ItemName": mdata.exam.name,
-                "UnitName": '',
-                "Quantity": 1,
-                "UnitPrice": mdata.exam.get_price(),
-                "DiscountRate": None,
-                "DiscountAmountOC": None,
-                "DiscountAmount": None,
-                "AmountOC":mdata.exam.get_price(),
-                "Amount": mdata.exam.get_price(),
-                "AmountWithoutVATOC": mdata.exam.get_price(),                                    
-                "AmountWithoutVAT": mdata.exam.get_price(),
-                "VATRateName": "0%",
-                "VATAmountOC": 0,
-                "VATAmount": 0    
-            })
-        list_odatadetail.append(exam)
-
-
-    for mdata in test_set:
-        count += 1
-        test = {}
-        test.update({
-                "ItemType": 1,
-                "LineNumber": count,
-                "SortOrder": 1,
-                "ItemCode": mdata.test.code,
-                "ItemName": mdata.test.name,
-                "UnitName": '',
-                "Quantity": 1,
-                "UnitPrice": mdata.test.get_price(),
-                "DiscountRate": None,
-                "DiscountAmountOC": None,
-                "DiscountAmount": None,
-                "AmountOC":mdata.test.get_price(),
-                "Amount": mdata.test.get_price(),
-                "AmountWithoutVATOC": mdata.test.get_price(),                                    
-                "AmountWithoutVAT": mdata.test.get_price(),
-                "VATRateName": "0%",
-                "VATAmountOC": 0,
-                "VATAmount": 0    
-            })
-        list_odatadetail.append(test)
-
- 
-    for mdata in precedure_set:
-        count += 1
-        prec = {}
-        prec.update({
-                "ItemType": 1,
-                "LineNumber": count,
-                "SortOrder": 1,
-                "ItemCode": mdata.precedure.code,
-                "ItemName": mdata.precedure.name,
-                "UnitName": '',
-                "Quantity": mdata.amount,
-                "UnitPrice": mdata.precedure.get_price(),
-                "DiscountRate": None,
-                "DiscountAmountOC": None,
-                "DiscountAmount": None,
-                "AmountOC":mdata.precedure.get_price() ,
-                "Amount": mdata.precedure.get_price(),
-                "AmountWithoutVATOC": mdata.precedure.get_price(),                                    
-                "AmountWithoutVAT": mdata.precedure.get_price(),
-                "VATRateName": "0%",
-                "VATAmountOC": 0,
-                "VATAmount": 0    
-            })
-        list_odatadetail.append(prec)
-
-  
-    for mdata in medicine_set:
-        count += 1
-        med = {}
-        quantity = int(mdata.days) * int(mdata.amount)
-        price = quantity * int(mdata.medicine.get_price())
-        med.update({
-                "ItemType": 1,
-                "LineNumber": count,
-                "SortOrder": 1,
-                "ItemCode": mdata.medicine.code,
-                "ItemName": mdata.medicine.name,
-                "UnitName": '',
-                "Quantity": quantity,
-                "UnitPrice": mdata.medicine.get_price(),
-                "DiscountRate": None,
-                "DiscountAmountOC": None,
-                "DiscountAmount": None,
-                "AmountOC":price,
-                "Amount": price,
-                "AmountWithoutVATOC": price,                                    
-                "AmountWithoutVAT": price,
-                "VATRateName": "0%",
-                "VATAmountOC": 0,
-                "VATAmount": 0    
-            })
-        list_odatadetail.append(med)
-
-    data['OriginalInvoiceDetail'] = list_odatadetail   
-    
-    headers = {
-        'Authorization': f'Bearer {token}',
-        'Content-Type': 'application/json',
-        'CompanyTaxCode': company_tax
-    }   
-
-    print(data)
-    response = requests.post(url, headers=headers, json=data)
-    print(response.json())
-    # link = response.json()['Data']
-    return JsonResponse({'data': 'ok'})
-    
-def public_invoice2(request):
-    url = 'https://testapi.meinvoice.vn/api/v3/code/itg/invoicepublishing/publishHSM'
-
-    company_tax = '6868686868-125'
-    token = request.POST.get('token')
-    template = request.POST.get('template')
-
-    reception_id = request.POST.get('rec_id')
-
-    datas = []
-    data = {}
-    data['RefID'] = reception_id
-    odata = {} #
-    odatadetail = {}
-
-    odata['RefID'] = reception_id
-    odata['InvSeries'] = template
-
-    odata['InvoiceName'] = 'Hóa đơn khám bệnh'
-    odata['CurrencyCode'] = 'VND'
-    odata['ExchangeRate'] = 1
-    odata['PaymentMethodName'] = 'TM/CK'
-    # odata['InvDate'] = "2024-07-07"
-    reception = Reception.objects.get(pk = reception_id)
-    diagnosis = Diagnosis.objects.get(reception_id = reception_id)
-    payment = Payment.objects.get(reception_id = reception_id)
-
-    exam_set = ExamManager.objects.filter(diagnosis_id = diagnosis.id)
-    test_set = TestManager.objects.filter(diagnosis_id = diagnosis.id, test__parent_test = None)
-    precedure_set = PrecedureManager.objects.filter(diagnosis_id = diagnosis.id)
-    medicine_set = MedicineManager.objects.filter(diagnosis_id = diagnosis.id)
-
-
-    try:
-        taxinvoice = TaxInvoice.objects.get(patient = reception.patient)
-    except TaxInvoice.DoesNotExist:
-        taxinvoice = None
-
-    odata['InvDate'] = reception.recorded_date.strftime("%Y-%m-%d")
-    odata['BuyerTaxCode'] = taxinvoice.number
-    odata['BuyerAddress'] = taxinvoice.address
-    odata['BuyerCode'] = reception.patient.getID()
-
-    if reception.patient.nationality == 'Vietnam':
-        odata['BuyerFullName'] = reception.patient.name_kor
-    else:
-        odata['BuyerFullName'] = reception.patient.name_eng
-
-    odata['BuyerPhoneNumber'] = reception.patient.phone
-    odata['BuyerEmail'] = reception.patient.email
-    odata['BuyerLegalName'] = taxinvoice.company_name
-
-    odata['ContactName'] = 'Imedicare'
-        
-    odata['TotalSaleAmountOC'] = payment.sub_total
-    odata['TotalSaleAmount'] = payment.sub_total
-    odata['TotalDiscountAmountOC'] = payment.discounted_amount
-    odata['TotalDiscountAmount'] = payment.discounted_amount
-    odata['TotalAmountWithoutVATOC'] = payment.total / 11 * 10
-    odata['TotalAmountWithoutVAT'] = payment.total / 11 * 10
-    odata['TotalVATAmountOC'] = payment.total / 11 
-    odata['TotalVATAmount1qa'] = payment.total / 11 
-    odata['TotalAmountOC'] = payment.total
-    odata['TotalAmount'] = payment.total
-    odata['TotalAmountInWords'] = 'hehehehe'
-    odata['IsTaxReduction43'] = False
-
-    list_odatadetail = []
-
-    count = 0
-    for mdata in exam_set:
-        count += 1
-        exam = {}
-        exam.update({
-                "ItemType": 1,
-                "LineNumber": count,
-                "SortOrder": 1,
-                "ItemCode": mdata.exam.code,
-                "ItemName": mdata.exam.name,
-                "UnitName": '',
-                "Quantity": 1,
-                "UnitPrice": mdata.exam.get_price(),
-                "DiscountRate": None,
-                "DiscountAmountOC": None,
-                "DiscountAmount": None,
-                "AmountOC":mdata.exam.get_price(),
-                "Amount": mdata.exam.get_price(),
-                "AmountWithoutVATOC": mdata.exam.get_price(),                                    
-                "AmountWithoutVAT": mdata.exam.get_price(),
-                "VATRateName": "0%",
-                "VATAmountOC": 0,
-                "VATAmount": 0    
-            })
-        list_odatadetail.append(exam)
-
-
-    for mdata in test_set:
-        count += 1
-        test = {}
-        test.update({
-                "ItemType": 1,
-                "LineNumber": count,
-                "SortOrder": 1,
-                "ItemCode": mdata.test.code,
-                "ItemName": mdata.test.name_vie,
-                "UnitName": '',
-                "Quantity": 1,
-                "UnitPrice": mdata.test.get_price(),
-                "DiscountRate": None,
-                "DiscountAmountOC": None,
-                "DiscountAmount": None,
-                "AmountOC":mdata.test.get_price(),
-                "Amount": mdata.test.get_price(),
-                "AmountWithoutVATOC": mdata.test.get_price(),                                    
-                "AmountWithoutVAT": mdata.test.get_price(),
-                "VATRateName": "0%",
-                "VATAmountOC": 0,
-                "VATAmount": 0    
-            })
-        list_odatadetail.append(test)
-
- 
-    for mdata in precedure_set:
-        count += 1
-        prec = {}
-        prec.update({
-                "ItemType": 1,
-                "LineNumber": count,
-                "SortOrder": 1,
-                "ItemCode": mdata.precedure.code,
-                "ItemName": mdata.precedure.name_vie,
-                "UnitName": '',
-                "Quantity": mdata.amount,
-                "UnitPrice": mdata.precedure.get_price(),
-                "DiscountRate": None,
-                "DiscountAmountOC": None,
-                "DiscountAmount": None,
-                "AmountOC":mdata.precedure.get_price() ,
-                "Amount": mdata.precedure.get_price(),
-                "AmountWithoutVATOC": mdata.precedure.get_price(),                                    
-                "AmountWithoutVAT": mdata.precedure.get_price(),
-                "VATRateName": "0%",
-                "VATAmountOC": 0,
-                "VATAmount": 0    
-            })
-        list_odatadetail.append(prec)
-
-  
-    for mdata in medicine_set:
-        count += 1
-        med = {}
-        quantity = int(mdata.days) * int(mdata.amount)
-        price = quantity * int(mdata.medicine.get_price())
-        med.update({
-                "ItemType": 1,
-                "LineNumber": count,
-                "SortOrder": 1,
-                "ItemCode": mdata.medicine.code,
-                "ItemName": mdata.medicine.name_vie,
-                "UnitName": mdata.medicine.unit_vie,
-                "Quantity": quantity,
-                "UnitPrice": mdata.medicine.get_price(),
-                "DiscountRate": None,
-                "DiscountAmountOC": None,
-                "DiscountAmount": None,
-                "AmountOC":price,
-                "Amount": price,
-                "AmountWithoutVATOC": price,                                    
-                "AmountWithoutVAT": price,
-                "VATRateName": "0%",
-                "VATAmountOC": 0,
-                "VATAmount": 0    
-            })
-        list_odatadetail.append(med)
-        
-        
-    
-
-
-    odata['OriginalInvoiceDetail'] = list_odatadetail
-    data['OriginalInvoiceData'] = odata
-
-    tax_info = {}
-    tax_info['VATRateName'] = '0%'
-    tax_info['AmountWithoutVATOC'] = 10000
-    tax_info['VATAmountOC'] = 0
-    odata['TaxRateInfo'] = [tax_info]
-    odata['FeeInfo'] = None
-
-    option = {}
-    option['MainCurrency'] = 'VND'
-    option['AmountDecimalDigits'] = '0'
-    option['AmountOCDecimalDigits'] = '0'
-    option['UnitPriceOCDecimalDigits'] = '0'
-    option['UnitPriceDecimalDigits'] = '0'
-    option['QuantityDecimalDigits'] = '2'
-    option['CoefficientDecimalDigits'] = '0'
-    option['ExchangRateDecimalDigits'] = '0'
-    option['ClockDecimalDigits'] = '2'
-
-    odata['OptionUserDefined'] = option
-
-    headers = {
-        'Authorization': f'Bearer {token}',
-        'Content-Type': 'application/json',
-        'CompanyTaxCode': company_tax
-    }   
-
-    datas.append(data)
-    print(data)
-    response = requests.post(url, headers=headers, json=datas)
-    print(response.json())
-    return JsonResponse({'result': 'ok'})
-
-def view_invoice(request):
+#3
+def get_invoice(request):
     url = 'https://testapi.meinvoice.vn/api/v3/code/itg/invoicepublishing/invoicelinkview?type=1'
 
     company_tax = '6868686868-125'
@@ -1709,7 +1302,17 @@ def view_invoice(request):
         taxinvoice = TaxInvoice.objects.get(patient = reception.patient)
     except TaxInvoice.DoesNotExist:
         taxinvoice = None
-    print(reception_id)
+    
+    email = reception.patient.email
+    if email.lower() == 'na' or email == '':
+        email = 'default@imedicare.com'
+
+    address2 = ''
+    if reception.need_invoice == True:
+        address2 = reception.patient.taxinvoice.address
+    elif reception.need_invoice_p == True:
+        address2 = reception.patient.taxinvoice.address_p
+    print(address2)
     odata = {
         "RefID":reception_id,
         "InvSeries":template,
@@ -1719,20 +1322,19 @@ def view_invoice(request):
         "InvDate": reception.recorded_date.strftime("%Y-%m-%d"),
         "PaymentMethodName":"TM/CK",
         "BuyerTaxCode":taxinvoice.number,
-        "BuyerAddress":taxinvoice.address,
+        "BuyerAddress":address2, 
         "BuyerCode":reception.patient.getID(),
         "BuyerFullName":reception.patient.name_eng,
         "BuyerPhoneNumber":reception.patient.phone,
-        "BuyerEmail":reception.patient.email,
-        "BuyerLegalName":taxinvoice.company_name,
+        "BuyerEmail": email,
         "ContactName": 'Imedicare',
         "TotalSaleAmountOC":payment.sub_total,
         "TotalSaleAmount":payment.sub_total,
-        "TotalDiscountAmountOC":payment.discounted_amount,
-        "TotalDiscountAmount":payment.discounted_amount,
+        "TotalDiscountAmountOC":0,
+        "TotalDiscountAmount":0,
         "TotalAmountOC":payment.total,
         "TotalAmount":payment.total,
-        "TotalAmountInWords":"",
+        "TotalAmountInWords":doc_so(payment.total),
         "IsTaxReduction43":False,
 
         "OptionUserDefined":{
@@ -1750,59 +1352,61 @@ def view_invoice(request):
         "FeeInfo": None
     }
 
+    if reception.need_invoice:
+        odata['BuyerLegalName'] = taxinvoice.company_name
     vat_0 = 0
     vat_5 = 0
+    vat_8 = 0
     vat_10 = 0
 
     a_w_vat_0 = 0
     a_w_vat_5 = 0
+    a_w_vat_8 = 0
     a_w_vat_10 = 0
 
     list_odatadetail = []
     count = 0
+
     for mdata in exam_set:
         count = count + 1
-        print('count', count)
         exam = {}
+        vat = mdata.exam.tax_rate
+        paid = mdata.exam.get_price()
+        amount = paid / (100 + vat) * 100
+        vat_amount = paid / (100 + vat) * vat
 
-        vat = get_vat(mdata.exam.code)
-        print(vat)
-        print(mdata.exam.code)
-        vat_name = get_vat_name(mdata.exam.code)
-        amount = mdata.exam.get_price()
-        vat_amount = mdata.exam.get_price() * vat
-        amount_without_vat = amount - vat_amount
-
-        if vat_name == 'KCT':
-           print('====', 0)
+        percent = 0
+        if vat == 0:
            vat_0 += vat_amount
-           a_w_vat_0 += amount_without_vat
-        elif vat_name == '5%':
-            print('====', 5)
+           a_w_vat_0 += amount
+        elif vat == 5:
             vat_5 += vat_amount
-            a_w_vat_5 += amount_without_vat
-        elif vat_name == '10%':
-            print('====', 10)
+            a_w_vat_5 += amount
+        elif vat == 8:
+            vat_8 += vat_amount
+            a_w_vat_8 += amount
+        elif vat == 10:
             vat_10 += vat_amount
-            a_w_vat_10 += amount_without_vat
-        print('vat_name', vat_name)
+            a_w_vat_10 += amount
+
+
         exam.update({
                 "ItemType": 1,
                 "LineNumber": count,
                 "SortOrder": count,
                 "ItemCode": mdata.exam.code,
-                "ItemName": mdata.exam.name,
+                "ItemName": mdata.exam.name_vn,
                 "UnitName": '',
                 "Quantity": 1,
-                "UnitPrice": mdata.exam.get_price(),
+                "UnitPrice": amount,
                 "DiscountRate": None,
                 "DiscountAmountOC": None,
                 "DiscountAmount": None,
                 "AmountOC":amount,
                 "Amount": amount,
-                "AmountWithoutVATOC": amount_without_vat,                                    
-                "AmountWithoutVAT":  amount_without_vat,
-                "VATRateName": vat_name,
+                "AmountWithoutVATOC": amount,                                    
+                "AmountWithoutVAT":  amount,
+                "VATRateName": f'{vat}%' if vat > 0 else 'KCT',
                 "VATAmountOC": vat_amount,
                 "VATAmount": vat_amount    
             })
@@ -1810,25 +1414,27 @@ def view_invoice(request):
 
     for mdata in test_set:
         count = count + 1
-        print('count', count)
         test = {}
 
-        vat = get_vat(mdata.test.code)
-        print(vat)
-        vat_name = get_vat_name(mdata.test.code)
-        amount = mdata.test.get_price()
-        vat_amount = mdata.test.get_price() * vat
-        amount_without_vat = amount - vat_amount
+        vat = mdata.test.tax_rate
+        paid = mdata.test.get_price()
+        amount = paid / (100 + vat) * 100
+        vat_amount = paid / (100 + vat) * vat
 
-        if vat_name == 'KCT':
+        percent = 0
+        if vat == 0:
            vat_0 += vat_amount
-           a_w_vat_0 += amount_without_vat
-        elif vat_name == '5%':
+           a_w_vat_0 += amount
+        elif vat == 5:
             vat_5 += vat_amount
-            a_w_vat_5 += amount_without_vat
-        elif vat_name == '10%':
+            a_w_vat_5 += amount
+        elif vat == 8:
+            vat_8 += vat_amount
+            a_w_vat_8 += amount
+        elif vat == 10:
             vat_10 += vat_amount
-            a_w_vat_10 += amount_without_vat
+            a_w_vat_10 += amount
+        
         test.update({
                 "ItemType": 1,
                 "LineNumber": count,
@@ -1837,15 +1443,15 @@ def view_invoice(request):
                 "ItemName": mdata.test.name_vie,
                 "UnitName": '',
                 "Quantity": 1,
-                "UnitPrice": mdata.test.get_price(),
+                "UnitPrice": amount,
                 "DiscountRate": None,
                 "DiscountAmountOC": None,
                 "DiscountAmount": None,
                 "AmountOC":amount,
                 "Amount": amount,
-                "AmountWithoutVATOC": amount_without_vat,                                    
-                "AmountWithoutVAT":  amount_without_vat,
-                "VATRateName": vat_name,
+                "AmountWithoutVATOC": amount,                                    
+                "AmountWithoutVAT":  amount,
+                "VATRateName": f'{vat}%' if vat > 0 else 'KCT',
                 "VATAmountOC": vat_amount,
                 "VATAmount": vat_amount    
             })
@@ -1853,26 +1459,28 @@ def view_invoice(request):
 
     for mdata in precedure_set:
         count = count + 1
-        print('count', count)
         prec = {}
+        quantity = mdata.amount
+        vat = mdata.precedure.tax_rate
+        paid = mdata.precedure.get_price() * quantity
+        amount = paid / (100 + vat) * 100 
+        
+        vat_amount = paid / (100 + vat) * vat 
+        unit_price = mdata.precedure.get_price() / (100 + vat) * 100
 
-        vat = get_vat(mdata.precedure.code)
-        print(vat)
-        vat_name = get_vat_name(mdata.precedure.code)
-        amount = mdata.precedure.get_price()
-        vat_amount = mdata.precedure.get_price() * vat
-        amount_without_vat = amount - vat_amount
-
-        if vat_name == 'KCT':
+        if vat == 0:
            vat_0 += vat_amount
-           a_w_vat_0 += amount_without_vat
-        elif vat_name == '5%':
+           a_w_vat_0 += amount
+        elif vat == 5:
             vat_5 += vat_amount
-            a_w_vat_5 += amount_without_vat
-        elif vat_name == '10%':
+            a_w_vat_5 += amount
+        elif vat == 8:
+            vat_8 += vat_amount
+            a_w_vat_8 += amount
+        elif vat == 10:
             vat_10 += vat_amount
-            a_w_vat_10 += amount_without_vat
-
+            a_w_vat_10 += amount
+        
         prec.update({
                 "ItemType": 1,
                 "LineNumber": count,
@@ -1880,44 +1488,46 @@ def view_invoice(request):
                 "ItemCode": mdata.precedure.code,
                 "ItemName": mdata.precedure.name_vie,
                 "UnitName": '',
-                "Quantity": mdata.amount,
-                "UnitPrice": mdata.precedure.get_price(),
+                "Quantity": quantity,
+                "UnitPrice": unit_price,
                 "DiscountRate": None,
                 "DiscountAmountOC": None,
                 "DiscountAmount": None,
                 "AmountOC":amount,
                 "Amount": amount,
-                "AmountWithoutVATOC": amount_without_vat,                                    
-                "AmountWithoutVAT":  amount_without_vat,
-                "VATRateName": vat_name ,#mdata.precedure.vat,
+                "AmountWithoutVATOC": amount,                                    
+                "AmountWithoutVAT":  amount,
+                "VATRateName": f'{vat}%' if vat > 0 else 'KCT',
                 "VATAmountOC": vat_amount,
                 "VATAmount": vat_amount    
             })
         list_odatadetail.append(prec)
 
     for mdata in medicine_set:
+        quantity = mdata.days * mdata.amount
         count = count + 1
-        print('count', count)
         med = {}
 
-        vat = get_vat(mdata.medicine.code)
-        print(vat)
-        vat_name = get_vat_name(mdata.medicine.code)
+        vat = mdata.medicine.tax_rate   
+        paid = mdata.medicine.get_price() * quantity
+        amount = paid / (100 + vat) * 100 
+        vat_amount = paid / (100 + vat) * vat 
 
-        quantity = int(mdata.days) * int(mdata.amount)
-        price = quantity * int(mdata.medicine.get_price())
-        vat_amount = price * vat
-        amount_without_vat = price - vat_amount
+        unit_price = mdata.medicine.get_price() / (100 + vat) * 100
 
-        if vat_name == 'KCT':
+        if vat == 0:
            vat_0 += vat_amount
-           a_w_vat_0 += amount_without_vat
-        elif vat_name == '5%':
+           a_w_vat_0 += amount
+        elif vat == 5:
             vat_5 += vat_amount
-            a_w_vat_5 += amount_without_vat
-        elif vat_name == '10%':
+            a_w_vat_5 += amount
+        elif vat == 8:
+            vat_8 += vat_amount
+            a_w_vat_8 += amount
+        elif vat == 10:
             vat_10 += vat_amount
-            a_w_vat_10 += amount_without_vat
+            a_w_vat_10 += amount
+
         med.update({
                 "ItemType": 1,
                 "LineNumber": count,
@@ -1926,15 +1536,15 @@ def view_invoice(request):
                 "ItemName": mdata.medicine.name,
                 "UnitName": mdata.medicine.unit_vie,
                 "Quantity": quantity,
-                "UnitPrice": mdata.medicine.get_price(),
+                "UnitPrice": unit_price,
                 "DiscountRate": None,
                 "DiscountAmountOC": None,
                 "DiscountAmount": None,
-                "AmountOC":price,
-                "Amount": price,
-                "AmountWithoutVATOC": amount_without_vat,                                    
-                "AmountWithoutVAT": amount_without_vat,
-                "VATRateName": vat_name,
+                "AmountOC":amount,
+                "Amount": amount,
+                "AmountWithoutVATOC": amount,                                    
+                "AmountWithoutVAT": amount,
+                "VATRateName": f'{vat}%' if vat > 0 else 'KCT',
                 "VATAmountOC": vat_amount,
                 "VATAmount": vat_amount    
             })
@@ -1967,18 +1577,20 @@ def view_invoice(request):
         }
         vat_rate_list.append(tax_rate_10)
     
+    if a_w_vat_8 != 0:
+        tax_rate_8 = {
+            'VATRateName' : '8%',
+            'AmountWithoutVATOC': a_w_vat_8,
+            'VATAmountOC': vat_8
+        }
+        vat_rate_list.append(tax_rate_8)
+    
     odata['TaxRateInfo'] = vat_rate_list
 
-    odata['TotalAmountWithoutVATOC'] = a_w_vat_0 + a_w_vat_5 + a_w_vat_10
-    odata['TotalAmountWithoutVAT'] = a_w_vat_0 + a_w_vat_5 + a_w_vat_10
-    odata['TotalVATAmountOC'] = vat_0 + vat_5 + vat_10
-    odata['TotalVATAmount'] = vat_0 + vat_5 + vat_10
-
-        # "TotalAmountWithoutVATOC":payment.total / 11 * 10,
-        # "TotalAmountWithoutVAT":payment.total / 11 * 10,
-        # "TotalVATAmountOC":payment.total / 11 ,
-        # "TotalVATAmount":payment.total / 11 ,
-    print(odata)
+    odata['TotalAmountWithoutVATOC'] = a_w_vat_0 + a_w_vat_5 + a_w_vat_10 + a_w_vat_8
+    odata['TotalAmountWithoutVAT'] = a_w_vat_0 + a_w_vat_5 + a_w_vat_10 + a_w_vat_8
+    odata['TotalVATAmountOC'] = vat_0 + vat_5 + vat_10 + vat_8
+    odata['TotalVATAmount'] = vat_0 + vat_5 + vat_10 + vat_8
     headers = {
         'Authorization': f'Bearer {token}',
         'Content-Type': 'application/json',
@@ -1986,299 +1598,38 @@ def view_invoice(request):
     }   
 
     response = requests.post(url, headers=headers, json=odata)
-    print(response.json())
+    print('++++',response.json())
     link = response.json()['Data']
-    return JsonResponse({'data': link})
 
+    return JsonResponse({'link': link, 'data': json.dumps(odata)})
+
+#4
+def view_invoice(request):
+    url = 'https://testapi.meinvoice.vn/api/v3/code/itg/invoicepublishing/invoicelinkview?type=1'
+
+    company_tax = '6868686868-125'
+    token = request.POST.get('token')
+    odata = request.POST.get('data')
+    odata = json.loads(odata)
+    headers = {
+        'Authorization': f'Bearer {token}',
+        'Content-Type': 'application/json',
+        'CompanyTaxCode': company_tax
+    }   
+    response = requests.post(url, headers=headers, json=odata)
+    link = response.json()['Data']
+    return JsonResponse({'link': link, 'data': json.dumps(odata)})
+
+#5
 def public_invoice(request):
     url = 'https://testapi.meinvoice.vn/api/v3/code/itg/invoicepublishing/publishHSM'
 
     company_tax = '6868686868-125'
     token = request.POST.get('token')
-    template = request.POST.get('template')
     reception_id = request.POST.get('rec_id')
+    odata = request.POST.get('data')
+    odata = json.loads(odata)
 
-    reception = Reception.objects.get(pk = reception_id)
-    diagnosis = Diagnosis.objects.get(reception_id = reception_id)
-    payment = Payment.objects.get(reception_id = reception_id)
-    exam_set = ExamManager.objects.filter(diagnosis_id = diagnosis.id)
-    test_set = TestManager.objects.filter(diagnosis_id = diagnosis.id, test__parent_test = None)
-    precedure_set = PrecedureManager.objects.filter(diagnosis_id = diagnosis.id)
-    medicine_set = MedicineManager.objects.filter(diagnosis_id = diagnosis.id)
-
-    try:
-        taxinvoice = TaxInvoice.objects.get(patient = reception.patient)
-    except TaxInvoice.DoesNotExist:
-        taxinvoice = None
-    print(reception_id)
-    odata = {
-        "RefID":reception_id,
-        "InvSeries":template,
-        "InvoiceName":'Hóa đơn khám bệnh',
-        "CurrencyCode":"VND",
-        "ExchangeRate":1,
-        "InvDate": reception.recorded_date.strftime("%Y-%m-%d"),
-        "PaymentMethodName":"TM/CK",
-        "BuyerTaxCode":taxinvoice.number,
-        "BuyerAddress":taxinvoice.address,
-        "BuyerCode":reception.patient.getID(),
-        "BuyerFullName":reception.patient.name_eng,
-        "BuyerPhoneNumber":reception.patient.phone,
-        "BuyerEmail":reception.patient.email,
-        "BuyerLegalName":taxinvoice.company_name,
-        "ContactName": 'Imedicare',
-        "TotalSaleAmountOC":payment.sub_total,
-        "TotalSaleAmount":payment.sub_total,
-        "TotalDiscountAmountOC":payment.discounted_amount,
-        "TotalDiscountAmount":payment.discounted_amount,
-        "TotalAmountOC":payment.total,
-        "TotalAmount":payment.total,
-        "TotalAmountInWords":"",
-        "IsTaxReduction43":False,
-
-        "OptionUserDefined":{
-            "MainCurrency": "VND",
-            "AmountDecimalDigits": "0",
-            "AmountOCDecimalDigits": "2",
-            "UnitPriceOCDecimalDigits": "0",
-            "UnitPriceDecimalDigits": "1",
-            "QuantityDecimalDigits": "2",
-            "CoefficientDecimalDigits": "2",
-            "ExchangRateDecimalDigits": "0",
-            'ClockDecimalDigits' : '2'
-        },
-        "OriginalInvoiceDetail": [],
-        "FeeInfo": None
-    }
-
-    vat_0 = 0
-    vat_5 = 0
-    vat_10 = 0
-
-    a_w_vat_0 = 0
-    a_w_vat_5 = 0
-    a_w_vat_10 = 0
-
-    list_odatadetail = []
-    count = 0
-    for mdata in exam_set:
-        count = count + 1
-        print('count', count)
-        exam = {}
-
-        vat = get_vat(mdata.exam.code)
-        print(vat)
-        print(mdata.exam.code)
-        vat_name = get_vat_name(mdata.exam.code)
-        amount = mdata.exam.get_price()
-        vat_amount = mdata.exam.get_price() * vat
-        amount_without_vat = amount - vat_amount
-
-        if vat_name == 'KCT':
-           print('====', 0)
-           vat_0 += vat_amount
-           a_w_vat_0 += amount_without_vat
-        elif vat_name == '5%':
-            print('====', 5)
-            vat_5 += vat_amount
-            a_w_vat_5 += amount_without_vat
-        elif vat_name == '10%':
-            print('====', 10)
-            vat_10 += vat_amount
-            a_w_vat_10 += amount_without_vat
-        print('vat_name', vat_name)
-        exam.update({
-                "ItemType": 1,
-                "LineNumber": count,
-                "SortOrder": count,
-                "ItemCode": mdata.exam.code,
-                "ItemName": mdata.exam.name,
-                "UnitName": '',
-                "Quantity": 1,
-                "UnitPrice": mdata.exam.get_price(),
-                "DiscountRate": None,
-                "DiscountAmountOC": None,
-                "DiscountAmount": None,
-                "AmountOC":amount,
-                "Amount": amount,
-                "AmountWithoutVATOC": amount_without_vat,                                    
-                "AmountWithoutVAT":  amount_without_vat,
-                "VATRateName": vat_name,
-                "VATAmountOC": vat_amount,
-                "VATAmount": vat_amount    
-            })
-        list_odatadetail.append(exam)
-
-    for mdata in test_set:
-        count = count + 1
-        print('count', count)
-        test = {}
-
-        vat = get_vat(mdata.test.code)
-        print(vat)
-        vat_name = get_vat_name(mdata.test.code)
-        amount = mdata.test.get_price()
-        vat_amount = mdata.test.get_price() * vat
-        amount_without_vat = amount - vat_amount
-
-        if vat_name == 'KCT':
-           vat_0 += vat_amount
-           a_w_vat_0 += amount_without_vat
-        elif vat_name == '5%':
-            vat_5 += vat_amount
-            a_w_vat_5 += amount_without_vat
-        elif vat_name == '10%':
-            vat_10 += vat_amount
-            a_w_vat_10 += amount_without_vat
-        test.update({
-                "ItemType": 1,
-                "LineNumber": count,
-                "SortOrder": count,
-                "ItemCode": mdata.test.code,
-                "ItemName": mdata.test.name_vie,
-                "UnitName": '',
-                "Quantity": 1,
-                "UnitPrice": mdata.test.get_price(),
-                "DiscountRate": None,
-                "DiscountAmountOC": None,
-                "DiscountAmount": None,
-                "AmountOC":amount,
-                "Amount": amount,
-                "AmountWithoutVATOC": amount_without_vat,                                    
-                "AmountWithoutVAT":  amount_without_vat,
-                "VATRateName": vat_name,
-                "VATAmountOC": vat_amount,
-                "VATAmount": vat_amount    
-            })
-        list_odatadetail.append(test)
-
-    for mdata in precedure_set:
-        count = count + 1
-        print('count', count)
-        prec = {}
-
-        vat = get_vat(mdata.precedure.code)
-        print(vat)
-        vat_name = get_vat_name(mdata.precedure.code)
-        amount = mdata.precedure.get_price()
-        vat_amount = mdata.precedure.get_price() * vat
-        amount_without_vat = amount - vat_amount
-
-        if vat_name == 'KCT':
-           vat_0 += vat_amount
-           a_w_vat_0 += amount_without_vat
-        elif vat_name == '5%':
-            vat_5 += vat_amount
-            a_w_vat_5 += amount_without_vat
-        elif vat_name == '10%':
-            vat_10 += vat_amount
-            a_w_vat_10 += amount_without_vat
-
-        prec.update({
-                "ItemType": 1,
-                "LineNumber": count,
-                "SortOrder": count,
-                "ItemCode": mdata.precedure.code,
-                "ItemName": mdata.precedure.name_vie,
-                "UnitName": '',
-                "Quantity": mdata.amount,
-                "UnitPrice": mdata.precedure.get_price(),
-                "DiscountRate": None,
-                "DiscountAmountOC": None,
-                "DiscountAmount": None,
-                "AmountOC":amount,
-                "Amount": amount,
-                "AmountWithoutVATOC": amount_without_vat,                                    
-                "AmountWithoutVAT":  amount_without_vat,
-                "VATRateName": vat_name ,#mdata.precedure.vat,
-                "VATAmountOC": vat_amount,
-                "VATAmount": vat_amount    
-            })
-        list_odatadetail.append(prec)
-
-    for mdata in medicine_set:
-        count = count + 1
-        print('count', count)
-        med = {}
-
-        vat = get_vat(mdata.medicine.code)
-        print(vat)
-        vat_name = get_vat_name(mdata.medicine.code)
-
-        quantity = int(mdata.days) * int(mdata.amount)
-        price = quantity * int(mdata.medicine.get_price())
-        vat_amount = price * vat
-        amount_without_vat = price - vat_amount
-
-        if vat_name == 'KCT':
-           vat_0 += vat_amount
-           a_w_vat_0 += amount_without_vat
-        elif vat_name == '5%':
-            vat_5 += vat_amount
-            a_w_vat_5 += amount_without_vat
-        elif vat_name == '10%':
-            vat_10 += vat_amount
-            a_w_vat_10 += amount_without_vat
-        med.update({
-                "ItemType": 1,
-                "LineNumber": count,
-                "SortOrder": count,
-                "ItemCode": mdata.medicine.code,
-                "ItemName": mdata.medicine.name,
-                "UnitName": mdata.medicine.unit_vie,
-                "Quantity": quantity,
-                "UnitPrice": mdata.medicine.get_price(),
-                "DiscountRate": None,
-                "DiscountAmountOC": None,
-                "DiscountAmount": None,
-                "AmountOC":price,
-                "Amount": price,
-                "AmountWithoutVATOC": amount_without_vat,                                    
-                "AmountWithoutVAT": amount_without_vat,
-                "VATRateName": vat_name,
-                "VATAmountOC": vat_amount,
-                "VATAmount": vat_amount    
-            })
-        list_odatadetail.append(med)
-        
-
-    odata['OriginalInvoiceDetail'] = list_odatadetail
-
-    vat_rate_list = []
-    if a_w_vat_0 != 0:
-        tax_rate_0 = {
-            'VATRateName' : 'KCT',
-            'AmountWithoutVATOC': a_w_vat_0,
-            'VATAmountOC': vat_0
-        }
-        vat_rate_list.append(tax_rate_0)
-    if a_w_vat_5 != 0:
-        tax_rate_5 = {
-            'VATRateName' : '5%',
-            'AmountWithoutVATOC': a_w_vat_5,
-            'VATAmountOC': vat_5
-        }
-        vat_rate_list.append(tax_rate_5)
-
-    if a_w_vat_10 != 0:
-        tax_rate_10 = {
-            'VATRateName' : '10%',
-            'AmountWithoutVATOC': a_w_vat_10,
-            'VATAmountOC': vat_10
-        }
-        vat_rate_list.append(tax_rate_10)
-    
-    odata['TaxRateInfo'] = vat_rate_list
-
-    odata['TotalAmountWithoutVATOC'] = a_w_vat_0 + a_w_vat_5 + a_w_vat_10
-    odata['TotalAmountWithoutVAT'] = a_w_vat_0 + a_w_vat_5 + a_w_vat_10
-    odata['TotalVATAmountOC'] = vat_0 + vat_5 + vat_10
-    odata['TotalVATAmount'] = vat_0 + vat_5 + vat_10
-
-        # "TotalAmountWithoutVATOC":payment.total / 11 * 10,
-        # "TotalAmountWithoutVAT":payment.total / 11 * 10,
-        # "TotalVATAmountOC":payment.total / 11 ,
-        # "TotalVATAmount":payment.total / 11 ,
     data = [{
         'RefID': reception_id,
         'OriginalInvoiceData': odata
@@ -2292,6 +1643,7 @@ def public_invoice(request):
     response = requests.post(url, headers=headers, json=data)
     print(response.json())
     return JsonResponse({'result': 'ok'})
+
 
 def get_vat(string):
     data = {
@@ -5348,3 +4700,59 @@ def get_vat_name(string):
     except:
         val = 'KCT'
     return val
+
+def doc_so(so):
+    chu_so = ["không", "một", "hai", "ba", "bốn", "năm", "sáu", "bảy", "tám", "chín"]
+    hang = ["", "nghìn", "triệu", "tỷ"]
+
+    def doc_3_so(so):
+        tram = so // 100
+        chuc = (so % 100) // 10
+        don_vi = so % 10
+        ket_qua = ""
+
+        if tram > 0:
+            ket_qua += chu_so[tram] + " trăm"
+            if chuc == 0 and don_vi != 0:
+                ket_qua += " lẻ"
+        elif chuc > 0 or don_vi > 0:
+            if len(ket_qua) > 0:  # Nếu có "triệu" hoặc "nghìn" phía trước
+                ket_qua += " lẻ"
+
+        if chuc > 0:
+            if chuc == 1:
+                ket_qua += " mười"
+            else:
+                ket_qua += " " + chu_so[chuc] + " mươi"
+
+            if don_vi == 1 and chuc > 1:
+                ket_qua += " mốt"
+            elif don_vi == 5 and chuc > 0:
+                ket_qua += " lăm"
+            elif don_vi != 0:
+                ket_qua += " " + chu_so[don_vi]
+        elif don_vi != 0:
+            ket_qua += " " + chu_so[don_vi]
+
+        return ket_qua.strip()
+
+    def doc_tien(so):
+        ket_qua = ""
+        vi_tri = 0
+
+        if so == 0:
+            return "không đồng"
+
+        while so > 0:
+            so_hien_tai = so % 1000
+            if so_hien_tai != 0 or vi_tri == 0:
+                ket_qua = doc_3_so(so_hien_tai) + " " + hang[vi_tri] + " " + ket_qua
+            so //= 1000
+            vi_tri += 1
+
+        return ket_qua.strip()
+
+    ket_qua = doc_tien(so)
+    ket_qua = ket_qua[0].upper() + ket_qua[1:] + " đồng"
+
+    return ket_qua.strip()

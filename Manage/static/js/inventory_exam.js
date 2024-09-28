@@ -45,7 +45,7 @@ $(function () {
     //ADD , Edit 
 
 
-    ////Level ÀÚµ¿ °è»ê
+    ////Level ï¿½Úµï¿½ ï¿½ï¿½ï¿½
     function set_level_price_multi() {
         var price_input = $("#add_edit_database_price_input").val();
         var level = $('#add_edit_database_multiple_level option:selected').val();
@@ -202,8 +202,10 @@ function exam_database_search(page = null) {
                         "<td>" + response.datas[i]['id'] + "</td>" +
                         "<td>" + response.datas[i]['code'] + "</td>" +
                         "<td title='" + response.datas[i]['name'] + "'>" + response.datas[i]['name'] + "</td>" +
+                        "<td>" + response.datas[i]['name_vn'] + "</td>" +
                         "<td>" + response.datas[i]['doctor'] + "</td>" +
                         "<td>" + numberWithCommas(response.datas[i]['price']) + "</td>" +
+                        "<td>" + response.datas[i]['tax_rate'] + " %</td>" +
                         "<td>" +
                         "<a class='btn btn-default btn-xs' style='margin-right:10px;' href='javascript: void (0);' onclick='edit_database_exam(" + response.datas[i]['id'] + ")' ><i class='fa fa-lg fa-pencil'></i></a>" +
                         "<a class='btn btn-danger btn-xs' href='javascript: void (0);' onclick='delete_database_precedure(" + response.datas[i]['id'] + ")' ><i class='fa fa-lg fa-trash'></i></a></tr> ";
@@ -216,7 +218,7 @@ function exam_database_search(page = null) {
             }
 
 
-            //ÆäÀÌÂ¡
+            //ï¿½ï¿½ï¿½ï¿½Â¡
             $('#medicine_pagnation').html('');
             str = '';
             if (response.has_previous == true) {
@@ -274,8 +276,10 @@ function edit_database_exam(id = null) {
                 if (response.result == true) {
                     $("#add_edit_database_id").val(response.id);
                     $("#add_edit_database_name").val(response.name);
+                    $("#add_edit_database_name_vn").val(response.name_vn);
                     $("#add_edit_database_price_output").val(response.price);
                     $("#add_edit_database_class").val(response.doctor_id);
+                    $("#add_edit_database_tax").val(response.tax_rate);
                     console.log(response.doctor_id)
 
                 } else {
@@ -300,6 +304,8 @@ function save_database_test(id = null) {
     }
 
     var name = $("#add_edit_database_name").val();
+    var tax = $("#add_edit_database_tax").val();
+    var name_vn = $("#add_edit_database_name_vn").val();
     if (name == '' || name == null) {
         alert(gettext('Name is necessary! '));
         return;
@@ -317,8 +323,10 @@ function save_database_test(id = null) {
             'csrfmiddlewaretoken': $('#csrf').val(),
             'id': id,
             'name': name,
+            'name_vn': name_vn,
             'price': price,
             'doctor':doctor_id,
+            'tax':tax
 
         },
         dataType: 'Json',
