@@ -135,7 +135,7 @@ Manage/static/excel_form
 env_local/
 *.sqlite3
 *.rar
-# */static/
+*/static/
 */excel_form
 *.xlsx
 */uploads/
@@ -143,3 +143,6 @@ env_local/
 *.css
 *.svg
 static/*
+staticfiles/*
+staticfiles
+static
