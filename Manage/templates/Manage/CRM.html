@@ -4,204 +4,205 @@
 {% block content %}
 
 {% csrf_token %}
-    <div class="background_grid">
-        <div class="customer_list partition">
-            <div class="status_table_title">
-                <span class="btn btn-danger title_span">{{ _('Customer Management') }}</span>
-                    <div style="float:right;">
-                        <input type="hidden" value="customer list" id="customer_list" />
-                        <!--Date-->
-                        <div class="date_input_div" style="{% if user.doctor %} margin-right:0px; {%endif%}">
-                            {{ _('Date')}}:
-                            <input type="text" class="form-control date_input" id="date_start" /> ~
-                            <input type="text" class="form-control date_input" id="date_end" />
-                        </div>             
-                        <div class="input-group" id="document_control_depart_div" style="{% if user.doctor %} display:none; {%endif%}">
-                            <span class="input-group-addon reception_table_title" id="basic-addon1">{{ _('Depart') }}</span>
-                            <select id="control_depart" class="form-control">
-                                <option value="">{{ _('All') }}</option>
-                                {% for depart in departs %}
-                                <option value="{{depart.id}}" {% if user.doctor.depart.id is depart.id %} selected {%endif%}>{{ depart.name }}</option>
-                                {% endfor %}
-                            </select>
-                        </div>
-                        <div class="input-group depart_select">
-                            <span class="input-group-addon patient_table_title" id="basic-addon1">{{ _('Type') }}</span>
-                            <select name="depart" id="patient_type" class="form-control costom-select " aria-describedby="basic-addon1" >
-                                <option value="" selected="">{{ _('ALL') }}</option>
-                                                    
-                            </select>
-                        </div>
-                        <input type="text" id="patient_search" class="form-control"/>
-                        <input type="button" id="patient_search_btn" class="btn btn-default" value="{{ _('Search') }}" style="display:inline;"/>
-                    </div>
+<div class="background_grid">
+    <div class="customer_list partition">
+        <div class="status_table_title">
+            <span class="btn btn-danger title_span">{{ _('Customer Management') }}</span>
+            <div style="float:right;">
+                <input type="hidden" value="customer list" id="customer_list" />
+                <!--Date-->
+                <div class="date_input_div" style="{% if user.doctor %} margin-right:0px; {%endif%}">
+                    {{ _('Date')}}:
+                    <input type="text" class="form-control date_input" id="date_start" /> ~
+                    <input type="text" class="form-control date_input" id="date_end" />
                 </div>
-            <div class="patient_list_table_wrap">
-                <table class="table table-bordered table-hover table-striped" id="patient_list_table">
-                    <thead>
-                        <tr>
-                            <th>{{ _('No') }}</th>
-                            <th><input type="checkbox" id="check_sms_all"/></th>
-                            <th>{{ _('Chart') }}</th>
-                            <th>{{ _('Name') }}</th>
-                            <th>{{ _('Date of Birth') }}</th>
-                            <th>{{ _('Phone Number') }}</th>
-                            <th>{{ _('Date Registered')}}</th>
-                            <th>{{ _('Remark') }}</th>
-                            <th>{{ _('Visits') }}</th>
-                            <th>{{ _('Total Paid') }}</th>
-                            <th>{{ _('Manage') }}</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-
-                    </tbody>
-                </table>
-                <ul class="pagination" id="table_pagnation">
-
-                </ul>
-                <div style="float:right">
-                    <a class="btn btn-warning" style="margin-right:5px;" onclick="sms_modal()"><i class="fa fa-lg fa-mobile"></i> {{ _('Group Text') }}</a>
-                    <a class="btn btn-default" onclick="excel_download()"><i class="fa fa-file-excel-o"></i>{{ _('Download') }}</a>
+                <div class="input-group" id="document_control_depart_div" style="{% if user.doctor %} display:none; {%endif%}">
+                    <span class="input-group-addon reception_table_title" id="basic-addon1">{{ _('Depart') }}</span>
+                    <select id="control_depart" class="form-control">
+                        <option value="">{{ _('All') }}</option>
+                        {% for depart in departs %}
+                        <option value="{{depart.id}}" {% if user.doctor.depart.id is depart.id %} selected {%endif%}>{{ depart.name }}</option>
+                        {% endfor %}
+                    </select>
                 </div>
+                <div class="input-group depart_select">
+                    <span class="input-group-addon patient_table_title" id="basic-addon1">{{ _('Type') }}</span>
+                    <select name="depart" id="patient_type" class="form-control costom-select " aria-describedby="basic-addon1" >
+                        <option value="" selected="">{{ _('ALL') }}</option>
+
+                    </select>
+                </div>
+                <input type="text" id="patient_search" class="form-control"/>
+                <input type="button" id="patient_search_btn" class="btn btn-default" value="{{ _('Search') }}" style="display:inline;"/>
             </div>
         </div>
+        <div class="patient_list_table_wrap">
+            <table class="table table-bordered table-hover table-striped" id="patient_list_table">
+                <thead>
+                    <tr>
+                        <th>{{ _('No') }}</th>
+                        <th><input type="checkbox" id="check_sms_all"/></th>
+                        <th>{{ _('Chart') }}</th>
+                        <th>{{ _('Name') }}</th>
+                        <th>{{ _('Date of Birth') }}</th>
+                        <th>{{ _('Phone Number') }}</th>
+                        <th>{{ _('Date Registered')}}</th>
+                        <th>{{ _('Remark') }}</th>
+                        <th>{{ _('Visits') }}</th>
+                        <th>{{ _('Total Paid') }}</th>
+                        <th>{{ _('Manage') }}</th>
+                    </tr>
+                </thead>
+                <tbody>
 
-        <div class="customer_info partition">
-            <div class="status_table_title">
-                  <!-- Nav tabs -->
-                  <ul class="nav nav-tabs" role="tablist">
-                    <li role="presentation" class="active"><a href="#basic_info" aria-controls="basic_info" role="tab" data-toggle="tab">{{ _('Basic Info') }}</a></li>
-                    <li role="presentation"><a href="#visit_history" aria-controls="visit_history" role="tab" data-toggle="tab">{{ _('Visit History') }}</a></li>
-                    <li role="presentation"><a href="#vaccine_history" aria-controls="vaccine_history" role="tab" data-toggle="tab">{{ _('Vaccine History') }}</a></li>
-                  </ul>
-                  <!-- Tab panes -->
-                  <div class="tab-content">
-                      <!--Basic Information-->
-                    <div role="tabpanel" class="tab-pane active" id="basic_info">
-                        <input type="hidden" id="patient_id" value="" />
-                        <div class="input-group fl">
-                            <span class="input-group-addon" id="basic-addon1">{{ _('Chart No') }}</span>
-                            <input type="text" id="basic_info_chart_no" class="form-control medicine_control_input" aria-describedby="basic-addon1" readonly>
-                        </div>
-                        <div class="input-group fr">
-                            <span class="input-group-addon patient_table_title" id="patient_nationality_span">{{_('Nationality') }}</span>
-                            <select name="nationality" id="patient_nationality" class="form-control costom-select" aria-describedby="basic-addon1" required="">
-                                <option value="">---------</option>
-                                <option value="Korea">{{ _('Korea') }}</option>
-                                <option value="Vietnam">{{ _('Vietnam') }}</option>
-                                <option value="Other">{{ _('Other') }}</option>
-                            </select>
-                        </div>
-                        <div class="input-group fl">
-                            <span class="input-group-addon" id="basic-addon1">{{ _('Korean Name') }}</span>
-                            <input type="text" id="basic_info_name_kor" class="form-control medicine_control_input" aria-describedby="basic-addon1">
-                        </div>
-                        <div class="input-group fr">
-                            <span class="input-group-addon" id="basic-addon1">{{ _('English Name') }}</span>
-                            <input type="text" id="basic_info_name_eng" class="form-control medicine_control_input" aria-describedby="basic-addon1">
-                        </div>
-                        <div class="input-group fl">
-                            <span class="input-group-addon" id="basic-addon1">{{ _('Date of Birth') }}</span>
-                            <input type="text" id="basic_info_dob" class="form-control medicine_control_input" aria-describedby="basic-addon1">
-                        </div>
-                        <div class="input-group fr">
-                            <span class="input-group-addon">{{ _('Gender') }}</span>
-                            <select name="gender" id="basic_info_gender" class="form-control costom-select" aria-describedby="basic-addon1" required="">
-                                <option value="">---------</option>
-                                <option value="Male">{{ _('Male') }}</option>
-                                <option value="Female">{{ _('Female') }}</option>
-                            </select>
-                        </div>
-                        <div class="input-group">
-                            <span class="input-group-addon" id="basic-addon1">{{ _('Address') }}</span>
-                            <input type="text" id="basic_info_address" class="form-control medicine_control_input" aria-describedby="basic-addon1">
-                        </div>
-                        <div class="input-group">
-                            <span class="input-group-addon" id="basic-addon1">{{ _('Phone Number') }}</span>
-                            <input type="text" id="basic_info_phone" class="form-control medicine_control_input" aria-describedby="basic-addon1">
-                        </div>
-                        <div class="input-group">
-                            <span class="input-group-addon" id="basic-addon1">{{ _('Passport') }}</span>
-                            <input type="text" id="basic_info_passport" class="form-control medicine_control_input" aria-describedby="basic-addon1">
-                        </div>
-                        <div class="input-group">
-                            <span class="input-group-addon" id="basic-addon1">{{ _('Email') }}</span>
-                            <input type="text" id="basic_info_email" class="form-control medicine_control_input" aria-describedby="basic-addon1">
-                        </div>
-                        <div class="input-group">
-                            <span class="input-group-addon" id="basic-addon1">{{ _('Memo') }}</span>
-                            <input type="text" id="basic_info_memo" class="form-control medicine_control_input" aria-describedby="basic-addon1">
-                            <div class="input-group-btn patient_mark_div">
-                                <select class="form-control" id="basic_info_mark">
-                                    <option value="" selected>--</option>
-                                    {% for data in patient_mark %}
-                                        <option value="{{ data.commcode }}">{{data.se1}}</option>
-                                    {% endfor%}
-                                </select>
-                            </div>
-                        </div>
-                        <div class="input-group"> 
-                            <span class="input-group-addon" id="basic-addon1">{{ _('Funnels') }}</span>
-                            <div class="input-group-btn patient_funnels_div">
-                                <select class="form-control" id="basic_info_funnel">
-                                    <option value="" selected>---------</option>
-                                    {% for data in list_funnels %}
-                                        <option value="{{ data.code }}">{{data.name}}</option>
-                                    {% endfor%}
-                                    <option value="etc">{{ _('Etc.') }}</option>
-                                </select>
-                            </div>
-                            <input type="text" id="basic_info_funnel_etc" class="form-control" aria-describedby="basic-addon1" autocomplete="off">
-                        </div>
-                        <div style="text-align:right;">
-                            <a class="btn btn-primary" onclick="save_information()">{{ _('Save') }}</a>
-                        </div>
-                    </div>
-                        <div role="tabpanel" class="tab-pane" id="visit_history">
-                            <table class="table table-bordered table-hover table-striped">
-                                <thead>
-                                    <tr>
-                                        <th>{{ _('No') }}</th>
-                                        <th>{{ _('Depart') }}</th>
-                                        <th>{{ _('Doctor') }}</th>
-                                        <th>{{ _('Date Visited') }}</th>
-                                        <th>{{ _('Paid') }}</th>
-                                        <th>{{ _('History') }}</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
+                </tbody>
+            </table>
+            <ul class="pagination" id="table_pagnation">
 
-                                </tbody>
-                            </table>
-
-
-                        </div>
-                      <div role="tabpanel" class="tab-pane" id="vaccine_history">
-                          <div>
-                                <table class="table table-bordered table-hover table-striped" id="vaccine_history_table">
-                                    <thead>
-                                        <tr>
-                                            <th>{{ _('No') }}</th>
-                                            <th>{{ _('Name') }}</th><!--백신 이름-->
-                                            <th>{{ _('Round') }}</th><!--회차-->
-                                            <th>{{ _('Date') }}</th>
-                                            <th></th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-
-                                    </tbody>
-                                </table>
-                              
-                          </div>
-
-                          <a class="btn btn-primary" style="float:right;" href="javascript:void(0);" onclick="vaccine_history_modal()">{{ _('New') }}</a>
-                    </div>
-                  </div>
+            </ul>
+            <div style="float:right">
+                <a class="btn btn-warning" style="margin-right:5px;" onclick="sms_modal()"><i class="fa fa-lg fa-mobile"></i> {{ _('Group Text') }}</a>
+                <a class="btn btn-default" onclick="excel_download()"><i class="fa fa-file-excel-o"></i>{{ _('Download') }}</a>
             </div>
         </div>
     </div>
+
+    <div class="customer_info partition">
+        <div class="status_table_title">
+            <!-- Nav tabs -->
+            <ul class="nav nav-tabs" role="tablist">
+                <li role="presentation" class="active"><a href="#basic_info" aria-controls="basic_info" role="tab" data-toggle="tab">{{ _('Basic Info') }}</a></li>
+                <li role="presentation"><a href="#visit_history" aria-controls="visit_history" role="tab" data-toggle="tab">{{ _('Visit History') }}</a></li>
+                <li role="presentation"><a href="#vaccine_history" aria-controls="vaccine_history" role="tab" data-toggle="tab">{{ _('Vaccine History') }}</a></li>
+            </ul>
+            <!-- Tab panes -->
+            <div class="tab-content">
+                <!--Basic Information-->
+                <div role="tabpanel" class="tab-pane active" id="basic_info">
+                    <input type="hidden" id="patient_id" value="" />
+                    <div class="input-group fl">
+                        <span class="input-group-addon" id="basic-addon1">{{ _('Chart No') }}</span>
+                        <input type="text" id="basic_info_chart_no" class="form-control medicine_control_input" aria-describedby="basic-addon1" readonly>
+                    </div>
+                    <div class="input-group fr">
+                        <span class="input-group-addon patient_table_title" id="patient_nationality_span">{{_('Nationality') }}</span>
+                        <select name="nationality" id="patient_nationality" class="form-control costom-select" aria-describedby="basic-addon1" required="">
+                            <option value="">---------</option>
+                            <option value="Korea">{{ _('Korea') }}</option>
+                            <option value="Vietnam">{{ _('Vietnam') }}</option>
+                            <option value="Other">{{ _('Other') }}</option>
+                        </select>
+                    </div>
+                    <div class="input-group fl">
+                        <span class="input-group-addon" id="basic-addon1">{{ _('Korean Name') }}</span>
+                        <input type="text" id="basic_info_name_kor" class="form-control medicine_control_input" aria-describedby="basic-addon1">
+                    </div>
+                    <div class="input-group fr">
+                        <span class="input-group-addon" id="basic-addon1">{{ _('English Name') }}</span>
+                        <input type="text" id="basic_info_name_eng" class="form-control medicine_control_input" aria-describedby="basic-addon1">
+                    </div>
+                    <div class="input-group fl">
+                        <span class="input-group-addon" id="basic-addon1">{{ _('Date of Birth') }}</span>
+                        <input type="text" id="basic_info_dob" class="form-control medicine_control_input" aria-describedby="basic-addon1">
+                    </div>
+                    <div class="input-group fr">
+                        <span class="input-group-addon">{{ _('Gender') }}</span>
+                        <select name="gender" id="basic_info_gender" class="form-control costom-select" aria-describedby="basic-addon1" required="">
+                            <option value="">---------</option>
+                            <option value="Male">{{ _('Male') }}</option>
+                            <option value="Female">{{ _('Female') }}</option>
+                        </select>
+                    </div>
+                    <div class="input-group">
+                        <span class="input-group-addon" id="basic-addon1">{{ _('Address') }}</span>
+                        <input type="text" id="basic_info_address" class="form-control medicine_control_input" aria-describedby="basic-addon1">
+                    </div>
+                    <div class="input-group">
+                        <span class="input-group-addon" id="basic-addon1">{{ _('Phone Number') }}</span>
+                        <input type="text" id="basic_info_phone" class="form-control medicine_control_input" aria-describedby="basic-addon1">
+                    </div>
+                    <div class="input-group">
+                        <span class="input-group-addon" id="basic-addon1">{{ _('Passport') }}</span>
+                        <input type="text" id="basic_info_passport" class="form-control medicine_control_input" aria-describedby="basic-addon1">
+                    </div>
+                    <div class="input-group">
+                        <span class="input-group-addon" id="basic-addon1">{{ _('Email') }}</span>
+                        <input type="text" id="basic_info_email" class="form-control medicine_control_input" aria-describedby="basic-addon1">
+                    </div>
+                    <div class="input-group">
+                        <span class="input-group-addon" id="basic-addon1">{{ _('Memo') }}</span>
+                        <input type="text" id="basic_info_memo" class="form-control medicine_control_input" aria-describedby="basic-addon1">
+                        <div class="input-group-btn patient_mark_div">
+                            <select class="form-control" id="basic_info_mark">
+                                <option value="" selected>--</option>
+                                {% for data in patient_mark %}
+                                <option value="{{ data.commcode }}">{{data.se1}}</option>
+                                {% endfor%}
+                            </select>
+                        </div>
+                    </div>
+                    <div class="input-group">
+                        <span class="input-group-addon" id="basic-addon1">{{ _('Funnels') }}</span>
+                        <div class="input-group-btn patient_funnels_div">
+                            <select class="form-control" id="basic_info_funnel">
+                                <option value="" selected>---------</option>
+                                {% for data in list_funnels %}
+                                <option value="{{ data.code }}">{{data.name}}</option>
+                                {% endfor%}
+                                <option value="etc">{{ _('Etc.') }}</option>
+                            </select>
+                        </div>
+                        <input type="text" id="basic_info_funnel_etc" class="form-control" aria-describedby="basic-addon1" autocomplete="off">
+                    </div>
+                    <div style="text-align:right;">
+                        <a class='btn btn-default btn-xs' href='javascript: void (0);' onclick='customer_history()'><i class='fa fa-lg fa-print'></i></a>
+                        <a class="btn btn-primary" onclick="save_information()">{{ _('Save') }}</a>
+                    </div>
+                </div>
+                <div role="tabpanel" class="tab-pane" id="visit_history">
+                    <table class="table table-bordered table-hover table-striped">
+                        <thead>
+                            <tr>
+                                <th>{{ _('No') }}</th>
+                                <th>{{ _('Depart') }}</th>
+                                <th>{{ _('Doctor') }}</th>
+                                <th>{{ _('Date Visited') }}</th>
+                                <th>{{ _('Paid') }}</th>
+                                <th>{{ _('History') }}</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+
+                        </tbody>
+                    </table>
+
+
+                </div>
+                <div role="tabpanel" class="tab-pane" id="vaccine_history">
+                    <div>
+                        <table class="table table-bordered table-hover table-striped" id="vaccine_history_table">
+                            <thead>
+                                <tr>
+                                    <th>{{ _('No') }}</th>
+                                    <th>{{ _('Name') }}</th><!--백신 이름-->
+                                    <th>{{ _('Round') }}</th><!--회차-->
+                                    <th>{{ _('Date') }}</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+
+                            </tbody>
+                        </table>
+
+                    </div>
+
+                    <a class="btn btn-primary" style="float:right;" href="javascript:void(0);" onclick="vaccine_history_modal()">{{ _('New') }}</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 
 
 
@@ -248,16 +249,16 @@
                     <a class="btn btn-default" data-dismiss="modal" aria-hidden="true">{{ _('Cancel') }}</a>
                     <a class="btn btn-primary" onclick="send_sms()">{{ _('Send') }}</a>
                 </div>
-                 
+
             </div>
         </div>
     </div>
 </div>
 
 <div id="overlay">
-	<div class="cv-spinner">
-		<span class="spinner"></span>
-	</div>
+    <div class="cv-spinner">
+        <span class="spinner"></span>
+    </div>
 </div>
 
 <div id="past_diagnosis_showlarge_modal" class="modal fade">
@@ -269,7 +270,7 @@
                 <div id="modalBody" class="modal-body" >
                     <table class="table" id="past_diagnosis_showlarge_table">
                         <tbody>
-                    
+
                         </tbody>
                     </table>
                 </div>
@@ -287,32 +288,32 @@
                 <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span> <span class="sr-only">close</span></button>
                 <h2>{{ _('Add / Edit Vaccine') }}</h2>
                 <div id="modalBody" class="modal-body" >
-                    
+
                     <input type="hidden" id="selected_vaccine_history" />
-					<div class="input-group">
-						<span class="input-group-addon" id="basic-addon1">* {{ _('Vaccine Name') }}</span>
-						<input type="text" id="vaccine_name" class="form-control" aria-describedby="basic-addon1">
-					</div>
                     <div class="input-group">
-						<span class="input-group-addon" id="basic-addon1">{{ _('Medicine Name') }}</span>
-						<input type="text" id="medicine_name" class="form-control" aria-describedby="basic-addon1">
-					</div>
+                        <span class="input-group-addon" id="basic-addon1">* {{ _('Vaccine Name') }}</span>
+                        <input type="text" id="vaccine_name" class="form-control" aria-describedby="basic-addon1">
+                    </div>
                     <div class="input-group">
-						<span class="input-group-addon" id="basic-addon1">* {{ _('Vaccine Date') }}</span>
-						<input type="text" id="vaccine_date" class="form-control" aria-describedby="basic-addon1">
-					</div>
+                        <span class="input-group-addon" id="basic-addon1">{{ _('Medicine Name') }}</span>
+                        <input type="text" id="medicine_name" class="form-control" aria-describedby="basic-addon1">
+                    </div>
                     <div class="input-group">
-						<span class="input-group-addon" id="basic-addon1">* {{ _('Round') }}</span>
-						<input type="text" id="round" class="form-control" aria-describedby="basic-addon1">
-					</div>
+                        <span class="input-group-addon" id="basic-addon1">* {{ _('Vaccine Date') }}</span>
+                        <input type="text" id="vaccine_date" class="form-control" aria-describedby="basic-addon1">
+                    </div>
                     <div class="input-group">
-						<span class="input-group-addon" id="basic-addon1">{{ _('Hospital') }}</span>
-						<input type="text" id="hospotal" class="form-control" aria-describedby="basic-addon1">
-					</div>
+                        <span class="input-group-addon" id="basic-addon1">* {{ _('Round') }}</span>
+                        <input type="text" id="round" class="form-control" aria-describedby="basic-addon1">
+                    </div>
                     <div class="input-group">
-						<span class="input-group-addon" id="basic-addon1">{{ _('Memo') }}</span>
-						<input type="text" id="memo" class="form-control" aria-describedby="basic-addon1">
-					</div>
+                        <span class="input-group-addon" id="basic-addon1">{{ _('Hospital') }}</span>
+                        <input type="text" id="hospotal" class="form-control" aria-describedby="basic-addon1">
+                    </div>
+                    <div class="input-group">
+                        <span class="input-group-addon" id="basic-addon1">{{ _('Memo') }}</span>
+                        <input type="text" id="memo" class="form-control" aria-describedby="basic-addon1">
+                    </div>
 
                 </div>
                 <div id="modal-footer" class="modal-body" >
@@ -326,6 +327,9 @@
     </div>
 </div>
 
+<div id="dynamic_div">
+
+</div>
 
 {% endblock %}
 
@@ -333,10 +337,26 @@
 {% block style %}
 <link rel="stylesheet" type="text/css" href="{% static 'css/CRM.css' %}" />
 <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
+<script type="text/javascript" src="{% static 'js/printThis.min.js' %}"></script>
+<link rel="stylesheet" type="text/css" href="{% static 'css/reservation.css' %}" !im />
 
 {% endblock %}
 
 {% block scripts %}
+<script>
+    function customer_history() {
+        var id = $('#patient_id').val();
+        if (id) {
+            $("#dynamic_div").html('');
+            $('#dynamic_div').load('/manage/customer_history/' + id);
+
+            $('#dynamic_div').printThis({});
+            // console.log('hello')
+        }
+
+        
+    }
+</script>
 <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
 <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.js"></script>
 <script src="{% static 'js/CRM.js' %}" type="text/javascript"></script>

@@ -47,16 +47,24 @@
 }
 
 .status_table_title_label {
-    font-weight: 500;
-    font-size:14px;
-    margin-bottom:10px;
+    text-align: left;
+    font-size: 16px;
+    height: 26.5px;
+    padding-top: 1px;
+    margin-bottom: 5px;
 }
 
-.radiation_input {
-    width: 80px;
-    padding:5px;
-    display: inline;
-}
+    .status_table_title_label:hover {
+        background-color: #5cb85c;
+        border-color: #4cae4c;
+        cursor:initial
+    }
+
+    .radiation_input {
+        width: 80px;
+        padding: 5px;
+        display: inline;
+    }
 
 
 

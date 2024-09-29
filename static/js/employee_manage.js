@@ -6,7 +6,7 @@ $(function () {
     $("#add_edit_database_user_ID, #add_edit_database_password, #add_edit_database_password_confirm, #edit_database_password_password, #edit_database_password_confirm").keyup(function (event) {
         if (!(event.keyCode >= 37 && event.keyCode <= 40)) {
             var inputVal = $(this).val();
-            $(this).val(inputVal.replace(/[^a-z0-9]/gi, ''));
+            $(this).val(inputVal.replace(/[^a-z0-9_]/gi, ''));
         }
     });
 
@@ -16,7 +16,7 @@ $(function () {
         autoUpdateInput: false,
         singleDatePicker: true,
         showDropdowns: true,
-        drops: "down",
+        drops: "down", 
         locale: {
             format: 'YYYY-MM-DD',
             locale: { cancelLabel: 'Clear' }
@@ -47,6 +47,7 @@ $(function () {
     $('#inventory_history_date').daterangepicker({
         singleDatePicker: true,
         showDropdowns: true,
+        autoApply: true,
         locale: {
             format: 'YYYY-MM-DD'
         }
@@ -57,6 +58,7 @@ $(function () {
     $('#add_medicine_reg').daterangepicker({
         singleDatePicker: true,
         showDropdowns: true,
+        autoApply: true,
         locale: {
             format: 'YYYY-MM-DD'
         }
@@ -332,7 +334,8 @@ function edit_database(id = null) {
     $("#add_edit_database_ID").prop("disabled", false);
     $("#add_edit_database_password").prop("disabled", false);
     $("#add_edit_database_password_confirm").prop("disabled", false);
-  
+
+    $("#edit_database_menu_btn").hide();
 
     if (id != null) {
         $("#add_edit_database_header").html(gettext('Edit Employee'));
@@ -376,6 +379,7 @@ function edit_database(id = null) {
                     $("#add_edit_database_date_of_employment").val(response.date_of_employment);
                     $("#add_edit_database_remark").val(response.remark);
 
+                    $("#edit_database_menu_btn").show();
                 } else {
                     alert(gettext('Please Refresh this page.'));
                 }
@@ -485,14 +489,16 @@ function delete_database(id = null, user_id = '') {
 function delete_user() {
     console.log('delete_database_id')
     var id = $("#delete_database_id").val();
+    var date_of_resignation = $("#delete_database_date_of_resignation").val();
+    var resignation_reason = $("#delete_database_resignation_reason").val();
     $.ajax({
         type: 'POST',
         url: '/manage/employee_delete/',
         data: {
             'csrfmiddlewaretoken': $('#csrf').val(),
             'id': id,
-            'date_of_resignation': $("#delete_database_date_of_resignation").val(),
-            'resignation_reason': $("#delete_database_resignation_reason").val(),
+            'date_of_resignation': date_of_resignation,
+            'resignation_reason': resignation_reason,
         },
         dataType: 'Json',
         success: function (response) {
@@ -538,7 +544,7 @@ function edit_database_password(id = null, user_id = '') {
 
 function change_password() {
     var id = $("#password_database_id").val();
-
+    console.log('change_password')
     var test = $("#edit_database_password_password").val();
     console.log(test)
 
@@ -575,6 +581,8 @@ function check_id() {
         alert(gettext('ID field is empty.'));
         return false;
     }
+
+
 
     $.ajax({
         type: 'POST',
@@ -687,13 +695,26 @@ function is_valid(type = null) {
             return false;
         }
 
+        //Rank
+        var rank = $("#add_edit_database_rank").val()
+        if (rank == '' || rank == null) {
+            alert(gettext('Rank field is empty'));
+            return false;
+        }
+
+        //Depart
+        var depart = $("#add_edit_database_depart").val()
+        if (depart == '' || depart == null) {
+            alert(gettext('Depart field is empty'));
+            return false;
+        }
+
         //Division
         var division = $("#add_edit_database_division").val()
         if (division == '' || division == null) {
             alert(gettext('Division field is empty'));
             return false;
         }
-
 
         //Status
         var status = $("#add_edit_database_status").val()
@@ -725,15 +746,77 @@ function is_valid(type = null) {
         return false;
     }
     
-
-
 }
 
 
 
 
 
+function edit_database_menu() {
+    user_id = $("#add_edit_database_id").val();
+    if (user_id == '') return;
 
+    $(".menu_item_wrap input[type='checkbox']").prop('checked', false);
+
+    $.ajax({
+        type: 'POST',
+        url: '/manage/employee_menu_get/',
+        data: {
+            'csrfmiddlewaretoken': $('#csrf').val(),
+    
+            'user_id': user_id,
+        },
+        dataType: 'Json',
+        success: function (response) {
+            for (var i = 0; i < response.datas.length; i++) {
+                $("#menu_" + response.datas[i] ).prop('checked', true);
+            }
+
+            $('#edit_database_menu').modal({ backdrop: 'static', keyboard: false });
+            $("#edit_database_menu").modal('show')
+        },
+        error: function (request, status, error) {
+            console.log("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
+    
+        },
+    })
+
+    
+}
+
+
+function menu_save() {
+    user_id = $("#add_edit_database_id").val();
+    if (user_id == '') return;
+
+    var checked_array = []
+    var checked = $(".menu_item_wrap input:checked");
+    for (var i = 0; i < checked.length; i++) {
+        checked_array.push($(checked[i]).attr('id'))
+    }
+
+
+    $.ajax({
+        type: 'POST',
+        url: '/manage/employee_menu_save/',
+        data: {
+            'csrfmiddlewaretoken': $('#csrf').val(),
+
+            'user_id': user_id,
+            'checked_array[]': checked_array,
+        },
+        dataType: 'Json',
+        success: function (response) {
+            alert(gettext('Saved.'))
+
+            $("#edit_database_menu").modal('hide')
+        },
+        error: function (request, status, error) {
+            console.log("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
+
+        },
+    })
+}
 
 
 

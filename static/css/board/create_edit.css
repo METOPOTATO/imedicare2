@@ -1,10 +1,10 @@
-ul {
-    padding-left:10px;
+.board_grid ul {
+    padding-left: 10px;
 }
 
-li{
-    margin:5px;
-    list-style:none;
+.board_grid li {
+    margin: 5px;
+    list-style: none;
 }
 
 
@@ -31,11 +31,12 @@ input[type=checkbox] {
 }
 
 
-.title_span{
-    margin-top: 20px;
-    margin-bottom: 20px;
-    font-size: 15px;
+.title_span {
+    text-align: left;
+    font-size: 16px;
+    height: 26.5px;
     padding-top: 1px;
+    margin-bottom: 5px;
     background: rgb(233, 69, 139);
     border-color: rgb(233, 69, 139);
 }
@@ -51,9 +52,10 @@ input[type=checkbox] {
 
 
 .board_list_wrap, .content_wrap {
-    width: 1300px;
+    width: 1400px;
     min-height: 800px;
-    margin: 0 auto;
+    /*margin: 0 auto;*/
+    margin-left:200px;
     text-align: left;
 }
 
@@ -148,9 +150,21 @@ input[type=checkbox] {
     margin-right:20px;
 }
 
-.option_check_label {
-    display: inline;
+.option_select_request_to_div {
+    width: 304px;
 }
+#option_select_request_to_div4 {
+    margin-right: 0px;
+}
+
+    .option_select_request_to_div > .form-control {
+        padding:5px;
+
+    }
+
+    .option_check_label {
+        display: inline;
+    }
 
 .delete_files {
     display: inline;

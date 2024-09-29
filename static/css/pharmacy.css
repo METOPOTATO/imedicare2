@@ -7,7 +7,8 @@ body {
     height: 100%;
     width: 100%;
     display: grid;
-    grid-template-columns: 30% ;
+    grid-template-columns: 45% ;
+    grid-template-rows: 27% ;
 }
 
 
@@ -23,19 +24,23 @@ body {
 .pharmacy_list {
     grid-column-start: 1;
     grid-column-end: 2;
+    grid-row-start: 1;
+    grid-row-end: 3;
     overflow-y:auto;
 }
 
-.pharmacy_list_control{
-    text-align:right;
-}
+
+
+/* .pharmacy_list_control {
+    text-align: right;
+} */
 
 .pharmacy_list_control *{
-    display:inline-block;
+    display:inline;
 }
 
     .pharmacy_list_table_wrap {
-    height:590px;
+    height:770px;
     overflow:auto;
 }
 
@@ -57,15 +62,65 @@ body {
     }
 
 
+.pharmacy_patient_info {
+    grid-column-start: 2;
+    grid-column-end: 3;
+    grid-row-start: 1;
+    grid-row-end: 2;
+}
+
 
 .pharmacy_contents {
     grid-column-start: 2;
     grid-column-end: 3;
-
+    grid-row-start: 2;
+    grid-row-end: 3;
 }
+
+
+#patient_info_table .input-group{
+    width:400px;
+    height:30px;
+    margin-bottom:0px;
+}
+#patient_info_table .input-group-addon{
+
+    width:120px;
+}
+
+
+#patient_gender {
+    list-style: none;
+    margin: 0px;
+    padding: 0px;
+}
+
+    #patient_gender input[type=radio] {
+        width: auto;
+    }
+
+    #patient_gender li {
+        margin-left: 4.5px;
+        margin-right: 0;
+        display: inline;
+    }
+
+        #patient_gender li:first-child {
+            margin-right: 50px;
+        }
+
+#patient_gender {
+    margin-top: 4px;
+}
+
+    #patient_gender input {
+        vertical-align: middle;
+        margin-top: -1px;
+    }
+
 .pharmacy_contents_overflow {
-    margin-top:15px;
-    height: 600px;
+    margin-top: 15px;
+    height: 520px;
     overflow: auto;
 }
 
@@ -75,9 +130,11 @@ body {
     text-align: left;
 }
 .medicine_table_title_span {
-    font-size: 1.9vh;
-    height: 3.2vh;
-    padding-top: 0.1vh;
+    text-align: left;
+    font-size: 16px;
+    height: 26.5px;
+    padding-top: 1px;
+    margin-bottom: 5px;
     background: rgb(90,64,129);
     border-color: rgb(90,64,129);
 }
@@ -128,6 +185,59 @@ body {
     padding-left:20px;
 }
 
+#pharmacy_list_table{
+    table-layout:fixed;
+}
+
+    #pharmacy_list_table td, #pharmacy_list_table th{
+        vertical-align:middle;
+        text-align:center;
+    }
+    #pharmacy_list_table th:nth-child(1){width:30px;}
+    #pharmacy_list_table th:nth-child(2){width:70px;}
+    #pharmacy_list_table th:nth-child(3){width:200px;}
+    #pharmacy_list_table th:nth-child(4){width:140px;}
+    #pharmacy_list_table th:nth-child(5){width:100px;}
+    #pharmacy_list_table th:nth-child(6), #pharmacy_list_table th:nth-child(7) {width: 120px;}
+
+        #pharmacy_list_table tbody tr td:nth-child(3) {
+            text-align:left;
+        }
+
+#pharmacy_contents_table{
+    table-layout:fixed;
+}
+
+    #pharmacy_contents_table td, #pharmacy_contents_table th {
+        vertical-align: middle;
+        text-align: center;
+    }
+
+    #pharmacy_contents_table th:nth-child(1){width:50px;}
+    #pharmacy_contents_table th:nth-child(2){}
+    #pharmacy_contents_table th:nth-child(3){width:70px;}
+    #pharmacy_contents_table th:nth-child(4){width:70px;}
+    #pharmacy_contents_table th:nth-child(5){width:70px;}
+        #pharmacy_contents_table th:nth-child(6), #pharmacy_contents_table th:nth-child(7), #pharmacy_contents_table th:nth-child(8) {
+            width: 60px;
+        }
+    #pharmacy_contents_table th:nth-child(9){width:200px;}
+    #pharmacy_contents_table th:nth-child(10){width:70px;}
+
+        #pharmacy_contents_table td:nth-child(2), #pharmacy_contents_table td:nth-child(9) {
+            text-align: left;
+        }
+
+.pharmacy_patient_info {
+    grid-column-start: 2;
+    grid-column-end: 3;
+    grid-row-start: 1;
+    grid-row-end: 2;
+}
+
+
+
+
 @media ( min-height: 965px ) {
     .pharmacy_list_calendar {
         width: 75px;
@@ -141,4 +251,29 @@ body {
     .pharmacy_database_table{
             height:500px;
     }
+
 }
+
+
+#overlay {
+    position: fixed;
+    top: 0;
+    z-index: 5555;
+    width: 100%;
+    height: 100%;
+    display: none;
+    background: rgba(0,0,0,0.6);
+}
+
+.depart_select{
+    display:inline-table;
+    width:115px;
+}
+
+    .depart_select span, .depart_select select {
+    padding:5px;
+    
+    }
+    .reception_table_title {
+        padding:5px;
+    }    

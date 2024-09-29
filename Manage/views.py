@@ -1461,8 +1461,8 @@ def audit_excel(request):
     path = static('excel_form/I-MEDICARE_REPORT.xlsx')
 
     #엑셀 파일 불러오기
-    # wb = load_workbook('/home/imedicare/Cofee/static/excel_form/audit_report.xlsx') #Workbook()
-    wb = load_workbook('/home/light/Desktop/Projects/imedicare2/static/excel_form/audit_report.xlsx')
+    wb = load_workbook('/home/imedicare/Cofee/static/excel_form/audit_report.xlsx') #Workbook()
+    # wb = load_workbook('/home/light/Desktop/Projects/imedicare2/static/excel_form/audit_report.xlsx')
     ws = wb.active# grab the active worksheet
 
     #선택한 날짜
@@ -7842,17 +7842,16 @@ def board_work_list(request,id=None):
         depart_name = user['depart']
         if user['depart'] == 'DOCTOR':
             depart_name = user['depart'] + '_' + user['depart_doctor']
-        try: 
-            user_dict.update({
-                user['id'] : {
-                    'user_id':user['user_id'],
-                    'name':user['name'],
-                    'depart':dict_depart[depart_name],
-                    }
-                })
+        
+        user_dict.update({
+            user['id'] : {
+                'user_id':user['user_id'],
+                'name':user['name'],
+                'depart':dict_depart[depart_name],
+                }
+            })
 
-        except Exception as e:
-            print(e)
+
 
     #content
     content = None;

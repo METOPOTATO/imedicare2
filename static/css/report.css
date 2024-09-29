@@ -108,9 +108,11 @@ body {
 }
 
 .status_table_title span {
-    font-size: 15px;
-    height: 22.5px;
+    text-align: left;
+    font-size: 16px;
+    height: 26.5px;
     padding-top: 1px;
+    margin-bottom: 5px;
     color: white;
     background: rgb(20,135,130);
     border-color: rgb(20,135,130);

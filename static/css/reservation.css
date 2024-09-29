@@ -22,9 +22,13 @@
     display: inline;
 }
 
-    .reservation_title span {
-        text-align: left;
-    }
+#title_span {
+    text-align: left;
+    font-size: 16px;
+    height: 26.5px;
+    padding-top: 1px;
+    margin-bottom: 5px;
+}
 
 .reservation_input {
     width: 90px;
@@ -39,3 +43,27 @@
 .btn_reservation_delete{
     float:left;
 }
+
+.fc-title {
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+}
+
+.fc-content{
+    cursor:pointer;
+}
+.need_medical_report {
+    font-weight:300;
+}
+
+    .need_medical_report input {
+        vertical-align: middle;
+        margin-top: -1px;
+    }
+    .costom-select {
+        width: 300px;
+    }
+    .input-group-addon {
+        padding: 5px 10px;
+    }

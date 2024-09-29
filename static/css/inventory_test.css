@@ -28,10 +28,11 @@
 
 
 .inventory_table_title_span {
-    margin-bottom: 15px;
-    font-size: 15px;
-    height: 30px;
+    text-align: left;
+    font-size: 16px;
+    height: 26.5px;
     padding-top: 1px;
+    margin-bottom: 5px;
     background: rgb(90,64,129);
     border-color: rgb(90,64,129);
 }
@@ -64,27 +65,30 @@
 
         #inventory_database_table thead tr th:nth-child(1) {
             width: 100px;
-            
         }
 
         #inventory_database_table thead tr th:nth-child(2) {
-            width: 150px;
+            width: 100px;
         }
 
         #inventory_database_table thead tr th:nth-child(3) {
-            
+            width: 200px;
         }
 
         #inventory_database_table thead tr th:nth-child(4) {
-            width: 200px;
+            
         }
 
         #inventory_database_table thead tr th:nth-child(5) {
             width: 200px;
         }
 
-
         #inventory_database_table thead tr th:nth-child(6) {
+            width: 200px;
+        }
+
+
+        #inventory_database_table thead tr th:nth-child(7) {
             widtH: 100px;
         }
 
@@ -98,21 +102,19 @@
             text-overflow: ellipsis;
             overflow: hidden;
             white-space: nowrap;
+            padding-left: 15px;
             padding-right: 15px;
         }
-            #inventory_database_table tbody tr td:nth-child(3) {
+            #inventory_database_table tbody tr td:nth-child(4) {
             text-align: left;
         }
 
-        #inventory_database_table tbody tr td:nth-child(3), #inventory_database_table tbody tr td:nth-child(4) {
 
-        }
-
-        #inventory_database_table tbody tr td:nth-child(5) {
+        #inventory_database_table tbody tr td:nth-child(6) {
             text-align: right;
         }
 
-        #inventory_database_table tbody tr td:nth-child(6) {
+        #inventory_database_table tbody tr td:nth-child(7) {
             text-align: center;
         }
 
@@ -318,8 +320,55 @@
     background:none;
 }
 
-@media ( min-height: 1900px ) {
 
+
+
+    #test_interval_table {
+        table-layout: fixed;
+        letter-spacing: -1px;
+    }
+    #test_interval_table th, #test_interval_table td {
+        vertical-align: middle;
+        text-align: center;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        overflow: hidden;
+    }
+
+    #test_interval_table th:nth-child(1){}
+    #test_interval_table th:nth-child(2){width:100px;}
+    #test_interval_table th:nth-child(3){width:60px;}
+    #test_interval_table th:nth-child(4){width:100px;}
+    #test_interval_table th:nth-child(5){width:90px;}
+    #test_interval_table th:nth-child(6){width:100px;}
+
+    #test_interval_table a:last-child{
+        margin-right:0px;
+    }
+
+#add_edit_interval .input-group-addon {
+    width: 135px;
+}
+
+
+#class_menu_table th, #class_menu_table td{
+    vertical-align:middle;
+    text-align:center;
+}
+
+#class_menu_table th:nth-child(1){width:50px;}
+#class_menu_table th:nth-child(2){width:300px;}
+#class_menu_table th:nth-child(3){width:300px;}
+#class_menu_table th:nth-child(4){}
+
+#class_table .input-group {
+    width: 100%;
+}
+#class_table .input-group-addon {
+    width: 120px;
+}
+
+@media ( min-height: 1900px ) {
     .inventory_precedure_grid {
         width: 1920px;
         height: 800px;

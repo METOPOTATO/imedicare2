@@ -32,10 +32,11 @@ body {
 
 
 .inventory_table_title_span {
-    margin-bottom: 15px;
-    font-size: 15px;
-    height: 30px;
+    text-align: left;
+    font-size: 16px;
+    height: 26.5px;
     padding-top: 1px;
+    margin-bottom: 5px;
     background: rgb(90,64,129);
     border-color: rgb(90,64,129);
 }
@@ -46,7 +47,6 @@ body {
     }
 
 #inventory_database_table {
-    height: 650px;
     table-layout: fixed;
 }
 
@@ -54,26 +54,31 @@ body {
         font-weight: 700;
         text-align: center;
         vertical-align: middle;
-        width: 100px;
     }
 
         #inventory_database_table thead tr th:nth-child(1) {
-            width: 50px;
+            width:60px;
         }
-
         #inventory_database_table thead tr th:nth-child(2) {
-            width: 400px;
+            width: 70px;
         }
 
-        #inventory_database_table thead tr th:nth-child(3) {
+
+        #inventory_database_table thead tr th:nth-child(4) {
             width: 250px;
         }
 
-        #inventory_database_table thead tr th:nth-child(4) {
+        #inventory_database_table thead tr th:nth-child(5) {
+            widtH: 75px
         }
-
-        #inventory_database_table thead tr th:nth-child(9) {
-            widtH: 80px;
+        #inventory_database_table thead tr th:nth-child(6) {
+            widtH: 100px;
+        }
+        #inventory_database_table thead tr th:nth-child(7) {
+            widtH: 75px;
+        }
+        #inventory_database_table thead tr th:nth-child(8) {
+            widtH: 90px;
         }
 
 
@@ -85,8 +90,9 @@ body {
             text-align:center;
         }
 
-        #inventory_database_table tbody tr td:nth-child(2){
+        #inventory_database_table tbody tr td:nth-child(3){
             text-align: left;
+            padding-left:15px;
         }
 
 
@@ -164,7 +170,10 @@ body {
 #inventory_history_total {
     float: right;
 }
-
+#inventory_history_table th {
+    vertical-align:middle;
+    text-align:center;
+}
 #inventory_history_table thead tr th:nth-child(1) {
     width: 50px;
 }

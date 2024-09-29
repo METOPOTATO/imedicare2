@@ -11,22 +11,108 @@ $(function () {
     });
 
     // 우측 클릭 방지
-    document.onmousedown = disableclick;
-    status = gettext("Right click is not available.");
-
-    function disableclick(event) {
-        if (event.button == 2) {
-            alert(status);
-            return false;
-        }
-    }
-
-
-    
+    //document.onmousedown = disableclick;
+    //status = gettext("Right click is not available.");
+    //
+    //function disableclick(event) {
+    //    if (event.button == 2) {
+    //        alert(status);
+    //        return false;
+    //    }
+    //}
 
 
+    $("#alert_mini").click(function () {
+        $("#alert_wrap").show();
+        $("#alert_mini").hide();
+    })
+    $("#close_menu").click(function () {
+        $("#alert_wrap").hide();
+        $("#alert_mini").show();
+    })
 
+
+
+    //페이지 리프레시 마다 알람 가져오기
+    get_new_alert();
 });
+
+
+function get_new_alert() {
+
+    $.ajax({
+        type: 'POST',
+        url: '/manage/get_alert/',
+        data: {
+            'csrfmiddlewaretoken': $('#csrf').val(),
+
+        },
+        dataType: 'Json',
+        success: function (response) {
+            console.log(response)
+            //alert
+            if (response.cowork_count + response.draft_count + response.project_count + response.vaccine_reserv_count) {
+                $("#alarm_nores_wrap").hide();
+                ////Cowork
+                if (response.cowork_count == 0) {
+                    $("#alarm_cowork_wrap").hide();
+                } else {
+                    $("#alarm_cowork_wrap").show();
+                    (!response.cowork_point) ? $("#co_work_pointed_week").hide() : $("#co_work_pointed_week").html("<span> - " + gettext('Comment(s) that pointed me out for a week') + " : " + response.cowork_point + "</span>");
+                    (!response.cowork_expected) ? $("#co_work_expected_week").hide() : $("#co_work_expected_week").html("<span> - " + gettext('Post(s) scheduled to be completed in less than a week') + " : " + response.cowork_expected + "</span>");
+
+                    $("#badge_board_coboard").html(response.cowork_point + response.cowork_expected);
+                    $("#badge_board_coboard").show();
+                }
+
+                //Draft
+                
+                if (response.draft_count == 0) {
+                    $("#alarm_draft_wrap").hide();
+                } else {
+                    $("#alarm_draft_wrap").show();
+                    (!response.draft_requested) ? $("#draft_requested").hide() : $("#draft_requested").html("<span> - " + gettext('Draft(s) that are requested') + " : " + response.draft_requested + "</span>");
+                    (!response.draft_waiting) ? $("#draft_waiting").hide() : $("#draft_waiting").html("<span> - " + gettext('Draft(s) that are waiting') + " : " + response.draft_waiting + "</span>");
+                    (!response.draft_pending) ? $("#draft_pending").hide() : $("#draft_pending").html("<span> - " + gettext('Draft(s) that are pending') + " : " + response.draft_pending + "</span>");
+
+                    $("#badge_draft").html(response.draft_requested + response.draft_waiting + response.draft_pending  );
+                    $("#badge_draft").show();
+                }
+
+                //Project
+                if (response.project_count == 0) {
+                    $("#alarm_project_wrap").hide();
+                
+                } else {
+                    $("#alarm_project_wrap").show();
+                    (!response.project_main) ? $("#project_main").hide() : $("#project_main").html("<span> - " + gettext('Draft(s) that are waiting') + " : " + response.project_main + "</span>");
+                    (!response.project_comment) ? $("#project_comment").hide() : $("#project_comment").html("<span> - " + gettext('Draft(s) that are waiting') + " : " + response.project_comment + "</span>")
+
+                    $("#badge_project_mgt").html(response.project_main + response.project_comment);
+                    $("#badge_project_mgt").show();
+                }
+
+                //Vaccine
+                if (response.vaccine_reserv_count == 0) {
+                    $("#alarm_vaccine_warp").hide();
+
+                } else {
+                    $("#alarm_vaccine_warp").show();
+                    (!response.vaccine_reserv_count) ? $("#reservation_pointed_week").hide() : $("#reservation_pointed_week").html("<span> - " + gettext('Number of Patients(s) who are reserved within a week') + " : " + response.vaccine_reserv_count + "</span>");
+
+                }
+            }
+            else {
+                $("#content_menu > div").hide();
+                $("#alarm_nores_wrap").show();
+            }
+        },
+        error: function (request, status, error) {
+            console.log("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
+
+        },
+    })
+}
 
 
 

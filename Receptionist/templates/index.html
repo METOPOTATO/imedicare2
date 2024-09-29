@@ -1,0 +1,1393 @@
+{% extends "app/layout.html" %}
+
+{% load staticfiles %}
+{% block content %}
+{% csrf_token %}
+
+    <div class="reception_grid">
+        <!--Reception-->
+        <div class="reception_patient partition">
+            <div class="status_table_title">
+                <span class="btn btn-danger">{{ _('New Patient') }}</span>
+                <div style="float:right;">
+                    <div class="dropdown" id="vaccine_drop_down_warp">
+                        <button class="btn btn-warning dropdown-toggle" type="button" id="dropdown_vaccine" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                            {{ _('Vaccine') }}
+                            <span class="caret"></span>
+                        </button>
+                        <ul class="dropdown-menu " aria-labelledby="dropdownMenu1">
+                            <li><a href="#" onclick="vaccine_img_kor()">{{ _('Image') }} ( {{ _('Kor') }} )</a></li>
+                            <li><a href="#" onclick="vaccine_img_vie()">{{ _('Image') }} ( {{ _('Vie') }} )</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <table class="table patient_table" id="reception_table">
+                <tr>
+                    <td >
+                        <div class="input-group input-group-half ">
+                            <span class="input-group-addon patient_table_title" id="lbl_chart">{{ _('Chart No') }}</span>
+                            <input type="hidden" id="patient_id" />
+                            {{patient.id}}
+
+                        </div>
+                        <div class="input-group input-group-half">
+                            <span class="input-group-addon patient_table_title" id="basic-addon1">{{ _('Passport No') }}</span>
+                            {{patient.passport}}
+                        </div>
+                    </td>
+                    <td>
+                        <div class="input-group">
+                            <span class="input-group-addon patient_table_title" id="basic-addon1">{{ _('Nationality') }}</span>
+                            <div class="input-group-btn patient_funnels_div">
+                                <select name="nationality" id="patient_nationality" class="form-control costom-select" aria-describedby="basic-addon1" required="">
+                                    <option value="">---------</option>
+                                    <option value="Korea">{{ _('HÀN QUỐC / REPUBLIC OF KOREA') }}</option>
+                                    <option value="Vietnam">{{ _('Vietnam') }}</option>
+                                    <option value="Other">{{ _('Other') }}</option>
+                                </select>
+                            </div>
+                            <input type="text" id="patient_nationality_etc" class="form-control" aria-describedby="basic-addon1" autocomplete="off">
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <div class="input-group input-group-half">
+                            <span class="input-group-addon patient_table_title" id="lbl_name_kor">{{ _('Name Kr/Vn') }}</span>
+                            {{patient.name_kor}}
+                        </div>
+                        <div class="input-group input-group-half">
+                            <span class="input-group-addon patient_table_title" id="lbl_name_eng">{{ _('Name Eng') }}</span>
+                            {{patient.name_eng}}
+                        </div>
+                    </td>
+                    <td>
+                        <div style="display: flex;">
+                            <div class="input-group input-group-half">
+                                <span class="input-group-addon patient_table_title" id="lbl_phone">{{ _('Phone') }}</span>
+                                {{patient.phone}}
+                            </div>
+                            <div class="input-group input-group-half" >
+                                <span class="input-group-addon patient_table_title" id="basic-addon1">{{ _('Gender') }}</span>
+                                <select name="gender" id="patient_gender" class="form-control costom-select" aria-describedby="basic-addon1" required="">
+                                    <option value="">---------</option>
+                                    <option value="Male">{{ _('Male (Nam)') }}</option>
+                                    <option value="Female">{{ _('Female (Nữ)') }}</option>
+                                </select>
+                                
+                            </div>
+                        </div>
+
+                    </td>
+                </tr>
+                <!--  -->
+                <tr>
+                    <td >
+                        <div class="input-group input-group-half">
+                            <span class="input-group-addon patient_table_title" id="lbl_dob">{{ _('Date of Birth') }}</span>
+                            {{patient.date_of_birth}}
+                        </div>
+                        <div class="input-group input-group-half">
+                            <span class="input-group-addon patient_table_title" id="basic-addon1">{{ _('Actual Residence') }}</span>
+                            {{patient.address}}
+                        </div>
+                    </td>
+                    <td >
+                        <div class="input-group">
+                            <span class="input-group-addon patient_table_title" id="lbl_email" style="border:1px solid #ccc">{{ _('Email') }}</span>
+                            {{patient.email}}
+                        </div>
+
+                    </td>
+                </tr>
+
+                <!-- <tr>
+                    <td >
+
+                    </td>
+                    <td >
+                        <div class="input-group">
+                            <span class="input-group-addon patient_table_title" id="basic-addon1" style="border:1px solid #ccc">{{ _('Passport') }}</span>
+                            {{patient.passport}}
+                        </div>
+                    </td>
+                </tr> -->
+
+                <tr>
+                    <td>
+                        <div class="input-group input-group-half" >
+                            <span class="input-group-addon patient_table_title" id="basic-addon1">{{ _('Depart') }}</span>
+                            {{reception.depart}}
+                        </div>
+                        <div class="input-group input-group-half" >
+                            <span class="input-group-addon patient_table_title" id="basic-addon1">{{ _('Doctor') }}</span>
+                            {{reception.doctor}}
+                        </div>
+                    </td>
+                    <td style="display: flex; flex-direction: row;"> 
+                        <div class="input-group" > 
+                            <span class="input-group-addon patient_table_title" id="basic-addon1">{{ _('Medical Note') }}</span>
+                            {{reception.chief_complaint}}
+                            
+                        </div>
+                        <div style="display: flex; justify-content: center; align-items: center;"><input style=" width: 50px;" type="button" value="{{ _('PM') }}" class="btn btn-success" id="patient_initial_report_click" /></div>
+                        
+                    </td>
+                </tr>
+                
+                <tr>
+                    <td>
+                        <!--방문 경로-->
+                        <div class="input-group"> 
+                            <span class="input-group-addon patient_table_title" id="basic-addon1">{{ _('Funnels') }}</span>
+                            <div class="input-group-btn patient_funnels_div">
+                                <select class="form-control" id="patient_funnel">
+                                    <option value="" selected>---------</option>
+                                    {% for data in list_funnels %}
+                                        <option value="{{ data.code }}">{{data.name}}</option>
+                                    {% endfor%}
+                                    <option value="etc">{{ _('Etc.') }}</option>
+                                </select>
+                            </div>
+                            <input type="text" id="patient_funnel_etc" class="form-control" aria-describedby="basic-addon1" autocomplete="off">
+                        </div>
+                    </td>
+                    <td style="display: flex; flex-direction: row; justify-content: center; align-items: center;">
+                        <div class="input-group"> 
+                            <span class="input-group-addon patient_table_title" id="lbl_memo">{{ _('Memo') }}</span>
+                            <input type="text" id="memo" class="form-control" aria-describedby="basic-addon1" autocomplete="off">
+
+                            <!-- <div><button>Input</button></div> -->
+                        </div>
+                        <div>
+                            <!-- <label for="" style="width: 60px;"></label> -->
+                            <input value="Detail" style="width: 50px;" type="button" id="show_memo_detail" onclick="show_memo_detail()" class="btn btn-info" >
+                        </div>
+                        <!-- <div class="input-group-btn">
+                            <input id="show_memo_detail" type="button" value="{{_('Detail Memo') }}" class="btn btn-primary save_cancel_btn" style="width:100px;" onmouseover="show_memo_detail()"/>
+                        </div> -->
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2">
+                    <div class="input-group" id="vital_sign">
+                        <!-- <span class="input-group-addon patient_table_title" id="basic-addon1" style="border:1px solid #ccc">{{ _('Vital Sign') }}</span> -->
+                        <input type="button" value="{{ _('Vital Sign') }}" class="btn btn-default" id="vital_sign_click" />
+                        <div id="vital_sign_control">
+                        <text id="patient_vital_first">{{ _('Ht') }}: </text><input type="text" class="form-control" id="patient_table_vital_ht"/>
+                        {{ _('Wt') }}: <input type="text" class="form-control" id="patient_table_vital_wt"/>
+                        {{ _('BP') }}: <input type="text" class="form-control" id="patient_table_vital_bp"/>
+                        {{ _('BT') }}: <input type="text" class="form-control" id="patient_table_vital_bt"/>
+                        {{ _('PR') }}: <input type="text" class="form-control" id="patient_table_vital_pr"/>
+                        {{ _('RR') }}: <input type="text" class="form-control " id="patient_table_vital_breath"/>
+                            </div>
+                    </div>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td colspan="2" >
+                        <div style="display: flex; flex-direction: row; justify-content: space-between;" >
+                            <!-- <input type="button" value="{{ _('Inform Tax Invoice') }}" class="btn btn-default" id="patient_tax_invoice_click" /> -->
+                            
+                            <!-- <label class="btn btn-warning need_medical_report" ><input type="checkbox" id="need_medical_report" /><text> {{_('Medical Report') }}</text></label> -->
+                            
+                            <div >
+                                <button class="btn btn-primary " style="width: 90px;">VAT Invoice</button>
+
+                                
+                                <label class="need_medical_report"  style="margin-right:10px;"><input name="tax_invoice" type="checkbox" id="need_invoice" onclick="checkTax(this)" /><text> {{_('Company') }}</text></label>
+                                <label class="need_medical_report"  style="margin-right:10px;"><input name="tax_invoice" type="checkbox" id="need_invoice_p" onclick="checkTax(this)" /><text style="color: red;"> {{_('Personal') }}</text></label>
+                                
+                                <!-- <label class="need_medical_report" style="margin-right:10px;"><input type="checkbox" id="" /><text> {{_('Red Invoice') }}</text></label> -->
+                            </div>
+                            <div>
+                                <button class="btn btn-primary " style="width: 90px;">Insurance</button>
+                                <label class="need_medical_report " style="margin-right:10px;" >
+                                    <input type="checkbox" id="need_insurance" />
+                                    <text> {{_('Insurance') }}</text>
+                                </label>
+                            </div>
+                            <div>
+                                <button class="btn btn-primary" style="width: 90px;">Without</button>
+                                <label class="need_medical_report" style="margin-right:10px;"><input style="accent-color: red;" type="checkbox" id="wo_name" /><text> {{_('Name') }}</text></label>
+                                <!-- <label class="need_medical_report" style="margin-right:10px;"><input type="checkbox" id="is_vaccine" /><text> {{_('Vaccine') }}</text></label> -->
+    
+                                <label class="need_medical_report" style="margin-right:10px;"><input style="accent-color: red;" type="checkbox" id="wo_email" /><text> {{_('Email') }}</text></label>
+                                <label class="need_medical_report" style="margin-right:10px;"><input style="accent-color: red;" type="checkbox" id="wo_today" /><text> {{_('Only today') }}</text></label>
+                            </div>
+
+                        </div>
+                    
+
+                    </td>
+
+
+                </tr>
+
+
+
+            </table>
+                            <!-- # tax -->
+            <table id="document_info">
+                <tr>
+                    <td>
+                        <span class="btn btn-danger">{{ _('Document Information') }}</span>
+                    </td>
+
+                </tr>
+                <tr>
+                    <td  style="display: flex; flex-direction: row;">
+                        <div class="input-group edit_reception_title" style="display: flex; flex-direction: row; width: 250px;">
+                            <span style="display: flex; text-align: center; justify-content: center; align-items: center;" class="input-group-addon patient_table_title" id="basic-addon1">{{ _('Tax code') }}</span>
+                            <input type="text" id="tax_invoice_number" class="form-control" aria-describedby="basic-addon1">
+                            <button class="btn btn-primary" onclick="open_tax_search()">
+                                <i class="fa fa-search" aria-hidden="true"></i>
+                            </button>
+                        </div>
+                        <div class="input-group edit_reception_title" style="display: flex; flex-direction: row;  width: 410px;">
+                            <span style="display: flex; text-align: center; justify-content: center; align-items: center;" class="input-group-addon patient_table_title" id="basic-addon2">{{ _('Company Name') }}</span>
+                            <input type="text" id="tax_invoice_company_name" class="form-control" aria-describedby="basic-addon2">
+                        </div>
+
+                        <div class="input-group  edit_reception_title" style="display: flex; flex-direction: row; width: 250px;">
+                            <span class="input-group-addon patient_table_title" id="basic-addon2">{{ _('Contact') }}</span>
+                            <input type="text" id="tax_invoice_contact" class="form-control" aria-describedby="basic-addon2" placeholder="Email or phone number">
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td style="display: flex; flex-direction: row;">
+                        <div class="input-group edit_reception_title" style="display: flex; flex-direction: row; width: 330px;">
+                            <span style="display: flex; text-align: center; justify-content: center; align-items: center; width: 120px;" class="input-group-addon patient_table_title" id="basic-addon1">{{ _('Company Address') }}</span>
+                            <input type="text" id="tax_invoice_address" class="form-control" aria-describedby="basic-addon1">
+                        </div>
+                        <div class="input-group edit_reception_title" style="display: flex; flex-direction: row;  width: 330px;">
+                            <span style="display: flex; text-align: center; justify-content: center; align-items: center; width: 120px; color: red;" class="input-group-addon patient_table_title" id="basic-addon2">{{ _('Personal Address') }}</span>
+                            <input type="text" id="tax_invoice_address_p" class="form-control" aria-describedby="basic-addon2">
+                        </div>
+
+                        <div class="input-group  edit_reception_title" style="display: flex; flex-direction: row; width: 250px;">
+                            <span style="display: flex; text-align: center; justify-content: center; align-items: center;" class="input-group-addon patient_table_title" id="basic-addon1">{{ _('Docu Memo') }}</span>
+                            <input type="text" id="tax_invoice_memo" class="form-control" aria-describedby="basic-addon1">
+                        </div>
+
+                    </td>
+                </tr>
+                <tr>
+                    <td >
+                        <div style="display: flex; justify-content: end; align-content: end; align-items: end;">
+                            <div >
+                                <input class="btn btn-default save_cancel_btn"  value="{{ _('Cancel') }}" onclick="set_cancel()" />
+                                <input class="btn btn-info save_cancel_btn" value="{{ _('Save') }}" onclick="show_memo_detail()"/>
+                                <!--<input type="button" value="{{_('Package') }}" class="btn btn-danger save_cancel_btn" style="width:80px;" onclick="patient_package_list_modal()"/>-->
+                                <input type="button" value="{{_('Registration') }}" class="btn btn-primary save_cancel_btn" style="width:100px;" onclick="show_memo_detail()"/>
+                            </div>
+                        </div>
+
+                    </td>
+                </tr>
+            </table>
+        </div>
+        
+        <!--Patient Search-->
+        <div class="reception_search_patient partition">
+            <div class="status_table_title">
+                <span class="btn btn-danger" style="display: inline" onclick="patient_search2()">{{ _('Search & Results') }}</span>
+
+                <div class="btn btn-primary" style="display: inline; margin-left: 40px;" id="clear_search">Clear Search</div>
+                <div class="search_form" style="display: block;">
+                    <table>
+                        <!-- <thead>
+                            <tr>
+                                <th>1</th>
+                                <th>2</th>
+                                <th>3</th>
+                                <th>4</th>
+                            </tr>
+                        </thead> -->
+                        <tr>
+                            <td>
+                                <label style="width: 80px;" for="name">{{ _('Name') }}</label>
+                                <input style="width: 200px;" type="text" name="search_input" id="name_id" class="form-control patient_search_input" aria-describedby="basic-addon1" required=""> </td>
+                            <td>
+                                <label style="width: 80px;"  for="phone">{{ _('Phone') }}</label>
+                                <input style="width: 200px;" type="text" name="search_input" id="phone_id" class="form-control patient_search_input" aria-describedby="basic-addon1" required=""> 
+                            </td>
+                            <td>
+                                <label style="width: 80px;"  for="dob">{{ _('Birth') }}</label>
+                                <input style="width: 200px;" type="text" name="search_input" id="dob_id" class="form-control patient_search_input" aria-describedby="basic-addon1" required=""> 
+                            </td>
+
+                        </tr>
+                        <tr>
+                            <td>
+                                <label  style="width: 80px;" for="Nationality">{{ _('Nationality') }}</label>
+                                <input style="width: 200px;" type="text" name="search_input" id="nation_id" class="form-control patient_search_input" aria-describedby="basic-addon1" required="">   
+                            </td>
+                            <td>
+                                <label style="width: 80px;"  for="email">{{ _('Email') }}</label>
+                                <input style="width: 200px;" type="text" name="search_input" id="email_id" class="form-control patient_search_input" aria-describedby="basic-addon1" required=""> 
+                            </td>
+                            <td>
+                                <label style="width: 80px;"  for="chart">{{ _('Chart No') }}</label>
+                                <input style="width: 200px;" type="text" name="search_input" id="chart_id" class="form-control patient_search_input" aria-describedby="basic-addon1" required=""> 
+                            </td>
+
+                        </tr>
+                        <tr>
+                            <td>
+                                <label style="width: 80px;" for="memo">{{ _('Memo') }}</label>
+                                <input style="width: 200px;" type="text" name="search_input" id="memo_id" class="form-control patient_search_input" aria-describedby="basic-addon1" required="">                              
+                            </td>
+                            <td>
+                                <label style="width: 80px;" for="address">{{ _('Address') }}</label>
+                                <input style="width: 200px;" type="text" name="search_input" id="address_id" class="form-control patient_search_input" aria-describedby="basic-addon1" required="">   
+                            </td>
+                            <td>
+                                <label style="width: 80px;" for="memo">{{ _('Tax Code') }}</label>
+                                <input style="width: 200px;" type="text" name="search_input" id="tax_id" class="form-control patient_search_input" aria-describedby="basic-addon1" required="">                              
+                            </td>
+                        </tr>
+                    </table>
+                    <div>
+
+                    </div>
+                    <div>
+                        <!-- <input type="button"  style="width: 120px;  background-color: #5bc0de; color: white;"  value="{{ _('Search') }}" class="btn btn-default" onclick="patient_search2()"/> -->
+                    </div>
+
+                    <!-- <select name="filter" id="patient_search_select" class="form-control costom-select patient_search_select" aria-describedby="basic-addon1">
+                        <option value="">{{_('All') }}</option>
+                        <option value="name">{{_('Name') }}</option>
+                        <option value="chart">{{_('Chart No') }}</option>
+                        <option value="date_of_birth">{{_('Date of Birth') }}</option>
+                        <option value="phone">{{_('Phone Number') }}</option>
+                        <option value="email">{{_('Email') }}</option>
+                        <option value="memo">{{_('Memo') }}</option>
+                    </select> -->
+                    <!-- <input type="text" name="search_input" id="patient_search_input" class="form-control patient_search_input" aria-describedby="basic-addon1" required=""> -->
+                    
+                </div>
+                <!-- <div style="float:right;">
+                    
+                </div> -->
+            </div>
+            <div class="patient_search_table_wrap" style="margin-top: 10px;" >
+                <table class="table patient_search_table" id="Patient_Search">
+                    <thead>
+                        <tr>
+                            <th>{{ _('No')}}</th>
+                            <th>{{ _('Chart No')}}</th>
+                            <th>{{ _('Name')}}</th>
+                            <th>{{ _('Date of Birth')}}</th>
+                            <th>{{ _('Phone Number')}}</th>
+                            <th>{{ _('Depart') }}</th>
+                            <th>{{ _('Last Visit') }}</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>            
+                </table>
+            </div>
+        </div>
+        <!--Reception Status-->
+        <div class="status_table_wrapper partition" >
+            <div class="status_table_title">
+                 <span class="btn btn-danger" >{{ _('Reception Status') }}</span>
+                <div class="status_table_filter" style="float:right;">
+                    {{ _('Date:') }}
+                    <input type="text" id="reception_waiting_date_start" class="form-control reception_waiting_date" aria-describedby="basic-addon1" required="">
+                     ~ 
+                    <input type="text" id="reception_waiting_date_end" class="form-control reception_waiting_date" aria-describedby="basic-addon1" required="">
+                    <div class="input-group" style="width:153px; display:inline-table;">
+                        <span class="input-group-addon reception_table_title" id="basic-addon1">{{ _('Depart') }}</span>
+                    {{ receptionsearch.depart }} 
+                    </div>
+                    <input type="text" name="search_input" id="reception_patient_search_input" class="form-control patient_search_input" aria-describedby="basic-addon1" required="">
+                    <input type="button" value="{{ _('Search') }}" class="btn btn-default" onclick="reception_search()"/>
+                    <!--<div class="input-group" style="width:153px; display:inline-table;">
+                        <span class="input-group-addon reception_table_title" id="basic-addon1">{{ _('Doctor') }}</span>
+                    {{ receptionsearch.doctor }} 
+                    </div>
+                        -->
+                </div>
+            </div>
+            <div class="reception_wait_table_wrap">
+            <table class="table reception_search_table" id="Rectption_Status">
+                <thead>
+                    <tr>
+                        <th>{{_('No') }}</th>
+                        <th>{{_('Chart No') }}</th>
+                        <th>{{_('Name') }}</th>
+                        <th> {{_('Date of Birth') }}</th>
+                        <th>{{_('Depart') }}</th>
+                        <th>{{_('Doctor') }}</th>
+                        <th>{{_('Date Time') }}</th>
+                        <th>{{_('New / Repeat') }}</th>
+                        <th></th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody></tbody>            
+            </table>
+            </div>
+        </div>
+       
+        <!--Reservation Status-->
+        <div class="reservation_status partition">
+            <div class="status_table_title">
+            <span class="btn btn-danger">{{_('Reservation Status') }}</span>
+            </div>
+            <div class="status_table_filter">
+                {{ _('Date') }} :
+                <input type="text" class="form-control reception_waiting_date" style=" display:inline;" id="reception_reservation_date_start" />
+                ~
+                <input type="text" class="form-control reception_waiting_date" style=" display:inline;" id="reception_reservation_date_end" />
+                <div class="input-group" style="width:153px; display:inline-table;">
+                    <span class="input-group-addon reception_table_title" id="basic-addon1">{{ _('Depart') }}</span>
+                {{ reservation.depart }} 
+                </div>
+                <div class="status_table_filter">
+                    <select name="filter" id="re_patient_search_select" class="form-control costom-select patient_search_select" aria-describedby="basic-addon1">
+                        <!-- <option value="">{{_('All') }}</option> -->
+                        <option value="name">{{_('Name') }}</option>
+                        <!-- <option value="chart">{{_('Chart No') }}</option>
+                        <option value="date_of_birth">{{_('Date of Birth') }}</option>
+                        <option value="phone">{{_('Phone Number') }}</option> -->
+                    </select>
+                    <input type="text" name="search_input" id="re_patient_search_input" class="form-control patient_search_input" aria-describedby="basic-addon1" required="">
+                    <input type="button" value="{{ _('Search') }}" class="btn btn-default" onclick="reservation_search()"/>
+                </div>
+            </div>
+
+            <div class="patient_search_table_wrap">
+            <table class="table patient_search_table" id="Reservation_Status">
+                <thead>
+                    <tr>
+                        <th>{{_('No')}}</th>
+                        <!-- <th>{{_('ID')}}</th> -->
+                        <th>{{_('Chart No')}}</th>
+                        <th>{{_('Name')}}</th>
+                        <th>{{_('Date of Birth')}}</th>
+                        <th>{{_('PhoneNumber')}}</th>
+                        <th>{{_('Depart')}}</th>
+                        <th>{{_('Date Time')}}</th>
+                        <th>{{_('Memo')}}</th>
+                    </tr>
+                </thead>
+                <tbody></tbody>
+            </table>
+        </div>
+    </div>
+        </div>
+
+    <script>
+        reception_waiting_date_w = undefined;
+        function reception_waiting_date_worker(is_run) {
+            if (is_run) {
+                if (window.Worker) {
+                    reception_waiting_date_w = new Worker('{% static 'js/event_listener.js' %}');
+                    reception_waiting_date_w.onmessage = function (event) {
+                        reception_search(true);
+                    };
+                }
+            } else {
+                if( reception_waiting_date_w != undefined){
+                    reception_waiting_date_w.terminate();
+                    reception_waiting_date_w = undefined;
+                }
+            }
+        }
+
+        //init
+        $('#doctor_select').empty();
+        $('#doctor_select').append(new Option('---------', ''));
+
+        $('#reception_waiting_doctor').empty();
+        $('#reception_waiting_doctor').append(new Option('---------', ''));
+
+        $('#reservation_doctor_select').empty();
+        $('#reservation_doctor_select').append(new Option('---------', ''));
+    </script>
+
+
+
+
+<!--통증과 문진표-->
+<div id="medical_exam_EventModal" class="modal fade">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span> <span class="sr-only">close</span></button>
+                <h2>{{ _('Initial Report') }}</h2>
+                <div id="modalBody" class="modal-body" >
+                    <div class="medical_exam_pm">
+                        <div>
+                            <div>
+                                <p>{{ _('활력징후') }}</p>
+                                <table class="table table_vital">
+                                    <tr>
+                                        <td>
+                                            {{ _('키') }} : 
+                                        </td>
+                                        <td>
+                                            <input type="text" class="form-control input_report_vital" id="input_vital_height" /> cm
+                                        </td>
+                                        <td>
+                                            {{ _('몸무게') }} : 
+                                        </td>
+                                        <td>
+                                            <input type="text" class="form-control input_report_vital" id="input_vital_weight" /> kg
+                                        </td>
+
+                                        <td>
+                                            {{ _('BMI') }} : 
+                                        </td>
+                                        <td>
+                                            <input type="text" class="form-control input_report_vital" id="input_vital_bmi" /> kg/m2
+                                        </td>
+                                        <td>
+                                            {{ _('혈압') }} : 
+                                        </td>
+                                        <td>
+                                            <input type="text" class="form-control input_report_vital" id="input_vital_bp" /> mmHg
+                                        </td>
+                                        <td>
+                                            {{ _('체온') }} : 
+                                        </td>
+                                        <td>
+                                            <input type="text" class="form-control input_report_vital" id="input_vital_bt" /> ˚C
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                            <br/>
+                            <div class="q2_items_div">
+                                <div style="background-image: url('{% static 'img/DX_AN.png'%}')" >
+                                    {% for item in initial_report_q2 %}
+                                    <div class="q2_items" data_code="{{ item.seq }}" data_seq="{{ item.se1 }}" id="q2_items_{{item.se1}}" style="background-image:url('{% static 'img/Medical_Exam_X.png'%}'); left:{{item.se4}}px; top:{{item.se5}}px; display:none; "></div>
+                                    {% endfor %}
+                                </div>
+                            </div>
+                            <br />
+                            <p class="question_item">{{ _('2. 현재 불편한 부위와 증상에 표시하여 주세요.') }}</p>
+                            <table class="table">
+                                {% for data in initial_report_q2_title%}
+                                {% if forloop.counter0|divisibleby:4 %}
+                                <tr>
+                                {% endif %}
+                                    <td>
+                                        <input type="checkbox" id="pain_location_text_{{ data.seq }}" class="pain_location_text" value="{{ data.seq }}" data_code="{{ data.seq }}"/>
+                                        <label for="pain_location_text_{{ data.seq }}">{{ data.se2 }}</label>
+                                        {% if data.se6 != 'hidden' %}
+                                        <select class="q2_item_select" id="q2_item_select1_{{ data.seq }}" data_code="{{ data.seq }}">
+                                            <option value="" selected>선택</option>
+                                            <option value="0">앞</option>
+                                            <option value="1">뒤</option>
+                                        </select>
+                                        {% else %}
+                                        <select class="q2_item_select" id="q2_item_select1_{{ data.seq }}" style="display:none;" data_code="{{ data.seq }}">
+                                            <option value="0" selected></option>
+                                        </select>
+                                        {% endif %}
+                                        <select class="q2_item_select q2_item_select2" id="q2_item_select2_{{ data.seq }}" data_code="{{ data.seq }}">
+                                            <option value="" selected>선택</option>
+                                            <option value="0">좌</option>
+                                            <option value="2">우</option>
+                                            {% if data.se7 == 'middle' %}
+                                            <option value="1">가운데</option>
+                                            {% endif %}
+                                        </select>
+                                    </td>
+                                
+                                {% endfor %}
+                                    <td></td>
+                                    </table>
+                            <!--
+                            <table class="table">
+                                <tr>
+                                    <td style="vertical-align:middle;">{{_('2)방향')}}</td>
+                                    <td><input type="checkbox" id="pain_location_text_20" class="pain_location_text" value="20"/><label for="pain_location_text_20">{{ _('왼쪽') }}</label></td>
+                                    <td><input type="checkbox" id="pain_location_text_21" class="pain_location_text" value="21"/><label for="pain_location_text_21">{{ _('가운데') }}</label></td>
+                                    <td><input type="checkbox" id="pain_location_text_22" class="pain_location_text" value="22"/><label for="pain_location_text_22">{{ _('오른쪽') }}</label></td>
+                                </tr>
+                            </table>
+                                -->
+                            <table class="table">
+                                <tr>
+                                    <td rowspan="2" style="vertical-align:middle;">{{ _('3)증상') }}</td>
+                                    <td><input type="checkbox" id="pain_location_text_23" class="pain_location_text" value="23"/><label for="pain_location_text_23">{{ _('당긴다') }}</label></td>
+                                    <td><input type="checkbox" id="pain_location_text_24" class="pain_location_text" value="24"/><label for="pain_location_text_24">{{ _('저리다') }}</label></td>
+                                    <td><input type="checkbox" id="pain_location_text_25" class="pain_location_text" value="25"/><label for="pain_location_text_25">{{ _('쑤신다') }}</label></td>
+                                    <td><input type="checkbox" id="pain_location_text_26" class="pain_location_text" value="26"/><label for="pain_location_text_26">{{ _('감각이 둔하다') }}</label></td>
+                                    <td><input type="checkbox" id="pain_location_text_27" class="pain_location_text" value="27" /><label for="pain_location_text_27">{{ _('마비가 된다') }}</label></td>
+                                </tr>
+                                <tr>
+                                    <td>{{ _('발병시기') }}</td>
+                                    <td colspan="4"><input class="form-control" type="text" id="occurred_date"></td>
+                                </tr>
+                            </table>
+
+                        </div>
+                        <div>
+                            <p class="question_item">{{ _('3. 최근 6개월 내 현재 증상으로 치료 받은 내역을 체크해주세요 (한의원 포함) ') }}</p>
+                            <input type="checkbox" id="treatment_history_yn" /><label for="treatment_history_yn">{{ _('없음') }}</label>
+                            <table class="table">
+                                <tr>
+                                    <td>
+                                        <input type="checkbox" id="physiotherapy_yn" /><label for="physiotherapy_yn">{{ _('물리치료') }}</label>
+                                        <input type="text" id="physiotherapy_count" class="form-control" />{{ _('회') }}</td>
+                                    <td>
+                                        <input type="checkbox" id="injection_treatment_yn" /><label for="injection_treatment_yn">{{ _('주사치료') }}</label>
+                                        <input type="text" id="injection_treatment_count" class="form-control" />{{ _('회') }}
+                                    </td>
+                                    <td>
+                                        <input type="checkbox" id="taking_medicine_yn" /><label for="taking_medicine_yn">{{ _('약복용') }}</label>
+                                        <input type="text" id="taking_medicine_count" class="form-control"/>{{ _('회') }}</td>
+                                    <td>
+                                        <input type="checkbox" id="acupuncture_yn" /><label for="acupuncture_yn">{{ _('침치료') }}</label>
+                                        <input type="text" id="acupuncture_count" class="form-control"/>{{ _('회') }}
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                        <div>
+                            <p class="question_item">{{ _('4. 통증 정도가 어느정도인지 표시해주세요.') }}</p>
+                             <input type="text" class="js-range-slider" id="pain_slider" name="my_range" value="" />
+                            <ul class="ul_pain_slider_img" >
+                                <li style="margin-left:-5px;">😄</li>
+                                <li>😃</li>
+                                <li>😐</li>
+                                <li>😟</li>
+                                <li>😩</li>
+                                <li style="width:1px;">😫</li>
+                            </ul>
+
+                        </div>
+                        <br />
+                        <div>
+                            <p class="question_item">{{ _('5. 한번이라도 수술 받으신 적이 있나요 ?') }}</p>
+                            <table class="table">
+                                <tr>
+                                    <td style="width:350px;">
+                                        <input type="radio" id="operation_yes" name="operation_yn" value="1"/><label for="operation_yes">{{ _('예') }}</label>
+                                        <input type="text" id="operation_year" class="form-control" />{{ _('년도') }}
+                                        ,
+                                        {{ _('수술명') }}<input type="text" id="operation_name" class="form-control" />
+                                    </td>
+                                    <td ><input type="radio" id="operation_no" name="operation_yn" value="0"/><label for="operation_no">{{ _('아니오') }}</label></td>
+                                </tr>
+                            </table>
+                        </div>
+                        <div>
+                            <p class="question_item">{{ _('6. 위 증상과 관련된 어떤 검사를 하셨는지요?') }}</p>
+                            <table class="table">
+                                <tr>
+                                    <td><input type="checkbox" id="test_kinds_1" class="test_kinds" value="1"/><label for="test_kinds_1">{{ _('MRI') }}</label></td>
+                                    <td><input type="checkbox" id="test_kinds_2" class="test_kinds" value="2"/><label for="test_kinds_2">{{ _('CT') }}</label></td>
+                                    <td><input type="checkbox" id="test_kinds_3" class="test_kinds" value="3"/><label for="test_kinds_3">{{ _('단순방사선촬영') }}</label></td>
+                                    <td><input type="checkbox" id="test_kinds_4" class="test_kinds" value="4"/><label for="test_kinds_4">{{ _('근전도검사') }}</label></td>
+                                    <td><input type="checkbox" id="test_kinds_5" class="test_kinds" value="5"/><label for="test_kinds_5">{{ _('척추조영술') }}</label></td>
+                                </tr>
+                                <tr>
+                                    <td colspan="5">
+                                        <label for="test_kinds_etc">{{ _('기타') }} : </label>
+                                        <input type="text" id="test_etc" class="form-control" style="display:inline; width:630px"/>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td colspan="5"><label>{{ _('외부에서 가져온 CD나 필름이 있나요 ?') }}</label></td>
+                                </tr>
+                                <tr>
+                                    <td><input type="checkbox" id="cd_film_yn_3" class="cd_film_yn" value="3"/><label for="cd_film_yn_3">{{ _('없음') }}</label></td>
+                                    <td><input type="checkbox" id="cd_film_yn_1" class="cd_film_yn" value="1"/><label for="cd_film_yn_1">{{ _('필름') }}</label></td>
+                                    <td><input type="checkbox" id="cd_film_yn_2" class="cd_film_yn" value="2"/><label for="cd_film_yn_2">{{ _('CD') }}</label></td>
+                                    <td colspan="2"></td>
+                                </tr>
+                            </table>
+                        </div>
+                        <div>
+                            <p class="question_item">{{ _('7. 현재 치료중인 질환과 복용약이 있으신가요? (아스피린, 쿠마딘, 와파린 등)') }}</p>
+                            <table class="table">
+                                <tr>
+                                    <td><input type="checkbox" id="disease_history_kinds_1" class="disease_history_kinds" value="1"/><label for="disease_history_kinds_1">{{ _('고혈압') }}</label></td>
+                                    <td><input type="checkbox" id="disease_history_kinds_2" class="disease_history_kinds" value="2"/><label for="disease_history_kinds_2">{{ _('당뇨') }}</label></td>
+                                    <td><input type="checkbox" id="disease_history_kinds_3" class="disease_history_kinds" value="3"/><label for="disease_history_kinds_3">{{ _('간질환') }}</label></td>
+                                    <td><input type="checkbox" id="disease_history_kinds_4" class="disease_history_kinds" value="4"/><label for="disease_history_kinds_4">{{ _('뇌질환(중풍)') }}</label></td>
+                                    <td><input type="checkbox" id="disease_history_kinds_5" class="disease_history_kinds" value="5"/><label for="disease_history_kinds_5">{{ _('폐결핵') }}</label></td>
+                                </tr>
+                                <tr>
+                                    <td><input type="checkbox" id="disease_history_kinds_6" class="disease_history_kinds" value="6"/><label for="disease_history_kinds_6">{{ _('심장질환') }}</label></td>
+                                    <td><input type="checkbox" id="disease_history_kinds_7" class="disease_history_kinds" value="7"/><label for="disease_history_kinds_7">{{ _('관절염') }}</label></td>
+                                    <td><input type="checkbox" id="disease_history_kinds_8" class="disease_history_kinds" value="8"/><label for="disease_history_kinds_8">{{ _('신장질환') }}</label></td>
+                                    <td colspan="2"><input type="checkbox" id="disease_history_kinds_9" class="disease_history_kinds" value="9"/><label for="disease_history_kinds_9">{{ _('갑상선질환') }}</label></td>
+                                </tr>
+                                <tr>
+                                    <td><label>{{ _('기타') }}</label></td>
+                                    <td colspan="4"><textarea id="disease_etc" class="form-control" style="resize: vertical;"></textarea></td>
+                                </tr>
+                                <tr>
+                                    <td><label>{{ _('복용약') }}</label></td>
+                                    <td colspan="4"><textarea id="medication" class="form-control" style="resize: vertical;"></textarea></td>
+                                </tr>
+                            </table>
+                        </div>
+                        <div>
+                            <p class="question_item">{{ _('8. 약에 대한 부작용은 있으신가요?') }}</p>
+                            <table>
+                                <tr>
+                                    <td><input type="radio" id="medicine_side_effects_1" name="medicine_side_effects" value="1"/><label for="medicine_side_effects_1">{{ _('예') }}</label></td>
+                                    <td style="width:50px;"></td>
+                                    <td><input type="radio" id="medicine_side_effects_0" name="medicine_side_effects" value="0"/><label for="medicine_side_effects_0">{{ _('아니오') }}</label></td>
+                                </tr>
+                                
+                                
+                            </table>
+
+                        </div>
+                        <div>
+                            <p class="question_item">{{ _('9. 임신 가능성이 있으신가요?') }}</p>
+                            <table>
+                                <tr>
+                                    <td>
+                                        <input type="radio" id="pregnant_0" name="pregnant_radio" value="0"/><label for="pregnant_0">{{ _('해당없음') }}</label>
+                                    </td>
+                                    <td style="width:50px;"></td>
+                                    <td>
+                                        <input type="radio" id="pregnant_1" name="pregnant_radio" value="1"/><label for="pregnant_1">{{ _('임신중') }}</label>
+                                    </td>
+                                    <td style="width:50px;"></td>
+                                    <td>
+                                        <input type="radio" id="pregnant_2" name="pregnant_radio" value="2"/><label for="pregnant_2">{{ _('계획중') }}</label>
+                                    </td>
+                                </tr>
+                            </table>  
+                        </div>
+                        <div>
+                            <p class="question_item">{{ _('10. 내원 동기') }}</p>
+                            <table class="table">
+                                <tr>
+                                    <td><input type="checkbox" id="visit_motiv_1" class="visit_motiv_item" value="1"/><label for="visit_motiv_1">{{ _('전단지') }}</label></td>
+                                    <td><input type="checkbox" id="visit_motiv_2" class="visit_motiv_item" value="2"/><label for="visit_motiv_2">{{ _('카카오톡 오픈 채팅') }}</label></td>
+                                    <td><input type="checkbox" id="visit_motiv_3" class="visit_motiv_item" value="3"/><label for="visit_motiv_3">{{ _('페이스북') }}</label></td>
+                                </tr>
+                                <tr>
+                                    <td><input type="checkbox" id="visit_motiv_4" /><label for="visit_motiv_4" value="4">{{ _('간판') }}</label></td>
+                                    <td colspan="2"><input type="checkbox" id="visit_motiv_5" /> <label for="visit_motiv_5">{{ _('지인소개') }}</label> : <input type="text" class="form-control" id="visit_motiv_friend"/></td>
+                                </tr>
+                                <tr>
+                                    <td colspan="3">{{ _('기타') }} : <input type="text" class="form-control" id="visit_motiv_etc"/></td>
+                                </tr>
+                            </table>
+                        </div>
+                        <div class="func_container">
+                            <input type="button" class="btn btn-default" data-dismiss="modal" value="Close"/>
+                            <input type="button" id="save" class="btn btn-primary" value="Save"/>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--보험 정보-->
+<div id="tax_exam_EventModal" class="modal fade">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span> <span class="sr-only">close</span></button>
+                <h4>{{ _('Inform Tax Invoice') }}</h4>
+                <div id="modalBody" class="modal-body" >
+                    <div id="show_Tax_invoice">
+                        <h5>{{ _('Patient Information') }}</h5>
+                        <input type="hidden" value="" id="selected_tax_invoice_id"/>
+                        <table class="table table-bordered edit_reception_table"> 
+                            <tr>
+                                <td >
+                                    <div class="input-group edit_reception_title">
+                                        <span class="input-group-addon Edit_Reception_input-group-addon" id="basic-addon1">{{ _('Chart No') }}</span>
+                                        <input type="text" class="form-control" id="tax_invoice_chart" disabled/>
+                                    </div>
+                                </td>
+                                <td ></td>
+                            </tr>
+                            <tr>
+                                <td >
+                                    <div class="input-group edit_reception_title">
+                                        <span class="input-group-addon Edit_Reception_input-group-addon" id="basic-addon1">{{ _('Name') }}</span>
+                                        <input type="text" class="form-control" id="tax_invoice_name" disabled/>
+                                    </div>
+                                </td>
+                                <td >
+                                    <div class="input-group edit_reception_title">
+                                        <span class="input-group-addon Edit_Reception_input-group-addon" id="basic-addon1">{{ _('Date of Birth') }}</span>
+                                        <input type="text" class="form-control" id="tax_invoice_date_of_birth" disabled/>
+                                    </div>
+                                </td>
+                            </tr>
+                        </table>
+                        <!--patient_tax_invoice-->
+                        <h5>{{ _('Tax Invoice Information') }}</h5>
+                        <!-- <table class="table table-bordered">
+                            <tr>
+                                <td>
+                                    <div class="input-group edit_reception_title">
+                                        <span class="input-group-addon Edit_Reception_input-group-addon" id="basic-addon1">{{ _('Tax code') }}</span>
+                                        <input type="text" id="tax_invoice_number" class="form-control" aria-describedby="basic-addon1">
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="input-group edit_reception_title">
+                                        <span class="input-group-addon Edit_Reception_input-group-addon" id="basic-addon2">{{ _('Company Name') }}</span>
+                                        <input type="text" id="tax_invoice_company_name" class="form-control" aria-describedby="basic-addon2">
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <div class="input-group edit_reception_title">
+                                        <span class="input-group-addon Edit_Reception_input-group-addon" id="basic-addon1">{{ _('Employee Position') }}</span>
+                                        <input type="text" id="tax_invoice_employee" class="form-control" aria-describedby="basic-addon1">
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="input-group edit_reception_title">
+                                        <span class="input-group-addon Edit_Reception_input-group-addon" id="basic-addon2">{{ _('Contact') }}</span>
+                                        <input type="text" id="tax_invoice_contact" class="form-control" aria-describedby="basic-addon2">
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="2">
+                                    <div class="input-group edit_reception_title">
+                                        <span class="input-group-addon Edit_Reception_input-group-addon" id="basic-addon1">{{ _('Address') }}</span>
+                                        <input type="text" id="tax_invoice_address" class="form-control" aria-describedby="basic-addon1">
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="2">
+                                    <div class="input-group edit_reception_title">
+                                        <span class="input-group-addon Edit_Reception_input-group-addon" id="basic-addon1">{{ _('Memo') }}</span>
+                                        <input type="text" id="tax_invoice_memo" class="form-control" aria-describedby="basic-addon1">
+                                    </div>
+                                </td>
+                            </tr>
+                        </table> -->
+                        <div style="text-align:right;">
+                            <input type="button" class="btn btn-default" value="{{ _('Cancel') }}" data-dismiss="modal"/>
+                            <input type="button" class="btn btn-primary" value="{{ _('Save') }}" id="tax_invoice_save"/>
+                        </div>
+                       
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--접수 정보 수정-->
+<div id="Edit_Reception_EventModal" class="modal fade">
+    <div class="modal-dialog Edit_Reception_modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span> <span class="sr-only">close</span></button>
+                <h4>{{ _('Edit Reception') }}</h4>
+                    <div id="modalBody" class="modal-body" >
+                        <h5>{{ _('Patient Information') }}</h5>
+                        <input type="hidden" value="" id="selected_reception_id"/>
+                        <table class="table table-bordered edit_reception_table"> 
+                            <tr>
+                                <td >
+                                    <div class="input-group edit_reception_title">
+                                        <span class="input-group-addon Edit_Reception_input-group-addon" id="basic-addon1">{{ _('Chart No') }}</span>
+                                        <input type="text" class="form-control" id="edit_reception_chart" disabled/>
+                                    </div>
+                                </td>
+                                <td ></td>
+                            </tr>
+                            <tr>
+                                <td >
+                                    <div class="input-group edit_reception_title">
+                                        <span class="input-group-addon Edit_Reception_input-group-addon" id="basic-addon1">{{ _('Name') }}</span>
+                                        <input type="text" class="form-control" id="edit_reception_name" disabled/>
+                                    </div>
+                                </td>
+                                <td >
+                                    <div class="input-group edit_reception_title">
+                                        <span class="input-group-addon Edit_Reception_input-group-addon" id="basic-addon1">{{ _('Date of Birth') }}</span>
+                                        <input type="text" class="form-control" id="edit_reception_date_of_birth" disabled/>
+                                    </div>
+                                </td>
+                            </tr>
+                        </table>
+
+                        <h5>{{ _('Reception Information') }}</h5>
+                        <table class="table table-bordered">
+                            <tr>
+                                <td >
+                                    <div class="input-group edit_reception_title" >
+                                        <span class="input-group-addon Edit_Reception_input-group-addon" id="basic-addon1">{{ _('Depart') }}</span>
+                                        <select id="edit_reception_depart" class="form-control">
+                                            <option value="" selected="">{{ _('ALL') }}</option>
+                                            {% for depart in list_depart %}
+                                            <option value="{{ depart.id }}">{{ depart.name }}</option>
+                                            {% endfor %}
+                                        </select>
+                                        
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="input-group edit_reception_title" >
+                                        <span class="input-group-addon Edit_Reception_input-group-addon" id="basic-addon2">{{ _('Doctor') }}</span>
+                                        <select id="edit_reception_doctor" class="form-control">
+                                            <option value="" selected="">{{ _('ALL') }}</option>
+                                        </select>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="2">
+                                    <div class="input-group edit_reception_title"> 
+                                        <span class="input-group-addon Edit_Reception_input-group-addon" id="basic-addon1">{{ _('C / C') }}</span>
+                                        <input type="text" id="edit_reception_chief_complaint" class="form-control" aria-describedby="basic-addon1" />
+                                    </div>
+                                </td>
+                            </tr>
+                        </table>
+
+
+                        <h5>{{ _('Vital Signs') }}</h5>
+                        <table class="table edit_reception_vital_table">
+                            <tr>
+                                <td>{{ _('Ht') }}:</td>
+                                <td><input type="text" class="form-control" id="edit_reception_vital_ht"/></td>
+                                <td>{{ _('Wt') }}:</td>
+                                <td><input type="text" class="form-control" id="edit_reception_vital_wt"/></td>
+                                <td>{{ _('BP') }}:</td>
+                                <td><input type="text" class="form-control" id="edit_reception_vital_bp"/></td>
+                                <td>{{ _('BT') }}:</td>
+                                <td><input type="text" class="form-control" id="edit_reception_vital_bt"/></td>
+                                <td>{{ _('PR') }}:</td>
+                                <td><input type="text" class="form-control" id="edit_reception_vital_pr"/></td>
+                                <td>{{ _('RR') }}:</td>
+                                <td><input type="text" class="form-control " id="edit_reception_vital_breath"/></td>
+                            </tr>
+                        </table>
+                        <div>
+
+                            
+                            <label class="btn btn-warning need_medical_report" ><input type="checkbox" value="" id="reception_edit_need_medical_report" /><text>{{_('Medical Report') }}</text></label>
+
+                            
+                        </div>
+                        <div style="margin-top:10px;">
+                            <input type="button" value="{{ _('Delete') }}" class="btn btn-danger" onclick="edit_reception_del()"/>
+                            <div style="text-align:right; float:right;">
+                                <input type="button" value="{{ _('Close') }}" class="btn btn-default" data-dismiss="modal"/>
+                                <input type="button" value="{{ _('Save') }}" class="btn btn-primary" onclick="edit_reception_save()" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+</div>
+
+
+<!--패키지 목록-->
+<div id="patient_package_list_modal" class="modal fade">
+    <div class="modal-dialog Edit_Reception_modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span> <span class="sr-only">close</span></button>
+                <h4>{{ _('Package Manage') }}</h4>
+                    <div id="modalBody" class="modal-body" >
+                        <h5>{{ _('Patient Information') }}</h5>
+                        <table class="table table-bordered edit_reception_table"> 
+                            <tr>
+                                <td >
+                                    <div class="input-group edit_reception_title">
+                                        <span class="input-group-addon Edit_Reception_input-group-addon" id="basic-addon1">{{ _('Chart No') }}</span>
+                                        <input type="text" class="form-control" id="patient_package_chart" readonly/>
+                                    </div>
+                                </td>
+                                <td ></td>
+                            </tr>
+                            <tr>
+                                <td >
+                                    <div class="input-group edit_reception_title">
+                                        <span class="input-group-addon Edit_Reception_input-group-addon" id="basic-addon1">{{ _('Name') }}</span>
+                                        <input type="text" class="form-control" id="patient_package_name" readonly/>
+                                    </div>
+                                </td>
+                                <td >
+                                    <div class="input-group edit_reception_title">
+                                        <span class="input-group-addon Edit_Reception_input-group-addon" id="basic-addon1">{{ _('Date of Birth') }}</span>
+                                        <input type="text" class="form-control" id="patient_package_date_of_birth" readonly/>
+                                    </div>
+                                </td>
+                            </tr>
+                        </table>
+
+                        <div >
+                         <h5 style="">{{ _('Package List') }}</h5>
+                            <div style="text-align:right;">
+                                <input type="button" class="btn btn-primary" id="show_package_list" value="+ {{ _('Add') }}" onclick="package_add_modal()" />
+                            </div>
+                            <div style="height:400px; overflow:auto">
+                                <table class="table table-bordered table-hover table-striped" id="patient_package_list_table">
+                                    <thead>
+                                        <tr>
+                                            <th>{{ _('No') }}</th>
+                                            <th>{{ _('Depart') }}</th>
+                                            <th>{{ _('Package Name') }}</th>
+                                            <th>{{ _('Count') }}</th>
+                                            <th>{{ _('History') }}</th>
+                                            <th>{{ _('Registration') }}</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                            
+                        </div>
+                        <div style="margin-top:10px;">
+                            <div style="text-align:right;">
+                                <input type="button" value="{{ _('Close') }}" class="btn btn-default" data-dismiss="modal"/>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+</div>
+
+<!--패키지 추가-->
+<div id="package_add_modal" class="modal fade">
+    <div class="modal-dialog Edit_Reception_modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span> <span class="sr-only">close</span></button>
+                <h4>{{ _('Package Register') }}</h4>
+                    <div id="modalBody" class="modal-body" >
+                         <span>{{ _('*Select Depart and Doctor first. then Package Item') }}</span>
+                        <div>
+                            <div class="input-group" id="search_depart_filter_package_div">
+                                <span class="input-group-addon" id="basic-addon1">{{ _('Depart') }}</span>
+                                <select id="search_depart_filter_package" class="form-control" >
+                                    <option value="">----------</option>
+                                    {% for data in list_depart %}
+                                    <option value="{{ data.id }}">{{ data.name }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                            <div class="input-group" id="search_doctor_filter_package_div">
+                                <span class="input-group-addon" id="basic-addon1">{{ _('Doctor') }}</span>
+                                <select id="search_doctor_filter_package" class="form-control" >
+                                    <option value="">----------</option>
+                                </select>
+                            </div>
+
+                        </div>
+                        <div style="text-align:right; margin-top:20px;">
+                            <input type="text" class="form-control" id="search_string_package" />
+                            <input type="button" class="btn btn-default" id="search_btn_package" value="{{ _('Search') }}"/>
+                        </div>
+
+                        <div style="height:400px; margin-top:10px;">
+                            <table class="table table-bordered table-hover table-striped" id="package_list_table">
+                                <thead>
+                                    <tr>
+                                        <th>{{ _('Code') }}</th>
+                                        <th>{{ _('Name') }}</th>
+                                        <th>{{ _('Price') }}</th>
+                                        <th>{{ _('Count') }}</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+
+                                </tbody>
+                            </table>
+                            <ul class="pagination" id="medicine_pagnation">
+
+                            </ul>
+                        </div>
+                            
+                        </div>
+                        <div style="margin-top:10px;">
+                            <div style="text-align:right;">
+                                <input type="button" value="{{ _('Close') }}" class="btn btn-default" data-dismiss="modal"/>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
+<!--패키지 접수-->
+<div id="patient_package_reception_modal" class="modal fade">
+    <div class="modal-dialog" style="width:600px;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span> <span class="sr-only">close</span></button>
+                <h4>{{ _('Package Reception') }}</h4>
+               
+                <div id="modalBody" class="modal-body" >
+                    <input type="hidden" id="patient_package_registration_id" value=""/>
+                    <div>
+                        <div class="input-group" id="depart_filter_reg_div">
+                            <span class="input-group-addon" id="basic-addon1">{{ _('Depart') }}</span>
+                            <select id="depart_filter_reg" class="form-control" >
+                                <option value="">----------</option>
+                                {% for data in list_depart %}
+                                <option value="{{ data.id }}">{{ data.name }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <div class="input-group" id="doctor_filter_reg_div">
+                            <span class="input-group-addon" id="basic-addon1">{{ _('Doctor') }}</span>
+                            <select id="doctor_filter_reg" class="form-control" >
+                                <option value="">----------</option>
+                            </select>
+                        </div>
+
+                    </div>
+
+                </div>
+                <div style="margin-top:10px;">
+                    <div style="text-align:right;">
+                        <input type="button" value="{{ _('Save') }}" class="btn btn-primary" onclick="patient_package_reception()"/>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<!--패키지 이력-->
+<div id="patient_package_history_modal" class="modal fade">
+    <div class="modal-dialog Edit_Reception_modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span> <span class="sr-only">close</span></button>
+                <h4>{{ _('Package History') }}</h4>
+                    <div id="modalBody" class="modal-body" >
+                        <table class="table table-bordered table-hover table-striped" id="patient_package_history_list">
+                            <thead>
+                                <tr>
+                                    <th>{{ _('No') }}</th>
+                                    <th>{{ _('Patient Name') }}</th>
+                                    <th>{{ _('Precedure Name') }}</th>
+                                    <th>{{ _('Round') }}</th>
+                                    <th>{{ _('Date Bought') }}</th>
+                                    <th>{{ _('Date Used') }}</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+
+                            </tbody>
+                        </table>
+
+                    </div>
+                    <div style="margin-top:10px;">
+                        <div style="text-align:right;">
+                            <input type="button" value="{{ _('Close') }}" class="btn btn-default" data-dismiss="modal"/>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+</div>
+
+
+<div id="memo_detail_modal" class="modal fade">
+
+    <div class="modal-dialog" style="width:500px;">
+        <div class="modal-content">
+            <div class="modal-header" style="overflow: scroll;">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span> <span class="sr-only">close</span></button>
+                <h4>{{ _('Memo Detail') }}</h4>
+
+                <table class="table table-bordered table-hover table-striped">
+                    <tr>
+                        <td >
+                            <div style="width:500px">
+                                <span class="btn btn-danger">Patient Extra Information</span>
+                                <table class="table table-bordered table-hover table-striped">
+                                    
+                                    <tr>
+                                        <td>
+                                            <div class="input-group">
+                                                <span class="input-group-addon patient_table_title" id="basic-addon1">{{ _('Order') }}</span>
+                                                <input type="text" class="form-control" id="memo_detail_order"/>
+                                            </div>
+                                        </td>
+                                    </tr>
+
+                                    <tr>
+                                        <td>
+                                            <div class="input-group">
+                                                <span class="input-group-addon patient_table_title" id="basic-addon1">{{ _('Diseases') }}</span>
+                                                <input type="text" class="form-control" id="memo_detail_disease"/>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </table> 
+                                <input id="patient_notes" type="button" value="{{_('Update') }}" class="btn btn-primary save_cancel_btn" style="width:100px;" onclick="update_patient_notes()"/>
+                            
+                            </div>
+                        </td>
+
+                    </tr>
+                    <tr>
+                        <td>
+                            <div style="width: 800px;">
+                                <span class="btn btn-danger">Memos</span>
+                            <table class="table table-bordered table-hover table-striped" id="table_memo_detail">
+                                <thead>
+                                    <tr>
+                                        <th>{{ _('No') }}</th>
+                                        <th>{{ _('Depart Creator') }}</th>
+                                        <th>{{ _('Creator') }}</th>
+                                        <th>{{ _('Memo') }}</th>
+                                        <th>{{ _('Depart Memo') }}</th>
+                                        <th></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+        
+                                </tbody>
+                            </table>
+        
+                            <br><br>
+                            <div class="input-group">
+                                <span class="input-group-addon Edit_Reception_input-group-addon" id="basic-addon1" style="width: 120px;">{{ _('Other Memo') }}</span>
+                                <input type="text" class="form-control" id="new_memo_detail"/>
+                            </div>
+                            <div class="input-group">
+                                <span class="input-group-addon Edit_Reception_input-group-addon" style="width: 120px;">{{ _('Character Memo') }}</span>
+                                <select id="help_text" class="form-control" aria-describedby="basic-addon1">
+                                    <option value selected>---------</option>
+                                    <option value="1">Tinh cach co tinh bất an nen không tin tưởng vào người khác - 성격이 불안하여 타인 신뢰않함</option>
+                                    <option value="2">Thiếu hiểu biết ( tự ý thức quá mứcnên không tập trung  nghe giải thích)- 이해력 부족(자의식이 너무 과해서 다른 사람 설명에 집중 못함)</option>
+                                    <option value="3">Thiếu kiên nhẫn và dễ cáu kỉnh (không kiểm soát được cảm xúc) - 매우 조급하여 잘 짜증냄 (감정 조절 못함)</option>
+                                    <option value="4">Coi thường quy định của bệnh viện - 병원 규정을 무시한 요구</option>
+                                    <option value="5">Yêu cầu nhiều, khó tính -  어떻게 해달라는 요구 많고 까다로움</option>
+                                    <option value="6">Phản ứng dữ dội một cách thái quá - 엄살이 심하고 과잉반응</option>
+                                    <option value="7">Người rối loạn nhân cách ái kỷ, chỉ quan tâm đến bản thân (phớt lờ người khác, không thừa nhận vấn đề của mình) - 자기만 중요한 나르시시스트 (다른 사람을 무시함,자신의 문제점을 인정 안함)</option>
+                                    <option value="8">Có nhiều bí mật (quá nhạy cảm với việc lộ thông tin) - 비밀이 많음 (정보 노출에 너무 민감함)</option>
+                                    <option value="9">Luôn yêu cầu giảm giá - 항상 가격 깎아 달라고 함</option>
+                                    <option value="10">Mang thuốc về rồi nhưng lại thản nhiên yêu cầu hoàn tiền - 약 처방 받은 후 태연히 환불요청</option>
+                                    <option value="11">Hay đánh giá ác ý về phòng khám trên mạng xã hội - SNS 등에 병원에 악성 리뷰</option>
+                                </select>
+                            </div>
+                            <div class="input-group">
+                                <span class="input-group-addon Edit_Reception_input-group-addon"" id="basic-addon1" style="width: 120px;">{{ _('Patient Mark') }}</span>
+                                <select class="form-control" id="patient_mark">
+                                    <option value="" selected>--</option>
+                                    {% for data in patient_mark %}
+                                        <option value="{{ data.commcode }}">{{data.se1}}</option>
+                                    {% endfor%}
+                                </select>
+                            </div>
+                            <div class="input-group">
+                                <span class="input-group-addon Edit_Reception_input-group-addon" style="width: 120px;">{{ _('Depart') }}</span>
+                                <select id="memo_depart" class="form-control" aria-describedby="basic-addon1">
+                                    <option value selected>---------</option>
+                                    <option value="PED">PED</option>
+                                    <option value="IM">IM</option>
+                                    <option value="LAB">LAB</option>
+                                    <option value="PS">PS</option>
+                                    <option value="ENT">ENT</option>
+                                    <option value="DERM">DERM</option>
+                                    <option value="PM">PM</option>
+                                    <option value="DENTAL">DENTAL</option>
+                                    <option value="OBGYN">OBGYN</option>
+                                    <option value="VACCINE">VACCINE</option>
+                                    <option value="SURGERY">SURGERY</option>
+                                </select>
+                            </div>
+
+                            <input id="create_memo_detail" type="button" value="{{_('Create Memo') }}" class="btn btn-primary save_cancel_btn" style="width:100px;" onclick="create_memo_detail()"/>
+                            
+                            </div>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td>
+    
+
+                        </td>
+                    </tr>
+
+                </table>
+
+                
+                <!-- </div> -->
+               
+            </div>
+            <div class="modal-body" style="display: flex; justify-content: space-between;">
+                <input style="width: 200px; height: 40px; font-size: 20px; font-weight: 500;" type="button" class="btn btn-info save_cancel_btn" id="btn_save_patient" value="{{ _('Save') }}" onclick="save_patient()"/>
+                <input style="width: 200px; height: 40px; font-size: 20px; font-weight: 500;" type="button" value="{{_('Registration') }}" class="btn btn-primary save_cancel_btn" style="width:100px;" onclick="save_recept()"/>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+
+<div id="modal_vital" class="modal fade">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span> <span class="sr-only">close</span></button>
+                <h4>{{ _('Vital Sign') }}</h4>
+                <div id="modalBody" class="modal-body" >
+                    <div id="show_Tax_invoice">
+                        <h5>{{ _('Patient Vital History') }}</h5>
+                        <!-- <input type="hidden" value="" id="selected_tax_invoice_id"/> -->
+                        <table class="table table-bordered edit_reception_table" id="list_vital_sign"> 
+                            <thead>
+                                <tr>
+                                    <th>Date Time</th>
+                                    <th>Ht</th>
+                                    <th>Wt</th>
+                                    <th>BP</th>
+                                    <th>BT</th>
+                                    <th>Pr</th>
+                                    <th>Rr</th>
+                                </tr>
+                            </thead>
+                            <tbody></tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+
+{% block style %}
+   
+    <link rel="stylesheet" href="{% static 'css/ion.rangeSlider.min.css' %}" />
+    <link rel="stylesheet" type="text/css" href="{% static 'css/reception.css' %}" />
+{% endblock %}
+
+{% block scripts %}
+<script src="{% static 'js/reception.js' %}" type="text/javascript"></script>
+<script src="{% static 'js/ion.rangeSlider.min.js' %}"></script>
+{% endblock %}

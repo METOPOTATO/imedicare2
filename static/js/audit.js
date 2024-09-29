@@ -18,6 +18,7 @@ $(function () {
             'Last Year': [moment().subtract(1, 'year').add(1, 'day'), moment()],
         },
         drops: "down",
+        autoApply: true,
         "alwaysShowCalendars": true,
         locale: {
             format: 'YYYY-MM-DD',

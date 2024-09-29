@@ -36,10 +36,11 @@ textarea{
 
 
 .title_span {
-    margin-top:20px;
-    margin-bottom: 20px;
-    font-size: 15px;
+    text-align: left;
+    font-size: 16px;
+    height: 26.5px;
     padding-top: 1px;
+    margin-bottom: 5px;
     background: rgb(233, 69, 139);
     border-color: rgb(233, 69, 139);
 }
@@ -54,8 +55,9 @@ textarea{
     text-align: center;
 }
 .board_list_wrap, .content_wrap {
-    width: 1200px;
-    margin: 0 auto;
+    width: 1400px;
+    /*margin: 0 auto;*/
+    margin-left:200px;
     text-align:left;
 }
 
@@ -108,10 +110,11 @@ textarea{
     table-layout: fixed;
 }
 
-#contents_table thead tr th{
-    vertical-align:middle;
-    text-align:center;
-}
+    #contents_table th, #contents_table td {
+        vertical-align: middle;
+        text-align: center;
+        word-break: break-word;
+    }
 
     #contents_table thead tr th:nth-child(1) {
         width:50px;
@@ -119,21 +122,21 @@ textarea{
     #contents_table thead tr th:nth-child(2) {
         width: 70px;
     }
-    #contents_table thead tr th:nth-child(4), #contents_table thead tr th:nth-child(5), #contents_table thead tr th:nth-child(7) {
-        width: 100px;
+    #contents_table thead tr th:nth-child(4) {
+        width: 130px;
     }
-    #contents_table thead tr th:nth-child(5) {
-        
-    }
-    #contents_table thead tr th:nth-child(6), #contents_table thead tr th:nth-child(8), #contents_table thead tr th:nth-child(9) {
-        width: 100px
+#contents_table thead tr th:nth-child(6){
+    width:130px;
+}
+    #contents_table thead tr th:nth-child(5), #contents_table thead tr th:nth-child(7), #contents_table thead tr th:nth-child(8) {
+        width: 110px
     }
 
 
-    #contents_table thead tr th:nth-child(10), #contents_table thead tr th:nth-child(11) {
+    #contents_table thead tr th:nth-child(9), #contents_table thead tr th:nth-child(10) {
         width: 55px;
     }
-    #contents_table thead tr th:nth-child(12){
+    #contents_table thead tr th:nth-child(11){
         width:80px;
     }
 
@@ -149,6 +152,9 @@ textarea{
 .list_division{
     font-size:12px;
     color: cadetblue;
+}
+.label-purple {
+    background: rgb(168,166,202)
 }
 
 .content_top {
@@ -223,9 +229,11 @@ textarea{
         margin-bottom:50px;
     }
 
-    .content_comment textarea, .content_comment span button {
-        height: 70px;
-    }
+.content_comment textarea, .content_comment span a {
+    vertical-align: central;
+    height: 70px;
+    padding-top: 17px;
+}
 .content_comment span a{
     vertical-align:middle;
 }
@@ -267,7 +275,7 @@ textarea{
 
     .comment_user_name {
         font-weight: 600;
-        width: 132px;
+        width: 145px;
         margin-right: 33px;
         margin-top: 3px;
     }
@@ -300,11 +308,12 @@ textarea{
 .comment_reply_wrap {
     display: none;
     width: 100%;
-    padding: 10px 50px;
+    padding-top: 10px;
     padding-bottom: 20px;
 }
 
 .comment_reply {
+    padding-left:50px;
 }
 
     .comment_reply .input-group{
@@ -321,6 +330,10 @@ textarea{
 
 #content_comment_additional {
     width:1200px;
+    margin-top:20px
+}
+#content_comment_additional tr, #content_comment_additional td {
+    border: none !important;
 }
 
 #file_count {
@@ -337,7 +350,15 @@ textarea{
     #text_comment_new_btn span {
     }
 
-
+#view_division_filter_div {
+    width: 120px;
+}
+#view_depart_filter_div {
+    width: 250px;
+}
+#view_status_filter_div{
+    width:150px;
+}
 .file_list_div {
     margin: 20px;
 }
@@ -348,12 +369,19 @@ textarea{
     }
 
 
-#expected_date_div {
-    width: 180px;
+.deleted_comment{
+    padding:10px 50px;
 }
 
-#due_date_div{
-    width:160px;
+.start_date_div {
+    width: 195px;
+}
+.expected_date_div {
+    width: 220px;
+}
+
+.due_date_div{
+    width:200px;
 }
 
 #status_div{
@@ -370,4 +398,43 @@ textarea{
 
 .i_coursor{
     cursor:pointer;
+}
+
+.content_comment_option_additional_div table {
+    margin-bottom:-10px;
+    margin-top:20px;
+}
+
+.content_comment_option_additional_div tr, .content_comment_option_additional_div  td{
+    border: none !important;
+}
+
+.commnet_top {
+    background: rgb(252,242,228);
+}
+
+.i_am_incharge {
+    background: rgb(200,243,243) !important;
+}
+
+.comment_top_additional {
+    margin: 0px;
+    padding: 0px;
+    text-align: left;
+}
+
+    .comment_top_additional > div {
+        padding-left:5px;
+        border-top: 1px solid rgb(180,180,180);
+        border-bottom: 1px solid rgb(180,180,180);
+        border-right: 1px solid rgb(180,180,180);
+        display: inline-block;
+        font-weight: 700;
+    }
+        .comment_top_additional > div:first-child {
+            border-left: 1px solid rgb(180,180,180);
+        }
+
+.comment_content{
+    padding:5px;
 }

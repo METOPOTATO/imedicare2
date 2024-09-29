@@ -4,14 +4,19 @@ th{
 
 
 .contents_wrap {
-    width: 95%;
-    margin: 0 auto;
-    margin-top: 40px;
+    width: 100%;
+    background: rgba(180, 180, 180, 0.15);
+    padding: 5px;
+    padding-left: 20px;
+    padding-right: 20px;
+    /*    margin: 0 auto;
+    margin-top: 40px;*/
 }
     .contents_wrap > div{
         margin-bottom:20px;
     }
 
+/*    
     .contents_Title_wrap {
         display: inline;
     }
@@ -22,9 +27,22 @@ th{
     font-size: 20px;
     padding: 10px 20px
 }
+*/
 
+.contents_Title {
+    text-align: left;
+    font-size: 16px;
+    height: 26.5px;
+    padding-top: 1px;
+    margin-bottom: 5px;
+    background: rgb(90,64,129);
+    border-color: rgb(90,64,129);
+}
 
-
+.contents_Title:hover {
+    background: rgb(90,64,129);
+    border-color: rgb(90,64,129);
+}
 
 .contents_filter_div{
     display:inline-table;
@@ -32,16 +50,20 @@ th{
 
 #contents_filter_div_context_count {
     float: right;
-    width: 130px;
+    width: 160px;
 }
 
+
+#contents_filter_div_date_type{
+    width:185px;
+}
 
 #contents_filter_div_depart {
     width: 150px;
 }
 
 #contents_filter_div_doctor{
-    width:150px;
+    width:200px;
 }
 
 
@@ -53,7 +75,22 @@ th{
     width:200px;
 }
 
+.patient_search_select {
+    width: 130px;
+    display: inline-block;
+    border-radius:0px;
+    border-right:none;
+}
+.patient_search_input {
+    width: 140px;
+    display: inline-block;
+    border-radius: 0px 4px 4px 0px;
+}
 
+#contents_filter_div_patient_name{
+    /*width:370px;*/
+    width:240px;
+}
 
 .search_table_No {
     width: 3vw;
@@ -94,10 +131,17 @@ th{
 
 }
 
+.red_invoice_label {
+    font-weight:300;
+}
 
+    .red_invoice_label input {
+        vertical-align: middle;
+        margin-top: -1px;
+    }
 
 .payment_table_result > tr {
-    height: 4vh;
+    height: 47px;
 }
 
 
@@ -184,37 +228,37 @@ th{
         #payment_search_table thead tr th:nth-child(1) {
             width: 50px;
         }
-    #payment_search_table thead tr th:nth-child(2) {
-        width: 70px;
-    }
-        #payment_search_table thead tr th:nth-child(3) {
+        #payment_search_table thead tr th:nth-child(2), #payment_search_table thead tr th:nth-child(3) {
+            width: 75px;
+        }
+        #payment_search_table thead tr th:nth-child(4) {
             width: 120px;
         }
-    #payment_search_table thead tr th:nth-child(4) {
-        width: 60px;
-    }
     #payment_search_table thead tr th:nth-child(5) {
         width: 60px;
     }
+    #payment_search_table thead tr th:nth-child(6) {
+        width: 60px;
+    }
 
 
-        #payment_search_table thead tr th:nth-child(6),
         #payment_search_table thead tr th:nth-child(7),
         #payment_search_table thead tr th:nth-child(8),
-        #payment_search_table thead tr th:nth-child(9) {
+        #payment_search_table thead tr th:nth-child(9),
+        #payment_search_table thead tr th:nth-child(10) {
             /*width: 70px;*/
         }
-#payment_search_table thead tr th:nth-child(11) {
-    width: 60px;
+#payment_search_table thead tr th:nth-child(12) {
+    width: 95px;
 }
-        #payment_search_table thead tr th:nth-child(12),
         #payment_search_table thead tr th:nth-child(13),
         #payment_search_table thead tr th:nth-child(14),
         #payment_search_table thead tr th:nth-child(15),
         #payment_search_table thead tr th:nth-child(16),
         #payment_search_table thead tr th:nth-child(17),
         #payment_search_table thead tr th:nth-child(18),
-        #payment_search_table thead tr th:nth-child(19) {
+        #payment_search_table thead tr th:nth-child(19),
+        #payment_search_table thead tr th:nth-child(20) {
             width: 80px;
         }
 
@@ -231,7 +275,6 @@ th{
         #payment_search_table tbody tr td:nth-child(10) {
             line-height:15px;
         }
-        #payment_search_table tbody tr td:nth-child(12),
         #payment_search_table tbody tr td:nth-child(13),
         #payment_search_table tbody tr td:nth-child(14),
         #payment_search_table tbody tr td:nth-child(15),
@@ -263,18 +306,22 @@ th{
 
 
         .total_table tbody tr td:nth-child(1) {
-            width: 842px;
+            width: 1139px;
             border: none;
             background: none;
         }
         .total_table tbody tr td:nth-child(2) {
-            width: 177px;
+            width: 260px;
         }
-    .total_table tbody tr td:nth-child(3), .total_table tbody tr td:nth-child(4), .total_table tbody tr td:nth-child(5), .total_table tbody tr td:nth-child(6), .total_table tbody tr td:nth-child(7) {
-        text-align: right;
-        width: 80px;
-        
-    }
+        .total_table tbody tr td:nth-child(3),
+        .total_table tbody tr td:nth-child(4),
+        .total_table tbody tr td:nth-child(5),
+        .total_table tbody tr td:nth-child(6), 
+        .total_table tbody tr td:nth-child(7), 
+        .total_table tbody tr td:nth-child(8) {
+            text-align: right;
+            width: 80px;
+        }
     /****** Doctor Profit    *******/
     .doctor_search_table_filter {
         text-align: right;
@@ -366,7 +413,7 @@ th{
 
 @media ( min-width: 1900px ) {
     .total_table tbody tr td:nth-child(1) {
-        width: 1145px;
+        width: 1139px;
     }
 
     .total_table tbody tr td:nth-child(2) {

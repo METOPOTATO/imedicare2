@@ -29,7 +29,9 @@
     grid-column-end: 2;
     overflow: auto;
 }
-
+.contents_filter_div{
+    display:inline-table;
+}
 .storage_contents {
     grid-column-start: 2;
     grid-column-end: 3;
@@ -40,7 +42,9 @@
     grid-column-end: 4;
     overflow: auto;
 }
-
+#contents_filter_div_depart {
+    width: 150px;
+}
 .storage_item_table {
     height: 360px;
     overflow: auto;
@@ -54,8 +58,11 @@
 
     .storage_list_title > span {
         text-align: left;
-        background: #d2322d;
         font-size: 16px;
+        height: 26.5px;
+        padding-top: 1px;
+        margin-bottom: 5px;
+        background: #d2322d;
     }
 
     .status_table_filter{
@@ -174,7 +181,6 @@
 }
 
 .storage_list_table_wrap {
-    margin-top: 30px;
     height: 575px;
     overflow-y: auto;
 }
@@ -198,8 +204,8 @@
     
 }
 
-    #storage_list_table tr td:nth-child(6),
-    #storage_list_table tr td:nth-child(7) {
+    #storage_list_table tr td:nth-child(7),
+    #storage_list_table tr td:nth-child(8) {
         text-align: right;
     }
 
@@ -216,7 +222,7 @@
             font-size: 11.2px;
         }
     #storage_list_total tr th:nth-child(2) {
-        width: 270px;
+        width: 230px;
         text-align: right;
     }
     #storage_list_total tr th:nth-child(3) {
@@ -242,6 +248,10 @@
     overflow-y:auto;
 }
 
+#patient_mark{
+    width:50px;
+    padding:3px;
+}
 
 @media ( min-width: 1900px ) {
     .storage_item_table {
@@ -510,3 +520,6 @@
 
 }
 
+#refund_modal .input-group{
+    width:100%;
+}

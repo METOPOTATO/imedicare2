@@ -1,0 +1,317 @@
+{% extends "app/layout.html" %}
+
+{% load staticfiles %}
+{% block content %}
+{% csrf_token %}
+
+<div class="main">
+    <!--Reception-->
+    <div class="table_patient partition">
+        <div class="status_table_title">
+            <span class="btn btn-danger">{{ _('Document List') }}</span>
+
+            <div class="status_table_filter">
+                {{ _('Date:') }}
+                <input type="text" class="form-control document_control" id="document_control_start"/>
+                ~ 
+                <input type="text" class="form-control document_control" id="document_control_end"/>
+                <div class="input-group" id="document_control_depart_div" style="{% if user.doctor %} display:none; {%endif%}">
+                    <span class="input-group-addon reception_table_title" id="basic-addon1">{{ _('Depart') }}</span>
+                    <select id="document_control_depart" class="form-control">
+                        <option value="">{{ _('All') }}</option>
+                        {% for depart in departs %}
+                        <option value="{{depart.id}}" {% if user.doctor.depart.id is depart.id %} selected {%endif%}>{{ depart.name }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <input type="text" class="form-control document_control" id="document_control_input"/>
+                <input type="button" class="btn btn-default document_control" id="document_control_search" value="{{ _('Search')}}"/>
+            </div>
+        </div>
+        <div class="document_contents_div part-2">
+            <table class="table table-bordered table-hover" id="document_contents_table">
+                <thead>
+                    <tr>
+                        <th>{{_('No')}}</th>
+                        <th>{{_('Chart No')}}</th>
+                        <th>{{_('Name')}}</th>
+                        <th>{{_('Date of Birth')}}</th>
+                        <th>{{_('Depart')}}</th>
+                        <!-- <th>{{_('Address')}}</th> -->
+                        <th>{{_('Phone')}}</th>
+                    </tr>
+                </thead>
+                <tbody id="document_contents">
+
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div class="detail_info partition">
+        <div class="status_table_title">
+            <span class="btn btn-danger">{{ _('Document Info') }}</span>
+        </div>
+        <div class="data">
+            <table class="table">
+                <tr>
+                    <td>
+                        <input type="text" id="rec_id" hidden>
+                        <input type="text" id="patient_id" hidden>
+                        <!-- <input type="text" id="patient_name" hidden> -->
+                        <div class="input-group ">
+                            <span class="input-group-addon patient_table_title" id="lbl_memo">{{ _('Patient Name') }}</span>
+                            <input type="text" id="patient_name" class="form-control" aria-describedby="basic-addon1" autocomplete="off">
+
+                        </div>
+
+                    </td>
+                    <td>
+                        <div class="input-group">
+                            <span class="input-group-addon patient_table_title" id="lbl_memo">{{ _('Address') }}</span>
+                            <input type="text" id="txt_address" class="form-control" aria-describedby="basic-addon1" autocomplete="off">
+
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <div class="input-group ">
+                            <span class="input-group-addon patient_table_title" id="lbl_memo">{{ _('Time') }}</span>
+                            <input type="text" id="txt_time" class="form-control" aria-describedby="basic-addon1" autocomplete="off">
+
+                        </div>
+
+                    </td>
+                    <td>
+                        <div class="input-group">
+                            <span class="input-group-addon patient_table_title" id="lbl_memo">{{ _('Email') }}</span>
+                            <input type="text" id="txt_email" class="form-control" aria-describedby="basic-addon1" autocomplete="off">
+
+                        </div>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>
+                        <div class="input-group ">
+                            <span class="input-group-addon patient_table_title" id="lbl_memo">{{ _('Tax') }}</span>
+                            <input type="text" id="txt_tax" class="form-control" aria-describedby="basic-addon1" autocomplete="off">
+
+                        </div>
+
+                    </td>
+                    <td>
+                        <div class="input-group">
+                            <span class="input-group-addon patient_table_title" id="lbl_memo">{{ _('Invoice Address') }}</span>
+                            <input type="text" id="txt_invoice_address" class="form-control" aria-describedby="basic-addon1" autocomplete="off">
+
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2">
+                        <div style="display: flex; flex-direction: row; justify-content: space-between;" >
+                            <!-- <input type="button" value="{{ _('Inform Tax Invoice') }}" class="btn btn-default" id="patient_tax_invoice_click" /> -->
+                            
+                            <!-- <label class="btn btn-warning need_medical_report" ><input type="checkbox" id="need_medical_report" /><text> {{_('Medical Report') }}</text></label> -->
+                            
+                            <div >
+                                <button class="btn btn-primary " style="width: 90px;">VAT Invoice</button>
+
+                                
+                                <label class="need_medical_report"  style="margin-right:10px;"><input name="tax_invoice" type="checkbox" id="need_invoice" onclick="checkTax(this)" /><text> {{_('Company') }}</text></label>
+                                <label class="need_medical_report"  style="margin-right:10px;"><input name="tax_invoice" type="checkbox" id="need_invoice_p" onclick="checkTax(this)" /><text style="color: red;"> {{_('Personal') }}</text></label>
+                                
+                                <!-- <label class="need_medical_report" style="margin-right:10px;"><input type="checkbox" id="" /><text> {{_('Red Invoice') }}</text></label> -->
+                            </div>
+                            <div>
+                                <button class="btn btn-primary " style="width: 90px;">Insurance</button>
+                                <label class="need_medical_report " style="margin-right:10px;" >
+                                    <input type="checkbox" id="need_insurance" />
+                                    <text> {{_('Insurance') }}</text>
+                                </label>
+                            </div>
+                            <div>
+                                <button class="btn btn-primary" style="width: 90px;">Without</button>
+                                <label class="need_medical_report" style="margin-right:10px;"><input style="accent-color: red;" type="checkbox" id="wo_name" /><text> {{_('Name') }}</text></label>
+                                <!-- <label class="need_medical_report" style="margin-right:10px;"><input type="checkbox" id="is_vaccine" /><text> {{_('Vaccine') }}</text></label> -->
+    
+                                <label class="need_medical_report" style="margin-right:10px;"><input style="accent-color: red;" type="checkbox" id="wo_email" /><text> {{_('Email') }}</text></label>
+                                <label class="need_medical_report" style="margin-right:10px;"><input style="accent-color: red;" type="checkbox" id="wo_today" /><text> {{_('Only today') }}</text></label>
+                            </div>
+
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2">
+                        <div class="download">
+                            <div class="download_pdf" id="download_pdf1">
+                                <a class='btn btn-default btn-xs' href="javascript: void (0);" onclick="print_medical_receipt()">
+                                    <i class='fa fa-lg fa-print'></i>
+                                </a>
+                                <p>
+                                    Medical Recepit
+                                </p>
+                            </div>
+                            <div class="download_pdf" id="download_pdf2">
+                                <a class='btn btn-default btn-xs' href="javascript: void (0);" onclick="print_medicine_receipt()">
+                                    <i class='fa fa-lg fa-print'></i>
+                                </a>
+                                <p>
+                                    Medicine Receipt
+                                </p>
+                            </div>
+                            <div class="download_pdf" id="download_pdf3">
+                                <a class='btn btn-default btn-xs' href="javascript: void (0);" onclick="print_subclinical_report()">
+                                    <i class='fa fa-lg fa-print'></i>
+                                </a>
+                                <p>
+                                    Subclinical
+                                </p>
+                            </div>
+                            <div class="download_pdf" id="download_pdf4">
+                                <a class='btn btn-default btn-xs' href="javascript: void (0);" onclick="print_medical_report()">
+                                    <i class='fa fa-lg fa-print'></i>
+                                </a>
+                                <p>
+                                    Medical Report
+                                </p>
+                            </div>
+                            <div class="download_pdf" id="download_pdf5">
+                                <a class='btn btn-default btn-xs' href="javascript: void (0);" onclick="print_prescription()">
+                                    <i class='fa fa-lg fa-print'></i>
+                                </a>
+                                <p>
+                                    Prescription Letter
+                                </p>
+                            </div>
+                            <div class="download_pdf" id="download_pdf6">
+                                <a class='btn btn-default btn-xs' href="javascript: void (0);" onclick="print_lab_report2()">
+                                    <i class='fa fa-lg fa-print'></i>
+                                </a>
+                                <p>
+                                    Lab Result
+                                </p>
+                            </div>
+                            <div class="download_pdf" id="download_pdf7">
+                                <a class='btn btn-default btn-xs' href="javascript: void (0);" onclick="print_vaccine_certificate()">
+                                    <i class='fa fa-lg fa-print'></i>
+                                </a>
+                                <p>
+                                    Vaccine Certification
+                                </p>
+                            </div>
+                            <div class="download_pdf">
+                                <a class='btn btn-default btn-xs' href="javascript: void (0);" onclick="excel_download()">
+                                    <i class='fa fa-lg fa-file-excel-o'></i>
+                                </a>
+                                <p>
+                                    Excel
+                                </p>
+                            </div>
+                        </div>
+                        
+                    </td>
+
+                </tr>
+                <tr>
+                    <td colspan="2">
+                        <div class="upload_pdf" id="download_1" style="margin: 10px 0 10px 0; display: flex; align-items: end; " >
+                            <div style="margin-right: 80px;">
+                                <input id="btn_update_email" style="width: 150px; height: 30px;" class="btn btn-success" onclick="update_send_mail_status(event)" value="Update Email Status"/>
+                            </div>
+
+                            <div class="file_upload" id="upload1" style="margin-right: 10px;">
+                                <input class="file" type="file" id="pdf_file1">
+                                <input class="btn btn-info" onclick="upload_pdf1()" value="Upload PDF File"/>
+                            </div>
+                            <div style="margin-right: 80px;">
+                                <input id="btn_send_email" style="width: 150px; height: 30px;" class="btn btn-info" onclick="send_email_document(event)" value="Send Email"/>
+                            </div>
+
+
+                            <div style="margin-right: 10px;">
+                                <input id="btn_update_invoice" style="width: 150px; height: 30px;" class="btn btn-success" onclick="update_send_invoice_status(event)" value="Update Invoice Status"/>
+                            </div>
+
+
+                            <!-- <div class="file_upload" id="upload2">
+                                <input class="file" type="file" id="pdf_file2" >
+                                <input class="btn btn-info" onclick="upload_pdf2()" value="Medicine Receipt"/>
+                            </div>
+                            <div class="file_upload" id="upload3">
+                                <input class="file" type="file" id="pdf_file3" >
+                                <input class="btn btn-info" onclick="upload_pdf3()" value="Subclinical"/>
+                            </div>
+                            <div class="file_upload" id="upload4">
+                                <input class="file" type="file" id="pdf_file4" >
+                                <input class="btn btn-info" onclick="upload_pdf4()" value="Medical Report"/>
+                            </div>
+                            <div class="file_upload" id="upload5">
+                                <input class="file" type="file" id="pdf_file5" >
+                                <input class="btn btn-info" onclick="upload_pdf5()" value="Prescription Letter"/>
+                            </div>
+                            <div class="file_upload" id="upload6">
+                                <input class="file" type="file" id="pdf_file6" >
+                                <input class="btn btn-info" onclick="upload_pdf6()" value="Lab Result"/>
+                            </div>
+                            <div class="file_upload" id="upload7">
+                                <input class="file" type="file" id="pdf_file7" >
+                                <input class="btn btn-info" onclick="upload_pdf7()" value="Vaccine Certification"/>
+                            </div> -->
+                        </div>
+                    </td>
+                </tr>
+                <!-- <tr>
+                    <td colspan="2">
+                        <div class="upload_pdf">
+                            
+
+                            <div class="file_upload" style="display: flex; flex-direction: row; justify-content: end; align-items: end;">
+                                
+                                <input class="btn btn-danger" onclick="upload_pdf(event)" value="Upload PDF"/>
+                            </div>
+                        </div>
+                    </td>
+                </tr> -->
+                <tr>
+                    <td colspan="2">
+                        <div style="margin-top: 10px; display: flex; flex-direction: row;">
+
+                            <!-- <div>
+                                <input id="btn_send_email" style="width: 150px; height: 30px;" class="btn btn-success" onclick="get_tax()" value="Get Tax"/>
+                            </div> -->
+                        </div>
+
+                        
+                    </td>
+                </tr>
+
+            </table>
+            
+        </div>
+    </div>
+</div>
+
+
+
+<div id="dynamic_div">
+
+</div>
+
+{% endblock %}
+
+
+{% block style %}
+    <link rel="stylesheet" href="{% static 'css/ion.rangeSlider.min.css' %}" />
+    <link rel="stylesheet" type="text/css" href="{% static 'css/Documents2.css' %}" />
+    
+<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
+{% endblock %}
+
+{% block scripts %}
+<script src="{% static 'js/Documents2.js' %}" type="text/javascript"></script>
+<script src="{% static 'js/ion.rangeSlider.min.js' %}"></script>
+{% endblock %}

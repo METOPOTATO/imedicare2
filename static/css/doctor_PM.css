@@ -6,7 +6,7 @@
     width: 100%;
     display: grid;
     grid-template-columns: 30% 40%;
-    grid-template-rows: 31% 7% 23% 10%;
+    grid-template-rows: 31% 9% 23% 10%;
 }
 
 .partition {
@@ -101,14 +101,15 @@ doctor_patient_info table ul label {
 
 
 .diagnosis_select_contents {
-    width: 420px;
-    height: 180px;
+    width: 530px;
+    height: 220px;
     overflow-y: auto;
     border: 2px solid #adadad;
 }
 
 .diagnosis_selected_method {
-    height: 135px;
+    /*height: 135px;*/
+    height:180px;
     margin-bottom: 15px;
     overflow: auto;
 }
@@ -157,16 +158,21 @@ doctor_patient_info table ul label {
     grid-column-end: 4;
 }
 
+#reception_table{
+    margin-bottom:0px;
+}
+
 .status_table_filter {
     display: inline;
     font-size: 15px;
 }
 
 .status_table_title span {
-    margin-bottom: 10px;
-    font-size: 14px;
-    height: 25px;
+    text-align: left;
+    font-size: 16px;
+    height: 26.5px;
     padding-top: 1px;
+    margin-bottom: 5px;
     background: rgb(20,135,130);
     border-color: rgb(20,135,130);
 }
@@ -179,8 +185,8 @@ doctor_patient_info table ul label {
 
 .diagnosis_history_taking_contents {
     resize: vertical;
-    width: 411px !important;
-    height: 45px !important;
+    width: 580px !important;
+    height: 55px !important;
 }
 
 .Vitial_table_warp {
@@ -207,6 +213,13 @@ doctor_patient_info table ul label {
     float: left;
 }
 
+#patient_mark {
+    padding: 3px;
+    float: right;
+    width: 50px;
+    margin-right: 5px;
+    height: 27px;
+}
 
 
 .diagnosis_select_category_tree ul {
@@ -292,7 +305,8 @@ doctor_patient_info table ul label {
 }
 
 .Rectption_Status_wrap {
-    height: 340px;
+    /*height: 340px;*/
+    height: 420px;
     overflow: auto;
 }
 
@@ -465,6 +479,43 @@ doctor_patient_info table ul label {
         .q2_item_select option:first-child {
             color: #aaaaaa;
         }
+
+.doctor_patient_info {
+    font-size: 20px;
+}
+
+.doctor_patient_table_contents {
+    height: 40px;
+}
+
+#status_drop_down_warp {
+    float: left;
+    margin-right: 5px;
+}
+
+#status_drop_down {
+    height: 26px;
+    width: 150px;
+}
+
+    #status_drop_down span {
+        font-size: 12px;
+        height: auto;
+        background: none;
+        border-left-color: rgba(0,0,0,0);
+        border-right-color: rgba(0,0,0,0);
+        border-bottom-color: rgba(0,0,0,0);
+    }
+
+#status_drop_down_warp .caret {
+    float: right;
+    margin-top: 6px;
+}
+
+.dropdown-menu li {
+    cursor: pointer;
+}
+
 @media ( min-width: 1900px ) {
     .diagnosis_select_contents {
         width: 530px;
@@ -499,7 +550,7 @@ doctor_patient_info table ul label {
     }
 
     .doctor_patient_info {
-        font-size: 20px;
+        /*font-size: 20px;*/
     }
 
     .doctor_patient_table_title {
@@ -507,9 +558,6 @@ doctor_patient_info table ul label {
         height: 40px;
     }
 
-    .doctor_patient_table_contents {
-        height: 40px;
-    }
 
     .fu_date {
         width: 300px;

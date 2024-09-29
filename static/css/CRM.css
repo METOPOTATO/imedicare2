@@ -20,10 +20,11 @@
 
 
 .title_span {
-    margin-bottom: 15px;
-    font-size: 15px;
-    height: 30px;
+    text-align: left;
+    font-size: 16px;
+    height: 26.5px;
     padding-top: 1px;
+    margin-bottom: 5px;
     background: rgb(90,64,129);
     border-color: rgb(90,64,129);
 }
@@ -32,7 +33,9 @@
         background: rgb(90,64,129);
         border-color: rgb(90,64,129);
     }
-
+.search_table_Date {
+    width: 5vw;
+}
 .customer_list {
     grid-column-start: 1;
     grid-column-end: 2;
@@ -86,33 +89,54 @@
     width:60px;
 }
 #patient_list_table thead tr th:nth-child(2) {
-    width: 100px;
+    width: 40px;
 }
 #patient_list_table thead tr th:nth-child(3) {
+    width: 100px;
+}
+#patient_list_table thead tr th:nth-child(4) {
     width: 180px;
 }
-#patient_list_table thead tr th:nth-child(4),
 #patient_list_table thead tr th:nth-child(5),
-#patient_list_table thead tr th:nth-child(6) {
+#patient_list_table thead tr th:nth-child(6),
+#patient_list_table thead tr th:nth-child(7) {
     width: 120px;
 }
 
-#patient_list_table thead tr th:nth-child(7) {
+#patient_list_table thead tr th:nth-child(8) {
 }
-        #patient_list_table thead tr th:nth-child(8) {
+        #patient_list_table thead tr th:nth-child(9) {
             width: 65px;
         }
-
-
-    .nav-tabs > li.active > a,
-    .nav-tabs > li.active > a:hover,
-    .nav-tabs > li.active > a:focus {
-        color: #fff;
-        cursor: default;
-        background-color: rgb(90,64,129);
-        border: 1px solid rgb(90,64,129);
-        border-bottom-color: transparent;
+    #patient_list_table thead tr th:nth-child(10) {
+        width: 120px;
     }
+    #patient_list_table thead tr th:nth-child(11) {
+        width: 65px;
+    }
+
+    #patient_list_table td:nth-child(10) {
+        text-align:right;
+        padding-right:10px;
+    }
+
+#document_control_depart_div{
+    display:inline-table;
+    width:150px;
+}
+.btn-primary {
+    background-color: #428bca !important;
+}
+
+.nav-tabs > li.active > a,
+.nav-tabs > li.active > a:hover,
+.nav-tabs > li.active > a:focus {
+    color: #fff;
+    cursor: default;
+    background-color: rgb(90,64,129);
+    border: 1px solid rgb(90,64,129);
+    border-bottom-color: transparent;
+}
 
 .nav-tabs > li > a {
     background-color: #eee;
@@ -139,11 +163,28 @@
     }
 
 
+.fl{
+    float:left;
+    width:49% !important;
+    margin-right:2%;
+}
 
+.fr {
+    float: left;
+    width: 49% !important;
+}
 
-#modalBody .input-group{
-    width:100%;
-    margin-bottom:20px;
+.patient_funnels_div{
+    width:30%;
+}
+
+.patient_mark_div{
+    width: 80px;
+}
+
+#modalBody .input-group {
+    width: 100%;
+    margin-bottom: 20px;
 }
 
 #modalBody .input-group:last-child {
@@ -157,7 +198,7 @@
 
 #modalBody textarea {
     resize:none;
-    height:100px;
+    height:200px;
 }
 
 
@@ -166,12 +207,21 @@
     overflow-y: auto;
 }
 
+
     #visit_history thead tr th, #visit_history tbody tr td{
         vertical-align:middle;
         text-align:center;
     }
 
-
+    #visit_history th:nth-child(4) {
+        width: 120px;
+    }
+    #visit_history th:nth-child(5) {
+        width: 120px;
+    }
+    #visit_history th:nth-child(6) {
+        width: 120px;
+    }
 
 
 
@@ -182,3 +232,83 @@
 
 
 
+
+
+#overlay {
+    position: fixed;
+    top: 0;
+    z-index: 5555;
+    width: 100%;
+    height: 100%;
+    display: none;
+    background: rgba(0,0,0,0.6);
+}
+
+.cv-spinner {
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.spinner {
+    width: 40px;
+    height: 40px;
+    border: 4px #ddd solid;
+    border-top: 4px #2e93e6 solid;
+    border-radius: 50%;
+    animation: sp-anime 0.8s infinite linear;
+}
+
+
+#vaccine_history_table{
+    table-layout:fixed;
+}
+
+    #vaccine_history_table th, #vaccine_history_table td{
+        text-align: center;
+        vertical-align:middle;
+    }
+
+    #vaccine_history_table th:nth-child(1){width:50px;}
+    #vaccine_history_table th:nth-child(2){}
+    #vaccine_history_table th:nth-child(3){width:70px;}
+    #vaccine_history_table th:nth-child(4){width:100px;}
+    #vaccine_history_table th:nth-child(5){width:90px;}
+
+#vaccine_history > div {
+    overflow: auto;
+    height: 550px;
+}
+
+@keyframes sp-anime {
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+.is-hide {
+    display: none;
+}
+
+.btn-default {
+    color: #333 !important ;
+    background-color: #fff !important ;
+    border-color: #ccc !important;
+}
+
+.btn-danger {
+    color: #fff !important;
+    background-color: #d9534f !important;
+    border-color: #d43f3a !important;
+}
+
+.date_input_div {
+    display: inline;
+    margin-right: 20px;
+}
+
+.date_input {
+    display: inline;
+    width: 90px;
+}

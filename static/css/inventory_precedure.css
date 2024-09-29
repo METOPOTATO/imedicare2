@@ -28,10 +28,11 @@
 
 
 .inventory_table_title_span {
-    margin-bottom: 15px;
-    font-size: 15px;
-    height: 30px;
+    text-align: left;
+    font-size: 16px;
+    height: 26.5px;
     padding-top: 1px;
+    margin-bottom: 5px;
     background: rgb(90,64,129);
     border-color: rgb(90,64,129);
 }
@@ -53,7 +54,7 @@
     }
 #search_depart_div {
     display: inline-table;
-    width: 200px;
+    width: 300px;
 }
 
 #search_depart {
@@ -65,18 +66,22 @@
 }
 
         #inventory_database_table thead tr th:nth-child(2) {
-            width: 150px;
+            width: 100px;
         }
 
         #inventory_database_table thead tr th:nth-child(3) {
-            
+            width:200px;
         }
 
         #inventory_database_table thead tr th:nth-child(4) {
-            width: 200px;
+            
         }
 
         #inventory_database_table thead tr th:nth-child(5) {
+            width: 200px;
+        }
+
+        #inventory_database_table thead tr th:nth-child(6) {
             width: 100px;
         }
 
@@ -92,6 +97,8 @@
         #inventory_database_table tbody tr td {
             text-align: center;
             vertical-align:middle;
+            padding-left:15px;
+            padding-right:15px;
         }
 
         #inventory_database_table tbody tr td:nth-child(2), #inventory_database_table tbody tr td:nth-child(3) {
@@ -100,14 +107,14 @@
             white-space: nowrap;
             padding-right: 15px;
         }
-            #inventory_database_table tbody tr td:nth-child(3) {
+            #inventory_database_table tbody tr td:nth-child(4) {
                 text-align:left;
             }
-        #inventory_database_table tbody tr td:nth-child(4) {
+        #inventory_database_table tbody tr td:nth-child(5) {
             text-align: right;
         }
 
-        #inventory_database_table tbody tr td:nth-child(5) {
+        #inventory_database_table tbody tr td:nth-child(6) {
             text-align: center;
         }
 
@@ -258,6 +265,32 @@
     white-space: nowrap;
 }
 
+
+#class_menu_table th, #class_menu_table td{
+    vertical-align:middle;
+    text-align:center;
+}
+
+#class_menu_table th:nth-child(1){width:50px;}
+#class_menu_table th:nth-child(2){width:300px;}
+#class_menu_table th:nth-child(3){width:300px;}
+#class_menu_table th:nth-child(4){}
+
+#class_table .input-group {
+    width: 100%;
+}
+#class_table .input-group-addon {
+    width: 120px;
+}
+
+
+#add_edit_class_menu .input-group_half_left {
+    width: 55%;
+    margin-right: 0.2%;
+}
+#add_edit_database_code_check {
+    height: 30px;
+}
 
 @media ( min-height: 1900px ) {
 

@@ -32,10 +32,11 @@ body {
 
 
 .inventory_table_title_span {
-    margin-bottom: 15px;
-    font-size: 15px;
-    height: 30px;
+    text-align: left;
+    font-size: 16px;
+    height: 26.5px;
     padding-top: 1px;
+    margin-bottom: 5px;
     background: rgb(90,64,129);
     border-color: rgb(90,64,129);
 }
@@ -53,48 +54,62 @@ body {
         font-weight: 700;
         text-align: center;
         vertical-align: middle;
-        width: 100px;
     }
 
-    #inventory_database_table thead tr th:nth-child(1){
-        width:50px;
-    }
-    #inventory_database_table thead tr th:nth-child(2) {
-        width:400px;
-    }
-    #inventory_database_table thead tr th:nth-child(3) {
-        width:250px;
-    }
+
+
+        #inventory_database_table thead tr th:nth-child(1) {
+            width: 60px;
+        }
+        #inventory_database_table thead tr th:nth-child(2) {
+            width: 70px
+        }
+        #inventory_database_table thead tr th:nth-child(3) {
+            width: 130px;
+        }
     #inventory_database_table thead tr th:nth-child(4) {
-        
-    }
 
-    #inventory_database_table thead tr th:nth-child(9) {
-        widtH: 80px;
+    }
+    #inventory_database_table thead tr th:nth-child(5) {
+        width:200px;
+    }
+        #inventory_database_table thead tr th:nth-child(6) {
+            width: 100px;
+        }
+        #inventory_database_table thead tr th:nth-child(7) {
+            width: 75px;
+        }
+        #inventory_database_table thead tr th:nth-child(8) {
+            width: 100px;
+        }
+        #inventory_database_table thead tr th:nth-child(9) {
+            width: 75px;
+        }
+    #inventory_database_table thead tr th:nth-child(10) {
+        widtH: 90px;
     }
 
 
 #inventory_database_table tbody tr {
     height: 30px;
 }
-        #inventory_database_table tbody tr td:nth-child(3){
-            
-        }
-        #inventory_database_table tbody tr td:nth-child(3), #inventory_database_table tbody tr td:nth-child(4) {
-            text-overflow: ellipsis;
-            overflow: hidden;
-            white-space: nowrap;
-            padding-right: 15px;
-        }
-    #inventory_database_table tbody tr td:nth-child(5), #inventory_database_table tbody tr td:nth-child(6) {
-        text-align: center;
+    #inventory_database_table td {
+        text-overflow: ellipsis;
+        overflow: hidden;
+        white-space: nowrap;
+        vertical-align:middle;
+        text-align:center;
     }
-    #inventory_database_table tbody tr td:nth-child(7) {
+
+
+    #inventory_database_table tbody tr td:nth-child(4) {
+        text-align:left;
+        padding-left:15px;
+    }
+    #inventory_database_table tbody tr td:nth-child(8) {
         text-align: right;
     }
-        #inventory_database_table tbody tr td:nth-child(8) {
-            text-align: center;
-        }
+
 
 #search_depart_div {
     display: inline-table;
@@ -167,9 +182,13 @@ body {
 #inventory_history_total {
     float:right;
 }
+#inventory_history_table th {
+    text-align: center;
+    vertical-align: middle;
+}
 
 #inventory_history_table thead tr th:nth-child(1) {
-    width:50px;
+    width: 50px;
 }
     #inventory_history_table thead tr th:nth-child(2) {
         width:140px;
@@ -178,9 +197,12 @@ body {
         width: 65px;
     }
     #inventory_history_table thead tr th:nth-child(4) {
+        width:100px;
+    }    
+    #inventory_history_table thead tr th:nth-child(5) {
         width: 50px;
     }
-#inventory_history_table thead tr th:nth-child(5) {
+#inventory_history_table thead tr th:nth-child(6) {
 }
 
 #add_medicine_table .input-group-addon:first-child {
@@ -241,4 +263,31 @@ body {
 
 #add_medicine_input_price_need {
     vertical-align: middle;
+}
+
+#is_red_invoice_label {
+    font-weight: 300;
+}
+
+    #is_red_invoice_label input {
+        vertical-align: middle;
+        margin-top: -1px;
+    }
+
+    
+#class_menu_table th, #class_menu_table td{
+    vertical-align:middle;
+    text-align:center;
+}
+
+#class_menu_table th:nth-child(1){width:50px;}
+#class_menu_table th:nth-child(2){width:300px;}
+#class_menu_table th:nth-child(3){width:300px;}
+#class_menu_table th:nth-child(4){}
+
+#class_table .input-group {
+    width: 100%;
+}
+#class_table .input-group-addon {
+    width: 120px;
 }

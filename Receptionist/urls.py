@@ -145,5 +145,4 @@ urlpatterns = [
     path('save_doctor_reservation/', views.save_doctor_reservation),
     path('get_doctor_reservation/', views.get_doctor_reservation),
     path('delete_doctor_reservation/', views.delete_doctor_reservation),
-    path('report/', views.report),
 ]

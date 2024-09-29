@@ -226,9 +226,9 @@ function set_report(reception_id) {
             $("#preview_date_visit").html(response.recorded_date);
             $("#preview_depart").html(response.depart);
             $("#preview_chief_complaint").html(response.chief_complaint);
-            $("#preview_medical_history").html(response.past_history);
+            $("#preview_medical_history").html(response.object);
             $("#preview_clinical_examations").html(response.assessment);
-            $("#preview_sub_clinical_examination").html(response.object);
+            $("#preview_sub_clinical_examination").html(response.sub_clinical_test);
             $("#preview_diagnosis").html(response.diagnosis);
             $("#preview_icd").html(response.icd);
             $("#preview_treatment_plan").html(response.plan);
