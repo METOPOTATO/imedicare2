@@ -2592,14 +2592,14 @@ def reservation_save(request):
     # address =request.POST.get('address')
     address =request.POST.get('reservation_address')
     need_pick_up = request.POST.get('need_pick_up',False)
-    follower=request.POST.get('follower')
+    follower=request.POST.get('follower', '')
     pick_up_time=request.POST.get('pick_up_time')
     funnel = request.POST.get('patient_funnel','')
     funnel_etc = request.POST.get('patient_funnel_etc','')    
     apointment_memo =request.POST.get('apointment_memo')
 
     tmp_regis_id = request.POST.get('tmp_regis_id', '')
-    print('=====>>>>', tmp_regis_id)
+
     if tmp_regis_id:
         print('heheheh')
         try:
@@ -6324,6 +6324,9 @@ def draft_patient_list(request):
     number = 1
     
     for patient in today_list:
+        date_reservation = ''
+        if patient.date_reservation:
+            date_reservation = patient.date_reservation.strftime('%Y-%m-%d %H:%M:%S')
         datas.append({
             'no': number,
             'draft_id': patient.id,
@@ -6338,6 +6341,10 @@ def draft_patient_list(request):
             'founded_phone': patient.founded_phone,
             'founded_eng_name': patient.founded_eng_name,
             'is_registed': patient.is_registed,
+
+            'nation': patient.nation,
+            'memo': patient.note,
+            'date_reservation': date_reservation
         })
 
         number +=1 

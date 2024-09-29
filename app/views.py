@@ -230,7 +230,7 @@ def set_menu(request):
                     "code": "rec_res"
                 },
                 {
-                    "name": "Draft Patients",
+                    "name": "Patient Booking",
                     "url": "/receptionist/pre_regis/",
                     "code": "sss"
                 }
@@ -4756,3 +4756,58 @@ def doc_so(so):
     ket_qua = ket_qua[0].upper() + ket_qua[1:] + " đồng"
 
     return ket_qua.strip()
+
+from rest_framework.views import APIView
+from rest_framework.response import Response
+from rest_framework.permissions import AllowAny
+class BookingView(APIView):
+    permission_classes = [AllowAny]
+    
+    # @csrf_exempt
+    def post(self, request):
+        print('==============')
+        name = request.data.get('name') 
+        gender = request.data.get('gender')
+        phone = request.data.get('phone')
+        dob = request.data.get('dob')
+        email = request.data.get('email')
+        nation = request.data.get('nation')
+        address = request.data.get('address')
+        date = request.data.get('date')
+        time = request.data.get('time')
+        symptom = request.data.get('symptom')
+        if dob:
+            dob = dob[:10]
+        if date:
+            date = date[:10]
+            combined_str = f"{date} {time}"  # Ví dụ: "2024-09-28 14:30"
+            event_datetime = datetime.datetime.strptime(combined_str, '%Y-%m-%d %H:%M')
+        else:
+            event_datetime = datetime.datetime.now()
+        
+        print(name)
+        print(gender)
+        print(phone)
+        print(dob)
+        print(email)
+        print(nation)
+        print(address)
+        print(date)
+        print(time)
+        print(symptom)
+
+
+        DraftPatient.objects.create(
+            kor_name = name,
+            eng_name = name,
+            dob = dob,
+            gender = gender,
+            phone =phone,
+            address = address,
+            email = email,
+            nation = nation,
+            date_reservation = event_datetime,
+            note=symptom
+        )
+
+        return Response({'message': 'Booking received successfully!'})

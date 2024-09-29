@@ -109,6 +109,7 @@ urlpatterns = [
     path('get_invoice/', views.get_invoice),
     path('view_invoice/', views.view_invoice),
     # path('create_invoice/', views.create_invoice),
+    path('booking/', views.BookingView.as_view()),
     ]
 
 

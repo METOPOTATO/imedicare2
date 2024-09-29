@@ -13,7 +13,11 @@ https://docs.djangoproject.com/en/2.1/ref/settings/
 import os
 import posixpath
 
-from django.utils.translation import ugettext_lazy as _
+try:
+    from django.utils.translation import gettext_lazy as _
+except:
+    from django.utils.translation import ugettext_lazy as _
+
 
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
@@ -33,6 +37,8 @@ ALLOWED_HOSTS = ['*']
 # Application references
 # https://docs.djangoproject.com/en/2.1/ref/settings/#std:setting-INSTALLED_APPS
 INSTALLED_APPS = [
+    'corsheaders',
+    'rest_framework',
     'app',
     'Account',
     'Doctor',
@@ -58,11 +64,13 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'storages', # azure storage
-    'qr_code'
+    'qr_code',
 
     #'crispy_forms',
     #'ckeditor',
     #'ckeditor_uploader',
+
+    
 ]
 CKEDITOR_UPLOAD_PATH = "uploads/"
 
@@ -91,6 +99,8 @@ LOGIN_URL = '/login'
 # Middleware framework
 # https://docs.djangoproject.com/en/2.1/topics/http/middleware/
 MIDDLEWARE = [
+    'corsheaders.middleware.CorsMiddleware',
+    
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.locale.LocaleMiddleware',
@@ -101,8 +111,14 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 
     'middlewares.middlewares.RequestMiddleware',
+
+    
 ]
 
+CORS_ORIGIN_ALLOW_ALL = True
+CORS_ORIGIN_WHITELIST = (
+    "*",
+)
 ROOT_URLCONF = 'Coffee.urls'
 
 # Template configuration
@@ -205,7 +221,11 @@ TIME_ZONE = 'Asia/Ho_Chi_Minh'
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.1/howto/static-files/
 STATIC_URL = '/static/'
-STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+STATICFILES_DIRS = [
+    BASE_DIR + "/static",  # Đảm bảo đường dẫn đúng
+]
+
+STATIC_ROOT = BASE_DIR + "/staticfiles"
 # STATICFILES_DIRS = os.path.join(BASE_DIR, 'static')
 # media
 
@@ -227,3 +247,5 @@ EMAIL_USE_TLS = True
 
 EMAIL_HOST_USER = 'clinic.imedi@gmail.com'  # Địa chỉ email của bạn
 EMAIL_HOST_PASSWORD = 'pcpq jivy vsgt ofvd'  # Mật khẩu ứng dụng
+
+

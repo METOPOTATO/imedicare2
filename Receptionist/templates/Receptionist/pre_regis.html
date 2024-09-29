@@ -210,45 +210,7 @@
             </tr>                         
 
         </table>
-        <table class="table table-bordered" id = "pick_up_table">
-            <tr>
-                <td colspan="2">
-                    <div class="input-group" style="width:100%">
-                        <span class="input-group-addon" style="width:21%" id="basic-addon1">{{ _('Pick up Address') }}</span>
-                        <input type="text" id="patient_address" class="form-control" style="width:100%;" aria-describedby="basic-addon1" autocomplete="off"/>
-                    </div>
-                </td>
-            </tr>   
-            <tr>
-                <td>
-                    <div class="input-group" style="width:100%" >
-                        <span class="input-group-addon" style="width:21%" id="basic-addon1">{{ _('Pick Up Time') }}</span>
-                        <input type="text" id="pick_up_time" class="form-control" aria-describedby="basic-addon1" autocomplete="off"/>
-                    </div>
-                </td>   
-                <td>
-                    <div class="input-group" style="width:100%">
-                        <span class="input-group-addon" style="width:42%">{{ _('Person') }}</span>
-                        <select id="follower" class="form-control">
-                            <option value="0" selected="">{{ _('0') }}</option>
-                                <option value="1">{{ _('1') }}</option>
-                                <option value="2">{{ _('2') }}</option>
-                                <option value="3">{{ _('3') }}</option>
-                                <option value="4">{{ _('4') }}</option>
-                                <option value="5">{{ _('5') }}</option>
-                            </select>   
-                    </div>
-                </td>                                                        
-            </tr>  
-            <tr>
-                <td colspan="2">
-                    <div class="input-group" style="width:100%">
-                        <span class="input-group-addon" style="width:21%" id="basic-addon1">{{ _('Pick Up Memo') }}</span>
-                        <input type="text" id="pick_up_memo" class="form-control" style="width:100%;" aria-describedby="basic-addon1" autocomplete="off"/>
-                   </div>
-                </td>
-            </tr>                                                               
-        </table>
+
         
         <div class="modal-footer">
             <input type="hidden" id="selected_reservation" />
@@ -353,6 +315,10 @@ function get_list_draft_patient(string = ""){
                         "</td>" +
                         "<td hidden>" + response.datas[i]['is_registed'] + "</td>" +
                         "<td hidden>" + response.datas[i]['draft_id'] + "</td>" +
+
+                        "<td hidden>" + response.datas[i]['nation'] + "</td>" +
+                        "<td hidden>" + response.datas[i]['memo'] + "</td>" +
+                        "<td hidden>" + response.datas[i]['date_reservation'] + "</td>" +
                         // "<td>" + response.datas[i]['founded_eng_name'] + "</td>" +
                         "<td>";
 
@@ -408,6 +374,9 @@ function remove_draft_patient(id){
                         "<td hidden>" + response.datas[i]['is_registed'] + "</td>" +
                         "<td hidden>" + response.datas[i]['draft_id'] + "</td>" +
 
+                        "<td hidden>" + response.datas[i]['nation'] + "</td>" +
+                        "<td hidden>" + response.datas[i]['memo'] + "</td>" +
+                        "<td hidden>" + response.datas[i]['date_reservation'] + "</td>" +
                         
                         "<td>";
 
@@ -961,12 +930,12 @@ function remove_draft_patient(id){
             }
         }
 
-        if (pick_up_time != '') {
-            if ( !date_pattern.test(pick_up_time)){
-                alert("{{ _('Pick up time should be 0000(year)-00(month)-00(day) hh:mm:ss') }}");
-                return;
-            }
-        }        
+        // if (pick_up_time != '') {
+        //     if ( !date_pattern.test(pick_up_time)){
+        //         alert("{{ _('Pick up time should be 0000(year)-00(month)-00(day) hh:mm:ss') }}");
+        //         return;
+        //     }
+        // }        
     
         if (re_reservation_date != '') {
                 if ( !date_pattern.test(re_reservation_date)){
@@ -1348,6 +1317,10 @@ function remove_draft_patient(id){
                 var phone = $(this).find('td:nth-child(6)').text();
                 var address = $(this).find('td:nth-child(7)').text();
                 
+                var nation = $(this).find('td:nth-child(12)').text();
+                var memo = $(this).find('td:nth-child(13)').text();
+                var date_reservation = $(this).find('td:nth-child(14)').text();
+
                 $('#tmp_regis_id').val(tmp_id)
                 $('#reservation_patient').val(name_kor);
                 $('#reservation_patient_eng').val(name_eng);
@@ -1359,8 +1332,10 @@ function remove_draft_patient(id){
                 $('#reservation_phone').val(phone);
                 $('#reservation_date_of_birth').val(dob);
                 $('#reservation_address').val(address);
-                $('#reservation_nationality').val('Korea');
-                $('#reservation_division').val('VACCIN');
+                $('#reservation_nationality').val(nation);
+                $('#reservation_memo').val(memo);
+                $('#reservation_date').val(date_reservation);
+                // $('#reservation_division').val('VACCIN');
             }
 
         });

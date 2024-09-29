@@ -1070,11 +1070,14 @@ class DraftPatient(models.Model):
     added_date = models.DateTimeField(auto_now_add=True)
 
     is_deleted = models.BooleanField(default=False)
-
     is_registed = models.BooleanField(default=False)
-    
     founded_phone = models.BooleanField(default=False)
     founded_eng_name = models.BooleanField(default=False)
+
+    nation = models.CharField(max_length=255, default='')
+    date_reservation = models.DateTimeField(default=None, null=True)
+    symptom = models.CharField(max_length=255, default='')
+
 
 class TodayDoctor(models.Model):
     name = models.CharField(max_length=255, default='', null=False)
