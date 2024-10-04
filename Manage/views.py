@@ -1461,8 +1461,8 @@ def audit_excel(request):
     path = static('excel_form/I-MEDICARE_REPORT.xlsx')
 
     #엑셀 파일 불러오기
-    wb = load_workbook('/home/imedicare/Cofee/static/excel_form/audit_report.xlsx') #Workbook()
-    # wb = load_workbook('/home/light/Desktop/Projects/imedicare2/static/excel_form/audit_report.xlsx')
+    # wb = load_workbook('/home/imedicare/Cofee/static/excel_form/audit_report.xlsx') #Workbook()
+    wb = load_workbook('/home/light/Desktop/Projects/imedicare2/static/excel_form/audit_report.xlsx')
     ws = wb.active# grab the active worksheet
 
     #선택한 날짜
@@ -4474,6 +4474,7 @@ def precedure_add_edit_set(request):
     count = request.POST.get('count');
 
     if int(id) == 0 :
+        print('11111111')
         data = Precedure()
         data.price = price
         data.price_dollar = price_dollar
@@ -4538,6 +4539,7 @@ def precedure_add_edit_set(request):
                     temp_code = last_code.code.split(CODE)
                     data.code = CODE + str('%04d' % (int(temp_code[1]) + 1)) 
     else:
+        print('22222222222')
         data = Precedure.objects.get(id=id)
         str_now = datetime.datetime.now().strftime('%Y%m%d%H%M%S')
 
@@ -4587,14 +4589,14 @@ def precedure_add_edit_set(request):
 
 
 
-
+    print('=============1')
 
     data.precedure_class_id = precedure_class
     data.name = name
     data.name_vie = name_vie
     data.type = is_package
     data.count = count
-    data.tax_rate = tax
+    data.tax_rate = tax if tax else 0
     data.save()
 
 

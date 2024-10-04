@@ -1,0 +1,40 @@
+server {
+    if ($host = pkimedicare.1s2haven.com) {
+        return 301 https://$host$request_uri;
+    } # managed by Certbot
+
+
+    listen 80;
+    server_name pkimedicare.1s2haven.com;
+
+    # Redirect HTTP to HTTPS
+    return 301 https://$host$request_uri;
+
+
+}
+
+server {
+    listen 443 ssl;
+    server_name pkimedicare.1s2haven.com;
+    ssl_certificate /etc/letsencrypt/live/pkimedicare.1s2haven.com/fullchain.pem; # managed by Certbot
+  # Thay đổi đường dẫn
+    ssl_certificate_key /etc/letsencrypt/live/pkimedicare.1s2haven.com/privkey.pem; # managed by Certbot
+  # Thay đổi đường dẫn
+    proxy_read_timeout 300;
+    proxy_connect_timeout 300;
+    proxy_send_timeout 300;
+ 
+    location / {
+        proxy_pass http://192.168.100.228:9090;
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+    }
+
+    location /static {
+        alias /home/imedicare/Cofee/static/;
+    }
+    location /media {
+        alias /home/imedicare/Cofee/media/;
+    }
+}

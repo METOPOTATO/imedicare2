@@ -952,7 +952,7 @@ msgstr "Chẩn đoán"
 #: .\obj\Release\Package\PackageTmp\Doctor\templates\Doctor\index.html:166
 #: .\physical_therapist\templates\physical_therapist\index.html:140
 msgid "Plan"
-msgstr "Chỉ định cận lâm sàng"
+msgstr "Hướng điều trị"
 
 #: .\Doctor\templates\Doctor\index.html:191
 #: .\Doctor\templates\Doctor\index_DERM.html:197

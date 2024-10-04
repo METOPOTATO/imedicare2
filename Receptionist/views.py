@@ -6344,7 +6344,8 @@ def draft_patient_list(request):
 
             'nation': patient.nation,
             'memo': patient.note,
-            'date_reservation': date_reservation
+            'date_reservation': date_reservation,
+            'depart': patient.depart
         })
 
         number +=1 

@@ -319,6 +319,7 @@ function get_list_draft_patient(string = ""){
                         "<td hidden>" + response.datas[i]['nation'] + "</td>" +
                         "<td hidden>" + response.datas[i]['memo'] + "</td>" +
                         "<td hidden>" + response.datas[i]['date_reservation'] + "</td>" +
+                        "<td hidden>" + response.datas[i]['depart'] + "</td>" +
                         // "<td>" + response.datas[i]['founded_eng_name'] + "</td>" +
                         "<td>";
 
@@ -377,7 +378,7 @@ function remove_draft_patient(id){
                         "<td hidden>" + response.datas[i]['nation'] + "</td>" +
                         "<td hidden>" + response.datas[i]['memo'] + "</td>" +
                         "<td hidden>" + response.datas[i]['date_reservation'] + "</td>" +
-                        
+                        "<td hidden>" + response.datas[i]['depart'] + "</td>" +
                         "<td>";
 
                         
@@ -1320,12 +1321,12 @@ function remove_draft_patient(id){
                 var nation = $(this).find('td:nth-child(12)').text();
                 var memo = $(this).find('td:nth-child(13)').text();
                 var date_reservation = $(this).find('td:nth-child(14)').text();
-
+                var depart = $(this).find('td:nth-child(15)').text();
                 $('#tmp_regis_id').val(tmp_id)
                 $('#reservation_patient').val(name_kor);
                 $('#reservation_patient_eng').val(name_eng);
                 var g = 'Male';
-                if (gender == '여'){
+                if (gender == 'female'){
                     g = 'Female'
                 }
                 $('#reservation_gender').val(g);
@@ -1335,7 +1336,10 @@ function remove_draft_patient(id){
                 $('#reservation_nationality').val(nation);
                 $('#reservation_memo').val(memo);
                 $('#reservation_date').val(date_reservation);
-                // $('#reservation_division').val('VACCIN');
+                $('#reservation_depart').val(depart);
+                $('#reservation_division').val('OTHER');
+                get_doctor($("#reservation_depart"));
+                
             }
 
         });

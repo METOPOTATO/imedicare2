@@ -223,9 +223,10 @@ def index(request):
     elif request.user.doctor.depart.id == 8: #DENTAL
         url = 'Doctor/index_DERM.html'
     else:
+        print('here')
         url = 'Doctor/index.html'
 
-
+    print(request.user.doctor.depart, '============')
     argument_test_class_list = []
     test_class_query = Depart_TestMenu.objects.filter(depart_id = request.user.doctor.depart.id)
     for data in test_class_query:
@@ -844,10 +845,12 @@ def reception_waiting(request):
     if date_end == '':
         date_end = date
 
-    date_min = datetime.datetime.combine(datetime.datetime.strptime(date, "%Y-%m-%d").date(), datetime.time.min)
-    date_max = datetime.datetime.combine(datetime.datetime.strptime(date_end, "%Y-%m-%d").date(), datetime.time.max)
-
-
+    try:
+        date_min = datetime.datetime.combine(datetime.datetime.strptime(date, "%Y-%m-%d").date(), datetime.time.min)
+        date_max = datetime.datetime.combine(datetime.datetime.strptime(date_end, "%Y-%m-%d").date(), datetime.time.max)
+    except:
+        date_min = datetime.datetime.now()
+        date_max = datetime.datetime.now()
     argument_list = [] 
     if string !='':
         argument_list.append( Q(**{'patient__name_kor__icontains':string} ) )

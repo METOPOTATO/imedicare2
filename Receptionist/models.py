@@ -1077,7 +1077,7 @@ class DraftPatient(models.Model):
     nation = models.CharField(max_length=255, default='')
     date_reservation = models.DateTimeField(default=None, null=True)
     symptom = models.CharField(max_length=255, default='')
-
+    depart = models.CharField(max_length=255, default='')
 
 class TodayDoctor(models.Model):
     name = models.CharField(max_length=255, default='', null=False)

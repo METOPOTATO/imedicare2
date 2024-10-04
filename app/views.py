@@ -30,6 +30,10 @@ from .models import *
 import json
 import requests
 import csv
+from django.core.mail import send_mail
+from django.conf import settings
+
+
 #@login_required
 def home(request):
     """Renders the home page."""
@@ -4776,6 +4780,8 @@ class BookingView(APIView):
         date = request.data.get('date')
         time = request.data.get('time')
         symptom = request.data.get('symptom')
+
+        depart = request.data.get('depart')
         if dob:
             dob = dob[:10]
         if date:
@@ -4784,22 +4790,10 @@ class BookingView(APIView):
             event_datetime = datetime.datetime.strptime(combined_str, '%Y-%m-%d %H:%M')
         else:
             event_datetime = datetime.datetime.now()
-        
-        print(name)
-        print(gender)
-        print(phone)
-        print(dob)
-        print(email)
-        print(nation)
-        print(address)
-        print(date)
-        print(time)
-        print(symptom)
-
 
         DraftPatient.objects.create(
             kor_name = name,
-            eng_name = name,
+            eng_name = remove_vietnamese_accents(name),
             dob = dob,
             gender = gender,
             phone =phone,
@@ -4807,7 +4801,22 @@ class BookingView(APIView):
             email = email,
             nation = nation,
             date_reservation = event_datetime,
-            note=symptom
+            note=symptom, 
+            depart=depart
         )
 
+        subject = 'Thông báo đặt lịch khám'
+        message = f'Bệnh nhân {name} vừa đặt lịch, vui lòng kiểm tra tại đây https://pkimedicare.1s2haven.com/receptionist/pre_regis/'
+        email_from = settings.EMAIL_HOST_USER
+        recipient_list = ['dalinn907@gmail.com',]
+        
+        send_mail(subject, message, email_from, recipient_list)
+
         return Response({'message': 'Booking received successfully!'})
+
+import unicodedata
+def remove_vietnamese_accents(text):
+    text = text.replace('đ', 'd').replace('Đ', 'D')
+    text = unicodedata.normalize('NFD', text)
+    text = ''.join(char for char in text if unicodedata.category(char) != 'Mn')
+    return unicodedata.normalize('NFC', text)

@@ -2623,10 +2623,6 @@ msgstr "수신 ( 고객 )"
 msgid "Date Dispatched"
 msgstr "발송 일"
 
-#: .\KBL\templates\KBL\estimate_sheet.html:46
-msgid "Paid by"
-msgstr "지불방법"
-
 #: .\KBL\templates\KBL\estimate_sheet.html:66
 msgid "Detailed Info"
 msgstr "환자 정보"
@@ -2881,11 +2877,8 @@ msgstr "노동허가서 결과 예정일"
 msgid "Project Register"
 msgstr "프로젝트 등록"
 
-#: .\Manage\templates\Manage\sms_history.html:48
-#: .\KBL\templates\KBL\project_management.html:192
-msgid "Company"
-msgstr "회사"
 
+#: .\Manage\templates\Manage\sms_history.html:48
 #: .\Manage\templates\Manage\inventory_medical_tool.html:36
 #: .\Manage\templates\Manage\inventory_medical_tool.html:212
 #: .\Pharmacy\templates\Pharmacy\inventory.html:37
@@ -2938,10 +2931,6 @@ msgstr "신청서 수령 여부"
 #: .\KBL\templates\KBL\visa_management.html:141
 msgid "is Emergency"
 msgstr "긴급여부"
-
-#: .\KBL\templates\KBL\project_management.html:444
-msgid "Work Permit"
-msgstr "노동허가서"
 
 #: .\KBL\templates\KBL\project_management.html:462
 msgid "Employment Approval"
