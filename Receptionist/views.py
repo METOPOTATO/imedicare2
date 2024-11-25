@@ -200,8 +200,9 @@ def save_patient(request):
     patient.phone = phone
     patient.gender = gender
     patient.address = address
-    patient.funnel = funnel
-    patient.funnel_etc = funnel_etc
+    if funnel and funnel != '':
+        patient.funnel = funnel
+        patient.funnel_etc = funnel_etc
     if passport != '' and passport != None:
         patient.passport = passport
     if nationality != '' and nationality != None:
@@ -360,12 +361,7 @@ def set_patient_data(request):
     invoice_p = '' if rec is None else rec.need_invoice_p
     insurance = '' if rec is None else rec.need_insurance
     insurance_p = '' if rec is None else rec.need_insurance_p
-    print(rec.id)
-    print(invoice)
-    print(invoice_p)
-    print(insurance)
-    print(insurance_p)
-    print(rec.without_today)
+   
     wo_today = '' if rec is None else rec.without_today
     if rec.without_day !=  datetime.date.today():
         wo_today = ''
@@ -806,8 +802,8 @@ def patient_search(request):
                             'txt_nation': search_nation(reception_last.patient.nationality),
                             'passport':reception_last.patient.passport,
                             'email':reception_last.patient.email,
-                            'category':reception_last.patient.category
-
+                            'category':reception_last.patient.category,
+                            'funnel': reception_last.patient.funnel
 
                             })
                         datas.append(data)
@@ -834,8 +830,8 @@ def patient_search(request):
                     'txt_nation': search_nation(reception_last.patient.nationality),
                     'passport':reception_last.patient.passport,
                     'email':reception_last.patient.email,
-                    'category':reception_last.patient.category
-
+                    'category':reception_last.patient.category,
+                    'funnel': reception_last.patient.funnel
 
                     })
                 datas.append(data)
@@ -866,8 +862,8 @@ def patient_search(request):
                     'txt_nation': search_nation(reception_last.patient.nationality),
                     'passport':reception_last.patient.passport,
                     'email':reception_last.patient.email,
-                    'category':reception_last.patient.category
-
+                    'category':reception_last.patient.category,
+                    'funnel': reception_last.patient.funnel
 
                     })
                 datas.append(data)
@@ -1323,10 +1319,10 @@ def waiting_list(request):
     date_min = datetime.datetime.combine(datetime.datetime.strptime(date_start, "%Y-%m-%d").date(), datetime.time.min)
     date_max = datetime.datetime.combine(datetime.datetime.strptime(date_end, "%Y-%m-%d").date(), datetime.time.max)
 
-    print(date_max)
+
     today = datetime.datetime.combine(datetime.datetime.now(), datetime.time.max)
     last_2_month = datetime.datetime.combine(datetime.datetime.now() - datetime.timedelta(hours=24*60), datetime.time.min)
-    print(last_2_month)
+
     argument_list = [] 
     if filter=='':
         argument_list.append( Q(**{'patient__name_kor__icontains':string} ) )
@@ -1561,19 +1557,44 @@ def get_today_selected(request):
 
     medicines = []
     for data in medicine_set:
-        medicine = {}
+        # medicine = {}
         quantity = int(data.days) * int(data.amount)
         unit = data.medicine.get_price()
         price = quantity * int(data.medicine.get_price())
-        medicine.update({
-            'manager_id':data.id,
-            'code':data.medicine.code,
-            'name':data.medicine.name,
-            'quantity':quantity,
-            'price':price,
-            'unit':unit,
-            })
-        medicines.append(medicine)
+        # medicine.update({
+        #     'manager_id':data.id,
+        #     'code':data.medicine.code,
+        #     'name':data.medicine.name,
+        #     'quantity':quantity,
+        #     'price':price,
+        #     'unit':unit,
+        #     })
+        # medicines.append(medicine)
+
+
+        if data.medicine.code[0] == 'I':
+            precedure = {}
+            precedure.update({
+                'manager_id':data.id,
+                'is_checked':data.is_checked_discount,
+                'code':data.medicine.code,
+                'name':data.medicine.name,
+                'amount':data.amount,
+                'price':price,
+                })
+            precedures.append(precedure)
+        else:
+            medicine = {}
+            medicine.update({
+                'manager_id':data.id,
+                'is_checked':data.is_checked_discount,
+                'code':data.medicine.code,
+                'name':data.medicine.name,
+                'quantity':quantity,
+                'price':price,
+                'unit':unit,
+                })
+            medicines.append(medicine)
 
     paid = 0
     records = PaymentRecord.objects.filter(payment = payment,status = 'paid')
@@ -1669,8 +1690,6 @@ def waiting_selected(request):
     medicine_set = MedicineManager.objects.filter(diagnosis_id = diagnosis.id)
 
     standard_date = reception.payment.paymentrecord_set.first().date
-    print('reception.need_invoice: ', reception.need_invoice)
-    print('reception.need_insurance: ', reception.need_insurance)
 
     exams = []
     for data in exam_set:
@@ -1711,24 +1730,34 @@ def waiting_selected(request):
 
     medicines = []
     for data in medicine_set:
-        medicine = {}
+        
         quantity = int(data.days) * int(data.amount)
         unit = data.medicine.get_price(standard_date)
-
-        print('>>>',data.medicine.name) 
-        print('>>>',quantity) 
-        print(unit)
         price = quantity * int(data.medicine.get_price(standard_date))
-        medicine.update({
-            'manager_id':data.id,
-            'is_checked':data.is_checked_discount,
-            'code':data.medicine.code,
-            'name':data.medicine.name,
-            'quantity':quantity,
-            'price':price,
-            'unit':unit,
-            })
-        medicines.append(medicine)
+
+        if data.medicine.code[0] == 'I':
+            precedure = {}
+            precedure.update({
+                'manager_id':data.id,
+                'is_checked':data.is_checked_discount,
+                'code':data.medicine.code,
+                'name':data.medicine.name,
+                'amount':data.amount,
+                'price':price,
+                })
+            precedures.append(precedure)
+        else:
+            medicine = {}
+            medicine.update({
+                'manager_id':data.id,
+                'is_checked':data.is_checked_discount,
+                'code':data.medicine.code,
+                'name':data.medicine.name,
+                'quantity':quantity,
+                'price':price,
+                'unit':unit,
+                })
+            medicines.append(medicine)
 
 
     print(payment.total)
@@ -2371,11 +2400,8 @@ def get_depart_doctor(request):
         print('에러가 발생 했습니다', ex) 
     
     datas={}
-    print('depart id', depart_id)
+
     for data in doctor:
-        print('id',data.id)
-        print('name',data.get_name())
-        print(type(data.id))
         if depart_id == '8' and data.id in [27, 48, 54]:
             pass
         elif data.id in [30, 38, 50, 52, 41 ,43]:
@@ -2701,8 +2727,15 @@ def reservation_save(request):
             reservation.need_pick_up = False            
         reservation.pick_up_addr = address
         reservation.follower = follower
-        reservation.funnel = funnel
-        reservation.funnel_etc = funnel_etc
+        # reservation.funnel = funnel
+        # reservation.funnel_etc = funnel_etc
+        try:
+            patient = reservation.patient
+            patient.funnel = funnel
+            patient.funnel_etc = funnel_etc
+            patient.save()
+        except:
+            pass
         reservation.apointment_memo = apointment_memo
         reservation.memo = memo
         reservation.division = division
@@ -2737,11 +2770,18 @@ def reservation_save(request):
         reservation.patient = reception.patient
         reservation.depart = reception.depart
         reservation.doctor = reception.doctor
+        try:
+            patient = reservation.patient
+            patient.funnel = funnel
+            patient.funnel_etc = funnel_etc
+            patient.save()
+        except:
+            pass
         reservation.save()
 
         reception.reservation = reservation
         reception.save()
-
+    print("====", funnel)
 
     print(reservation.patient.name_eng)
 
@@ -2921,6 +2961,7 @@ def reservation_info(request):
     if reception_last is not None:
         if reception_last.without_day !=  datetime.date.today():
             wo_today = ''
+    print("===",reservation.patient.funnel)
     context = {
         'reservation_id':reservation.id,
         'reservation_date': reservation.reservation_date.strftime('%Y-%m-%d %H:%M:%S'),
@@ -2961,8 +3002,8 @@ def reservation_info(request):
         'need_pick_up': reservation.need_pick_up,     
         'follower': reservation.follower,      
   
-        'funnel': reservation.funnel,
-        'funnel_etc': reservation.funnel_etc if reservation.patient is None else reservation.patient.funnel_etc,  
+        'funnel': reservation.patient.funnel,
+        'funnel_etc': reservation.patient.funnel_etc if reservation.patient is None else reservation.patient.funnel_etc,  
         'patient_memo':reservation.memo if reservation.patient is None else reservation.patient.memo,
         'reservation_patient_eng': reservation.name if reservation.patient is None else reservation.patient.name_eng,
 
@@ -3631,9 +3672,7 @@ def Documents2(request):
 @login_required
 def get_document(request):
     rec_id = request.POST.get('rec_id', '')
-    print(rec_id)
     reception = Reception.objects.get(pk = rec_id)
-    print(reception.id)
     tax_code = ''
     try:
         tax_code = reception.patient.taxinvoice.number
@@ -3653,7 +3692,12 @@ def get_document(request):
         rec = Reception.objects.filter(patient_id = reception.patient_id,).exclude(progress='deleted').last()
     except:
         rec = None
-        
+    
+    is_today = None
+
+    if reception.without_day == reception.recorded_date.date():
+        is_today = True
+
     data = {
         'id':reception.id,
         'chart':reception.patient.get_chart_no(),
@@ -3684,9 +3728,8 @@ def get_document(request):
         'need_insurance_p':rec.need_insurance_p if rec is not None else '',
         'wo_name':rec.without_name if rec is not None else '',
         'wo_email':rec.without_email if rec is not None else '',
-        'wo_today':rec.without_today if rec is not None else '',
+        'wo_today': is_today,
     }
-    print('===', rec.without_today)
     
     diagnosis = True
     try:
@@ -4366,6 +4409,20 @@ def document_excel(request, reception_id):
                     current_row +=1
                     no += 1                        
 
+            for data in medicine_set:
+                if data.medicine.code[0] == 'I':
+                    medicine = {}
+                    quantity = int(data.days) * int(data.amount)
+                    price = quantity * int(data.medicine.get_price(reception.recorded_date))
+
+
+                    ws['A' + str(current_row)] = no
+                    ws['B' + str(current_row)] = data.medicine.name
+                    ws['D' + str(current_row)] = price
+
+                    aount_other_exam += price
+                    current_row +=1
+                    no += 1   
             sub_total +=amount_consult
             sub_total +=amount_image
             sub_total +=amount_test
@@ -4473,21 +4530,22 @@ def document_excel(request, reception_id):
             ws['A13'] = '8. Chẩn đoán/ Diagnostic : ' + diagnostic       
 
             for data in medicine_set:
-                medicine = {}
-                quantity = int(data.days) * int(data.amount)
-                price = quantity * int(data.medicine.get_price(reception.recorded_date))
+                if data.medicine.code[0] != 'I':
+                    medicine = {}
+                    quantity = int(data.days) * int(data.amount)
+                    price = quantity * int(data.medicine.get_price(reception.recorded_date))
 
 
-                ws['A' + str(current_row)] = writing_number
-                ws['B' + str(current_row)] = data.medicine.name
-                ws['D' + str(current_row)] = data.medicine.unit_vie + '/' + data.medicine.unit
-                ws['E' + str(current_row)] = quantity
-                ws['F' + str(current_row)] = f"{data.medicine.get_price(reception.recorded_date):,}"
-                ws['G' + str(current_row)] = f"{price:,}"
+                    ws['A' + str(current_row)] = writing_number
+                    ws['B' + str(current_row)] = data.medicine.name
+                    ws['D' + str(current_row)] = data.medicine.unit_vie + '/' + data.medicine.unit
+                    ws['E' + str(current_row)] = quantity
+                    ws['F' + str(current_row)] = f"{data.medicine.get_price(reception.recorded_date):,}"
+                    ws['G' + str(current_row)] = f"{price:,}"
 
-                writing_number +=1 
-                current_row +=1
-                sub_total += price
+                    writing_number +=1 
+                    current_row +=1
+                    sub_total += price
             total = sub_total + (sub_total * vat / 100 )
             rows = ws['A18:G' + str(current_row + 3)]
             # for row in rows:
@@ -4697,19 +4755,21 @@ def document_excel(request, reception_id):
             current_row = 18
             writing_number = 1     
 
+
             for manager in manager_set:
-                ws['A' + str(current_row)] = writing_number
-                ws['B' + str(current_row)] = manager.medicine.name
+                if manager.medicine.code[0] != 'I':
+                    ws['A' + str(current_row)] = writing_number
+                    ws['B' + str(current_row)] = manager.medicine.name
 
-                # ws['D' + str(current_row)].style.alignment.wrap_text = True
-                ws['D' + str(current_row)] = manager.medicine.unit_vie + '' if manager.medicine.unit is None or manager.medicine.unit_vie is None else '\n' + manager.medicine.unit
+                    # ws['D' + str(current_row)].style.alignment.wrap_text = True
+                    ws['D' + str(current_row)] = manager.medicine.unit_vie + '' if manager.medicine.unit is None or manager.medicine.unit_vie is None else '\n' + manager.medicine.unit
 
-                ws['E' + str(current_row)] = manager.amount * manager.days
-                ws['F' + str(current_row)] = manager.memo
-                ws['G' + str(current_row)] = ''
+                    ws['E' + str(current_row)] = manager.amount * manager.days
+                    ws['F' + str(current_row)] = manager.memo
+                    ws['G' + str(current_row)] = ''
 
-                writing_number +=1 
-                current_row +=1
+                    writing_number +=1 
+                    current_row +=1
 
             ws['B' + str(40)] = 'Lời dặn của bác sĩ / Advice of Doctor: '
             # ws['B' + str(37)].font = Font(bold = True)

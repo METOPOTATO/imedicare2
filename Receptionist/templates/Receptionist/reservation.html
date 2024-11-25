@@ -93,6 +93,9 @@
                                     <option value="Phạm Thị Hằng (Da liễu - Chiều)">Phạm Thị Hằng (Da liễu - Chiều)</option>
                                     <option value="Lê Thị Hằng (Da liễu - Sáng)">Lê Thị Hằng (Da liễu - Sáng)</option>
                                     <option value="Lê Thị Hằng (Da liễu - Chiều)">Lê Thị Hằng (Da liễu - Chiều)</option>
+                                    <option value="BS Partime (Nha)">BS Partime (Nha)</option>
+                                    <option value="BS Partime (Nội)">BS Partime (Nội)</option>
+                                    <option value="BS Partime (Sản)">BS Partime (Sản)</option>
                                 </select>
                             </div>
                         </td>
@@ -855,7 +858,8 @@
                                     '<td>' + response.datas[i].email + '</td>' +
                                     '<td style="display: none">' + response.datas[i].category + '</td>' +
                                     '<td style="display: none;">' + response.datas[i].address + '</td>' +
-                                    '<td style="display: nonen;">' + response.datas[i].gender + '</td>' +
+                                    '<td style="display: none;">' + response.datas[i].gender + '</td>' +
+                                    '<td style="display: none;">' + response.datas[i].funnel + '</td>' +
                                     '</tr>' ;
                             }
                             $('#patient_list_contents').append(str);
@@ -919,7 +923,8 @@
                                     '<td>' + response.datas[i].email + '</td>' +
                                     '<td style="display: none">' + response.datas[i].category + '</td>' +
                                     '<td style="display: none;">' + response.datas[i].address + '</td>' +
-                                    '<td style="display: nonen;">' + response.datas[i].gender + '</td>' +
+                                    '<td style="display: none;">' + response.datas[i].gender + '</td>' +
+                                    '<td style="display: none;">' + response.datas[i].funnel + '</td>' +
                                     '</tr>' ;
                             }
                             $('#patient_list_contents').append(str);
@@ -1004,6 +1009,7 @@
 
         $('#reservation_address').val(content.children[11].textContent);
         $('#reservation_gender').val(content.children[12].textContent);
+        $('#patient_funnel').val(content.children[13].textContent).change();
         // $('#patient_category').val(content.children[10].textContent);
 
         $('#patient_list').modal('hide');

