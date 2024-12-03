@@ -19,7 +19,7 @@
 
 
 {% csrf_token %}
-
+<!-- <span id="btn-add-doctor-calendar" class="btn btn-info" style="font-size:16px; height:26.5px; padding-top:1.5px;">{{ _('Add Doctor Calendar')}}</span> -->
 
  <div class="reservation_wrap">
      <div id="cal_fc-left" style="display:none">
@@ -27,17 +27,6 @@
     </div>
     <div style="height:100%; width:100%;margin:auto;">
 
-    <div id="doctor-today" style="height:100px; width:auto;margin:auto; ">
-        <div style="display: flex; justify-content: space-between; padding: 10px 0px 0px 0px; margin-bottom: 5px;">
-            <span class="btn btn-danger" style="font-size:16px; height:26.5px; padding-top:1.5px; background:#d2322d;">{{ _('List Doctors Today')}}</span>
-            <span id="btn-add-doctor-calendar" class="btn btn-info" style="font-size:16px; height:26.5px; padding-top:1.5px;">{{ _('Add Doctor Calendar')}}</span>
-        </div>
-        <div>
-            {% for doctor in list_doctors %}
-                <span style="background-color: rgb(243, 236, 227); border-radius: 5px; padding: 5px; margin: 10px 0 0 0;">{{doctor.name}}</span>
-            {% endfor %}
-        </div>
-    </div>
 
     <div id='calendar' style="overflow:auto;"></div>
     </div>
@@ -440,7 +429,7 @@
             header: {
                 left: ' ',
                 center: 'title',
-                right: 'Add_New, prev,next'
+                right: 'Add_New, prev,next, Add_Doctor'
             },
 
 
@@ -469,9 +458,14 @@
                     $('#createEventModal').modal('show');
                     }
                 },
-
-
+                Add_Doctor: {
+                    text: "{{ _('Add Doctor') }}",
+                    click: function() {
+                        $('#createDoctorCalendar').modal('show');
+                    }
                 },
+
+            },
             eventClick: function(info) {
 
                 //alert('Event: ' + info.event.id);

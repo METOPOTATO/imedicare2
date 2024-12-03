@@ -1,5 +1,6 @@
 from ast import Tuple
 import json
+import random
 from time import strftime, time
 from django.shortcuts import render, redirect
 import datetime ,calendar
@@ -1472,6 +1473,7 @@ def get_today_list(request):
     
 
     datas=[]
+    total = 0
     for reception in receptions:
         try:
             query = COMMCODE.objects.get(upper_commcode = '000006',commcode_grp='PT_INFO',commcode = reception.patient.marking)
@@ -1485,6 +1487,7 @@ def get_today_list(request):
         count = PaymentRecord.objects.filter(payment = reception.payment,status='paid').count()
         if count is not 0:
             continue
+        total += reception.payment.total
         data={
             'reception_id':reception.id,
             'chart':reception.patient.get_chart_no(),
@@ -1504,7 +1507,7 @@ def get_today_list(request):
         datas.append(data)
         
     datas.reverse()
-    context = {'datas':datas}
+    context = {'datas':datas, 'total': total}
     return JsonResponse(context)
 
 def get_today_selected(request):
@@ -2038,8 +2041,82 @@ def reservation_events(request):
             **kwargs,
             # name__icontains = name
             )
+    
+    
 
     datas=[]
+
+    for doctor in TodayDoctor.objects.filter(active_day__range=(date_min, date_max)):
+        data = {
+            'id': random.randint(1,1000),
+            'start': doctor.active_day.strftime('%Y-%m-%d %H:%M:00'),
+            'title': doctor.name,
+            'allDay': 'true',
+        }
+        data.update({
+            'backgroundColor':'rgb( 147, 203, 249)',
+            'borderColor':'rgb(149 227 169)',
+            })
+        # if doctor.depart == '1':  #1	PED
+        #     pass
+        # elif doctor.depart == 2:  #2	IM
+        #     data.update({
+        #         'backgroundColor':'rgb(149 227 169)',
+        #         'borderColor':'rgb(149 227 169)',
+        #         })
+        # elif doctor.depart == 3:  #3	URO
+        #     # pass
+        #     data.update({
+        #        'backgroundColor':'rgb(188,255,0)',
+        #        'borderColor':'rgb(188,255,0)',
+        #        })
+        # elif doctor.depart == 4:  #4	PS
+        #     data.update({
+        #         'backgroundColor':'rgb(255,81,255)',
+        #         'borderColor':'rgb(255,81,255)',
+        #         })
+        # elif doctor.depart == 5:  #5	ENT
+        #     data.update({
+        #         'backgroundColor':'rgb(255,205,100)',
+        #         'borderColor':'rgb(255,205,100)',
+        #         })
+        # elif doctor.depart == 6:  #6	DERM
+        #     data.update({
+        #         'backgroundColor':'rgb(183,164,210)',
+        #         'borderColor':'rgb(183,164,210)',
+        #         })
+        # elif doctor.depart == 7:  #7	PM
+        #     data.update({
+        #         'backgroundColor':'rgb(147,203,249)',
+        #         'borderColor':'rgb(147,203,249)',
+        #         })
+        # elif doctor.departd == 9:  #9	OBGYN
+        #     data.update({
+        #         'backgroundColor':'rgb(254,154,202)',
+        #         'borderColor':'rgb(254,154,202)',
+        #         })
+        # elif doctor.depart == 10: 
+        #     data.update({
+        #         'backgroundColor':'rgb(255,251,0)',
+        #         'borderColor':'rgb(255,251,0)',
+        #         })
+        # elif doctor.depart == 11:  #9	SUGERY
+        #     data.update({
+        #         'backgroundColor':'rgb(70, 209, 61)',
+        #         'borderColor':'rgb(70, 209, 61)',
+        #         })
+        # elif doctor.depart == 12:  #9	EYES
+        #     data.update({
+        #         'backgroundColor':'rgb(166, 55, 163)',
+        #         'borderColor':'rgb(166, 55, 163)',
+        #         })
+        # elif doctor.depart == 13:  #9	HC
+        #     data.update({
+        #         'backgroundColor':'rgb(0, 136, 136)',
+        #         'borderColor':'rgb(0, 136, 136)',
+        #         })
+        datas.append(data)
+
     for reservation in reservations:
         
         reservation_date = reservation.reservation_date.strftime('%Y-%m-%d %H:%M:00')
@@ -2051,7 +2128,7 @@ def reservation_events(request):
             'start':reservation_date,
             #'backgroundColor':'red',
             }
-
+        print(reservation_date)
         if reservation.depart.id == 1:  #1	PED
             pass
             #data.update({
@@ -4679,7 +4756,7 @@ def document_excel(request, reception_id):
                             ws['E' + str(current_row)] = ''
                             current_row +=1
                             no += 1           
-                ws['D78'] = 'Ngàyyyy/Date: ' + reception.recorded_date.strftime('%d/%m/%Y') 
+                ws['D78'] = 'Ngày/Date: ' + reception.recorded_date.strftime('%d/%m/%Y') 
                 # ws['D' + str(67)].font = Font(bold = True)
         ws = wb.get_sheet_by_name('Medical_Report')# grab the active worksheet
         ws['A9'] = '1. Số hồ sơ/ PID : ' + reception.patient.get_chart_no() 

@@ -1013,7 +1013,8 @@ function get_today_list() {
 
                 $('#storage_today_table').append(str);
             }
-            
+            $('#payment_waiting_current').html(numberWithCommas(response.total));
+            console.log(response.total)
         },
         error: function (request, status, error) {
             console.log("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
