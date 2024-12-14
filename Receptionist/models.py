@@ -1083,3 +1083,8 @@ class TodayDoctor(models.Model):
     name = models.CharField(max_length=255, default='', null=False)
     depart = models.CharField(max_length=255, default='', null=True)
     active_day = models.DateField()
+
+
+class ListDoctor(models.Model):
+    name = models.CharField(max_length=255, default='', null=False)
+    depart = models.CharField(max_length=255, default='', null=True)

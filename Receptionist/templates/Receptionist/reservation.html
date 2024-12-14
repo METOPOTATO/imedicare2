@@ -53,7 +53,7 @@
                         <td>
                             <div class="input-group" style="display:inline-table">
                                 <span class="input-group-addon" id="basic-addon1">{{ _('Doctor') }}</span>
-                                <select name="payment_info" class="form-control costom-select" aria-describedby="basic-addon1" id="list-doctors">
+                                <!-- <select name="payment_info" class="form-control costom-select" aria-describedby="basic-addon1" id="list-doctors">
                                     <option value="">-----------</option>
                                     <option value="Phạm Thị Hằng (Da liễu) ">Phạm Thị Hằng (Da liễu) </option>
                                     <option value="Lê Thị Hằng (Da liễu)">Lê Thị Hằng (Da liễu)</option>
@@ -85,10 +85,54 @@
                                     <option value="BS Partime (Nha)">BS Partime (Nha)</option>
                                     <option value="BS Partime (Nội)">BS Partime (Nội)</option>
                                     <option value="BS Partime (Sản)">BS Partime (Sản)</option>
+                                </select> -->
+                                <select id="list-doctors" class="form-control costom-select" aria-describedby="basic-addon1">
+                                    <option value="">----------</option>
+                                    {% for data in list_doctors %}
+                                    <option value="{{ data.name }}-{{ data.depart }}">{{ data.name }} - {{ data.depart }}</option>
+                                    {% endfor %}
                                 </select>
                             </div>
                         </td>
                     </tr>
+                    <!-- <tr>
+                        <td>
+                            <div class="input-group" style="display:inline-table">
+                                <span class="input-group-addon" id="basic-addon1">{{ _('Depart') }}</span>
+                                <select name="depart" id="list-departs" class="form-control costom-select " aria-describedby="basic-addon1" required="">
+                                    <option value="" selected="">---------</option>
+                                  
+                                    <option value="PED">PED</option>
+                                  
+                                    <option value="IM">IM</option>
+                                  
+                                    <option value="LAB">LAB</option>
+                                  
+                                    <option value="PS">PS</option>
+                                  
+                                    <option value="ENT">ENT</option>
+                                  
+                                    <option value="DERM">DERM</option>
+                                  
+                                    <option value="PM">PM</option>
+                                  
+                                    <option value="DENTAL">DENTAL</option>
+                                  
+                                    <option value="OBGYN">OBGYN</option>
+                                  
+                                    <option value="VACCINE">VACCINE</option>
+                                  
+                                    <option value="SURGERY">SURGERY</option>
+                                  
+                                    <option value="OPH">OPH</option>
+                                  
+                                    <option value="HEALTH CHECKUP">HEALTH CHECKUP</option>
+                                  
+                                  </select>
+                                
+                            </div>
+                        </td>
+                    </tr> -->
 
                    </table>     
                    <div class="modal-footer">
@@ -105,6 +149,95 @@
                     <thead>
                         <tr>
                             <th>{{ _('Doctor Name')}}</th>
+                            <th>{{ _('Depart')}}</th>
+                            <th>{{ _('_')}}</th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>   
+
+
+                </table>     
+
+            </div>
+               
+           </div>
+       </div>
+
+   </div>
+</div>
+
+<div id="addDoctor" class="modal fade">
+    <div class="modal-dialog">
+       <div class="modal-content">
+           <div class="modal-header">
+               <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span> <span class="sr-only">close</span></button>
+               <h4>Add Reservation</h4>
+               <div id="modalBody" class="modal-body" >
+                   <table class="table table-bordered" id="retable" style="border-top: none; border-right: none; border-left: none;">
+                    <tr>
+                        <td>
+                            <div class="input-group" style="display:inline-table">
+                                <span class="input-group-addon" id="basic-addon1">{{ _('Doctor Name') }}</span>
+                                <input type="text" id="doctor_name" class="form-control reservation_input" aria-describedby="sizing-addon1" />
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <div class="input-group" style="display:inline-table">
+                                <span class="input-group-addon" id="basic-addon1">{{ _('Depart') }}</span>
+                                <select name="depart" id="doctor_depart" class="form-control costom-select " aria-describedby="basic-addon1" required="">
+                                    <option value="" selected="">---------</option>
+                                  
+                                    <option value="PED">PED</option>
+                                  
+                                    <option value="IM">IM</option>
+                                  
+                                    <option value="LAB">LAB</option>
+                                  
+                                    <option value="PS">PS</option>
+                                  
+                                    <option value="ENT">ENT</option>
+                                  
+                                    <option value="DERM">DERM</option>
+                                  
+                                    <option value="PM">PM</option>
+                                  
+                                    <option value="DENTAL">DENTAL</option>
+                                  
+                                    <option value="OBGYN">OBGYN</option>
+                                  
+                                    <option value="VACCINE">VACCINE</option>
+                                  
+                                    <option value="SURGERY">SURGERY</option>
+                                  
+                                    <option value="OPH">OPH</option>
+                                  
+                                    <option value="HEALTH CHECKUP">HEALTH CHECKUP</option>
+                                    
+                                    <option value="CĐHA">CĐHA</option>
+                                  </select>
+                                
+                            </div>
+                        </td>
+                    </tr>
+                
+                    
+
+                   </table>     
+                   <div class="modal-footer">
+                       <input type="button" class="btn btn-primary" value="{{ _('Save') }}" onclick="save_doctor()"/>
+                       
+                   </div>
+               </div>
+
+               <div id="modalBody2" class="modal-body" >
+                <table class="table table-bordered" id="list_doctor" style="border-top: none; border-right: none; border-left: none;">
+                    <thead>
+                        <tr>
+                            <th>{{ _('Doctor Name')}}</th>
+                            <th>{{ _('Doctor Depart')}}</th>
+                            <th>{{ _('_')}}</th>
                         </tr>
                     </thead>
                     <tbody></tbody>   
@@ -418,6 +551,8 @@
         $('#btn-add-doctor-calendar').on('click', function(){
             $('#createDoctorCalendar').modal('show')
         })
+
+        get_doctor_list()
     });
 
     var calendar_p;
@@ -429,7 +564,7 @@
             header: {
                 left: ' ',
                 center: 'title',
-                right: 'Add_New, prev,next, Add_Doctor'
+                right: 'Add_New, prev,next, Add_Doctor, Add_Calendar',
             },
 
 
@@ -458,10 +593,16 @@
                     $('#createEventModal').modal('show');
                     }
                 },
+                Add_Calendar: {
+                    text: "{{ _('Doctor Calendar') }}",
+                    click: function() {
+                        $('#createDoctorCalendar').modal('show');
+                    }
+                },
                 Add_Doctor: {
                     text: "{{ _('Add Doctor') }}",
                     click: function() {
-                        $('#createDoctorCalendar').modal('show');
+                        $('#addDoctor').modal('show');
                     }
                 },
 
@@ -1517,7 +1658,8 @@ function disableTable(disableState) {
                 data: {
                     'csrfmiddlewaretoken': $('#csrf').val(),
                     'doctor_date':$('#doctor-date').val(),
-                    'doctor': $('#list-doctors :selected').val()
+                    'doctor': $('#list-doctors :selected').val(),
+                    'depart': $('#list-departs :selected').val()
                 },
                 dataType: 'Json',
                 success: function (response) {
@@ -1527,9 +1669,42 @@ function disableTable(disableState) {
                         } else {
                             for (var i in response.datas) {
                                 str = '<tr><td>' + response.datas[i].name + '</td>';
+                                str += '<td>' + response.datas[i].depart + '</td>';
                                 str +=  '<td><input type="button" class="btn btn-primary" value="Delete" onclick="delete_doctor_reservation(' + response.datas[i].id + ')" /> </td>';
                                 str += ' </tr>';
                                 $('#list_by_day').append(str);
+                            }
+                        }        
+                },
+                error: function (request, status, error) {
+                    console.log("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
+                },
+            });
+    }
+
+    function save_doctor(){
+        console.log($('#list-doctors:selected').val())
+        $.ajax({
+                type: 'POST',
+                url: '/receptionist/save_doctor/',
+                data: {
+                    'csrfmiddlewaretoken': $('#csrf').val(),
+                    'doctor_name':$('#doctor_name').val(),
+                    // 'doctor_depart':$('#doctor_depart').val(),
+                    'doctor_depart': $('#doctor_depart :selected').val()
+                },
+                dataType: 'Json',
+                success: function (response) {
+                    $('#list_doctor > tbody').empty();
+                        if (response.datas.length == 0) {
+                            $('#list_doctor').append("<tr><td colspan='8'>" + gettext('No Result !!') + "</td></tr>");
+                        } else {
+                            for (var i in response.datas) {
+                                str = '<tr><td>' + response.datas[i].name + '</td>';
+                                str += '<td>' + response.datas[i].depart + '</td>';
+                                str +=  '<td><input type="button" class="btn btn-primary" value="Delete" onclick="delete_doctor(' + response.datas[i].id + ')" /> </td>';
+                                str += ' </tr>';
+                                $('#list_doctor').append(str);
                             }
                         }        
                 },
@@ -1558,6 +1733,7 @@ function disableTable(disableState) {
                         } else {
                             for (var i in response.datas) {
                                 str = '<tr><td>' + response.datas[i].name + '</td>';
+                                    str += '<td>' + response.datas[i].depart + '</td>';
                                 str +=  '<td><input type="button" class="btn btn-primary" value="Delete" onclick="delete_doctor_reservation(' + response.datas[i].id + ')" /> </td>';
                                 str += ' </tr>';
                                 $('#list_by_day').append(str);
@@ -1588,6 +1764,7 @@ function disableTable(disableState) {
                         } else {
                             for (var i in response.datas) {
                                 str = '<tr><td>' + response.datas[i].name + '</td>';
+                                    str += '<td>' + response.datas[i].depart + '</td>';
                                 str +=  '<td><input type="button" class="btn btn-primary" value="Delete" onclick="delete_doctor_reservation(' + response.datas[i].id + ')" /> </td>';
                                 str += ' </tr>';
                                 $('#list_by_day').append(str);
@@ -1600,6 +1777,64 @@ function disableTable(disableState) {
             });
     }
 
+    function delete_doctor(id){
+        console.log('hehehhehe')
+        $.ajax({
+                type: 'POST',
+                url: '/receptionist/delete_doctor/',
+                data: {
+                    'csrfmiddlewaretoken': $('#csrf').val(),
+                    'id': id
+                },
+                dataType: 'Json',
+                success: function (response) {
+                    $('#list_doctor > tbody').empty();
+                        if (response.datas.length == 0) {
+                            $('#list_doctor').append("<tr><td colspan='8'>" + gettext('No Result !!') + "</td></tr>");
+                        } else {
+                            for (var i in response.datas) {
+                                str = '<tr><td>' + response.datas[i].name + '</td>';
+                                str += '<td>' + response.datas[i].depart + '</td>';
+                                str +=  '<td><input type="button" class="btn btn-primary" value="Delete" onclick="delete_doctor(' + response.datas[i].id + ')" /> </td>';
+                                str += ' </tr>';
+                                $('#list_doctor').append(str);
+                            }
+                        }        
+                },
+                error: function (request, status, error) {
+                    console.log("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
+                },
+            });
+    }
+
+    function get_doctor_list(){
+
+        $.ajax({
+                type: 'POST',
+                url: '/receptionist/get_doctor/',
+                data: {
+                    'csrfmiddlewaretoken': $('#csrf').val(),
+                },
+                dataType: 'Json',
+                success: function (response) {
+                    $('#list_doctor > tbody').empty();
+                        if (response.datas.length == 0) {
+                            $('#list_doctor').append("<tr><td colspan='8'>" + gettext('No Result !!') + "</td></tr>");
+                        } else {
+                            for (var i in response.datas) {
+                                str = '<tr><td>' + response.datas[i].name + '</td>';
+                                str += '<td>' + response.datas[i].depart + '</td>';
+                                str +=  '<td><input type="button" class="btn btn-primary" value="Delete" onclick="delete_doctor(' + response.datas[i].id + ')" /> </td>';
+                                str += ' </tr>';
+                                $('#list_doctor').append(str);
+                            }
+                        }        
+                },
+                error: function (request, status, error) {
+                    console.log("code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
+                },
+            });
+    }
 </script>
 
 {% endblock %}

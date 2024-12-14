@@ -11947,8 +11947,6 @@ def get_alert(request):
     list_reservation = []
     if 'ALERT' in  request.session:
         if 'vaccine' in request.session['ALERT']:
-            print(date_min)
-            print(date_max)
 
             argument_list = []
             argument_list.append( Q(**{'reservation_date__range':(date_min, date_max) } ) ) 

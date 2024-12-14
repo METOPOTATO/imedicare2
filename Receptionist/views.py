@@ -2050,71 +2050,78 @@ def reservation_events(request):
         data = {
             'id': random.randint(1,1000),
             'start': doctor.active_day.strftime('%Y-%m-%d %H:%M:00'),
-            'title': doctor.name,
+            'title': doctor.name + ' - ' + doctor.depart,
             'allDay': 'true',
         }
         data.update({
             'backgroundColor':'rgb( 147, 203, 249)',
             'borderColor':'rgb(149 227 169)',
             })
-        # if doctor.depart == '1':  #1	PED
-        #     pass
-        # elif doctor.depart == 2:  #2	IM
-        #     data.update({
-        #         'backgroundColor':'rgb(149 227 169)',
-        #         'borderColor':'rgb(149 227 169)',
-        #         })
-        # elif doctor.depart == 3:  #3	URO
-        #     # pass
-        #     data.update({
-        #        'backgroundColor':'rgb(188,255,0)',
-        #        'borderColor':'rgb(188,255,0)',
-        #        })
-        # elif doctor.depart == 4:  #4	PS
-        #     data.update({
-        #         'backgroundColor':'rgb(255,81,255)',
-        #         'borderColor':'rgb(255,81,255)',
-        #         })
-        # elif doctor.depart == 5:  #5	ENT
-        #     data.update({
-        #         'backgroundColor':'rgb(255,205,100)',
-        #         'borderColor':'rgb(255,205,100)',
-        #         })
-        # elif doctor.depart == 6:  #6	DERM
-        #     data.update({
-        #         'backgroundColor':'rgb(183,164,210)',
-        #         'borderColor':'rgb(183,164,210)',
-        #         })
-        # elif doctor.depart == 7:  #7	PM
-        #     data.update({
-        #         'backgroundColor':'rgb(147,203,249)',
-        #         'borderColor':'rgb(147,203,249)',
-        #         })
-        # elif doctor.departd == 9:  #9	OBGYN
-        #     data.update({
-        #         'backgroundColor':'rgb(254,154,202)',
-        #         'borderColor':'rgb(254,154,202)',
-        #         })
-        # elif doctor.depart == 10: 
-        #     data.update({
-        #         'backgroundColor':'rgb(255,251,0)',
-        #         'borderColor':'rgb(255,251,0)',
-        #         })
-        # elif doctor.depart == 11:  #9	SUGERY
-        #     data.update({
-        #         'backgroundColor':'rgb(70, 209, 61)',
-        #         'borderColor':'rgb(70, 209, 61)',
-        #         })
-        # elif doctor.depart == 12:  #9	EYES
-        #     data.update({
-        #         'backgroundColor':'rgb(166, 55, 163)',
-        #         'borderColor':'rgb(166, 55, 163)',
-        #         })
-        # elif doctor.depart == 13:  #9	HC
-        #     data.update({
-        #         'backgroundColor':'rgb(0, 136, 136)',
-        #         'borderColor':'rgb(0, 136, 136)',
-        #         })
+        
+        if doctor.depart == '1':  #1	PED
+            pass
+        elif doctor.depart == 'IM':  #2	IM
+            data.update({
+                'backgroundColor':'rgb(149 227 169)',
+                'borderColor':'rgb(149 227 169)',
+                })
+        elif doctor.depart == 'URO':  #3	URO
+            # pass
+            data.update({
+               'backgroundColor':'rgb(188,255,0)',
+               'borderColor':'rgb(188,255,0)',
+               })
+        elif doctor.depart == 'PS':  #4	PS
+            data.update({
+                'backgroundColor':'rgb(255,81,255)',
+                'borderColor':'rgb(255,81,255)',
+                })
+        elif doctor.depart == 'ENT':  #5	ENT
+            data.update({
+                'backgroundColor':'rgb(255,205,100)',
+                'borderColor':'rgb(255,205,100)',
+                })
+        elif doctor.depart == 'DERM':  #6	DERM
+            data.update({
+                'backgroundColor':'rgb(183,164,210)',
+                'borderColor':'rgb(183,164,210)',
+                })
+        elif doctor.depart == 'PM':  #7	PM
+            data.update({
+                'backgroundColor':'rgb(147,203,249)',
+                'borderColor':'rgb(147,203,249)',
+                })
+        elif doctor.depart == 'OBGYN':  #9	OBGYN
+            data.update({
+                'backgroundColor':'rgb(254,154,202)',
+                'borderColor':'rgb(254,154,202)',
+                })
+        elif doctor.depart == 10: 
+            data.update({
+                'backgroundColor':'rgb(255,251,0)',
+                'borderColor':'rgb(255,251,0)',
+                })
+        elif doctor.depart == 'SUGERY':  #9	SUGERY
+            data.update({
+                'backgroundColor':'rgb(70, 209, 61)',
+                'borderColor':'rgb(70, 209, 61)',
+                })
+        elif doctor.depart == 'EYES':  #9	EYES
+            data.update({
+                'backgroundColor':'rgb(166, 55, 163)',
+                'borderColor':'rgb(166, 55, 163)',
+                })
+        elif doctor.depart == 'HEALTH CHECKUP':  #9	HC
+            data.update({
+                'backgroundColor':'rgb(0, 136, 136)',
+                'borderColor':'rgb(0, 136, 136)',
+                })
+            
+        elif doctor.depart == 'CĐHA':  #9	HC
+            data.update({
+                'backgroundColor':'rgb(254,154,202)',
+                'borderColor':'rgb(254,154,202)',
+                })
         datas.append(data)
 
     for reservation in reservations:
@@ -2128,7 +2135,7 @@ def reservation_events(request):
             'start':reservation_date,
             #'backgroundColor':'red',
             }
-        print(reservation_date)
+
         if reservation.depart.id == 1:  #1	PED
             pass
             #data.update({
@@ -2610,8 +2617,10 @@ def reservation(request):
             })
     _now = datetime.datetime.now().date()
     list_doctor = []
-    for d in TodayDoctor.objects.filter(active_day=_now):
+    for d in ListDoctor.objects.all():
         list_doctor.append(d)
+
+    
     return render(request,
     'Receptionist/reservation.html',
             {
@@ -6965,10 +6974,19 @@ def save_memo_email(request):
 def save_doctor_reservation(request):
     doctor = request.POST.get('doctor')
     doctor_date = request.POST.get('doctor_date')
+    doctor_name = doctor.split('-')[0]
+    doctor_depart = doctor.split('-')[1]
+    # doctor_depart = request.POST.get('depart')
 
+    # depart = ListDoctor.objects.filter(name = doctor).first()
+    # if not depart:
+    #     depart = 'NA'
+    # else:
+    #     depart = depart.depart
     TodayDoctor.objects.create(
-        name = doctor,
-        active_day = doctor_date
+        name = doctor_name,
+        active_day = doctor_date,
+        depart = doctor_depart
     )    
     lists = TodayDoctor.objects.filter(active_day = doctor_date)
     data = []
@@ -6976,7 +6994,8 @@ def save_doctor_reservation(request):
         data.append(
             {
                 'name': d.name,
-                'id': d.id
+                'id': d.id,
+                'depart': d.depart
             }
         )
     return JsonResponse({'datas': data})
@@ -6989,7 +7008,8 @@ def get_doctor_reservation(request):
         data.append(
             {
                 'name': d.name,
-                'id': d.id
+                'id': d.id,
+                'depart': d.depart
             }
         )
     return JsonResponse({'datas': data})
@@ -7005,7 +7025,8 @@ def delete_doctor_reservation(request):
         data.append(
             {
                 'name': d.name,
-                'id': d.id
+                'id': d.id, 
+                'depart': d.depart
             }
         )
     return JsonResponse({'datas': data})
@@ -7030,3 +7051,51 @@ def report(request):
         # ws[f'J{i+1}'] = p.name_eng
     wb.save('/home/light/Desktop/Projects/imedicare2/report.xlsx')
     return JsonResponse({'data': 'ok'})
+
+def save_doctor(request):
+    doctor_name = request.POST.get('doctor_name')
+    doctor_depart = request.POST.get('doctor_depart')
+    ListDoctor.objects.create(
+        name = doctor_name,
+        depart = doctor_depart,
+    )    
+    lists = ListDoctor.objects.all()
+    data = []
+    for d in lists:
+        data.append(
+            {
+                'name': d.name,
+                'id': d.id,
+                'depart': d.depart
+            }
+        )
+    return JsonResponse({'datas': data})
+
+def delete_doctor(request):
+    _id = request.POST.get('id')
+    ListDoctor.objects.get(pk=_id).delete()
+
+    lists = ListDoctor.objects.all()
+    data = []
+    for d in lists:
+        data.append(
+            {
+                'name': d.name,
+                'id': d.id,
+                'depart': d.depart
+            }
+        )
+    return JsonResponse({'datas': data})
+
+def get_doctor(request):
+    lists = ListDoctor.objects.all()
+    data = []
+    for d in lists:
+        data.append(
+            {
+                'name': d.name,
+                'id': d.id,
+                'depart': d.depart
+            }
+        )
+    return JsonResponse({'datas': data})
