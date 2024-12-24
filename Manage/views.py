@@ -6610,7 +6610,7 @@ def customer_manage_get_patient_visit_history(request):
 
         data = {'date':diagnosis.recorded_date.strftime('%Y-%m-%d'),
         'day':diagnosis.recorded_date.strftime('%a'),
-        'subjective':reception.chief_complaint,
+        'subjective':reception.chief_complaint if reception.chief_complaint else '-',
         'objective':diagnosis.objective_data,
         'assessment':diagnosis.assessment,
         'plan':diagnosis.plan,

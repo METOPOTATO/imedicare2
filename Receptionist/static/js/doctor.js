@@ -1098,10 +1098,10 @@ function diagnosis_save(set) {
         return;
     }
     
-    if ($('#chief_complaint').val().trim() == '') {
-        alert(gettext('Subjective Data is Empty.\nPlease fill in all the input of History Taking.'));
-        return;
-    }
+    // if ($('#chief_complaint').val().trim() == '') {
+    //     alert(gettext('Subjective Data is Empty.\nPlease fill in all the input of History Taking.'));
+    //     return;
+    // }
     if ($('#objective_data').val().trim() == '') {
         alert(gettext('Objective Data is Empty.\nPlease fill in all the input of History Taking.'));
         return;

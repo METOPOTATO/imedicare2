@@ -917,7 +917,7 @@ def reception_select(request):
         'gender':patient.gender,
         'phone':patient.phone,
         'address':patient.address,
-        'chief_complaint':reception.chief_complaint,
+        'chief_complaint':reception.chief_complaint if  reception.chief_complaint else '-',
         'marking':patient.marking,
         'memo':patient.memo,
 
