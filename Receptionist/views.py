@@ -1836,9 +1836,11 @@ def waiting_selected(request):
 
 
 def storage_page_save(request):
+    print("=====================")
     reception_id = request.POST.get('reception_id')
     paid = request.POST.get('paid')
     paid = int(paid)
+    print('==', paid)
     method = request.POST.get('method')
     
     memo = request.POST.get('payment_memo')
@@ -1911,10 +1913,13 @@ def storage_page_save(request):
 
     payment_recoreds = PaymentRecord.objects.filter(payment = payment,status='paid' )
     res = int(payment.total)
+    print('==', res)
     for payment_recored in payment_recoreds:
         res -= payment_recored.paid
-    
+    print('==', res)
+    print('==',paid)
     if paid > res:
+        print('111111111111')
         context = {'result':'overflowed'}
         return JsonResponse(context)
 
@@ -2121,6 +2126,17 @@ def reservation_events(request):
             data.update({
                 'backgroundColor':'rgb(254,154,202)',
                 'borderColor':'rgb(254,154,202)',
+                })
+            
+        elif doctor.depart == 'OPH':  #9	HC
+            data.update({
+                'backgroundColor':'rgb(166, 55, 163)',
+                'borderColor':'rgb(166, 55, 163)',
+                })
+        elif doctor.depart == 'DENTAL':  #9	HC
+            data.update({
+                'backgroundColor':'rgb(55, 136, 216)',
+                'borderColor':'rgb(55, 136, 216)',
                 })
         datas.append(data)
 
@@ -5161,6 +5177,7 @@ def document_medical_receipt_old(request,reception_id,):
 
     type= request.GET.get('type')
     if type == 'bf':
+        print('===========1')
         discount_input= request.GET.get('discount_input',0) 
         discount_amount= request.GET.get('discount_amount',0) 
         additional_amount= int( request.GET.get('additional_amount',0) )
@@ -5235,7 +5252,7 @@ def document_medical_receipt_old(request,reception_id,):
 
 
     else:
-        print('h2')
+        print('===========2')
 
         if reception.payment.discounted is not 0 :
             discount = (reception.payment.discounted / 100) * reception.payment.sub_total
