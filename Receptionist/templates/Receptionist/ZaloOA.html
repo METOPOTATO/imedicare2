@@ -1,0 +1,120 @@
+{% extends "app/layout.html" %}
+
+{% load staticfiles %}
+{% block content %}
+{% csrf_token %}
+
+<div class="main">
+    <!--Reception-->
+    <div class="table_patient partition" style="height: 800px;">
+        <div class="status_table_title"
+            <span class="btn btn-danger">{{ _('Document List') }}</span>
+
+            <div class="status_table_filter">
+                {{ _('Date:') }}
+                <input type="text" class="form-control document_control" id="document_control_start"/>
+                ~ 
+                <input type="text" class="form-control document_control" id="document_control_end"/>
+                <div class="input-group" id="document_control_depart_div" style="{% if user.doctor %} display:none; {%endif%}">
+                    <span class="input-group-addon reception_table_title" id="basic-addon1">{{ _('Depart') }}</span>
+                    <select id="document_control_depart" class="form-control">
+                        <option value="">{{ _('All') }}</option>
+                        {% for depart in departs %}
+                        <option value="{{depart.id}}" {% if user.doctor.depart.id is depart.id %} selected {%endif%}>{{ depart.name }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <input type="text" class="form-control document_control" id="document_control_input"/>
+                <input type="button" class="btn btn-default document_control" id="document_control_search" value="{{ _('Search')}}"/>
+            </div>
+        </div>
+        <div class="document_contents_div part-2">
+            <table class="table table-bordered table-hover" id="document_contents_table">
+                <thead>
+                    <tr>
+                        <th>{{_('No')}}</th>
+                        <th>{{_('Chart No')}}</th>
+                        <th>{{_('Name')}}</th>
+                        <th>{{_('Date of Birth')}}</th>
+                        <th>{{_('Depart')}}</th>
+                        <!-- <th>{{_('Address')}}</th> -->
+                        <th>{{_('Phone')}}</th>
+                        <th style="width: 50px;">{{_('Send Invoice Status')}}</th>
+                        <th style="width: 120px;">{{_('Paid by')}}</th>
+                        <th style="width: 120px;">{{_('Send ZaloOA')}}</th>
+                    </tr>
+                </thead>
+                <tbody id="document_contents">
+
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div class="detail_info partition">
+        <div class="status_table_title">
+            <span class="btn btn-danger">{{ _('Document Info') }}</span>
+        </div>
+        <div class="data">
+            <table class="table">
+                <tr>
+                    <td>
+                        <input type="text" id="rec_id" hidden>
+                        <input type="text" id="patient_id" hidden> 
+                        <input type="text" id="depart" hidden>
+                        <!-- <input type="text" id="patient_name" hidden> -->
+                        <div class="input-group ">
+                            <span class="input-group-addon patient_table_title" id="lbl_memo">{{ _('Patient Name') }}</span>
+                            <input type="text" id="patient_name" class="form-control" aria-describedby="basic-addon1" autocomplete="off">
+
+                        </div>
+
+                    </td>
+                    <td>
+                        <div class="input-group">
+                            <span class="input-group-addon patient_table_title" id="lbl_memo">{{ _('Address') }}</span>
+                            <input type="text" id="txt_address" class="form-control" aria-describedby="basic-addon1" autocomplete="off">
+
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <button onclick="send_patient_info_by_zalo()">Send Result ZaloOA</button>
+                </tr>
+
+
+
+
+                
+
+
+
+
+
+
+            </table>
+            
+        </div>
+    </div>
+</div>
+
+
+
+<div id="dynamic_div">
+
+</div>
+
+{% endblock %}
+
+
+{% block style %}
+    <link rel="stylesheet" href="{% static 'css/ion.rangeSlider.min.css' %}" />
+    <link rel="stylesheet" type="text/css" href="{% static 'css/ZaloOA.css' %}" />
+    
+<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
+{% endblock %}
+
+{% block scripts %}
+<script src="{% static 'js/ZaloOA.js' %}" type="text/javascript"></script>
+<script src="{% static 'js/ion.rangeSlider.min.js' %}"></script>
+{% endblock %}

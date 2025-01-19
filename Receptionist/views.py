@@ -3983,14 +3983,10 @@ def document_search(request):
             'need_insurance_p': reception.need_insurance_p,
             'tax_code':tax_code,
             'address2': address2,
-            'paid_by': str(reception.payment.paymentrecord_set.first().method) if reception.payment.paymentrecord_set.first() else ''
+            'paid_by': str(reception.payment.paymentrecord_set.first().method) if reception.payment.paymentrecord_set.first() else '',
+            'send_zns': reception.send_zns,
             }
-        #
-        print(reception.id)
-        print(reception.need_invoice)
-        print(reception.need_invoice_p)
-        print(reception.need_insurance)
-        print(reception.need_insurance_p)
+
         diagnosis = True
         try:
             if reception.diagnosis.medicinemanager_set.count() !=0:
@@ -7116,3 +7112,86 @@ def get_doctor(request):
             }
         )
     return JsonResponse({'datas': data})
+
+@login_required
+def ZaloOA(request):
+
+    departs = Depart.objects.all()
+
+    token = ''
+    try:
+        url = 'https://testapi.meinvoice.vn/api/v3/auth/token'
+        body = {
+            "appid": "7291159a-cbb1-43b2-8e0b-673a4586a8c7",
+            "taxcode": "6868686868-125",
+            "username": "testmisa@yahoo.com",
+            "password": "123456Aa"
+        }
+        response = requests.post(url, json=body)
+        data = response.json()
+
+        token = data['Data']
+    except:
+        token = ''
+
+    template = ''
+    
+    try:
+        year = datetime.datetime.now().year
+        url = f'https://testapi.meinvoice.vn/api/v3/code/itg/InvoicePublishing/templates?invyear={year}'
+
+        header = {
+            "CompanyTaxCode": "6868686868-125",
+            'Authorization': f'Bearer {token}',
+        }
+
+        response = requests.get(url, headers=header)
+        data = response.json()
+        data = data['Data']
+        template = json.loads(data)[0]['InvSeries']
+    except:
+        template = ''
+    
+    return render(request,
+    'Receptionist/ZaloOA.html',
+            {
+                'departs':departs,
+                'token': token,
+                'template': template
+            },
+        )
+
+def send_patient_info_by_zalo(request):
+    rid =  request.POST.get('id')
+    template_id = '401362'
+
+    reception = Reception.objects.get(pk = rid)
+    patient = reception.patient
+
+    phone = patient.phone
+    name = patient.name_eng
+
+    
+    data = {
+        'phone': "84985637898",
+        'template_id': template_id,
+        'template_data': {
+            'company_name': "PK International Clinic",
+            "customer_name": "Bui Quang Linh",
+            "id": "asdasdasdasdasd",
+        }
+    }
+
+    headers = {
+        "access_token": "sihD7WAxBLJOpiqQ0RujLztBp1WT_sWRlElNMX3OINojrAz9TCqMPTp7abXwqt15-gFULawAHK7id_HPDxWL4-YpyJr7ac4mtPtf4NwQSm_8ufmYISClOz_Al29MxWGApFhc7bl20r20oPPvCRiBSBs_cKOObmLylEQqQ030K4U_qyvFPVft1Dw9z1jQWHGiXfAN8pYzTX7YlFSIDPyM68k9zXWafdWLeTF_NGhIVrocekb47v8ESRlbe3mD_nCXh8odCWgq0W6Zkx8D2R41Fe2Qb2q2WYGCXuwb8rshF1lqZvebTAWtRiMhiJfTgW87uO24Ebs3Vd7ojCHfURLh9S-zq15MkcGEpgM30LID8I3mXSOFI_Sd9vFRWJmdeomLkTkIEJBI22Ar-kewEFbOAhh_zn0vrnKGxa3NUG2aA5O",  # Ví dụ: Bearer Token
+        "Content-Type": "application/json",        # Loại dữ liệu gửi đi
+    }
+
+    res = requests.post('https://business.openapi.zalo.me/message/template', headers=headers, json=data)
+    print(res.json())
+    reception.send_zns = True
+    reception.save()
+
+
+
+    return JsonResponse({'datas': 'ok'})

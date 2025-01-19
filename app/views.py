@@ -188,6 +188,11 @@ def set_menu(request):
                     "name": "Send Email",
                     "url": "/receptionist/Documents2/",
                     "code": "sta_pro"
+                },
+                {
+                    "name": "ZaloOA",
+                    "url": "/receptionist/ZaloOA/",
+                    "code": "sta_pro"
                 }
 
             ],

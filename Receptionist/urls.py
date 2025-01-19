@@ -83,6 +83,7 @@ urlpatterns = [
     #Documetation
     path('Documents/',views.Documents,name='Documents'),
     path('Documents2/',views.Documents2,name='Documents'),
+    path('ZaloOA/',views.ZaloOA,name='Documents'),
     path('document_search/',views.document_search,name='document_search'),
     path('get_document/',views.get_document,name='get_document'),
     path('upload_pdf/',views.upload_pdf,name='upload_pdf'),
@@ -149,4 +150,5 @@ urlpatterns = [
     path('save_doctor/', views.save_doctor),
     path('delete_doctor/', views.delete_doctor),
     path('get_doctor/', views.get_doctor),
+    path('send_patient_info_by_zalo/', views.send_patient_info_by_zalo),
 ]

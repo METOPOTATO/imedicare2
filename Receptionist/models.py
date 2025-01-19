@@ -297,6 +297,11 @@ class Reception(models.Model):
         null=True,
     )
 
+    send_zns = models.BooleanField(
+        default = False,
+        null = True
+    )
+
     objects=ReceptionQueryManager()
 
     
@@ -1088,3 +1093,13 @@ class TodayDoctor(models.Model):
 class ListDoctor(models.Model):
     name = models.CharField(max_length=255, default='', null=False)
     depart = models.CharField(max_length=255, default='', null=True)
+
+class ZNS(models.Model):
+    reception = models.ForeignKey(
+        to = Reception,
+        on_delete=models.DO_NOTHING,
+        null=True,
+        )
+    
+    code_challenge = models.CharField(max_length=255, default='', null=False)
+    code_verify = models.CharField(max_length=255, default='', null=False)
